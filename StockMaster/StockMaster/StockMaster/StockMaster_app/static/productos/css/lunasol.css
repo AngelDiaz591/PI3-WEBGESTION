@@ -1,0 +1,25 @@
+/* Estilos del botón de cambio de tema */
+#themeToggleBtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline: none;
+}
+
+/* Estilos para el icono del sol */
+#sunIcon {
+    color: #ffc107; /* Color amarillo para el sol */
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+/* Estilos para el icono de la luna */
+#moonIcon {
+    color: #fff; /* Color blanco para la luna */
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}

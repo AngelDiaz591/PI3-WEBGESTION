@@ -6,7 +6,7 @@
     --color-success: #41f1b6;
     --color-warning: #ffbb55;
     --color-white: #fff;
-    --color-info-dark: #7d8da1;
+    --color-info-dark: #817da1;
     --color-info-light: #dce1eb;
     --color-dark: #363949;
     --color-light: rgba(132, 139, 200, 0.18);
@@ -729,39 +729,4 @@ main  .recent-orders a{
 .alert-custom:hover .btn-close {
     transform: translate(0, -50%); /* Mover el botón hacia la izquierda */
     background-color: transparent; /* Cambia a rojo al pasar el mouse */
-}
-
-.search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    width: 50%;
-}
-
-#search-input {
-    padding: 12px 10px 12px 10px;
-    border-radius: 20px;
-    outline: none;
-    width: 70%;
-    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
-}
-
-#search-icon {
-    position: relative;
-    right: 2rem;
-    color: #333; /* Color del ícono */
-    cursor: pointer;
-}
-
-.highlighted {
-    background-color: #000000; /* Cambia el color de fondo a tu elección */
-    font-weight: bold; /* Cambia el estilo de fuente a tu elección */
-    color: white;
-}
-
-.principal{
-    justify-content: space-between;
-    display: flex;
-    padding: 1.5rem 0;
 }

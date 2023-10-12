@@ -17,6 +17,7 @@
 </head>
 <body>
     <div class="container">
+
         <aside>
             <div class="top">
                 <div class="logo">
@@ -47,10 +48,6 @@
                         <a href="{% url 'pro' %}">
                             <span class="material-symbols-outlined">inventory</span>
                             <h3>Productos</h3>
-                        </a>
-                        <a href="{% url 'recuperar_producto' %}">
-                            <span class="material-symbols-outlined">restart_alt</span>
-                            <h3>Recuperacion</h3>
                         </a>
                     {% endif %}
                 {% endif %}
@@ -98,16 +95,9 @@
             
             <div class="recent-orders">
                 <h1>Configuraciones</h1>
-                <div class="principal">
-                    <div>
-                        <h2 class="agregar">Categorias</h2>
-                    </div>
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
-                        <i class="fas fa-search" id="search-icon"></i>
-                    </div>
+                <div class="date">
                 </div>
-                <br>
+                <h2 class="agregar">Categorias</h2>
                 <div class="messages-container">
                     {% for message in messages %}
                         <div class="alert alert-custom" role="alert">
@@ -228,9 +218,6 @@
     <script src="{% static 'static/js/inventario.js' %}"></script>
     <script src="{% static 'static/js/edit.js' %}"></script>
     <script src="{% static 'productos/js/lunasol.js' %}"></script>
-    <style>
-</style>
-<script src="{% static 'login/js/busqueda.js' %}"></script>
 </body>
 </html>
 {% endblock %}

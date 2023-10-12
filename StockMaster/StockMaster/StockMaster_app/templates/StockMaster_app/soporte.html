@@ -46,10 +46,6 @@
                                     <span class="material-symbols-outlined">inventory</span>
                                     <h3>Productos</h3>
                                 </a>
-                                <a href="{% url 'recuperar_producto' %}">
-                                    <span class="material-symbols-outlined">restart_alt</span>
-                                    <h3>Recuperacion</h3>
-                                </a>
                             {% endif %}
                         {% endif %}
                         <a href="{% url 'usuarios' %}" >
@@ -321,10 +317,10 @@
                             <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
             
                             </button>
-                            <button id="themeToggleBtn" style="display: block;">
-                                <i id="sunIcon" class="fas fa-sun"></i>
-                                <i id="moonIcon" class="fas fa-moon"></i>
-                            </button>
+                            <div class="theme-toggler">
+                                <span class="material-symbols-outlined active">light_mode</span>
+                                <span class="material-symbols-outlined">dark_mode</span>
+                            </div>
                             <div class="profile">
                                 {% if request.user.is_authenticated %}
                                     <div class="info">

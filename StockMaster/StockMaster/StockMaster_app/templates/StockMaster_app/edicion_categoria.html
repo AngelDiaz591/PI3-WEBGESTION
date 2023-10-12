@@ -26,6 +26,7 @@
                 <form action="/editarCat/" method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <div class="form-group py-2">
                         <input type="hidden" name="idCat" value="{{ categoria.categoria_id }}">
+
                     </div>
                     <div class="form-group py-2">
                         <input type="text" id="txtNombreCat" name="txtNombreCat" value="{{categoria.nombre}}" pattern="[A-Za-z0-9]{6,}" class="form-control" placeholder="Nombre"  minlength="6" maxlength="20" required>

@@ -13,6 +13,7 @@
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             </head>
             <body>
+            
                 <div class="container">
                     <aside>
                         <div class="top">
@@ -44,10 +45,6 @@
                                     <a href="{% url 'pro' %}" class="active">
                                         <span class="material-symbols-outlined">inventory</span>
                                         <h3>Productos</h3>
-                                    </a>
-                                    <a href="{% url 'recuperar_producto' %}">
-                                        <span class="material-symbols-outlined">restart_alt</span>
-                                        <h3>Recuperacion</h3>
                                     </a>
                                 {% endif %}
                             {% endif %}
@@ -84,14 +81,15 @@
                                 <h3>Cerrar Sesion</h3>
                             </a>
                             {% endif %}
-
+            
                         </div>
                     </aside>
-
+                    
                     <main>
                         <div class="right">
                             <div class="top">
                                 <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+                
                                 </button>
                                 <button id="themeToggleBtn" style="display: block;">
                                     <i id="sunIcon" class="fas fa-sun"></i>
@@ -106,6 +104,7 @@
                                             {% else %}
                                                 <small class="text-muted">Empleado</small>
                                             {% endif %}
+                                                
                                         </div>
                                         <div class="profile-photo">
                                             {% if request.user.is_superuser %}
@@ -119,18 +118,18 @@
                             </div>
                         </div>
                         <h1>Productos</h1>
-                        <div class="principal">
-                            <div class="boton-modal">
-                                <label for="btn-modal">
-                                    <i class="fa-solid fa-plus"></i>    Agregar Producto
-                                </label>
-                            </div>
-                            <div class="search-bar">
-                                <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
-                                <i class="fas fa-search" id="search-icon"></i>
-                            </div>
+                        <div class="date">
                         </div>
+                        <!--Boton-->
+                        <div class="boton-modal">
+                            <label for="btn-modal">
+                                <i class="fa-solid fa-plus"></i>    Agregar Producto
+                            </label>
+                        </div>
+          
                         <!--Fin de Boton-->
+
+
                         <div class="messages-container">
                             {% for message in messages %}
                                 <div class="alert alert-custom" role="alert">
@@ -139,46 +138,45 @@
                                 </div>
                             {% endfor %}
                         </div>
-                                <div class="recent-orders" style="overflow: auto; max-height: 600px;">
-                                    <h2 class="agregar">Listado de Productos</h2>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Código</th>
-                                                <th>Nombre</th>
-                                                <th>Precio</th>
-                                                <th>Marca</th>
-                                                <th>Cantidad</th>
-                                                <th>Imagen</th>
-                                                <th>Categoría</th>
-                                                <th colspan="2">Opciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for c in Productos %}
-                                                {% if c.status %}
-                                                    <tr>
-                                                        <td>{{ forloop.counter }}</td>
-                                                        <td>{{ c.codigo }}</td>
-                                                        <td>{{ c.nombre }}</td>
-                                                        <td>{{ c.precio }}</td>
-                                                        <td>{{ c.marca }}</td>
-                                                        <td>{{ c.cantPro }}</td>
-                                                        <td class="imagen" style="position: relative;">
-                                                            <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
-                                                                <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
-                                                            </div>
-                                                        </td>
-                                                        <td>{{ c.id_categorias.nombre }}</td>
-                                                        <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">Editar</a></td>
-                                                        <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
-                                                    </tr>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="recent-orders" style="overflow: auto; max-height: 600px;">
+                            <h2 class="agregar">Listado de Productos</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Marca</th>
+                                        <th>Cantidad</th>
+                                        <th>Imagen</th>
+                                        <th>Categoria</th>
+                                        <th colspan="2">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for c in Productos %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{ c.codigo }} </td>
+                                            <td>{{ c.nombre }}</td>
+                                            <td>{{ c.precio }}</td>
+                                            <td>{{ c.marca}}</td>
+                                            <td>{{ c.cantPro}}</td>
+                                            <td class="imagen" style="position: relative;">
+                                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                                                    <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
+                                                </div>
+                                            </td>                                            
+                                            <td>{{ c.id_categorias.nombre }}</td>
+                                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">Editar</a></td>
+                                            <td class="elimina"><a href="eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+            
+                            </table>
+                        </div>
 
                         <!--Ventana Modal-->
                         <input type="checkbox" id="btn-modal">
@@ -190,7 +188,7 @@
                                     <div class="updates">
                                         <form action="/registrarProducto/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
                                             <!--Inicio de la tabla de columnas-->
-                                            <div class="form-columns">
+                                            <div class="form-columns">    
                                             <!--Datos-->
                                                 <!--Primer columna-->
                                                 <div class="form-column">
@@ -272,14 +270,14 @@
                                                     <label for="btn-modal">Cancelar</label>
                                                 </div>
                                             <!--Fin datos-->
-
+                                            
                                         </form>
                                     </div>
                                 </div>
                                 <script>
                                     // Obtén todos los elementos con la clase "close-btn"
                                     var closeBtns = document.querySelectorAll('.close-btnn');
-
+        
                                     // Agrega un evento de clic a cada elemento
                                     closeBtns.forEach(function (closeBtn) {
                                         closeBtn.addEventListener('click', function () {
@@ -288,6 +286,7 @@
                                         });
                                     });
                                 </script>
+                                
                             </div>
                             <label for="btn-modal" class="cerrar-modal"></label>
                         </div>
@@ -298,8 +297,8 @@
                 <script src="{% static 'static/js/edit.js' %}"></script>
                 <script src="{% static 'usuarios/js/dashboard.js' %}"></script>
                 <script src="{% static 'productos/js/ordenes.js' %}"></script>
-                <script src="{% static 'productos/js/lunasol.js' %}"></script>
-                <script src="{% static 'login/js/busqueda.js' %}"></script>
+                
+
     <script>
         function validarNumeros(input) {
             // Obtener el valor actual del campo de entrada
@@ -317,7 +316,7 @@
             input.value = valor;
         }
     </script>
-    
+    <script src="{% static 'productos/js/lunasol.js' %}"></script>
 </scrip>
 <script>
     // Función para eliminar el mensaje al hacer clic en el botón de cerrar
@@ -328,6 +327,7 @@
         }
     }
 </script>
+
 {% else %}
 <h2>Hola</h2>
         {% endif %}

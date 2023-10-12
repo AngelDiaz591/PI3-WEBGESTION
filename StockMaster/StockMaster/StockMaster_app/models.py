@@ -1,8 +1,7 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
+from PIL import Image  
 from django.utils import timezone
-
-
 # Create your models here.
 class Categoria(models.Model):
     categoria_id = models.AutoField(primary_key=True)
@@ -21,14 +20,7 @@ class Productos(models.Model):
     imagen = models.BinaryField(null=True, blank=True)
 
     id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    hora_baja = models.DateTimeField(default=timezone.now, null=True)
-    username = models.CharField(max_length=255, null=True)
-    usernamere = models.CharField(max_length=255, null=True)
-    status = models.BooleanField(default=True)
-    fecha_edit = models.DateTimeField(default=timezone.now, null=True)
-    useredit = models.CharField(max_length=255, null=True)
-    movimiento = models.CharField(max_length=255, null=True)
-    
+
     def __str__(self):
         texto = "{0} ({1})"
         return texto.format(self.nombre, self.precio)

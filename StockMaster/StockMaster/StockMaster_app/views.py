@@ -1,5 +1,9 @@
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.mail import send_mail
 from django import forms
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
@@ -10,12 +14,13 @@ from django.contrib import messages
 from django.contrib import messages as men
 from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
+from django.conf import settings
+from pathlib import Path, os
 from .models import Productos, Mensajes, Categoria
 from django.http.response import JsonResponse
 import base64
+from PIL import Image  
 from django.shortcuts import get_object_or_404
-from django.utils import timezone
-from django.db.models import Q
 # Create your views here.
 
 class CustomUserCreationForm(UserCreationForm):
@@ -68,16 +73,7 @@ def signup(request):
 
     return render(request, 'StockMaster_app/registro.html', {'form': form})
 
-def eliminaruser(request, id):
-    try:
-        user_to_delete = User.objects.get(id=id)
-        user_to_delete.delete()
-        return redirect('/usuarios')
-    except User.DoesNotExist:
-        # Maneja el caso en que el usuario con el ID especificado no existe
-        # Puedes mostrar un mensaje de error o realizar alguna otra acción aquí
-        pass
-    
+
 def signin(request):
     if request.user.is_authenticated:
         return redirect('/productos')
@@ -96,6 +92,7 @@ def signin(request):
                 # Agrega un mensaje de error con la etiqueta 'signin'
                 messages.error(request, 'Usuario no Registrado', extra_tags='signin')
             else:
+                # Agrega un mensaje de error con la etiqueta 'signin'
                 messages.error(request, 'Contraseña Incorrecta', extra_tags='signin')
         return render(request, 'registration/login.html', {'form': form})
 
@@ -106,27 +103,15 @@ def signin(request):
 def home(request):
     if request.user.is_authenticated:
         return redirect('/productos')
+  #  mensajes = Mensajes.objects.all()
+  #  cantidad_mensajes =mensajes.count()
     return render(request, 'registration/login.html')
 
 @login_required(login_url='signin')
 def productos(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes = mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/productos.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes, 'Productos':ProductosListados,'CategoriaListados':CategoriaListados})
-
-def editarcant(request, idproducts):
-    if request.method == 'POST':
-        cantPro = request.POST.get('cantPro')
-        producto = Productos.objects.get(idproducts=idproducts)
-        producto.cantPro = cantPro
-        producto.username = request.user.username
-        producto.fecha_edit = timezone.now()
-        producto.movimiento = 'Edicion de Cantidad'
-        producto.save()
-        messages.success(request, '¡Cantidad Editada!')
-    return redirect('/productos')
+    return render(request, 'StockMaster_app/productos.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes})
 
 @login_required(login_url='signin')
 def usuarios(request):
@@ -169,7 +154,6 @@ def registrarProducto(request):
     cantPro = request.POST['CantPro'] 
     imagen = request.FILES['imagen'] 
     categoria_id = request.POST['categoria']
-    fecha_edit = timezone.now()
 
     # Comprobar si el producto ya existe
     if Productos.objects.filter(codigo=codigo).exists():
@@ -181,7 +165,7 @@ def registrarProducto(request):
         imagen_bytes = imagen.read()
         
         # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
-        producto = Productos(codigo=codigo, nombre=nombre, precio=precio, marca=marca, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Producto creado')
+        producto = Productos(codigo=codigo, nombre=nombre, precio=precio, marca=marca, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id)
         # Guardar la instancia en la base de datos
         producto.save()
         messages.success(request, '¡Producto registrado!')
@@ -212,8 +196,6 @@ def editarProducto(request):
     productos.precio = precio
     productos.marca = marca
     productos.cantPro = cantPro
-    productos.username = request.user.username
-    productos.movimiento = 'Edicion de Producto'
     productos.id_categorias_id = categoria_id
     if nueva_imagen:
         productos.imagen = nueva_imagen.read()
@@ -227,46 +209,12 @@ def eliminaInventario(request, idproducts):
     productos = Productos.objects.get(idproducts=idproducts)
     productos.delete()
     messages.success(request, '¡Producto Eliminado!')
-    return redirect('/recuperar_producto')
-def buscar_productos(request):
-    query = request.GET.get('query', '')
+    return redirect('/pro')
 
-    if query:
-        productos = Productos.objects.filter(
-            Q(codigo__icontains=query) |  # Buscar en código (contiene)
-            Q(nombre__icontains=query) |  # Buscar en nombre (contiene)
-            Q(marca__icontains=query) |  # Buscar en marca (contiene)
-            Q(id_categorias__nombre__icontains=query)  # Buscar en nombre de categoría (contiene)
-        )
-    else:
-        productos = Productos.objects.all()
-
-    return render(request, 'Stockmaster_app/inventario.html', {'productos': productos, 'query': query})
 def get_char(_request):
     chart = {}
     return JsonResponse(chart)
 
-def cambio_status(request, idproducts):
-    producto = Productos.objects.get(idproducts=idproducts)
-    if producto.status != 0:
-        producto.status = 0
-
-        producto.hora_baja = timezone.now()
-        producto.username = request.user.username
-        producto.movimiento = 'Eliminacion de Producto'
-        producto.save()
-    return redirect('/pro')
-def cambio_statusre(request, idproducts):
-    producto = Productos.objects.get(idproducts=idproducts)
-    if producto.status != 1:
-        producto.status = 1
-
-        producto.hora_baja = timezone.now()
-        producto.username = request.user.username
-        producto.movimiento = 'Recuperacion de Producto'
-        producto.save()
-    messages.success(request, '¡Producto recuperado¡')
-    return redirect('/recuperar_producto')
 #mio gael
 @login_required(login_url='signin')
 def soporte(request):
@@ -337,12 +285,6 @@ def configuraciones(request):
     cantidad_mensajes =mensajes.count()
     CategoriaListados = Categoria.objects.all()
     return render(request, 'StockMaster_app/configuraciones.html',{"Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
-
-@login_required(login_url='signin')
-def recuperar_producto(request):
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados})
 
 @login_required(login_url='signin')
 def registrar_categoria(request):

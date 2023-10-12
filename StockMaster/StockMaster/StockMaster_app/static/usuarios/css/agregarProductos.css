@@ -214,11 +214,8 @@ aside .sidebar .message-count{
 }
 /*Boton-Modal*/
 .boton-modal{
-    padding: 40px 0px 20px 0px;
-    display: flex;
-    width: 100%;
+    padding: 40px;
 }
-
 .boton-modal label{
     padding: 10px 15px;
     background-color: #5488a3;
@@ -850,44 +847,3 @@ select.updatess {
     transform: scale(1.5); /* Escala la imagen al 150% */
     z-index: 1; /* Coloca la imagen ampliada sobre la imagen de abajo */
 }
-
-.search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-left: 2rem;
-    width: 50%;
-    justify-content: right;
-}
-
-#search-input {
-    padding: 12px 10px 12px 10px;
-    /* border: 1px solid #ccc; */
-    border-radius: 20px;
-    outline: none;
-    width: 70%;
-    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
-}
-
-#search-icon {
-    position: relative;
-    right: 2rem;
-    color: #333; /* Color del ícono */
-    cursor: pointer;
-}
-
-.highlighted {
-    background-color: #000000; /* Cambia el color de fondo a tu elección */
-    font-weight: bold; /* Cambia el estilo de fuente a tu elección */
-    color: white;
-}
-
-.principal{
-    justify-content:space-between;
-    display: flex;
-    padding: 1.5rem -3rem;
-}
-    
-    
-
-                        

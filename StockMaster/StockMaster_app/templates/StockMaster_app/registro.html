@@ -1,0 +1,78 @@
+
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet"href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link  rel="stylesheet" href="{% static 'usuarios/css/registro.css' %}">
+</head>
+    <body>
+    <div class="container">
+        <div class="title">Registro de Usuarios</div>
+      
+        <form  action="" method="post" id="registrationForm">
+            {% csrf_token %}
+            {% if messages %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% endif %}
+            <div class="user-details" id="#IniciaSesion">
+                <div class="input-box">
+                    <span class="details">Nombre Completo</span>
+                    <input type="text" id="first_name" name="first_name" placeholder="Enter your name" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Apellido</span>
+                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last_name" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Email</span>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="input-box">
+                    <span class="details">Username</span>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Password</span>
+                    <input type="password" id="id_password1" name="password1" placeholder="Enter your password" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Confirm Password</span>
+                    <input type="password" id="id_password2" name="password2" placeholder="confirm your password" required>
+                </div>
+                <div class="input-box">
+                    <select name="is_superuser" id="is_superuser" class="updatess" required>
+                        <option value="" disabled selected>Selecciona una rol</option>
+                        <option value="1">Administrador</option>
+                        <option value="0">Empleado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="button">
+                <button type="submit">Registrar</button>
+                
+            </div>
+        </form>
+        <div class="buttonn">
+            <form action="{% url 'usuarios' %}">
+                <button>Cancelar</button>
+            </form>
+            
+        </div>
+    </div>
+    
+    <script src="{% static 'usuarios/js/aviso.js' %}"></script>
+    </body>
+</html>
+{% endblock %}

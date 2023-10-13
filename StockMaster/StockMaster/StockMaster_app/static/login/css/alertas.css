@@ -1,0 +1,46 @@
+.messages-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.alert {
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Color de fondo verde */
+    color: white; /* Color del texto blanco */
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Ocultar el botón de eliminar inicialmente */
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+.alert:hover .btn-close {
+    transform: translateX(0);
+}
+
+.alert strong {
+    margin-right: 10px;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: -30px; /* Fuera de la vista inicialmente */
+    transform: translateX(100%); /* Mover el botón fuera del mensaje */
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.btn-close:hover {
+    background-color: red; /* Cambia a rojo al pasar el mouse */
+    color: white;
+}

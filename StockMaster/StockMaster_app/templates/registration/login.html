@@ -1,0 +1,67 @@
+{% block content %}
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="{% static 'login/css/estilos.css' %}">
+        <link rel="stylesheet" href="{% static 'login/css/alertas.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <div id="particles-js"></div>
+        <form action="/signin/" method="post" class="">
+            <div class="logo">
+                <img src="{% static 'login/img/logo.jpg' %}">
+            </div>
+            <h1 class="title">Iniciar Sesion</h1>
+            {% csrf_token %}
+            {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="alert {% if message.tags %} {{ message.tags }}{% endif %}">
+                                <strong>{{ message }}</strong>
+                            </li>
+                        {% endfor %}
+                    </ul>
+            {% endif %}
+            <label>
+                <i class="fa-solid fa-user"></i>
+                <input type="text" placeholder="Usuario" id="floatingInput" name="username">
+            </label>
+            <label>
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Contraseña" id="floatingPassword" name="password">
+            </label>
+            <button id="button"  type="submit">
+                Login
+            </button>
+        </form>
+        <div class="span">
+            <a href="" id="showModal" class="span2">
+                <i class="bi bi-question-circle"></i>
+            </a>
+        </div>
+            <!-- Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img class="modal-img" src="{% static 'login/img/error4.svg' %}">
+                <h2>¿Necesitas ayuda?</h2>
+                <p>Comunícate con soporte técnico: </p>
+                <p>Tel: 3141010101</p>
+            </div>
+        </div>
+        <script src="{% static 'login/js/particles.min.js' %}"></script>
+        <script src="{% static 'login/js/app.js' %}"></script>
+        <script src="{% static 'js/inventario.js' %}"></script>
+        <script src="{% static 'js/edit.js' %}"></script>
+        <script src="{% static 'login/js/modal.js' %}"></script>
+        <script src="{% static 'login/js/alertas.js' %}"></script>
+    </body>
+    </html>
+{% endblock %}
+

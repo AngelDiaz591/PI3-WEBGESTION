@@ -1,0 +1,40 @@
+{% extends "./base.html" %}
+{% block title %} Productos {% endblock %}
+{% block body %}
+<div class="container">
+    <h1 class="mt-4">Productos</h1>
+    <form method="get" class="mb-4">
+        <div class="form-group">
+            <label for="categoria">Categoría:</label>
+            <select name="categoria" id="categoria" class="form-control" required>
+                <option value="" disabled selected>Selecciona una categoría</option>
+                {% for categoria in Categoria %}
+                    <option value="{{ categoria.nombre }}">{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <a href="/example" class="btn btn-secondary">Mostrar todos los productos</a>
+    </form>
+    <div class="row">
+        {% for producto in Productos %}
+            {% if not request.GET.categoria or producto.id_categorias.nombre == request.GET.categoria %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <center><img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" class="card-img-top img-fluid" style="max-height: 250px;"></center>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre }}</h5>
+                            <p class="card-text">Código: {{ producto.codigo }}</p>
+                            <p class="card-text">Categoría: {{ producto.id_categorias.nombre }}</p>
+                            <p class="card-text">Precio: {{ producto.precio }}</p>
+                            <p class="card-text">Marca: {{ producto.marca }}</p>
+                            <p class="card-text">Cantidad: {{ producto.cantPro }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>    
+</div>
+{% endblock %}

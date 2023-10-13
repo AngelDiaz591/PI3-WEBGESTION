@@ -1,0 +1,67 @@
+{% extends "./base.html" %}
+{% block title %} Gestión de Categoria {% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Categoria</h2>
+        <div class="card">
+            <div class="card-body">
+                {% if error_messages %}
+                <div class="alert alert-danger" id="error-alert">
+                    <ul>
+                        {% for message in error_messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        var errorAlert = document.getElementById('error-alert');
+                        if (errorAlert) {
+                            errorAlert.style.display = 'none';
+                        }
+                    }, 5000); 
+                </script>
+                {% endif %}
+                <form action="/editarCat/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group py-2">
+                        <input type="hidden" name="idCat" value="{{ categoria.categoria_id }}">
+
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtNombreCat" name="txtNombreCat" value="{{categoria.nombre}}" pattern="[A-Za-z0-9]{6,}" class="form-control" placeholder="Nombre"  minlength="6" maxlength="20" required>
+                        <span class="error-message" style="color: red;"></span>
+                    </div>                      
+                    <div class="form-group py-2">
+                        <button type="submit" class="btn btn-success btn-lg btn-block text-white">Guardar</button>
+                        <button type="submit" class="btn btn-danger btn-lg btn-block text-white">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
+    <script>
+        const txtNombreCat = document.getElementById("txtNombreCat");
+
+    // Agrega un evento 'input' al campo de texto
+    txtNombreCat.addEventListener("input", function () {
+        // Convierte el valor del campo de texto en mayúsculas
+        this.value = this.value.toUpperCase();
+    });
+
+    var campoId = 'txtNombreCat';
+    var campo = document.getElementById(campoId);
+
+    campo.addEventListener('input', function () {
+        var input = this;
+        var errorMessage = input.parentNode.querySelector('.error-message');
+
+        if (input.validity.patternMismatch) {
+            errorMessage.textContent = 'El nombre debe contener almenos 6 caracteres alfanuméricos';
+        } else {
+            errorMessage.textContent = '';
+        }
+    });
+    </script>
+</div>
+{% endblock %}

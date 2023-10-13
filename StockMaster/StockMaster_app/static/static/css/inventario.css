@@ -1,0 +1,24 @@
+th, 
+td{
+    text-align: center;
+    vertical-align: middle;
+}
+.bg-coffee {
+    background-color: #C2533B;
+}
+
+/*Inicio de las columnas*/
+.form-columns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-column {
+    flex: 1;
+    margin-right: 1rem; /* Espacio entre las columnas */
+}
+
+.form-column:last-child {
+    margin-right: 0; /* Elimina el espacio en la última columna */
+}
+/*Fin de las columnas*/

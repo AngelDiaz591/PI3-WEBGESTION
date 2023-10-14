@@ -1,0 +1,88 @@
+
+.container{
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 14rem auto 0rem;
+}
+
+/* Estilo personalizado para el mensaje de alerta */
+.alert-custom {
+    background-color: #4CAF50; /* Color de fondo verde */
+    color: white; /* Color del texto blanco */
+    border: 2px solid #388E3C; /* Borde verde más oscuro */
+    border-radius: 5px; /* Borde redondeado */
+    padding: 10px 20px; /* Espaciado interior */
+    margin-bottom: 10px; /* Espacio entre mensajes */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex; /* Para alinear elementos horizontalmente */
+    align-items: center; /* Para alinear elementos verticalmente */
+    justify-content: space-between; /* Para espaciar el mensaje y el botón */
+    position: relative; /* Para posicionar el botón de cierre */
+    transition: all 0.3s; /* Transición suave */
+}
+
+/* Estilo para el botón de cierre */
+.alert-custom .btn-close {
+    background-color: transparent;
+    border: none;
+    color: white;
+    position: absolute;
+    top: 50%; /* Centrar verticalmente el botón */
+    right: 10px; /* Espaciado del borde derecho */
+    transform: translateY(-50%); /* Centrar verticalmente el botón */
+    cursor: pointer;
+    transition: transform 0.3s; /* Transición suave */
+}
+
+/* Cambio de color del botón al pasar el mouse */
+.alert-custom:hover .btn-close {
+    transform: translate(0, -50%); /* Mover el botón hacia la izquierda */
+    background-color: transparent; /* Cambia a rojo al pasar el mouse */
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin: 0rem 0rem 1.5rem 0rem;
+    justify-content: right;
+}
+
+#search-input {
+    padding: 12px 10px 12px 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 20px;
+    outline: none;
+    width: 70%;
+    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    border-color: var(--color-dark);
+}
+
+#search-icon {
+    position: relative;
+    right: 2rem;
+    color: var(--color-dark-variant); /* Color del ícono */
+    cursor: pointer;
+}
+
+.highlighted {
+    font-weight: bold; /* Cambia el estilo de fuente a tu elección */
+    background-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+.principal{
+    justify-content:end;
+    display: flex;
+}
+
+/* #respuestascomentarios{
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    border: 2px white;
+} */

@@ -12,7 +12,28 @@ const moonIcon = document.getElementById("moonIcon");
 // Agrega un evento de clic al botón de cambio de tema
 const themeToggleBtn = document.getElementById("themeToggleBtn");
 themeToggleBtn.addEventListener("click", toggleTheme);
+
+// Obtener la ubicación de la página actual
+const currentPage = window.location.pathname;
+
+// Obtener todos los enlaces del menú
+const menuLinks = document.querySelectorAll("aside .sidebar a");
+
 // <---------------------------------------------------Fin Elementos--------------------------------------------------->
+
+// <------------------------------------------------Inicio de las funciones en opciones de menu------------------------------------------->
+// <----------------------------------para la identificacion de la opcion del menu, en la que se encuentra------------------------------------------------>
+
+menuLinks.forEach((link) => { // Recorrer los enlaces y comparar con la URL actual
+  const linkHref = link.getAttribute("href");
+
+  if (linkHref === currentPage) {
+      link.classList.add("active"); // Agrega la clase "active" al enlace actual
+  } else {
+      link.classList.remove("active"); // Quita la clase "active" de otros enlaces
+  }
+});
+// <------------------------------------------------Fin de las funciones------------------------------------------------>
 // <-----------------------------Inicio de las funciones para los botones de cerrar el menú---------------------------->
 menuBtn.addEventListener('click', () => {
     sideMenu.style.display = 'block';

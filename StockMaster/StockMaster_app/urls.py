@@ -25,7 +25,7 @@ urlpatterns = [
     path('comentario/',views.comentario),
     path('actividades/eliminarcomentarios/<int:idcomentario>/', views.eliminarcomentarios, name='eliminar_comentario'),
     path('contestarcomentarios/<int:idcomentario>/', views.contestarcomentarios, name='contestarcomentarios'),
-    path('inventario', views.example_view, name='inventario'),
+    path('inventario/', views.example_view, name='inventario'),
     path('productos/', views.pro, name='productos'),
     path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
     path('registrarProducto/', views.registrarProducto),

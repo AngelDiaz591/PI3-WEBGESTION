@@ -332,7 +332,7 @@ def example_view(request):
     for producto in ProductosListados:
         producto.imagen_url = get_imagen_url(producto.imagen)
 
-    return render(request, 'StockMaster_app/manejo.html', {"Productos": ProductosListados, "Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+    return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
 
 @login_required(login_url='signin')
 def configuraciones(request):

@@ -6,7 +6,38 @@
     <link  rel="stylesheet" href="{% static 'css/productos.css' %}">
 </head>
 <main>
+    <div class="right" >
+        <div class="top">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
     
+            </button>
+            <button id="themeToggleBtn" style="display: block;">
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+            <div class="profile">
+                {% if request.user.is_authenticated %}
+                    <div class="info">
+                        <p>hey, <b>{{ user.username}}</b></p>
+                        {% if request.user.is_superuser %}
+                            <small class="text-muted">Admin</small>
+                        {% else %}
+                            <small class="text-muted">Empleado</small>
+                        {% endif %}
+    
+                    </div>
+                    <div class="profile-photo">
+                        {% if request.user.is_superuser %}
+                            <i class="fa-solid fa-user-tie"></i>
+                        {% else %}
+                            <i class="fa-solid fa-user"></i>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    
+    </div>
     <div class="recent-orders">
         <h1>Productos</h1>
         <div class="principal">
@@ -183,38 +214,6 @@
     <!--Fin de Ventana Modal-->
 </main>
 
-<div class="right2" >
-    <div class="top">
-        <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-
-        </button>
-        <button id="themeToggleBtn" style="display: block;">
-            <i id="sunIcon" class="fas fa-sun"></i>
-            <i id="moonIcon" class="fas fa-moon"></i>
-        </button>
-        <div class="profile">
-            {% if request.user.is_authenticated %}
-                <div class="info">
-                    <p>hey, <b>{{ user.username}}</b></p>
-                    {% if request.user.is_superuser %}
-                        <small class="text-muted">Admin</small>
-                    {% else %}
-                        <small class="text-muted">Empleado</small>
-                    {% endif %}
-
-                </div>
-                <div class="profile-photo">
-                    {% if request.user.is_superuser %}
-                        <i class="fa-solid fa-user-tie"></i>
-                    {% else %}
-                        <i class="fa-solid fa-user"></i>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-
-</div>
 <script>
     function validarNumeros(input) {
         // Obtener el valor actual del campo de entrada

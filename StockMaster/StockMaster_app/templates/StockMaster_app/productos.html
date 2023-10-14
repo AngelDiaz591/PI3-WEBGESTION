@@ -2,29 +2,25 @@
 {% block body %}
 {% load static %}
 
+<head>
+    <link  rel="stylesheet" href="{% static 'css/productos.css' %}">
+</head>
 <main>
-    {% if request.user.is_superuser %}
-        <h1>Actividad de Usuarios</h1>
-    {% else %}
-        <h1>Actividades Recientes</h1>
-    {% endif %}
+    
     <div class="recent-orders">
+        <h1>Productos</h1>
         <div class="principal">
-            <div class="encabezado">
-            {% if request.user.is_superuser %}
-                <h2>Modificaciones del producto</h2>
+            <div class="boton-modal">
+                <label for="btn-modal">
+                    <i class="fa-solid fa-plus"></i>    Agregar Producto
+                </label>
             </div>
-            <!-- <div class="encabezado2"> -->
-            {% else %}
-                <h2>Productos Recientes</h2>
-            {% endif %}
-            <!-- </div> -->
             <div class="search-bar">
-                <label for="search-input"></label><input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
         </div>
-        <br>
+        <!--Fin de Boton-->
         <div class="messages-container">
             {% for message in messages %}
                 <div class="alert alert-custom" role="alert">
@@ -33,79 +29,169 @@
                 </div>
             {% endfor %}
         </div>
-                
+        <h2 class="agregar">Listado de Productos</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Codigo</th>
-                    <th>Producto</th>
-                    <th>Movimiento</th>
-                    {% if request.user.is_superuser %}
-                        <th>Usuario</th>
-                        <th>Fecha</th>
-                    {% else %}
-                        <th colspan="2">Editar Cantidad</th>
-                    {% endif %}
-                        <th>Opciones</th>
+                    <th>#</th>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Imagen</th>
+                    <th>Categoría</th>
+                    <th colspan="2">Opciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for ca in Productos|dictsortreversed:"fecha_edit" %}
-                {% if request.user.is_superuser %}
-                            <tr>
-                                <td>{{ ca.codigo }}</td>
-                                <td>{{ ca.nombre }}</td>
-                                {% if request.user.is_superuser %}
-                                    <td>{{ ca.movimiento }}</td>
-                                    <td>{{ ca.username }}</td>
-                                    <td>{{ ca.fecha_edit }}</td>
-                                {% else %}
-                                    <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
-                                        {% csrf_token %}
-                                        <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                        <td><button type="submit">Editar Cantidad</button></td>
-                                    </form>                                    
-                                {% endif %}
-                                <td class="elimina">
-                                    <a href="" class="btnEliminacion">Eliminar</a>
-                                </td>
-                            </tr>
-                    {% else %}
-                        {% if ca and ca.status  %}
-                        
-                            <tr>
-                                <td>{{ ca.id_categorias.nombre }}</td>
-                                <td>{{ ca.codigo }}</td>
-                                <td>{{ ca.cantPro }}</td>
-                                {% if request.user.is_superuser %}
-                                    <td>{{ ca.useredit }}</td>
-                                    <td>{{ ca.fecha_edit }}</td>
-                                {% else %}
-                                    <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
-                                        {% csrf_token %}
-                                        <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                        <td><button type="submit">Editar Cantidad</button></td>
-                                    </form>                                    
-                                {% endif %}
-                            </tr>
-                        {% endif%}
+                {% for c in Productos %}
+                    {% if c.status %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ c.codigo }}</td>
+                            <td>{{ c.nombre }}</td>
+                            <td>{{ c.precio }}</td>
+                            <td>{{ c.marca }}</td>
+                            <td>{{ c.cantPro }}</td>
+                            <td class="imagen" style="position: relative;">
+                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                                    <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
+                                </div>
+                            </td>
+                            <td>{{ c.id_categorias.nombre }}</td>
+                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">Editar</a></td>
+                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        </tr>
                     {% endif %}
                 {% endfor %}
             </tbody>
-
         </table>
     </div>
+
+    <!--Ventana Modal-->
+    <input type="checkbox" id="btn-modal">
+    <div class="container-modal">
+        <div class="content-modal">
+            <label for="btn-modal" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
+            <div class="recent-updates">
+                <h2>Agregar Nuevo Producto</h2>
+                <div class="updates">
+                    <form action="/registrarProducto/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
+                        <!--Inicio de la tabla de columnas-->
+                        <div class="form-columns">
+                        <!--Datos-->
+                            <!--Primer columna-->
+                            <div class="form-column">
+                                <div class="update">
+                                    <div class="profile-photo">
+                                    </div>
+                                    <div class="message">
+                                        <input type="text" id="txtCodigo" name="txtCodigo" class="updatess" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" required>
+                                        <br><span class="error-message" style="color: red;"></span>
+                                    </div>
+                                </div>
+                                <div class="update">
+                                    <div class="profile-photo">
+                                    </div>
+                                    <div class="message">
+                                        <input type="text" id="txtNombre" name="txtNombre" class="updatess" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
+                                        <br><span class="error-message" style="color: red;"></span>
+                                    </div>
+                                </div>
+                                <div class="update">
+                                    <div class="profile-photo">
+                                    </div>
+                                    <div class="message">
+                                        <input type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="updatess" maxlength="7" required oninput="validarNumeros(this)">
+                                        <br>
+                                        <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
+                                        <span class="error-message error" style="color: red;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Termino de la 1 columna-->
+                            <!--Inicio de la 2 columna-->
+                            <div class="form-column">
+                                <div class="update">
+                                    <div class="profile-photo">
+                                    </div>
+                                    <div class="message">
+                                        <input type="text" id="NomMarca" name="NomMarca" class="updatess" placeholder="Marca"  pattern="[A-Za-z0-9]{6,20}" maxlength="20" required>
+                                        <br> <span class="error-message" style="color: red;"></span></br>
+                                    </div>
+                                </div>
+                                <div class="update">
+                                    <div class="profile-photo">
+                                    </div>
+                                    <div class="message">
+                                        <input type="number" id="CantPro" name="CantPro" placeholder="Cantidad de Producto" pattern="[0-9]{1,7}" class="updatess" maxlength="7"  required oninput="validarNumeros(this)" >
+                                        <br>
+                                        <small class="text-muted">Ingrese un numero (entre 1 y 100 000).</small><br>
+                                        <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                </div>
+                                <div class="update">
+                                    <div class="profile-photo">
+                                    </div>
+                                    <div class="message"></div>
+                                        <label for="categoria">Categoría:</label>
+                                        <br>
+                                        <select name="categoria" id="categoria" class="updatess" required>
+                                            <option value="" disabled selected>Selecciona una categoría</option>
+                                            {% for c in Categoria %}
+                                                <option value="{{ c.categoria_id }}">{{ c.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Termino de la 2 columna-->
+                        </div>
+                        <!--Termino de la tabla de columnas-->
+                            <div class="update">
+                                <div class="profile-photo">
+                                </div>
+                                <div class="message" style="align-items: center;">
+                                    <input type="file" name="imagen" id="id_imagen" accept="image/*" required>
+                                </div>
+                            </div>
+                            <div class="btn-cerrar">
+                                <button type="submit" class="updatess">Guardar</button>
+                                <label for="btn-modal">Cancelar</label>
+                            </div>
+                        <!--Fin datos-->
+
+                    </form>
+                </div>
+            </div>
+            <script>
+                // Obtén todos los elementos con la clase "close-btn"
+                var closeBtns = document.querySelectorAll('.close-btnn');
+
+                // Agrega un evento de clic a cada elemento
+                closeBtns.forEach(function (closeBtn) {
+                    closeBtn.addEventListener('click', function () {
+                        // Oculta el elemento al hacer clic
+                        closeBtn.style.display = 'none';
+                    });
+                });
+            </script>
+        </div>
+        <label for="btn-modal" class="cerrar-modal"></label>
+    </div>
+    <!--Fin de Ventana Modal-->
 </main>
-<div class="right" >
+
+<div class="right2" >
     <div class="top">
         <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+
         </button>
         <button id="themeToggleBtn" style="display: block;">
             <i id="sunIcon" class="fas fa-sun"></i>
             <i id="moonIcon" class="fas fa-moon"></i>
         </button>
-            
-
         <div class="profile">
             {% if request.user.is_authenticated %}
                 <div class="info">
@@ -115,7 +201,7 @@
                     {% else %}
                         <small class="text-muted">Empleado</small>
                     {% endif %}
-                        
+
                 </div>
                 <div class="profile-photo">
                     {% if request.user.is_superuser %}
@@ -127,95 +213,34 @@
             {% endif %}
         </div>
     </div>
-    <div class="recent-updates">
-        <h2>Mensajes Recientes</h2>
-        <div class="updates">
-            {% if request.user.is_superuser %}
-                {% if Mensajes %}
-                {% if respuestascomentarios %}
-                    <p>respuestascomentarios </p>
-                {% else %}
-                    {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
-                    {% if me.respuestascomentarios%}
-                        <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
-                        <p>Mensaje contestado</p>
-                    {% else %}
-                        <div class="update">
-                            <div class="profile-photo">
-                                <img src="{% static 'usuarios/img/1.png' %}" alt="">
-                            </div>
-                            <div class="message">
-                                <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
-                                <small class="text-muted">{{ me.tiempo_creacion }}</small>
-                            </div> 
-                        </div>
-                    {% endif %}
-                    {% endfor %}
-                {% endif %}
-                {% else %}
-                    <p>No hay mensajes disponibles en este momento.</p>
-                {% endif %}
-            {% else %}
-                {% if Mensajes %}
-                        {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
-                            {% if me.respuestascomentarios %}
-                                {% if me.username == request.user.username %}
-                                    <div class="update ">
-                                        <div class="profile-photo">
-                                            <img src="{% static 'usuarios/img/1.png' %}" alt="">
-                                        </div>
-                                        <div class="message">
-                                            <b>Comentario:</b>
-                                            <p>{{me.comentario}}</p>
-                                            <b>Respuesta del Admin: </b>
-                                            <p> {{ me.respuestascomentarios }}</p>
-                                            <small class="text-muted">{{ me.tiempo_creacion }}</small>
-                                        </div> 
-                                    </div>
-                                {% endif %}
-                            {% else %}
-                                {% if me.username == request.user.username %}
-                                    <div class="update">
-                                        <div class="profile-photo">
-                                            <img src="{% static 'usuarios/img/1.png' %}" alt="">
-                                        </div>
-                                        <div class="message">
-                                            <b>Comentario:</b>
-                                            <p>{{me.comentario}}</p>
-                                            <p>Sin respuesta</p>
-                                        </div> 
-                                    </div>
-                                {% endif %}
-                            {% endif%}
-                        {% endfor%}
-                {% else %}
-                    <p>No has comentado por el momento</p>
-                {% endif %}
-            {% endif %}
-            
-        </div>
-        <div class="sales-analyticss">
-            <div class="item add-products">
-                <div>
-                    <span class="material-symbols-outlined">add</span> 
-                    <a href="{% url 'soporte' %}">Mostrar Todas</a>
-                </div>
-            </div>
-        </div>
-        
-        <script>
-            // Obtén todos los elementos con la clase "close-btn"
-            var closeBtns = document.querySelectorAll('.close-btnn');
 
-            // Agrega un evento de clic a cada elemento
-            closeBtns.forEach(function (closeBtn) {
-                closeBtn.addEventListener('click', function () {
-                    // Oculta el elemento al hacer clic
-                    closeBtn.style.display = 'none';
-                });
-            });
-        </script>
-    </div>
 </div>
+<script>
+    function validarNumeros(input) {
+        // Obtener el valor actual del campo de entrada
+        let valor = input.value;
+
+        // Reemplazar cualquier caracter que no sea un número con una cadena vacía
+        valor = valor.replace(/[^0-9]/g, '');
+
+        // Limitar la longitud del valor a 7 caracteres
+        if (valor.length > 7) {
+            valor = valor.slice(0, 7);
+        }
+
+        // Actualizar el valor del campo de entrada con la versión filtrada
+        input.value = valor;
+    }
+</script>
+<script>
+    // Función para eliminar el mensaje al hacer clic en el botón de cerrar
+    function dismissMessage(button) {
+        const messageContainer = button.closest('.alert');
+        if (messageContainer) {
+            messageContainer.remove();
+        }
+    }
+</script>
 
 {% endblock %}
+

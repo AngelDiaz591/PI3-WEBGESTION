@@ -8,7 +8,6 @@
 
     <!--Codigos de estilos-->
     <link  rel="stylesheet" href="{% static 'css/menu.css' %}">
-    <link  rel="stylesheet" href="{% static 'css/actividad.css' %}">
 
     <!--Fuentes-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -28,7 +27,7 @@
                 </div>
             </div>
             <div class="sidebar">
-                <a href="{% url 'productos' %}" class="active">
+                <a href="{% url 'actividades' %}" class="active">
                     <span class="material-symbols-outlined">grid_view</span>
                     <h3>Actividad Reciente</h3>
                 </a>
@@ -38,7 +37,7 @@
                 </a>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
-                        <a href="{% url 'pro' %}">
+                        <a href="{% url 'productos' %}">
                             <span class="material-symbols-outlined">inventory</span>
                             <h3>Productos</h3>
                         </a>
@@ -92,5 +91,8 @@
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>
+    <script src="{% static 'static/js/inventario.js' %}"></script>
+    <script src="{% static 'static/js/edit.js' %}"></script>
+    <script src="{% static 'productos/js/search.js' %}"></script>
 </body>
 </html>

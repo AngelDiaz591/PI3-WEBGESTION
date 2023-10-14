@@ -43,3 +43,5 @@ function convertToUppercase() {
     const inputElement = document.getElementById("search-input");
     inputElement.value = inputElement.value.toUpperCase();
 }
+
+

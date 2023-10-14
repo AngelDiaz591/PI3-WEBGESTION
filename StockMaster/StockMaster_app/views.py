@@ -80,7 +80,7 @@ def eliminaruser(request, id):
     
 def signin(request):
     if request.user.is_authenticated:
-        return redirect('/productos')
+        return redirect('/actividades')
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -89,7 +89,7 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            return redirect('productos')
+            return redirect('actividades')
         else:
             form = AuthenticationForm(request.POST)
             if not User.objects.filter(username=username).exists():
@@ -105,7 +105,7 @@ def signin(request):
     
 def home(request):
     if request.user.is_authenticated:
-        return redirect('/productos')
+        return redirect('/actividades')
     return render(request, 'registration/login.html')
 
 @login_required(login_url='signin')
@@ -114,7 +114,7 @@ def productos(request):
     cantidad_mensajes = mensajes.count()
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/productos.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes, 'Productos':ProductosListados,'CategoriaListados':CategoriaListados})
+    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes, 'Productos':ProductosListados,'CategoriaListados':CategoriaListados})
 
 def editarcant(request, idproducts):
     if request.method == 'POST':
@@ -126,7 +126,7 @@ def editarcant(request, idproducts):
         producto.movimiento = 'Edicion de Cantidad'
         producto.save()
         messages.success(request, '¡Cantidad Editada!')
-    return redirect('/productos')
+    return redirect('/actividades')
 
 @login_required(login_url='signin')
 def usuarios(request):
@@ -136,12 +136,12 @@ def usuarios(request):
         form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
         return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes})
     else:
-        return redirect('/productos')
+        return redirect('/actividades')
     
 @login_required(login_url='signin')
 def exit(request):
     logout(request)
-    return redirect('/productos')
+    return redirect('/actividades')
 
 @login_required(login_url='signin')
 def pro(request):
@@ -152,9 +152,9 @@ def pro(request):
         CategoriaListados = Categoria.objects.all() 
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/inventario.html', { "Productos": ProductosListados,"Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados,"Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
-        return redirect('/productos')
+        return redirect('/actividades')
     
 def get_imagen_url(imagen_binaria):
     imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
@@ -185,7 +185,7 @@ def registrarProducto(request):
         # Guardar la instancia en la base de datos
         producto.save()
         messages.success(request, '¡Producto registrado!')
-    return redirect('/pro/')
+    return redirect('/productos/')
 
 @login_required(login_url='signin')
 def edicioninventario(request, idproducts):
@@ -221,7 +221,7 @@ def editarProducto(request):
     productos.save()
 
     messages.success(request, '¡Producto Editado!')
-    return redirect('/pro/')
+    return redirect('/productos/')
 
 @login_required(login_url='signin')
 def eliminaInventario(request, idproducts):
@@ -229,6 +229,7 @@ def eliminaInventario(request, idproducts):
     productos.delete()
     messages.success(request, '¡Producto Eliminado!')
     return redirect('/recuperar_producto')
+
 def buscar_productos(request):
     query = request.GET.get('query', '')
 
@@ -242,13 +243,14 @@ def buscar_productos(request):
     else:
         productos = Productos.objects.all()
 
-    return render(request, 'Stockmaster_app/inventario.html', {'productos': productos, 'query': query})
+    return render(request, 'Stockmaster_app/productos.html', {'productos': productos, 'query': query})
 def get_char(_request):
     chart = {}
     return JsonResponse(chart)
 
 def cambio_status(request, idproducts):
     producto = Productos.objects.get(idproducts=idproducts)
+    messages.success(request, '¡Producto Eliminado!')
     if producto.status != 0:
         producto.status = 0
 
@@ -256,7 +258,7 @@ def cambio_status(request, idproducts):
         producto.username = request.user.username
         producto.movimiento = 'Eliminacion de Producto'
         producto.save()
-    return redirect('/pro')
+    return redirect('/productos')
 def cambio_statusre(request, idproducts):
     producto = Productos.objects.get(idproducts=idproducts)
     if producto.status != 1:

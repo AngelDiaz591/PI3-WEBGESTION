@@ -1,0 +1,223 @@
+{% extends "./base.html" %}
+{% block body %}
+{% load static %}
+<head>
+    <link  rel="stylesheet" href="{% static 'css/actividad.css' %}">
+</head>
+<main>
+    {% if request.user.is_superuser %}
+        <h1>Actividad de Usuarios</h1>
+    {% else %}
+        <h1>Actividades Recientes</h1>
+    {% endif %}
+    <div class="recent-orders">
+        <div class="principal">
+            <div class="encabezado">
+            {% if request.user.is_superuser %}
+                <h2>Modificaciones del producto</h2>
+            </div>
+            <!-- <div class="encabezado2"> -->
+            {% else %}
+                <h2>Productos Recientes</h2>
+            {% endif %}
+            <!-- </div> -->
+            <div class="search-bar">
+                <label for="search-input"></label><input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+        </div>
+        <br>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+                
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Producto</th>
+                    <th>Movimiento</th>
+                    {% if request.user.is_superuser %}
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                    {% else %}
+                        <th colspan="2">Editar Cantidad</th>
+                    {% endif %}
+                        <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ca in Productos|dictsortreversed:"fecha_edit" %}
+                {% if request.user.is_superuser %}
+                            <tr>
+                                <td>{{ ca.codigo }}</td>
+                                <td>{{ ca.nombre }}</td>
+                                {% if request.user.is_superuser %}
+                                    <td>{{ ca.movimiento }}</td>
+                                    <td>{{ ca.username }}</td>
+                                    <td>{{ ca.fecha_edit }}</td>
+                                {% else %}
+                                    <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
+                                        {% csrf_token %}
+                                        <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
+                                        <td><button type="submit">Editar Cantidad</button></td>
+                                    </form>                                    
+                                {% endif %}
+                                <td class="elimina">
+                                    <a href="" class="btnEliminacion">Eliminar</a>
+                                </td>
+                            </tr>
+                    {% else %}
+                        {% if ca and ca.status  %}
+                        
+                            <tr>
+                                <td>{{ ca.id_categorias.nombre }}</td>
+                                <td>{{ ca.codigo }}</td>
+                                <td>{{ ca.cantPro }}</td>
+                                {% if request.user.is_superuser %}
+                                    <td>{{ ca.useredit }}</td>
+                                    <td>{{ ca.fecha_edit }}</td>
+                                {% else %}
+                                    <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
+                                        {% csrf_token %}
+                                        <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
+                                        <td><button type="submit">Editar Cantidad</button></td>
+                                    </form>                                    
+                                {% endif %}
+                            </tr>
+                        {% endif%}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</main>
+<div class="right" >
+    <div class="top">
+        <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+        </button>
+        <button id="themeToggleBtn" style="display: block;">
+            <i id="sunIcon" class="fas fa-sun"></i>
+            <i id="moonIcon" class="fas fa-moon"></i>
+        </button>
+            
+
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>hey, <b>{{ user.username}}</b></p>
+                    {% if request.user.is_superuser %}
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                        
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="recent-updates">
+        <h2>Mensajes Recientes</h2>
+        <div class="updates">
+            {% if request.user.is_superuser %}
+                {% if Mensajes %}
+                {% if respuestascomentarios %}
+                    <p>respuestascomentarios </p>
+                {% else %}
+                    {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
+                    {% if me.respuestascomentarios%}
+                        <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
+                        <p>Mensaje contestado</p>
+                    {% else %}
+                        <div class="update">
+                            <div class="profile-photo">
+                                <img src="{% static 'usuarios/img/1.png' %}" alt="">
+                            </div>
+                            <div class="message">
+                                <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
+                                <small class="text-muted">{{ me.tiempo_creacion }}</small>
+                            </div> 
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% else %}
+                    <p>No hay mensajes disponibles en este momento.</p>
+                {% endif %}
+            {% else %}
+                {% if Mensajes %}
+                        {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
+                            {% if me.respuestascomentarios %}
+                                {% if me.username == request.user.username %}
+                                    <div class="update ">
+                                        <div class="profile-photo">
+                                            <img src="{% static 'usuarios/img/1.png' %}" alt="">
+                                        </div>
+                                        <div class="message">
+                                            <b>Comentario:</b>
+                                            <p>{{me.comentario}}</p>
+                                            <b>Respuesta del Admin: </b>
+                                            <p> {{ me.respuestascomentarios }}</p>
+                                            <small class="text-muted">{{ me.tiempo_creacion }}</small>
+                                        </div> 
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                {% if me.username == request.user.username %}
+                                    <div class="update">
+                                        <div class="profile-photo">
+                                            <img src="{% static 'usuarios/img/1.png' %}" alt="">
+                                        </div>
+                                        <div class="message">
+                                            <b>Comentario:</b>
+                                            <p>{{me.comentario}}</p>
+                                            <p>Sin respuesta</p>
+                                        </div> 
+                                    </div>
+                                {% endif %}
+                            {% endif%}
+                        {% endfor%}
+                {% else %}
+                    <p>No has comentado por el momento</p>
+                {% endif %}
+            {% endif %}
+            
+        </div>
+        <div class="sales-analyticss">
+            <div class="item add-products">
+                <div>
+                    <span class="material-symbols-outlined">add</span> 
+                    <a href="{% url 'soporte' %}">Mostrar Todas</a>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // Obtén todos los elementos con la clase "close-btn"
+            var closeBtns = document.querySelectorAll('.close-btnn');
+
+            // Agrega un evento de clic a cada elemento
+            closeBtns.forEach(function (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    // Oculta el elemento al hacer clic
+                    closeBtn.style.display = 'none';
+                });
+            });
+        </script>
+    </div>
+</div>
+
+{% endblock %}

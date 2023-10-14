@@ -58,13 +58,6 @@ body{
     color: var(--color-dark)
 }
 
-.container{
-    display: grid;
-    width: 96%;
-    margin: 0 auto;
-    gap: 1.8rem;
-    grid-template-columns: 14rem auto 23rem;
-}
 a {
     color: var(--color-dark);
 }
@@ -184,7 +177,7 @@ main{
 }
 
 main .recent-orders{
-    margin-top: 2rem;
+    margin-top: 1.2rem;
 }
 main .recent-orders h2{
     margin-bottom: 0.8rem;
@@ -203,21 +196,14 @@ main .recent-orders table:hover{
     box-shadow: none;
 }
 main table tbody td{
-    height: 4.5rem;
+    height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
     color: --color-dark;
-    font-size: 0.9rem;
-    text-transform: uppercase;
 }
 main table tbody tr:last-child td{
     border: none;
 }
-main  .recent-orders a{
-    text-align: center;
-    display: block;
-    margin: 1rem auto;
-    color: white;
-}
+
 
 .right{
     margin-top: 1.4rem;
@@ -260,6 +246,11 @@ main  .recent-orders a{
     gap: 2rem;
     text-align: right;
 }
+.updatess{
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 5px;
+}
 .right .recent-updates{
     margin-top: 1rem;
 }
@@ -268,7 +259,6 @@ main  .recent-orders a{
 }
 .right .recent-updates .updates{
     background-color: var(--color-white);
-    color: var(--color-dark);
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow);
@@ -358,9 +348,48 @@ main  .recent-orders a{
     font-weight: 600;
 }
 
-.principal{
-    justify-content: space-between;
+.right2{
+    margin-top: 1.4rem;
+    height: 40px;
+    margin-left: -20rem;
+}
+.right2 .top{
     display: flex;
+    justify-content: end;
+    gap: 2rem;
+}
+.right2 .top button{
+    display: none;
+}
+.right2 button.theme-toggler{
+    background: var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6rem;
+    width: 4.2rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+}
+
+.right2 .theme-toggler span{
+    font-size: 1.2rem;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.right2 .theme-toggler span.active{
+    background: var(--color-success);
+    color: white;
+    border-radius: var(--border-radius-1);
+}
+
+.right2 .top .profile{
+    display: flex;
+    gap: 2rem;
+    text-align: right;
 }
 
 /* Estilos del botón de cambio de tema */
@@ -406,6 +435,23 @@ main  .recent-orders a{
 }
 .elimina a:hover{
     background-color: #930404;
+}
+
+.edita {
+    width: 100px;
+    height: auto;
+}
+.edita a{
+    padding: 10px 15px;
+    background-color: #5488a3;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    
+}
+.edita a:hover{
+    background-color: #185E83;
 }
 
 /*Responsivo*/

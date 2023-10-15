@@ -3,9 +3,7 @@
 {% load static %}
 
 {% if request.user.is_superuser %}
-    <head>
-        <link  rel="stylesheet" href="{% static 'css/soporte.css' %}">
-    </head>
+
 {% else %}
 <head>
     <link  rel="stylesheet" href="{% static 'css/actividad.css' %}">
@@ -13,10 +11,41 @@
 {% endif %}
     <body>
         {% if request.user.is_superuser %}
-
+        <div class="right-v2" >
+            <div class="top">
+                <div class="tema">
+                    <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <button id="themeToggleBtn" >
+                        <i id="sunIcon" class="fas fa-sun"></i>
+                        <i id="moonIcon" class="fas fa-moon"></i>
+                    </button>
+                </div>
+                <div class="profile">
+                    {% if request.user.is_authenticated %}
+                        <div class="info">
+                            <p>Hola, <b>{{ user.username}}</b> </p>
+                            <p style="text-align: center;">
+                                BIENVENIDO
+                            </p>
+                        </div>
+                        <div class="profile-photo">
+                            {% if request.user.is_superuser %}
+                                <i class="fa-solid fa-user-tie"></i>
+                                <small class="text-muted">Admin</small>
+                            {% else %}
+                                <i class="fa-solid fa-user"></i>
+                                <small class="text-muted">Empleado</small>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>  
+        </div>
                 <main>
+                    <h1>Soporte Tecnico</h1>
                     <div class="recent-orders">
-                        <h1>Soporte Tecnico</h1>
+                        
                         <div class="principal">
                             <div class="search-bar">
                                 <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
@@ -90,37 +119,7 @@
                         
                     </div>
                 </main>
-                <div class="right" >
-                    <div class="top">
-                        <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-        
-                        </button>
-                        <button id="themeToggleBtn" style="display: block;">
-                            <i id="sunIcon" class="fas fa-sun"></i>
-                            <i id="moonIcon" class="fas fa-moon"></i>
-                        </button>
-                        <div class="profile">
-                            {% if request.user.is_authenticated %}
-                                <div class="info">
-                                    <p>hey, <b>{{ user.username}}</b></p>
-                                    {% if request.user.is_superuser %}
-                                    <small class="text-muted">Admin</small>
-                                    {% else %}
-                                    <small class="text-muted">Empleado</small>
-                                    {% endif %}
-                                
-                                </div>
-                                <div class="profile-photo">
-                                    {% if request.user.is_superuser %}
-                                        <i class="fa-solid fa-user-tie"></i>
-                                    {% else %}
-                                        <i class="fa-solid fa-user"></i>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
+                
                 <script>
                     // Función para eliminar el mensaje al hacer clic en el botón de cerrar
                     function dismissMessage(button) {
@@ -131,102 +130,106 @@
                     }
                 </script>      
         {% else %}
-                    <main>
-                        <div class="recent-orders">
-                        <h1>Soporte Tecnico</h1>
-                        <div class="date"></div>
-                        <!-- Muestra mensajes existentes -->
-                        {% for message in messages %}
-                                <div class="alert alert-custom" role="alert">
-                                    <strong>{{ message }}</strong>
-                                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)">Elimíname</button>
-                                </div>
-                        {% endfor %}
-                        <table>
-                            <thead>
+        <div class="ctn">
+            <main>
+                <h1>Soporte Tecnico</h1>
+                <div class="recent-orders">
+                
+                <div class="date"></div>
+                <!-- Muestra mensajes existentes -->
+                {% for message in messages %}
+                        <div class="alert alert-custom" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)">Elimíname</button>
+                        </div>
+                {% endfor %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th><h2 class="agregar">Usuario</h2></th>
+                            <th><h2 class="agregar">Mensaje</h2></th>
+                            <th><h2 class="agregar">Respuesta</h2></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if Mensajes %}
+                            {% for mensaje in Mensajes|dictsortreversed:"tiempo_creacion" %}
+                                {% if mensaje.username == request.user.username %}
                                 <tr>
-                                    <th><h2 class="agregar">Usuario</h2></th>
-                                    <th><h2 class="agregar">Mensaje</h2></th>
-                                    <th><h2 class="agregar">Respuesta</h2></th>
+                                    <td>
+                                        <h4>{{ mensaje.username}}:</h4>
+                                    </td>
+                                    <td>
+                                        {{ mensaje.comentario }}
+                                    </td>
+                                    <td>
+                                        {% if mensaje.respuestascomentarios %}
+                                            {{ mensaje.respuestascomentarios }}
+
+                                        {% else %}
+                                            <p>No tiene respuestas </p>
+
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}                             
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {% if Mensajes %}
-                                    {% for mensaje in Mensajes|dictsortreversed:"tiempo_creacion" %}
-                                        {% if mensaje.username == request.user.username %}
-                                        <tr>
-                                            <td>
-                                                <h4>{{ mensaje.username}}:</h4>
-                                            </td>
-                                            <td>
-                                                {{ mensaje.comentario }}
-                                            </td>
-                                            <td>
-                                                {% if mensaje.respuestascomentarios %}
-                                                    {{ mensaje.respuestascomentarios }}
-
-                                                {% else %}
-                                                    <p>No tiene respuestas </p>
-
-                                                {% endif %}
-                                            </td>
-                                            {% endif %}                             
-                                        </tr>
-                                    {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            <br>
+                            <p style="color: #787878; font-size: 15px;">No hay mensajes disponibles en este momento.</p>
+                            <br>
+                        {% endif %}
+                    </tbody>
+                    
+                </table>
+                <!-- Formulario para agregar un nuevo comentario --> 
+            </div>
+            </main>
+            <div class="right" >
+                <div class="top">
+                    <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+    
+                    </button>
+                    <button id="themeToggleBtn" style="display: block;">
+                        <i id="sunIcon" class="fas fa-sun"></i>
+                        <i id="moonIcon" class="fas fa-moon"></i>
+                    </button>
+                    <div class="profile">
+                        {% if request.user.is_authenticated %}
+                            <div class="info">
+                                <p>hey, <b>{{ user.username}}</b></p>
+                                {% if request.user.is_superuser %}
+                                <small class="text-muted">Admin</small>
                                 {% else %}
-                                    <br>
-                                    <p style="color: #787878; font-size: 15px;">No hay mensajes disponibles en este momento.</p>
-                                    <br>
+                                <small class="text-muted">Empleado</small>
                                 {% endif %}
-                            </tbody>
                             
-                        </table>
-                        <!-- Formulario para agregar un nuevo comentario --> 
-                    </div>
-                    </main>
-                    <div class="right" >
-                        <div class="top">
-                            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-            
-                            </button>
-                            <button id="themeToggleBtn" style="display: block;">
-                                <i id="sunIcon" class="fas fa-sun"></i>
-                                <i id="moonIcon" class="fas fa-moon"></i>
-                            </button>
-                            <div class="profile">
-                                {% if request.user.is_authenticated %}
-                                    <div class="info">
-                                        <p>hey, <b>{{ user.username}}</b></p>
-                                        {% if request.user.is_superuser %}
-                                        <small class="text-muted">Admin</small>
-                                        {% else %}
-                                        <small class="text-muted">Empleado</small>
-                                        {% endif %}
-                                    
-                                    </div>
-                                    <div class="profile-photo">
-                                        {% if request.user.is_superuser %}
-                                            <i class="fa-solid fa-user-tie"></i>
-                                        {% else %}
-                                            <i class="fa-solid fa-user"></i>
-                                        {% endif %}
-                                    </div>
+                            </div>
+                            <div class="profile-photo">
+                                {% if request.user.is_superuser %}
+                                    <i class="fa-solid fa-user-tie"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-user"></i>
                                 {% endif %}
                             </div>
-                        </div>
-                        <div class="recente updates">
-                            <div class="updates">
-                                <h2>Agregar un comentario:</h2>
-                                <form method="post" action="/comentario/">
-                                    {% csrf_token %}
-                                    <label for="comentario">Comentario:</label>
-                                    <textarea id="comentario" name="comentario" rows="4" cols="50" style="resize: none;" required></textarea>
-                                    <br>
-                                    <input type="submit" value="Enviar comentario">
-                                </form>   
-                            </div>
-                        </div>
+                        {% endif %}
                     </div>
+                </div>
+                <div class="recente updates">
+                    <div class="updates">
+                        <h2>Agregar un comentario:</h2>
+                        <form method="post" action="/comentario/">
+                            {% csrf_token %}
+                            <label for="comentario">Comentario:</label>
+                            <textarea id="comentario" name="comentario" rows="4" cols="50" style="resize: none;" required></textarea>
+                            <br>
+                            <input type="submit" value="Enviar comentario">
+                        </form>   
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
                     <script>
                         // Función para eliminar el mensaje al hacer clic en el botón de cerrar
                         function dismissMessage(button) {

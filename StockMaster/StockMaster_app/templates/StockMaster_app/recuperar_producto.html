@@ -1,59 +1,58 @@
 {% extends "./base.html" %}
 {% block body %}
 {% load static %}
-<head> 
-    <link  rel="stylesheet" href="{% static 'usuarios/css/recuperarProducto.css' %}">
-</head>
 
-<main>
-    <div class="right">
-        <div class="top">
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
             <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-
             </button>
-            <button id="themeToggleBtn" style="display: block;">
+            <button id="themeToggleBtn" >
                 <i id="sunIcon" class="fas fa-sun"></i>
                 <i id="moonIcon" class="fas fa-moon"></i>
             </button>
-            <div class="profile">
-                {% if request.user.is_authenticated %}
-                    <div class="info">
-                        <p>hey, <b>{{ user.username}}</b></p>
-                        {% if request.user.is_superuser %}
-                            <small class="text-muted">Admin</small>
-                        {% else %}
-                            <small class="text-muted">Empleado</small>
-                        {% endif %}
-                            
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+
+<main>
+    
+    <h1>Productos dados de baja</h1>
+    <div class="recent-orders">
+        <div class="principal">
+            <div class="search-bar-v2">
+                <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+            <br><br>
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-custom" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                    <div class="profile-photo">
-                        {% if request.user.is_superuser %}
-                            <i class="fa-solid fa-user-tie"></i>
-                        {% else %}
-                            <i class="fa-solid fa-user"></i>
-                        {% endif %}
-                    </div>
-                {% endif %}
+                {% endfor %}
             </div>
         </div>
-    </div>
-    <h1>Productos dados de baja</h1>
-    <br>
-    <div class="search-bar">
-        <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
-        <i class="fas fa-search" id="search-icon"></i>
-    </div>
-    <br><br>
-    <div class="messages-container">
-        {% for message in messages %}
-            <div class="alert alert-custom" role="alert">
-                <strong>{{ message }}</strong>
-                <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="recent-orders">
-        <br>
         <table>
             <thead>
                 <tr>
@@ -89,6 +88,7 @@
         </table>
     </div>
 </main>
+
 <script>
     function validarNumeros(input) {
         // Obtener el valor actual del campo de entrada
@@ -106,7 +106,6 @@
         input.value = valor;
     }
 </script>
-
 <script>
     // Función para eliminar el mensaje al hacer clic en el botón de cerrar
     function dismissMessage(button) {

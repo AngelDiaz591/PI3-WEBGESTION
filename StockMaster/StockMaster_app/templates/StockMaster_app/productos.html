@@ -1,52 +1,47 @@
 {% extends "./base.html" %}
 {% block body %}
 {% load static %}
-
-<head>
-    <link  rel="stylesheet" href="{% static 'css/productos.css' %}">
-</head>
-<main>
-    <div class="right" >
-        <div class="top">
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
             <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-    
             </button>
-            <button id="themeToggleBtn" style="display: block;">
+            <button id="themeToggleBtn" >
                 <i id="sunIcon" class="fas fa-sun"></i>
                 <i id="moonIcon" class="fas fa-moon"></i>
             </button>
-            <div class="profile">
-                {% if request.user.is_authenticated %}
-                    <div class="info">
-                        <p>hey, <b>{{ user.username}}</b></p>
-                        {% if request.user.is_superuser %}
-                            <small class="text-muted">Admin</small>
-                        {% else %}
-                            <small class="text-muted">Empleado</small>
-                        {% endif %}
-    
-                    </div>
-                    <div class="profile-photo">
-                        {% if request.user.is_superuser %}
-                            <i class="fa-solid fa-user-tie"></i>
-                        {% else %}
-                            <i class="fa-solid fa-user"></i>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
         </div>
-    
-    </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+<main>
+    <h1>Productos</h1>
     <div class="recent-orders">
-        <h1>Productos</h1>
         <div class="principal">
             <div class="boton-modal">
                 <label for="btn-modal">
                     <i class="fa-solid fa-plus"></i>    Agregar Producto
                 </label>
             </div>
-            <div class="search-bar">
+            <div class="search-bar-v3">
                 <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>

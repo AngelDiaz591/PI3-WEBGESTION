@@ -1,12 +1,41 @@
 {% extends "./base.html" %}
 {% block body %}
 {% load static %}
-<head>
-    <link  rel="stylesheet" href="{% static 'css/inventario.css' %}">
-</head>
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+
 <main>
+    <h1>INVENTARIO</h1>
     <div class="recent-orders">
-        <h1>INVENTARIO</h1>
         <form method="get">
             <div class="principal">
                 <div class="encabezado">
@@ -24,12 +53,12 @@
                         <span class="material-symbols-outlined">tune</span>
                         <p class="filter">Filtrar</p>
                     </button>
-                    <a type="submit" href="inventario" class="btn btn-all">
+                    <a type="submit" href="{% url 'inventario' %}" class="btn btn-all">
                         <span class="material-symbols-outlined">grid_on</span>
                         <p class="filter">Mostrar todo</p>
                     </a>
                 </div>
-                <div class="search-bar">
+                <div class="search-bar-v2">
                     <label for="search-input"></label><input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
@@ -71,37 +100,7 @@
     </div>
 </main>
 
-<div class="right2" >
-    <div class="top">
-        <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
 
-        </button>
-        <button id="themeToggleBtn" style="display: block;">
-            <i id="sunIcon" class="fas fa-sun"></i>
-            <i id="moonIcon" class="fas fa-moon"></i>
-        </button>
-        <div class="profile">
-            {% if request.user.is_authenticated %}
-                <div class="info">
-                    <p>hey, <b>{{ user.username}}</b></p>
-                    {% if request.user.is_superuser %}
-                        <small class="text-muted">Admin</small>
-                    {% else %}
-                        <small class="text-muted">Empleado</small>
-                    {% endif %}
-
-                </div>
-                <div class="profile-photo">
-                    {% if request.user.is_superuser %}
-                        <i class="fa-solid fa-user-tie"></i>
-                    {% else %}
-                        <i class="fa-solid fa-user"></i>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static 'js/search.js' %}"></script>
 <script>

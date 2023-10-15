@@ -1,129 +1,84 @@
 {% extends "./base.html" %}
 {% block body %}
 {% load static %}
-<head>
-    <link  rel="stylesheet" href="{% static 'css/actividad.css' %}">
-</head>
-        <main>
-            
-            <div class="recent-orders">
-                <h1>Configuraciones</h1>
-                <div class="principal">
-                    <div>
-                        <h2 class="agregar">Categorias</h2>
-                    </div>
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
-                        <i class="fas fa-search" id="search-icon"></i>
-                    </div>
-                </div>
-                <br>
-                <div class="messages-container">
-                    {% for message in messages %}
-                        <div class="alert alert-custom" role="alert">
-                            <strong>{{ message }}</strong>
-                            <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div > <!-- Ajusta max-height según tus necesidades -->
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Categorias</th>
-                                <th colspan="2">Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for c in Categoria %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>{{ c.nombre }}</td>
-                                    <td class="edita"><a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="color: white;">Editar</a></td>
-                                    <td class="elimina"><a href="{% url 'eliminarcategoria' categoria_id=c.categoria_id %}" style="color: white;" class="btn btn-danger btnEliminacion">Eliminar</a></td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </main>
-        <div class="right" >
-            <div class="top">
-                <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
 
-                </button>
-                <button id="themeToggleBtn" style="display: block;">
-                    <i id="sunIcon" class="fas fa-sun"></i>
-                    <i id="moonIcon" class="fas fa-moon"></i>
-                </button>
-                <div class="profile">
-                    {% if request.user.is_authenticated %}
-                        <div class="info">
-                            <p>hey, <b>{{ user.username}}</b></p>
-                            {% if request.user.is_superuser %}
-                                <small class="text-muted">Admin</small>
-                            {% else %}
-                                <small class="text-muted">Empleado</small>
-                            {% endif %}
-                                
-                        </div>
-                        <div class="profile-photo">
-                            {% if request.user.is_superuser %}
-                                <i class="fa-solid fa-user-tie"></i>
-                            {% else %}
-                                <i class="fa-solid fa-user"></i>
-                            {% endif %}
-                        </div>
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
                     {% endif %}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-md-4 col-lg-2 col-xl-4">
-                {% if messages %}
-                {% endif %} 
-                    <h2>Gestion de Categorias</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="/registrar_categoria/" method="POST" enctype="multipart/form-data" id="mi_formulario">
-                                {% csrf_token %}
-                                <div class="form-group py-2">
-                                    <input type="text" id="txtNombreCat" name="txtNombreCat" class="form-control" placeholder="Nombre" pattern="[A-Za-z0-9]{6,1}" minlength="6" maxlength="10" required>
-                                    <span class="error-message" style="color: red;"></span>
-                                </div>
-                                <div class="form-group py-2">
-                                    <button type="submit" class="btn btn-success btn-lg btn-block text-white">Guardar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+    <main>
+        <h1>Configuraciones</h1>
+        <div class="recent-orders">
+            
+            <div class="principal">
+                <div>
+                    <h2 class="agregar">Categorias</h2>
                 </div>
-                <script>
-                    const txtNombreCat = document.getElementById("txtNombreCat");
-
-                // Agrega un evento 'input' al campo de texto
-                txtNombreCat.addEventListener("input", function () {
-                    // Convierte el valor del campo de texto en mayúsculas
-                    this.value = this.value.toUpperCase();
-                });
-
-                var campoId = 'txtNombreCat';
-                var campo = document.getElementById(campoId);
-
-                campo.addEventListener('input', function () {
-                    var input = this;
-                    var errorMessage = input.parentNode.querySelector('.error-message');
-
-                    if (input.validity.patternMismatch) {
-                        errorMessage.textContent = 'El nombre debe contener almenos 6 caracteres alfanuméricos';
-                    } else {
-                        errorMessage.textContent = '';
-                    }
-                });
-                </script>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                    <i class="fas fa-search" id="search-icon"></i>
+                </div>
+            </div>
+            <br>
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-custom" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                {% endfor %}
+            </div>
+            <div > <!-- Ajusta max-height según tus necesidades -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Categorias</th>
+                            <th colspan="2">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in Categoria %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ c.nombre }}</td>
+                                <td class="edita"><a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="color: white;">Editar</a></td>
+                                <td class="elimina"><a href="{% url 'eliminarcategoria' categoria_id=c.categoria_id %}" style="color: white;" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
+    </main>
+
     <script>
         // Función para eliminar el mensaje al hacer clic en el botón de cerrar
         function dismissMessage(button) {

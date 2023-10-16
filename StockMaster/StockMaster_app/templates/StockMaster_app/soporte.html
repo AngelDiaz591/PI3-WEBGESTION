@@ -100,7 +100,9 @@
                                 <br>
                             </td>  
                             <td class="elimina">
-                                <a href="{% url 'eliminar_comentario' mensaje.idcomentario %}" class="btnEliminacion">Eliminar</a>
+                                <a href="{% url 'eliminar_comentario' mensaje.idcomentario %}" class="btn btn-danger btnEliminacion">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a>
                             </td>
                                                             
                         </tr>

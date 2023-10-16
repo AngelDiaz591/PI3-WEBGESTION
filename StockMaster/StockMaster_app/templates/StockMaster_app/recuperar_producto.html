@@ -44,15 +44,16 @@
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
             <br><br>
-            <div class="messages-container">
-                {% for message in messages %}
-                    <div class="alert alert-custom" role="alert">
-                        <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                {% endfor %}
-            </div>
         </div>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
         <table>
             <thead>
                 <tr>

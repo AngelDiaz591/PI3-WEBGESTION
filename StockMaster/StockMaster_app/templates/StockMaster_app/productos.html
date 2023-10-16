@@ -226,10 +226,6 @@
         <label for="btn-modal" class="cerrar-modal"></label>
     </div>
     <!--Fin de Ventana Modal-->
-
-
-
-
     <style>
 .modal {
     display: none;
@@ -356,19 +352,19 @@
                                     <input type="hidden" name="idproducts" value="{{ productos.idproducts }}">
                                 </div>
                                 <div class="formulario">
-                                    <label class="sub" for="txtCodigo">Código:</label>
+                                    <!-- <label class="sub" for="txtCodigo">Código:</label> -->
                                     <input class="ingresar" type="text" id="txtCodigo" name="txtCodigo" value="{{ productos.codigo }}"
                                          placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
                                     <span class="error-message"></span> 
                                 </div>
                                 <div class="formulario">
-                                    <label class="sub" for="txtNombre">Nombre:</label>
+                                    <!-- <label class="sub" for="txtNombre">Nombre:</label> -->
                                     <input class="ingresar" type="text" id="txtNombre" name="txtNombre" value="{{ productos.nombre }}"
                                         placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
                                     <span class="error-message"></span>
                                 </div>
                                 <div class="formulario">
-                                    <label class="sub" for="NumPrecio">Precio:</label>
+                                    <!-- <label class="sub" for="NumPrecio">Precio:</label> -->
                                     <input class="ingresar" type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio"
                                         value="{{ productos.precio }}" pattern="[0-9]{1,7}" maxlength="7" required>
                                     <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
@@ -376,13 +372,13 @@
                                 </div>
                             
                                 <div class="formulario">
-                                    <label class="sub" for="NomMarca">Marca:</label>
+                                    <!-- <label class="sub" for="NomMarca">Marca:</label> -->
                                     <input class="ingresar" type="text" id="NomMarca" name="NomMarca"   pattern="[A-Za-z0-9]{6}"
                                         value="{{ productos.marca }}" placeholder="Marca" minlength="6" maxlength="20" required>
                                     <span class="error-message"></span>
                                 </div>
                                 <div class="formulario">
-                                    <label class="sub" for="CantPro">Cantidad de Producto:</label>
+                                    <!-- <label class="sub" for="CantPro">Cantidad de Producto:</label> -->
                                     <input class="ingresar" type="text" id="CantPro" name="CantPro" placeholder="Cantidad de Producto"
                                         pattern="[0-9]{1,7}" value="{{ productos.cantPro }}" maxlength="7" required>
                                     <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
@@ -390,7 +386,7 @@
                                 </div>
                                 <div class="formulario"> <!-- class="update" -->
                                     <div class="message"></div>
-                                    <label class="sub" for="categoria">Categoría:</label>
+                                    <!-- <label class="sub" for="categoria">Categoría:</label> -->
                                     <select name="categoria" id="categoria" class="updatess ingresar" required>
                                         <option value="" disabled>Selecciona una categoría</option>
                                         {% for c in Categoria %}
@@ -411,7 +407,7 @@
                                 {% endif %}
                             
                                 <div class="formulario">
-                                    <label class="sub" for="imagen">Nueva imagen:</label>
+                                    <!-- <label class="sub" for="imagen">Nueva imagen:</label> -->
                                     <input type="file" name="imagen" id="id_imagen" accept="image/*">
                                     <input class="ingresar" type="hidden" name="imagen_actual" value="{{ productos.imagen.url }}">
                                 </div>

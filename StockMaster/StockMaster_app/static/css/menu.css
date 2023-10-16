@@ -323,6 +323,7 @@ main table tbody td{
 }
 .right .recent-updates{
     margin-top: 1rem;
+    text-align: center;
 }
 .right .recent-updates h2{
     margin-bottom: 1rem;
@@ -331,8 +332,9 @@ main table tbody td{
     background-color: var(--color-white);
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
-    box-shadow: var(--box-shadow);
     transition: all 300ms ease;
+    /* box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px; */
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
 }
 .right .recent-updates .updates:hover{
     box-shadow: none;
@@ -382,4 +384,26 @@ main table tbody td{
     color: #fff; /* Color blanco para la luna */
     transform: scale(0);
     transition: transform 0.3s ease;
+}
+
+.comentar{
+    background-color: #111e88;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    
+}
+
+textarea{
+/*     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+ */ 
+ box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+    padding: 6px; 
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.comment{
+    font-size: 16px;
+    text-align: left;
 }

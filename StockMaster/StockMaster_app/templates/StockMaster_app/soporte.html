@@ -207,15 +207,15 @@
                 {% endif %}
             </div>
         </div>
-        <div class="recente updates">
-            <h2>Agregar un comentario:</h2>
+        <div class="recent-updates">
+            <h2>Agregar comentario:</h2>
             <div class="updates">
                 <form method="post" action="/comentario/">
                     {% csrf_token %}
-                    <label for="comentario">Comentario:</label>
-                    <textarea id="comentario" name="comentario" rows="4" cols="50" style="resize: none;" required></textarea>
+                    <label class="comment" for="comentario">Comentario:</label>
+                    <textarea id="comentario" name="comentario" rows="4" cols="35" style="resize: none;" required></textarea>
                     <br>
-                    <input type="submit" value="Enviar comentario">
+                    <input class="comentar" type="submit" value="Enviar comentario">
                 </form>   
             </div>
         </div>

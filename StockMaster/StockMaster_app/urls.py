@@ -45,4 +45,10 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path('logout/', views.exit, name='exit'),
     path('buscar_productos/', views.buscar_productos, name='buscar_productos'),
+    #paths de proveedor
+    path('prov/', views.prov, name='prov'),
+    path('prov/', views.prov, name='prov'),
+    path('prov/edicionproveedor/<idProveedor>', views.edicionproveedor),
+    path('editarproveedor/', views.editarproveedor),
+    path('prov/eliminaProveedor/<idProveedor>', views.eliminaProveedor),
     ]

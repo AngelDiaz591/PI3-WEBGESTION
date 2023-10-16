@@ -1,0 +1,53 @@
+/*Botones*/
+.elimina a{
+    width: 50px;
+    height: auto;
+    color: #fff;
+}
+.elimina a{
+    padding: 10px 15px;
+    background-color: #ff0000;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    
+}
+.elimina a:hover{
+    background-color: #930404;
+}
+
+.edita {
+    width: 50px;
+    height: auto;
+}
+.edita a{
+    padding: 10px 15px;
+    background-color: #5488a3;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    
+}
+.edita a:hover{
+    background-color: #185E83;
+}
+
+main  .recent-orders .btn-registrar{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 1rem auto;
+}
+main  .recent-orders .btn-registrar:hover{
+    background-color: var(--color-primary-variant);
+
+}

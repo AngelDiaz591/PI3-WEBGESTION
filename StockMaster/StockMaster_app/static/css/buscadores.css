@@ -24,7 +24,7 @@
 #search-input {
     padding: 12px 30px 12px 10px;
     border-radius: 20px;
-    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
+    box-shadow: var(--box-shadow);
     width: 100%;
     background-color: var(--color-white);
     color: var(--color-dark);
@@ -35,7 +35,6 @@
     right: 2rem;
     color: var(--color-dark-variant); /* Color del ícono */
     cursor: pointer;
-    color: var(--color-dark-variant);
 }
 
 .highlighted {

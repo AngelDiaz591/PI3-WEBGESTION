@@ -58,12 +58,14 @@
 }
 .content-modal .btn-cerrar label{
     padding: 7px 10px;
-    background-color: #960808;
+    background-color: #e90404;
     color: #fff;
     border-radius: 4px;
     cursor: pointer;
     transition: all 300ms ease;
-    
+}
+.content-modal .btn-cerrar label:hover{
+    background-color: #960808;
 }
 .content-modal .btn-cerrar button{
     padding: 7px 10px;
@@ -72,6 +74,9 @@
     color: #fff;
     border: 1px solid #5488a3;
     cursor: pointer;
+}
+.content-modal .btn-cerrar button:hover{
+    background-color: #204a60;
 }
 .cerrar-modal{
     width:100%;

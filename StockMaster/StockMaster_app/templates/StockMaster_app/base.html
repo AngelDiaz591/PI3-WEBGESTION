@@ -11,6 +11,7 @@
     <link  rel="stylesheet" href="{% static 'css/buscadores.css' %}">
     <link  rel="stylesheet" href="{% static 'css/targetas.css' %}">
     <link  rel="stylesheet" href="{% static 'css/modal.css' %}">
+    <link  rel="stylesheet" href="{% static 'css/botones.css' %}">
 
     <!--Fuentes-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -86,14 +87,17 @@
             </div>
         </aside>
         <!--Fin Menú-->
+
         <!--Contenido-->
         {% block body %}
         {% endblock %}
         <!--Fin del contenido-->
+
     </div>
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>
     <script src="{% static 'js/inventario.js' %}"></script>
+    <!--Fin Scripts-->
 </body>
 </html>

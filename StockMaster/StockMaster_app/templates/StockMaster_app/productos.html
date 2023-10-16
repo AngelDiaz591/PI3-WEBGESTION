@@ -59,7 +59,6 @@
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Precio</th>
@@ -74,20 +73,23 @@
                 {% for c in Productos %}
                     {% if c.status %}
                         <tr>
-                            <td>{{ forloop.counter }}</td>
                             <td>{{ c.codigo }}</td>
                             <td>{{ c.nombre }}</td>
                             <td>{{ c.precio }}</td>
                             <td>{{ c.marca }}</td>
                             <td>{{ c.cantPro }}</td>
-                            <td class="imagen" style="position: relative;">
-                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                            <td  style="position: relative;">
+                                <div  style="width: 150px; height: 200px; overflow: hidden;">
                                     <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
                                 </div>
                             </td>
                             <td>{{ c.id_categorias.nombre }}</td>
-                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">Editar</a></td>
-                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">
+                                <span class="material-symbols-outlined">edit</span>
+                            </a></td>
+                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -203,7 +205,6 @@
                     });
                 });
             </script>
-        </div>
         <label for="btn-modal" class="cerrar-modal"></label>
     </div>
     <!--Fin de Ventana Modal-->

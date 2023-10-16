@@ -143,6 +143,18 @@
                                     </select>
                                     <span class="error-message error"></span>
                                 </div>
+                                <div class="update">
+                                    <div class="message"></div>
+                                    <label for="proveedor">Proveedor:</label>
+                                    <select name="proveedor" id="proveedor" class="updatess" required>
+                                        <option value="" disabled>Selecciona un proveedor</option>
+                                        {% for c in Proveedor %}
+                                        <option value="{{ c.idProveedor }}"
+                                            {% if c.idProveedor == productos.id_Proveedors %}selected{% endif %}>{{ c.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="error-message error"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group py-2">

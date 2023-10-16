@@ -1,10 +1,21 @@
 (function () {
 
+    const btnEliminacionProv = document.querySelectorAll(".btnElimiacioProv")
+
+    btnEliminacionProv.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea eliminar al proveedor?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
     const btnEliminacion = document.querySelectorAll(".btnEliminacion");
 
     btnEliminacion.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const confirmacion = confirm('¿Desea eliminar el producto para siempre? (No se recuperara los datos)');
+            const confirmacion = confirm('¿Desea eliminar el producto?');
             if (!confirmacion) {
                 e.preventDefault();
             }

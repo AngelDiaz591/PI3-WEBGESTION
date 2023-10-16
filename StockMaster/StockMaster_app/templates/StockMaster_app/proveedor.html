@@ -82,13 +82,13 @@
                             {% if c.noInt %}
                                 Interior {{ c.noInt }},
                             {% endif %}
-                            {{ c.colonia }}, {{ c.cp }}, {{ c.municipio }}{{ c.estado }}, {{ c.pais }}
+                            {{ c.colonia }}, {{ c.cp }}, {{ c.municipio }}, {{ c.estado }}, {{ c.pais }}
                         </td>
                         <td class="imagen"><img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="100" height="100"></td>    
                         <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
                             <span class="material-symbols-outlined">edit</span>
                         </a></td>
-                        <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">
+                        <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
                             <span class="material-symbols-outlined">delete</span>
                         </a></td>
                     </tr>

@@ -114,7 +114,8 @@ def productos(request):
     cantidad_mensajes = mensajes.count()
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes, 'Productos':ProductosListados,'CategoriaListados':CategoriaListados})
+    ProveedoresListados = Proveedores.objects.all()
+    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes, 'Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
 
 def editarcant(request, idproducts):
     if request.method == 'POST':
@@ -149,10 +150,11 @@ def pro(request):
         mensajes = Mensajes.objects.all()
         cantidad_mensajes =mensajes.count()
         ProductosListados = Productos.objects.all()
-        CategoriaListados = Categoria.objects.all() 
+        CategoriaListados = Categoria.objects.all()
+        ProveedoresListados = Proveedores.objects.all() 
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados,"Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados,"Categoria": CategoriaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
         return redirect('/actividades')
     
@@ -191,8 +193,9 @@ def registrarProducto(request):
 def edicioninventario(request, idproducts):
     productos = Productos.objects.get(idproducts= idproducts)
     CategoriaListados = Categoria.objects.all() 
+    ProveedorListados = Proveedores.objects.all()
     imagen_url = get_imagen_url(productos.imagen)
-    return render(request, "StockMaster_app/edicioninventario.html", {"productos": productos, "imagen_url": imagen_url, "Categoria": CategoriaListados})
+    return render(request, "StockMaster_app/edicioninventario.html", {"productos": productos, "imagen_url": imagen_url, "Categoria": CategoriaListados, 'Proveedor' : ProveedorListados})
 
 @login_required(login_url='signin')
 def editarProducto(request):
@@ -204,6 +207,7 @@ def editarProducto(request):
     cantPro = request.POST.get('CantPro')
     nueva_imagen = request.FILES.get('imagen') 
     categoria_id = request.POST.get('categoria') 
+    idProveedor = request.POST.get('proveedor')
 
     productos = Productos.objects.get(idproducts=idproducts)
 
@@ -216,6 +220,7 @@ def editarProducto(request):
     productos.movimiento = 'Edicion de Producto'
     productos.fecha_edit = timezone.now()
     productos.id_categorias_id = categoria_id
+    productos.id_Proveedores_id = idProveedor
     if nueva_imagen:
         productos.imagen = nueva_imagen.read()
     productos.save()
@@ -226,7 +231,8 @@ def editarProducto(request):
 @login_required(login_url='signin')
 def eliminaInventario(request, idproducts):
     productos = Productos.objects.get(idproducts=idproducts)
-    productos.delete()
+    productos.status = 0
+    productos.save()
     messages.success(request, '¡Producto Eliminado!')
     return redirect('/recuperar_producto')
 
@@ -259,8 +265,33 @@ def cambio_status(request, idproducts):
         producto.movimiento = 'Eliminacion de Producto'
         producto.save()
     return redirect('/productos')
+def cambio_status(request, idProveedor):
+    proveedor = Proveedores.objects.get(idProveedor=idProveedor)
+    messages.success(request, '¡Proveedor Eliminado!')
+    if proveedor.estatus != 0:
+        proveedor.estatus = 0
+
+        proveedor.fecha_edit = timezone.now()
+        proveedor.username = request.user.username
+        proveedor.movimiento = 'Eliminacion de Proveedor'
+        proveedor.save()
+
+    return redirect('/prov')
+
 def cambio_statusre(request, idproducts):
     producto = Productos.objects.get(idproducts=idproducts)
+    if producto.status != 1:
+        producto.status = 1
+
+        producto.fecha_edit = timezone.now()
+        producto.username = request.user.username
+        producto.movimiento = 'Recuperacion de Producto'
+        producto.save()
+    messages.success(request, '¡Producto recuperado¡')
+    return redirect('/recuperar_producto')
+
+def cambio_statusre(request, idProveedor):
+    proveedor = Proveedores.objects.get(idProveedor=idProveedor)
     if producto.status != 1:
         producto.status = 1
 

@@ -32,284 +32,251 @@
         </div>
     </div>  
 </div>
-                    <main>
-                        <div class="right">
-                            <div class="top">
-                                <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-                
-                                </button>
-                                <div class="theme-toggler">
-                                    <span class="material-symbols-outlined active">light_mode</span>
-                                    <span class="material-symbols-outlined">dark_mode</span>
-                                </div>
-                                <div class="profile">
-                                    {% if request.user.is_authenticated %}
-                                        <div class="info">
-                                            <p>hey, <b>{{ user.username}}</b></p>
-                                            {% if request.user.is_superuser %}
-                                                <small class="text-muted">Admin</small>
-                                            {% else %}
-                                                <small class="text-muted">Empleado</small>
-                                            {% endif %}
-                                                
+<main>
+    <h1>Proveedores</h1>
+    <div class="recent-orders">
+        <div class="principal">
+            <!--Boton-->
+            <div class="boton-modal">
+                <label for="btn-modal">
+                    <i class="fa-solid fa-plus"></i>    Registrar Proveedor
+                </label>
+            </div>
+            <!--Fin de Boton-->
+            <div class="search-bar-v3">
+                <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+        </div>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        <h2 class="agregar">Listado de Proveedores</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Contacto</th>
+                    <th>Telefono</th>
+                    <th>Correo</th>
+                    <th>Direccion</th>
+                    <th>Imagen</th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in Proveedor %}
+                {% if c.estatus == 1 %}
+                    <tr>
+                        <td>{{ c.nombre }}</td>
+                        <td>{{ c.contacto }}</td>
+                        <td>{{ c.telefono}}</td>
+                        <td>{{ c.email}}</td>
+                        <td>
+                            {{ c.calle }} {{ c.noExt }}
+                            {% if c.noInt %}
+                                Interior {{ c.noInt }},
+                            {% endif %}
+                            {{ c.colonia }}, {{ c.cp }}, {{ c.municipio }}{{ c.estado }}, {{ c.pais }}
+                        </td>
+                        <td class="imagen"><img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="100" height="100"></td>    
+                        <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
+                            <span class="material-symbols-outlined">edit</span>
+                        </a></td>
+                        <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">
+                            <span class="material-symbols-outlined">delete</span>
+                        </a></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        <!--Ventana Modal-->
+        <input type="checkbox" id="btn-modal">
+        <div class="container-modal">
+            <div class="content-modal">
+                <label for="btn-modal" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
+                <div class="recent-updates">
+                    <h2>Registrar Nuevo Proveedor</h2>
+                    <div class="updates">
+                        <form action="/registrarProv/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
+                            <!--Inicio de la tabla de columnas-->
+                            <div class="form-columns">    
+                            <!--Datos-->
+                                <!--Primer columna-->
+                                <div class="form-column">
+                                    <label for="">Proveedor:</label>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="NombreProv" name="NombreProv" class="updatess" placeholder="Nombre" maxlength="50" required>
+                                            <br><span class="error-message" style="color: red;"></span>
                                         </div>
+                                    </div>
+                                    <div class="update">
                                         <div class="profile-photo">
-                                            {% if request.user.is_superuser %}
-                                                <i class="fa-solid fa-user-tie"></i>
-                                            {% else %}
-                                                <i class="fa-solid fa-user"></i>
-                                            {% endif %}
                                         </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        <h1>Proveedores</h1>
-                        <div class="date">
-                        </div>
-                        <!--Boton-->
-                        <div class="boton-modal">
-                            <label for="btn-modal">
-                                <i class="fa-solid fa-plus"></i>    Registrar Proveedor
-                            </label>
-                        </div>
-          
-                        <!--Fin de Boton-->
-
-
-                        <div class="messages-container">
-                            {% for message in messages %}
-                                <div class="alert alert-custom" role="alert">
-                                    <strong>{{ message }}</strong>
-                                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="recent-orders">
-                            <h2 class="agregar">Listado de Proveedores</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Contacto</th>
-                                        <th>Telefono</th>
-                                        <th>Correo</th>
-                                        <th>Direccion</th>
-                                        <th>Imagen</th>
-                                        <th colspan="2">Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for c in Proveedor %}
-                                    {% if c.estatus == 1 %}
-                                        <tr>
-                                            <td>{{ c.nombre }}</td>
-                                            <td>{{ c.contacto }}</td>
-                                            <td>{{ c.telefono}}</td>
-                                            <td>{{ c.email}}</td>
-                                            <td>
-                                                {{ c.calle }} {{ c.noExt }}
-                                                {% if c.noInt %}
-                                                    Interior {{ c.noInt }},
-                                                {% endif %}
-                                                {{ c.colonia }}, {{ c.cp }}, {{ c.municipio }}{{ c.estado }}, {{ c.pais }}
-                                            </td>
-                                            <td class="imagen"><img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="100" height="100"></td>    
-                                            <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">Editar</a></td>
-                                            <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
-                                        </tr>
-                                        {% endif %}
-                                    {% endfor %}
-                                </tbody>
-            
-                            </table>
-                        </div>
-
-                        <!--Ventana Modal-->
-                        <input type="checkbox" id="btn-modal">
-                        <div class="container-modal">
-                            <div class="content-modal">
-                                <label for="btn-modal" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
-                                <div class="recent-updates">
-                                    <h2>Registrar Nuevo Proveedor</h2>
-                                    <div class="updates">
-                                        <form action="/registrarProv/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
-                                            <!--Inicio de la tabla de columnas-->
-                                            <div class="form-columns">    
-                                            <!--Datos-->
-                                                <!--Primer columna-->
-                                                <div class="form-column">
-                                                    <label for="">Proveedor:</label>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="NombreProv" name="NombreProv" class="updatess" placeholder="Nombre" maxlength="50" required>
-                                                            <br><span class="error-message" style="color: red;"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="profile-photo">
-                                                        </div>
-                                                        <div class="message">
-                                                            <input type="text" id="ContactoProv" name="ContactoProv" placeholder="Contacto" class="updatess" maxlength="50" required>
-                                                            <br>
-                                                            <span class="error-message error" style="color: red;"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="profile-photo">
-                                                        </div>
-                                                        <div class="message">
-                                                            <input type="text" id="TelefonoProv" name="TelefonoProv" class="updatess" placeholder="Telefono" maxlength="10" required  oninput="validarNumeros(this)">
-                                                           <br> <span class="error-message" style="color: red;"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="profile-photo">
-                                                        </div>
-                                                        <div class="message">
-                                                            <input type="email" id="EmailProv" name="EmailProv" placeholder="Email" class="updatess" maxlength="100" required>
-                                                            <br>
-                                                            <span class="error-message" style="color: red;"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--Termino de la 1 columna-->
-                                                <!--Inicio de la 2 columna-->
-                                                <div class="form-column">
-                                                    <label for="">Direccion:</label>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="Calle" name="Calle" class="updatess" placeholder="Calle" maxlength="50" required>
-                                                            <span class="error-message" style="color: red;"></span>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="profile-photo">
-                                                        </div>
-                                                        <div class="message">
-                                                            <input type="text" id="NoExt" name="NoExt" placeholder="Número Exterior" class="updatess" maxlength="10" oninput="validarNumeros(this)" value="">
-
-                                                            <span class="error-message" style="color: red;"></span>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="NoInt" name="NoInt" class="updatess" placeholder="Número Interior" maxlength="10" oninput="validarNumeros(this)" value="">
-                                                           <br> <span class="error-message" style="color: red;"></span></br>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="Colonia" name="Colonia" class="updatess" placeholder="Colonia" maxlength="50" required>
-                                                           <br> <span class="error-message" style="color: red;"></span></br>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="CP" name="CP" class="updatess" placeholder="Código Postal" maxlength="5" required  oninput="validarCP(this)">
-                                                           <br> <span class="error-message" style="color: red;"></span></br>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="Municipio" name="Municipio" class="updatess" placeholder="Municipio" maxlength="50" required>
-                                                           <br> <span class="error-message" style="color: red;"></span></br>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="Estado" name="Estado" class="updatess" placeholder="Estado" maxlength="50" required>
-                                                           <br> <span class="error-message" style="color: red;"></span></br>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input type="text" id="Pais" name="Pais" class="updatess" placeholder="Pais" maxlength="50" required>
-                                                           <br> <span class="error-message" style="color: red;"></span></br>
-                                                        </div>
-                                                    </div>
-                                                    <div class="update">
-                                                        <div class="message">
-                                                            <input hidden type="number" id="Estatus" name="Estatus" class="updatess" value=1>
-                                                           <br> <span class="error-message" style="color: red;"></span></br>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <!--Termino de la 2 columna-->
-                                            </div>
-                                            <!--Termino de la tabla de columnas-->
+                                        <div class="message">
+                                            <input type="text" id="ContactoProv" name="ContactoProv" placeholder="Contacto" class="updatess" maxlength="50" required>
                                             <br>
-                                            <label for="">Logo Proveedor:</label>
-                                                <div class="update">
-                                                    <div class="message" style="align-items: center;">
-                                                        <input type="file" name="imagenProv" id="id_imagen" accept="image/*" required>
-                                                    </div>
-                                                </div>
-                                                <div class="btn-cerrar">
-                                                    <button type="submit" class="updatess">Guardar</button>
-                                                    <label for="btn-modal">Cancelar</label>
-                                                </div>
-                                            <!--Fin datos-->
-                                            
-                                        </form>
+                                            <span class="error-message error" style="color: red;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="profile-photo">
+                                        </div>
+                                        <div class="message">
+                                            <input type="text" id="TelefonoProv" name="TelefonoProv" class="updatess" placeholder="Telefono" maxlength="10" required  oninput="validarNumeros(this)">
+                                            <br> <span class="error-message" style="color: red;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="profile-photo">
+                                        </div>
+                                        <div class="message">
+                                            <input type="email" id="EmailProv" name="EmailProv" placeholder="Email" class="updatess" maxlength="100" required>
+                                            <br>
+                                            <span class="error-message" style="color: red;"></span>
+                                        </div>
                                     </div>
                                 </div>
-                                <script>
-                                    // Obtén todos los elementos con la clase "close-btn"
-                                    var closeBtns = document.querySelectorAll('.close-btnn');
-        
-                                    // Agrega un evento de clic a cada elemento
-                                    closeBtns.forEach(function (closeBtn) {
-                                        closeBtn.addEventListener('click', function () {
-                                            // Oculta el elemento al hacer clic
-                                            closeBtn.style.display = 'none';
-                                        });
-                                    });
-                                </script>
-                                
-                            </div>
-                            <label for="btn-modal" class="cerrar-modal"></label>
-                        </div>
-                        <!--Fin de Ventana Modal-->
-                    </main>
-                </div>
-                <script src="{% static 'static/js/inventario.js' %}"></script>
-                <script src="{% static 'static/js/edit.js' %}"></script>
-                <script src="{% static 'usuarios/js/dashboard.js' %}"></script>
-                <script src="{% static 'productos/js/ordenes.js' %}"></script>
-                
+                                <!--Termino de la 1 columna-->
+                                <!--Inicio de la 2 columna-->
+                                <div class="form-column">
+                                    <label for="">Direccion:</label>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="Calle" name="Calle" class="updatess" placeholder="Calle" maxlength="50" required>
+                                            <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="update">
+                                        <div class="profile-photo">
+                                        </div>
+                                        <div class="message">
+                                            <input type="text" id="NoExt" name="NoExt" placeholder="Número Exterior" class="updatess" maxlength="10" oninput="validarNumeros(this)" value="">
 
-    <script>
-        function validarNumeros(input) {
-            // Obtener el valor actual del campo de entrada
-            let valor = input.value;
-    
-            // Reemplazar cualquier caracter que no sea un número con una cadena vacía
-            valor = valor.replace(/[^0-9]/g, '');
-    
-            // Limitar la longitud del valor a 7 caracteres
-            if (valor.length > 10) {
-                valor = valor.slice(0, 10);
-            }
-            // Actualizar el valor del campo de entrada con la versión filtrada
-            input.value = valor;
+                                            <span class="error-message" style="color: red;"></span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="NoInt" name="NoInt" class="updatess" placeholder="Número Interior" maxlength="10" oninput="validarNumeros(this)" value="">
+                                            <br> <span class="error-message" style="color: red;"></span></br>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="Colonia" name="Colonia" class="updatess" placeholder="Colonia" maxlength="50" required>
+                                            <br> <span class="error-message" style="color: red;"></span></br>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="CP" name="CP" class="updatess" placeholder="Código Postal" maxlength="5" required  oninput="validarCP(this)">
+                                            <br> <span class="error-message" style="color: red;"></span></br>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="Municipio" name="Municipio" class="updatess" placeholder="Municipio" maxlength="50" required>
+                                            <br> <span class="error-message" style="color: red;"></span></br>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="Estado" name="Estado" class="updatess" placeholder="Estado" maxlength="50" required>
+                                            <br> <span class="error-message" style="color: red;"></span></br>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input type="text" id="Pais" name="Pais" class="updatess" placeholder="Pais" maxlength="50" required>
+                                            <br> <span class="error-message" style="color: red;"></span></br>
+                                        </div>
+                                    </div>
+                                    <div class="update">
+                                        <div class="message">
+                                            <input hidden type="number" id="Estatus" name="Estatus" class="updatess" value=1>
+                                            <br> <span class="error-message" style="color: red;"></span></br>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!--Termino de la 2 columna-->
+                            </div>
+                            <!--Termino de la tabla de columnas-->
+                            <br>
+                            <label for="">Logo Proveedor:</label>
+                                <div class="update">
+                                    <div class="message" style="align-items: center;">
+                                        <input type="file" name="imagenProv" id="id_imagen" accept="image/*" required>
+                                    </div>
+                                </div>
+                                <div class="btn-cerrar">
+                                    <button type="submit" class="updatess">Guardar</button>
+                                    <label for="btn-modal">Cancelar</label>
+                                </div>
+                            <!--Fin datos-->
+                            
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    // Obtén todos los elementos con la clase "close-btn"
+                    var closeBtns = document.querySelectorAll('.close-btnn');
+
+                    // Agrega un evento de clic a cada elemento
+                    closeBtns.forEach(function (closeBtn) {
+                        closeBtn.addEventListener('click', function () {
+                            // Oculta el elemento al hacer clic
+                            closeBtn.style.display = 'none';
+                        });
+                    });
+                </script>
+                
+            </div>
+            <label for="btn-modal" class="cerrar-modal"></label>
+        </div>
+        <!--Fin de Ventana Modal-->
+    </div>
+</main>
+<script>
+    function validarNumeros(input) {
+        // Obtener el valor actual del campo de entrada
+        let valor = input.value;
+
+        // Reemplazar cualquier caracter que no sea un número con una cadena vacía
+        valor = valor.replace(/[^0-9]/g, '');
+
+        // Limitar la longitud del valor a 7 caracteres
+        if (valor.length > 10) {
+            valor = valor.slice(0, 10);
         }
-        function validarCP(input) {
-            // Obtener el valor actual del campo de entrada
-            let valor = input.value;
-    
-            // Reemplazar cualquier caracter que no sea un número con una cadena vacía
-            valor = valor.replace(/[^0-9]/g, '');
-    
-            // Limitar la longitud del valor a 7 caracteres
-            if (valor.length > 10) {
-                valor = valor.slice(0, 5);
-            }
-            // Actualizar el valor del campo de entrada con la versión filtrada
-            input.value = valor;
+        // Actualizar el valor del campo de entrada con la versión filtrada
+        input.value = valor;
+    }
+    function validarCP(input) {
+        // Obtener el valor actual del campo de entrada
+        let valor = input.value;
+
+        // Reemplazar cualquier caracter que no sea un número con una cadena vacía
+        valor = valor.replace(/[^0-9]/g, '');
+
+        // Limitar la longitud del valor a 7 caracteres
+        if (valor.length > 10) {
+            valor = valor.slice(0, 5);
         }
-    </script>
+        // Actualizar el valor del campo de entrada con la versión filtrada
+        input.value = valor;
+    }
+</script>
 </scrip>
 <script>
     // Función para eliminar el mensaje al hacer clic en el botón de cerrar

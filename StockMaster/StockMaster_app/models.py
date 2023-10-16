@@ -42,3 +42,25 @@ class Mensajes(models.Model):
 
     def __str__(self):
         return self.comentario
+    
+#Modelo de proveedores
+
+class Proveedores(models.Model):    
+    idProveedor = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=50)
+    contacto = models.CharField(max_length=50)
+    telefono = models.PositiveBigIntegerField(max_length=10)
+    email = models.CharField(max_length=100)
+    calle = models.CharField(max_length=100, default="")
+    noExt = models.CharField(max_length=50, null=True, default="")
+    noInt = models.CharField(max_length=50, null=True, default="")
+    colonia = models.CharField(max_length=100, default="")
+    cp = models.PositiveBigIntegerField(max_length=5, default="")
+    municipio = models.CharField(max_length=100, default="")
+    estado = models.CharField(max_length=100, default="")
+    pais = models.CharField(max_length=100, default="")
+    imagen = models.BinaryField(null=True, blank=True)
+    estatus = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.nombre

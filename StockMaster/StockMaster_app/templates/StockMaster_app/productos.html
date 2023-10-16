@@ -86,10 +86,16 @@
                                 </div>
                             </td>
                             <td>{{ c.id_categorias.nombre }}</td>
-                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">Editar</a></td>
+                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
+                                <span class="material-symbols-outlined">edit</span>
+                            </a></td>
                             <!-- <td class="edita"><a id="showEditModal" class="btn btn-info" data-id="{{ c.idproducts }}">Editar</a></td> -->
-                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">Editar</a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
-                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">
+                                <span class="material-symbols-outlined">edit</span>
+                            </a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
+                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}

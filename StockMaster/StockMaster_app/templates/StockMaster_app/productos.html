@@ -87,7 +87,7 @@
                             <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">
                                 <span class="material-symbols-outlined">edit</span>
                             </a></td>
-                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger">
+                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
                                 <span class="material-symbols-outlined">delete</span>
                             </a></td>
                         </tr>
@@ -123,7 +123,7 @@
                                     <div class="profile-photo">
                                     </div>
                                     <div class="message">
-                                        <input type="text" id="txtNombre" name="txtNombre" class="updatess" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
+                                        <input type="text" id="txtNombre" name="txtNombre" class="updatess" placeholder="Nombre" pattern="[A-Za-z0-9\s]{2,20}"  maxlength="20" required>
                                         <br><span class="error-message" style="color: red;"></span>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                     <div class="profile-photo">
                                     </div>
                                     <div class="message">
-                                        <input type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="updatess" maxlength="7" required oninput="validarNumeros(this)">
+                                        <input type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="updatess" pattern="[0-9]{1,7}" maxlength="7" required oninput="validarNumeros(this)">
                                         <br>
                                         <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
                                         <span class="error-message error" style="color: red;"></span>
@@ -145,7 +145,7 @@
                                     <div class="profile-photo">
                                     </div>
                                     <div class="message">
-                                        <input type="text" id="NomMarca" name="NomMarca" class="updatess" placeholder="Marca"  pattern="[A-Za-z0-9]{6,20}" maxlength="20" required>
+                                        <input type="text" id="NomMarca" name="NomMarca" class="updatess" placeholder="Marca"  pattern="[A-Za-z0-9\s]{2,20}" maxlength="20" required>
                                         <br> <span class="error-message" style="color: red;"></span></br>
                                     </div>
                                 </div>

@@ -319,6 +319,7 @@ main table tbody td{
     border: 1px solid rgb(0, 0, 0);
     border-radius: 5px;
     padding: 5px;
+    align-items: center;
 }
 .right .recent-updates{
     margin-top: 1rem;
@@ -339,6 +340,7 @@ main table tbody td{
 .right .recent-updates .updates .message{
     background-color: var(--color-info-dark);
     box-shadow: var(--box-shadow);
+    padding: 1rem;
     margin-bottom: 1rem;
     border-radius: var(--border-radius-1);
 }

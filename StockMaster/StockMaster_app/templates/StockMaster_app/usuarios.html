@@ -36,7 +36,7 @@
                                     <td>{{ us.last_name }}</td>
                                     <td>{{ us.email }}</td>
                                     <td>{% if us.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                    <td class="elimina"><a class="btn btn-danger" href="eliminaruser/{{us.id}}">
+                                    <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id}}">
                                         <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>

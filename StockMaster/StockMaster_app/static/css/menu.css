@@ -13,7 +13,7 @@
     --color-primary-variant: #111e88;
     --color-dark-variant: #677483;
     --color-background: #f6f6f9;
-    --color-tabla: #677483;
+    --color-tabla: #b9b9b9;
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
@@ -220,13 +220,19 @@ main .recent-orders table tbody tr{
     border: none;
 }
 main .recent-orders table tbody tr:hover{
-    background: var(--color-tabla);
+    /* background: var(--color-tabla); */
 }
 main table tbody td{
     height: 4.8rem;
     border-bottom: 1px solid var(--color-light);
     color: --color-dark;
 }
+
+main table th{
+    background: var(--color-white);
+    text-transform: uppercase;
+}
+
 .right{
     margin-top: 1.4rem;
 }
@@ -422,4 +428,3 @@ textarea{
     position: absolute;
     padding: 0.5rem 0;
 }
-

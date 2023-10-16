@@ -56,52 +56,54 @@
             {% endfor %}
         </div>
         <h2 class="agregar">Listado de Productos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Marca</th>
-                    <th>Cantidad</th>
-                    <th>Imagen</th>
-                    <th>Categoría</th>
-                    <th>Proveedor</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Productos %}
-                    {% if c.status %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ c.codigo }}</td>
-                            <td>{{ c.nombre }}</td>
-                            <td>{{ c.precio }}</td>
-                            <td>{{ c.marca }}</td>
-                            <td>{{ c.cantPro }}</td>
-                            <td class="imagen" style="position: relative;">
-                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
-                                    <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
-                                </div>
-                            </td>
-                            <td>{{ c.id_categorias.nombre }}</td>
-                            <td>{{ c.id_Proveedores.nombre }}</td>
-                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
-                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a></td>
-                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+        <div style="overflow: auto; height: 450px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Imagen</th>
+                        <th>Categoría</th>
+                        <th>Proveedor</th>
+                        <th colspan="4">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in Productos %}
+                        {% if c.status %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ c.codigo }}</td>
+                                <td>{{ c.nombre }}</td>
+                                <td>{{ c.precio }}</td>
+                                <td>{{ c.marca }}</td>
+                                <td>{{ c.cantPro }}</td>
+                                <td class="imagen" style="position: relative;">
+                                    <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                                        <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
+                                    </div>
+                                </td>
+                                <td>{{ c.id_categorias.nombre }}</td>
+                                <td>{{ c.id_Proveedores.nombre }}</td>
+                                <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info" style="margin-left: 2rem;">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
+                                <!-- <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </a></td> -->
+                                <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!--Ventana Modal-->
@@ -323,10 +325,12 @@
 }
 </style>
 
+
+<!--
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeEditModal">&times;</span>
-        <!-- Contenido del modal de edición -->
+        <!-- Contenido del modal de edición --
         <h2 class="title">Editar Producto</h2>
         {% if error_messages %}
                     <div class="alert alert-danger" id="error-alert">
@@ -348,26 +352,26 @@
                     <form action="/editarProducto/" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="hidden" id="editProductId" name="productId" value="">
-                        <div class="columnas"> <!-- class="form-columns" -->
-                            <!-- Primer columna -->
+                        <div class="columnas"> <!-- class="form-columns" --
+                            <!-- Primer columna --
                             <div class="primerColum">
                                 <div >
                                     <input type="hidden" name="idproducts" value="{{ productos.idproducts }}">
                                 </div>
                                 <div class="formulario">
-                                    <!-- <label class="sub" for="txtCodigo">Código:</label> -->
+                                    <!-- <label class="sub" for="txtCodigo">Código:</label> --
                                     <input class="ingresar" type="text" id="txtCodigo" name="txtCodigo" value="{{ productos.codigo }}"
-                                         placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
+                                         placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control --
                                     <span class="error-message"></span> 
                                 </div>
                                 <div class="formulario">
-                                    <!-- <label class="sub" for="txtNombre">Nombre:</label> -->
+                                    <!-- <label class="sub" for="txtNombre">Nombre:</label> --
                                     <input class="ingresar" type="text" id="txtNombre" name="txtNombre" value="{{ productos.nombre }}"
                                         placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
                                     <span class="error-message"></span>
                                 </div>
                                 <div class="formulario">
-                                    <!-- <label class="sub" for="NumPrecio">Precio:</label> -->
+                                    <!-- <label class="sub" for="NumPrecio">Precio:</label> --
                                     <input class="ingresar" type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio"
                                         value="{{ productos.precio }}" pattern="[0-9]{1,7}" maxlength="7" required>
                                     <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
@@ -375,21 +379,21 @@
                                 </div>
                             
                                 <div class="formulario">
-                                    <!-- <label class="sub" for="NomMarca">Marca:</label> -->
+                                    <!-- <label class="sub" for="NomMarca">Marca:</label> --
                                     <input class="ingresar" type="text" id="NomMarca" name="NomMarca"   pattern="[A-Za-z0-9]{6}"
                                         value="{{ productos.marca }}" placeholder="Marca" minlength="6" maxlength="20" required>
                                     <span class="error-message"></span>
                                 </div>
                                 <div class="formulario">
-                                    <!-- <label class="sub" for="CantPro">Cantidad de Producto:</label> -->
+                                    <!-- <label class="sub" for="CantPro">Cantidad de Producto:</label> --
                                     <input class="ingresar" type="text" id="CantPro" name="CantPro" placeholder="Cantidad de Producto"
                                         pattern="[0-9]{1,7}" value="{{ productos.cantPro }}" maxlength="7" required>
                                     <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                                     <span class="error-message error"></span>
                                 </div>
-                                <div class="formulario"> <!-- class="update" -->
+                                <div class="formulario"> <!-- class="update" --
                                     <div class="message"></div>
-                                    <!-- <label class="sub" for="categoria">Categoría:</label> -->
+                                    <!-- <label class="sub" for="categoria">Categoría:</label> --
                                     <select name="categoria" id="categoria" class="updatess ingresar" required>
                                         <option value="" disabled>Selecciona una categoría</option>
                                         {% for c in Categoria %}
@@ -410,22 +414,24 @@
                                 {% endif %}
                             
                                 <div class="formulario">
-                                    <!-- <label class="sub" for="imagen">Nueva imagen:</label> -->
+                                    <!-- <label class="sub" for="imagen">Nueva imagen:</label> --
                                     <input type="file" name="imagen" id="id_imagen" accept="image/*">
                                     <input class="ingresar" type="hidden" name="imagen_actual" value="{{ productos.imagen.url }}">
                                 </div>
 
                                 <div class="botones">
                                     <button type="submit" class="btn-guardar">Guardar</button>
-                                    <a class="btn-cancelar">Cancelar</a> <!-- href="{% url 'productos' %}" -->
+                                    <a class="btn-cancelar">Cancelar</a> <!-- href="{% url 'productos' %}" --
                                 </div>
                             
                             </div>
                         </div>
                     </form>
     </div>
-</div>
+</div>-->
 
+
+<!--
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     // Obtén todos los elementos con la clase "edit-product-button"
@@ -471,8 +477,7 @@
     });
     
 </script>
-
-
+-->
 
 
 </main>

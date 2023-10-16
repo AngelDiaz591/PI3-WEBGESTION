@@ -64,38 +64,40 @@
                 </div>
             </div>
         </form>
-        {% for producto in Productos %} 
-            {% if producto.status %}
-                {% if not request.GET.categoria or producto.id_categorias.nombre == request.GET.categoria %}
-                <div class="prod">
-                    <div class="make-3D-space">
-                        <div class="product-card">
-                            <div class="product-front">
-                                <div class="shadow"></div>
-                                <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}"/>
-                                <div class="image_overlay"></div>
-                                <div class="stats">
-                                    <div class="stats-container">
-                                        <span class="product_price">${{ producto.precio }}</span>
-                                        <span class="product_name">{{ producto.nombre }}</span>
-                                        <p><strong style="color: black;">CATEGORIA: {{ producto.id_categorias.nombre }}</strong></p>
-                                        <div class="product-options">
-                                            <strong>CODIGO</strong>
-                                            <span>{{ producto.codigo }}</span>
-                                            <strong>MARCA</strong>
-                                            <span>{{ producto.marca }}</span>
-                                            <strong>CANTIDAD DISPONIBLES</strong>
-                                            <span>{{ producto.cantPro }} unidades</span>
+        <div style="overflow: auto; height: 400px;">
+            {% for producto in Productos %} 
+                {% if producto.status %}
+                    {% if not request.GET.categoria or producto.id_categorias.nombre == request.GET.categoria %}
+                    <div class="prod">
+                        <div class="make-3D-space">
+                            <div class="product-card">
+                                <div class="product-front">
+                                    <div class="shadow"></div>
+                                    <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}"/>
+                                    <div class="image_overlay"></div>
+                                    <div class="stats">
+                                        <div class="stats-container">
+                                            <span class="product_price">${{ producto.precio }}</span>
+                                            <span class="product_name">{{ producto.nombre }}</span>
+                                            <p><strong style="color: black;">CATEGORIA: {{ producto.id_categorias.nombre }}</strong></p>
+                                            <div class="product-options">
+                                                <strong>CODIGO</strong>
+                                                <span>{{ producto.codigo }}</span>
+                                                <strong>MARCA</strong>
+                                                <span>{{ producto.marca }}</span>
+                                                <strong>CANTIDAD DISPONIBLES</strong>
+                                                <span>{{ producto.cantPro }} unidades</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </main>
 

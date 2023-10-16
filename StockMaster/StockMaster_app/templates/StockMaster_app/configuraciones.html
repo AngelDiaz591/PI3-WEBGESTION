@@ -60,29 +60,33 @@
                 </div>
             {% endfor %}
         </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Categorias</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Categoria %}
+        <div style="overflow:auto; height: 450px;"">
+            <table class="table table-striped" ">
+                <thead>
                     <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ c.nombre }}</td>
-                        <td class="edita"><a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" >
-                            <span class="material-symbols-outlined">edit</span>
-                        </a></td>
-                        <td class="elimina"><a href="{% url 'eliminarcategoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
-                            <span class="material-symbols-outlined">delete</span>
-                        </a></td>
+                        <th>#</th>
+                        <th>Categorias</th>
+                        <th colspan="2">Opciones</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody style="font-size: 15px;">
+                    {% for c in Categoria %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ c.nombre }}</td>
+                            <td class="edita">
+                                <a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="margin-left: 15rem;">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </a>
+                            </td>
+                            <td class="elimina"><a href="{% url 'eliminarcategoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <!--Ventana Modal-->
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">

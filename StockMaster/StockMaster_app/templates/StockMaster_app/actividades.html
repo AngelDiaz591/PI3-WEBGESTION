@@ -30,54 +30,56 @@
                         <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 {% endfor %}
-            </div> 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Producto</th>
-                        <th>Movimiento</th>
-                        {% if request.user.is_superuser %}
-                            <th>Usuario</th>
-                            <th>Fecha</th>
-                        {% else %}
-                            <th colspan="2">Editar Cantidad</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ca in Productos|dictsortreversed:"fecha_edit" %}
-                        {% if request.user.is_superuser %}
-                            <tr>
-                                <td>{{ ca.codigo }}</td>
-                                <td>{{ ca.nombre }}</td>
-                                <td>{{ ca.movimiento }}</td>
-                                <td>{{ ca.username }}</td>
-                                <td>{{ ca.fecha_edit }}</td>                                   
-                            </tr>
-                        {% else %}
-                            {% if ca and ca.status  %}
+            </div>
+            <div style="overflow: auto; height: 400px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Producto</th>
+                            <th>Movimiento</th>
+                            {% if request.user.is_superuser %}
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                            {% else %}
+                                <th colspan="2">Editar Cantidad</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ca in Productos|dictsortreversed:"fecha_edit" %}
+                            {% if request.user.is_superuser %}
                                 <tr>
-                                    <td>{{ ca.id_categorias.nombre }}</td>
                                     <td>{{ ca.codigo }}</td>
-                                    <td>{{ ca.cantPro }}</td>
-                                    <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
-                                        {% csrf_token %}
-                                        <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                        <td>
-                                            <button type="submit" class="btn-registrar">
-                                                <span class="material-symbols-outlined">
-                                                edit
-                                                </span>
-                                            </button>
-                                        </td>
-                                    </form>                                    
+                                    <td>{{ ca.nombre }}</td>
+                                    <td>{{ ca.movimiento }}</td>
+                                    <td>{{ ca.username }}</td>
+                                    <td>{{ ca.fecha_edit }}</td>                                   
                                 </tr>
-                            {% endif%}
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
+                            {% else %}
+                                {% if ca and ca.status  %}
+                                    <tr>
+                                        <td>{{ ca.id_categorias.nombre }}</td>
+                                        <td>{{ ca.codigo }}</td>
+                                        <td>{{ ca.cantPro }}</td>
+                                        <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
+                                            {% csrf_token %}
+                                            <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
+                                            <td>
+                                                <button type="submit" class="btn-registrar">
+                                                    <span class="material-symbols-outlined">
+                                                    edit
+                                                    </span>
+                                                </button>
+                                            </td>
+                                        </form>                                    
+                                    </tr>
+                                {% endif%}
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
     <div class="right" >
@@ -124,15 +126,15 @@
                                         <div class="icon" style="color: green">
                                             <span class="material-symbols-outlined">forward</span>
                                         </div>
-                                            <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
-                                        <p>Mensaje contestado</p>
+                                            <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
+                                        <small class="text-muted" style="font-size: 11px;">Mensaje contestado</small>
                                     </div>
                                 {% else %}
                                     <div class="message">
                                         <div class="icon" style="color: red">
                                             <span class="material-symbols-outlined">mark_email_unread</span>
                                         </div>
-                                        <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
+                                        <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
                                         <small class="text-muted">{{ me.tiempo_creacion }}</small>
                                     </div>
                                 {% endif %}

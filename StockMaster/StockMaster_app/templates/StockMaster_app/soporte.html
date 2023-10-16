@@ -55,66 +55,69 @@
                 <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
             </div>
         {% endfor %}
-        <table>
-            <thead>
-                <tr>
-                    <th><h2 class="agregar">Usuario</h2></th>
-                    <th><h2 class="agregar">Mensaje</h2></th>
-                    <th><h2 class="agregar">Respuesta</h2></th>
-                    <th><h2 class="agregar">Fecha</h2></th>
-                    <th><h2 class="agregar">Contestar</h2></th>
-                    <th><h2 class="agregar">Eliminar</h2></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if Mensajes %}
-                    {% for mensaje in Mensajes|dictsortreversed:"tiempo_creacion"%}
-                        <tr>
-                            <td>
-                                <h4>{{ mensaje.username}}:</h4>
-                            </td>
-                            <td>
-                                {{ mensaje.comentario }}
-                            </td>
-                            <td>
-                                {% if mensaje.respuestascomentarios %}
-                                {{ mensaje.respuestascomentarios }}
+        <div style="overflow:auto; height: 400px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th><h2 class="agregar">Usuario</h2></th>
+                        <th><h2 class="agregar">Mensaje</h2></th>
+                        <th><h2 class="agregar">Respuesta</h2></th>
+                        <th><h2 class="agregar">Fecha</h2></th>
+                        <th><h2 class="agregar">Contestar</h2></th>
+                        <th><h2 class="agregar">Eliminar</h2></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if Mensajes %}
+                        {% for mensaje in Mensajes|dictsortreversed:"tiempo_creacion"%}
+                            <tr>
+                                <td>
+                                    <h4>{{ mensaje.username}}:</h4>
+                                </td>
+                                <td>
+                                    {{ mensaje.comentario }}
+                                </td>
+                                <td>
+                                    {% if mensaje.respuestascomentarios %}
+                                    {{ mensaje.respuestascomentarios }}
 
-                                {% else %}
-                                    <p>No tiene respuestas </p>
+                                    {% else %}
+                                        <p>No tiene respuestas </p>
 
-                                {% endif %}
-                            </td>
-                            <td>
-                                {{ mensaje.tiempo_creacion }}
-                            </td>
-                            <td>
-                                <div id="contenedor">
-                                    <form method="post" action="{% url 'contestarcomentarios' mensaje.idcomentario %}">
-                                        <br>
-                                        {% csrf_token %}
-                                        <textarea id="respuestascomentarios" name="respuestascomentarios" style="resize: none; border: 20px;" required></textarea>
-                                        <button class="edita type="submit" id="botonOcultar" class="edita" style="background: transparent;"><i class="fa-solid fa-paper-plane"></i></button>
-                                    </form>                                        
-                                </div>
-                                <br>
-                            </td>  
-                            <td class="elimina">
-                                <a href="{% url 'eliminar_comentario' mensaje.idcomentario %}" class="btn btn-danger btnEliminacion">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a>
-                            </td>
-                                                            
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <br>
-                    <p style="color: #787878; font-size: 15px;">No hay mensajes disponibles en este momento.</p>
-                    <br>
-                {% endif %}             
-            </tbody>
-        </table>
-        
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ mensaje.tiempo_creacion }}
+                                </td>
+                                <td>
+                                    <div id="contenedor">
+                                        <form method="post" action="{% url 'contestarcomentarios' mensaje.idcomentario %}">
+                                            <br>
+                                            {% csrf_token %}
+                                            <textarea id="respuestascomentarios" name="respuestascomentarios" style="resize: none; border: 20px;" required></textarea>
+                                            <button class="edita" type="submit" id="botonOcultar" style="background: transparent;">
+                                                <i class="fa-solid fa-paper-plane" style="color: rgb(13, 13, 221); font-size: 20px; cursor:pointer"></i>
+                                            </button>
+                                        </form>                                        
+                                    </div>
+                                    <br>
+                                </td>  
+                                <td class="elimina" style="padding-left: 2.5rem;">
+                                    <a href="{% url 'eliminar_comentario' mensaje.idcomentario %}" class="btn btn-danger btnEliminacion">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
+                                </td>
+                                                                
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <br>
+                        <p style="color: #787878; font-size: 15px;">No hay mensajes disponibles en este momento.</p>
+                        <br>
+                    {% endif %}             
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 {% else %}

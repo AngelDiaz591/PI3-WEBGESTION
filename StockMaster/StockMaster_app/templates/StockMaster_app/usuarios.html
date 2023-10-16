@@ -16,36 +16,35 @@
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Gmail</th>
-                        <th>Rol</th>
-
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user.is_superuser %}
-                            {% for us in Usuarios %}
-                                <tr>
-                                    <td>{{ us.first_name }}</td>
-                                    <td>{{ us.last_name }}</td>
-                                    <td>{{ us.email }}</td>
-                                    <td>{% if us.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                    <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id}}">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a></td>
-                                </tr>
-                            {% endfor %}
+            <div style="overflow:auto; height: 400px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Gmail</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                                {% for us in Usuarios %}
+                                    <tr>
+                                        <td>{{ us.first_name }}</td>
+                                        <td>{{ us.last_name }}</td>
+                                        <td>{{ us.email }}</td>
+                                        <td>{% if us.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
+                                        <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id}}">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </a></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                </tbody>
-
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
     <div class="right" >
@@ -89,12 +88,18 @@
                             {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
                                 {% if me.respuestascomentarios%}
                                     <div class="message">
-                                        <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
-                                        <p>Mensaje contestado</p>
+                                        <div class="icon" style="color: green">
+                                            <span class="material-symbols-outlined">forward</span>
+                                        </div>
+                                            <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
+                                        <small class="text-muted" style="font-size: 11px;">Mensaje contestado</small>
                                     </div>
                                 {% else %}
                                     <div class="message">
-                                        <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
+                                        <div class="icon" style="color: red">
+                                            <span class="material-symbols-outlined">mark_email_unread</span>
+                                        </div>
+                                        <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
                                         <small class="text-muted">{{ me.tiempo_creacion }}</small>
                                     </div>
                                 {% endif %}

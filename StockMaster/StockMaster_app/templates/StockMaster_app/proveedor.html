@@ -57,46 +57,48 @@
             {% endfor %}
         </div>
         <h2 class="agregar">Listado de Proveedores</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Contacto</th>
-                    <th>Telefono</th>
-                    <th>Correo</th>
-                    <th>Direccion</th>
-                    <th>Imagen</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Proveedor %}
-                {% if c.estatus == 1 %}
+        <div style="overflow: auto; height: 450px;">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ c.nombre }}</td>
-                        <td>{{ c.contacto }}</td>
-                        <td>{{ c.telefono}}</td>
-                        <td>{{ c.email}}</td>
-                        <td>
-                            {{ c.calle }} {{ c.noExt }}
-                            {% if c.noInt %}
-                                Interior {{ c.noInt }},
-                            {% endif %}
-                            {{ c.colonia }}, {{ c.cp }}, {{ c.municipio }}, {{ c.estado }}, {{ c.pais }}
-                        </td>
-                        <td class="imagen"><img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="100" height="100"></td>    
-                        <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
-                            <span class="material-symbols-outlined">edit</span>
-                        </a></td>
-                        <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
-                            <span class="material-symbols-outlined">delete</span>
-                        </a></td>
+                        <th>Nombre</th>
+                        <th>Contacto</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th>Direccion</th>
+                        <th>Imagen</th>
+                        <th colspan="2">Opciones</th>
                     </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
+                </thead>
+                <tbody>
+                    {% for c in Proveedor %}
+                    {% if c.estatus == 1 %}
+                        <tr>
+                            <td>{{ c.nombre }}</td>
+                            <td>{{ c.contacto }}</td>
+                            <td>{{ c.telefono}}</td>
+                            <td>{{ c.email}}</td>
+                            <td>
+                                {{ c.calle }} {{ c.noExt }}<br>
+                                {% if c.noInt %}
+                                    Interior {{ c.noInt }},<br>
+                                {% endif %}
+                                {{ c.colonia }}, {{ c.cp }}, <br>{{ c.municipio }}, <br>{{ c.estado }}, {{ c.pais }}
+                            </td>
+                            <td class="imagen"><img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="100" height="100"></td>    
+                            <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
+                                <span class="material-symbols-outlined">edit</span>
+                            </a></td>
+                            <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
 
-        </table>
+            </table>
+        </div>
 
         <!--Ventana Modal-->
         <input type="checkbox" id="btn-modal">

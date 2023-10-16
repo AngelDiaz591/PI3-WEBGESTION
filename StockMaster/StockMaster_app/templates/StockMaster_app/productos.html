@@ -46,6 +46,7 @@
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
         </div>
+        <!--Fin de Boton-->
         <div class="messages-container">
             {% for message in messages %}
                 <div class="alert alert-custom" role="alert">
@@ -58,6 +59,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Precio</th>
@@ -72,23 +74,22 @@
                 {% for c in Productos %}
                     {% if c.status %}
                         <tr>
+                            <td>{{ forloop.counter }}</td>
                             <td>{{ c.codigo }}</td>
                             <td>{{ c.nombre }}</td>
                             <td>{{ c.precio }}</td>
                             <td>{{ c.marca }}</td>
                             <td>{{ c.cantPro }}</td>
-                            <td  style="position: relative;">
-                                <div  style="width: 150px; height: 200px; overflow: hidden;">
+                            <td class="imagen" style="position: relative;">
+                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
                                     <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
                                 </div>
                             </td>
                             <td>{{ c.id_categorias.nombre }}</td>
-                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a></td>
-                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
+                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">Editar</a></td>
+                            <!-- <td class="edita"><a id="showEditModal" class="btn btn-info" data-id="{{ c.idproducts }}">Editar</a></td> -->
+                            <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">Editar</a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
+                            <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -122,7 +123,7 @@
                                     <div class="profile-photo">
                                     </div>
                                     <div class="message">
-                                        <input type="text" id="txtNombre" name="txtNombre" class="updatess" placeholder="Nombre" pattern="[A-Za-z0-9\s]{2,20}"  maxlength="20" required>
+                                        <input type="text" id="txtNombre" name="txtNombre" class="updatess" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
                                         <br><span class="error-message" style="color: red;"></span>
                                     </div>
                                 </div>
@@ -130,7 +131,7 @@
                                     <div class="profile-photo">
                                     </div>
                                     <div class="message">
-                                        <input type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="updatess" pattern="[0-9]{1,7}" maxlength="7" required oninput="validarNumeros(this)">
+                                        <input type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="updatess" maxlength="7" required oninput="validarNumeros(this)">
                                         <br>
                                         <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
                                         <span class="error-message error" style="color: red;"></span>
@@ -144,7 +145,7 @@
                                     <div class="profile-photo">
                                     </div>
                                     <div class="message">
-                                        <input type="text" id="NomMarca" name="NomMarca" class="updatess" placeholder="Marca"  pattern="[A-Za-z0-9\s]{2,20}" maxlength="20" required>
+                                        <input type="text" id="NomMarca" name="NomMarca" class="updatess" placeholder="Marca"  pattern="[A-Za-z0-9]{6,20}" maxlength="20" required>
                                         <br> <span class="error-message" style="color: red;"></span></br>
                                     </div>
                                 </div>
@@ -204,9 +205,260 @@
                     });
                 });
             </script>
+        </div>
         <label for="btn-modal" class="cerrar-modal"></label>
     </div>
     <!--Fin de Ventana Modal-->
+
+
+
+
+    <style>
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(144, 148, 150, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 4% auto; /*posicion modal*/
+    padding: 20px 0px 25px ;
+    width: 60%;
+    height: 85%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    /* border-radius: 25px; */
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+    color: rgb(144, 144, 144);
+    font-size: 32px;
+}
+
+.close:hover { 
+    color: rgb(255, 0, 0);
+}
+
+.title{
+    text-align: center;
+}
+
+.columnas{
+    margin: 1.5%;
+    /* padding: 3%; */
+    display: grid;
+    grid-template-columns: 390px 1fr; /* Divide el contenedor en dos columnas iguales */
+    height: 100%;
+}
+
+.formulario{
+    /* text-align: center; / / Alinea los elementos en el centro horizontalmente */
+    display: flex;
+    flex-direction: column; /* Apila los elementos en una columna */
+    /* align-items: center;  // Alinea los elementos en el centro verticalmente */
+    margin-bottom: 20px; /* Espacio entre cada grupo de etiqueta y entrada */
+}
+
+.secondColumn{
+    padding: 12%;
+    
+}
+
+.primerColum{
+    padding: 2%;
+}
+
+.sub{
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #434343;
+    font-weight: 500;
+}
+
+.ingresar{
+   /*  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset; */
+    /* box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px; */
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
+/*     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;*/
+    height: 40px;
+    width: 70%;
+    border-radius: 8px;
+    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+/*     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+ */    font-size: 20px;
+ }
+
+.botones{
+    align-self:flex-end;
+}
+</style>
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeEditModal">&times;</span>
+        <!-- Contenido del modal de edición -->
+        <h2 class="title">Editar Producto</h2>
+        {% if error_messages %}
+                    <div class="alert alert-danger" id="error-alert">
+                        <ul>
+                            {% for message in error_messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <script>
+                        setTimeout(function() {
+                            var errorAlert = document.getElementById('error-alert');
+                            if (errorAlert) {
+                                errorAlert.style.display = 'none';
+                            }
+                        }, 5000);
+                    </script>
+                    {% endif %}
+                    <form action="/editarProducto/" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" id="editProductId" name="productId" value="">
+                        <div class="columnas"> <!-- class="form-columns" -->
+                            <!-- Primer columna -->
+                            <div class="primerColum">
+                                <div >
+                                    <input type="hidden" name="idproducts" value="{{ productos.idproducts }}">
+                                </div>
+                                <div class="formulario">
+                                    <label class="sub" for="txtCodigo">Código:</label>
+                                    <input class="ingresar" type="text" id="txtCodigo" name="txtCodigo" value="{{ productos.codigo }}"
+                                         placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
+                                    <span class="error-message"></span> 
+                                </div>
+                                <div class="formulario">
+                                    <label class="sub" for="txtNombre">Nombre:</label>
+                                    <input class="ingresar" type="text" id="txtNombre" name="txtNombre" value="{{ productos.nombre }}"
+                                        placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
+                                    <span class="error-message"></span>
+                                </div>
+                                <div class="formulario">
+                                    <label class="sub" for="NumPrecio">Precio:</label>
+                                    <input class="ingresar" type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio"
+                                        value="{{ productos.precio }}" pattern="[0-9]{1,7}" maxlength="7" required>
+                                    <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
+                                    <span class="error-message error"></span>
+                                </div>
+                            
+                                <div class="formulario">
+                                    <label class="sub" for="NomMarca">Marca:</label>
+                                    <input class="ingresar" type="text" id="NomMarca" name="NomMarca"   pattern="[A-Za-z0-9]{6}"
+                                        value="{{ productos.marca }}" placeholder="Marca" minlength="6" maxlength="20" required>
+                                    <span class="error-message"></span>
+                                </div>
+                                <div class="formulario">
+                                    <label class="sub" for="CantPro">Cantidad de Producto:</label>
+                                    <input class="ingresar" type="text" id="CantPro" name="CantPro" placeholder="Cantidad de Producto"
+                                        pattern="[0-9]{1,7}" value="{{ productos.cantPro }}" maxlength="7" required>
+                                    <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
+                                    <span class="error-message error"></span>
+                                </div>
+                                <div class="formulario"> <!-- class="update" -->
+                                    <div class="message"></div>
+                                    <label class="sub" for="categoria">Categoría:</label>
+                                    <select name="categoria" id="categoria" class="updatess ingresar" required>
+                                        <option value="" disabled>Selecciona una categoría</option>
+                                        {% for c in Categoria %}
+                                        <option value="{{ c.categoria_id }}"
+                                            {% if c.categoria_id == productos.id_categorias %}selected{% endif %}>{{ c.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="error-message error"></span>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="secondColumn">
+                                {% if imagen_url %}
+                                <center><img src="{{ imagen_url }}" alt="Imagen actual" style="max-width: 150px; max-height: 150px"><center>
+                                {% else %}
+                                <p>No hay imagen disponible.</p>
+                                {% endif %}
+                            
+                                <div class="formulario">
+                                    <label class="sub" for="imagen">Nueva imagen:</label>
+                                    <input type="file" name="imagen" id="id_imagen" accept="image/*">
+                                    <input class="ingresar" type="hidden" name="imagen_actual" value="{{ productos.imagen.url }}">
+                                </div>
+
+                                <div class="botones">
+                                    <button type="submit" class="btn-guardar">Guardar</button>
+                                    <a class="btn-cancelar">Cancelar</a> <!-- href="{% url 'productos' %}" -->
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Obtén todos los elementos con la clase "edit-product-button"
+    const editButtons = document.querySelectorAll('.edit-product-button');
+    const editModal = document.getElementById('editModal');
+    const editProductIdField = document.getElementById('editProductId');
+
+    // Función para abrir el modal de edición
+    function openEditModal(productId) {
+        editProductIdField.value = productId;
+
+        // Realiza una solicitud Ajax para obtener los detalles del producto y llenar el formulario con esos datos
+        // Aquí debes cargar los detalles del producto y llenar el formulario en el modal
+
+        // Abre el modal de edición
+        editModal.style.display = 'block';
+    }
+    
+
+    // Asigna un evento de clic a cada botón de edición
+    editButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            const productId = button.getAttribute('data-id');
+            openEditModal(productId);
+        });
+    });
+
+    // Resto del código para cerrar el modal y otros eventos
+    
+        // Cierra el modal de edición cuando se hace clic en la "x"
+        closeEditModal.addEventListener("click", function() {
+            editModal.style.display = "none";
+        });
+    
+        // Cierra el modal de edición si se hace clic fuera del contenido del modal
+        window.addEventListener("click", function(event) {
+            if (event.target === editModal) {
+                editModal.style.display = "none";
+            }
+        });
+
+        
+    });
+    
+</script>
+
+
+
+
 </main>
 
 <script>
@@ -237,4 +489,3 @@
 </script>
 
 {% endblock %}
-

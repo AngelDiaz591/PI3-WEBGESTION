@@ -23,7 +23,6 @@ class Productos(models.Model):
     id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     hora_baja = models.DateTimeField(default=timezone.now, null=True)
     username = models.CharField(max_length=255, null=True)
-    usernamere = models.CharField(max_length=255, null=True)
     status = models.BooleanField(default=True)
     fecha_edit = models.DateTimeField(default=timezone.now, null=True)
     useredit = models.CharField(max_length=255, null=True)

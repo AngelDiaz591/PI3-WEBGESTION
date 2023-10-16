@@ -121,7 +121,7 @@
                             {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
                                 {% if me.respuestascomentarios%}
                                     <div class="message">
-                                        <div class="icon">
+                                        <div class="icon" style="color: green">
                                             <span class="material-symbols-outlined">forward</span>
                                         </div>
                                             <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>
@@ -129,7 +129,7 @@
                                     </div>
                                 {% else %}
                                     <div class="message">
-                                        <div class="icon">
+                                        <div class="icon" style="color: red">
                                             <span class="material-symbols-outlined">mark_email_unread</span>
                                         </div>
                                         <p><b>{{ me.username }}: </b> {{ me.comentario }}</p>

@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib import messages as men
 from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
-from .models import Productos, Mensajes, Categoria
+from .models import Productos, Mensajes, Categoria, Proveedores
 from django.http.response import JsonResponse
 import base64
 from django.shortcuts import get_object_or_404
@@ -401,3 +401,102 @@ def eliminar_categoria(request, categoria_id):
 def exit(request):
     logout(request)
     return redirect('home')
+
+#Vistas de proveedores
+
+#Para acceder al apartado de proveedores
+@login_required(login_url='signin')
+def prov(request):
+    if request.user.is_superuser:
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes = mensajes.count()
+        ProveedoresListados = Proveedores.objects.all()
+        for proveedor in ProveedoresListados:
+            proveedor.imagen_url = get_imagen_url(proveedor.imagen)
+        return render(request, 'StockMaster_app/proveedor.html', { "Proveedor": ProveedoresListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+    else:
+        return redirect('/prov')
+
+#Registro Proveedores
+@login_required(login_url='signin')
+def registrarProv(request):
+    nombreProv = request.POST['NombreProv']
+    contactoProv = request.POST['ContactoProv']
+    telefonoProv = request.POST['TelefonoProv']
+    emailProv = request.POST['EmailProv'] 
+    imagenProv = request.FILES['imagenProv'] 
+    calle = request.POST['Calle']
+    noExt = request.POST['NoExt']
+    noInt = request.POST['NoInt']
+    colonia = request.POST['Colonia']
+    cp = request.POST['CP']
+    municipio = request.POST['Municipio']
+    estado = request.POST['Estado']
+    pais = request.POST['Pais']
+    estatus = request.POST['Estatus']
+
+    # Comprobar si el producto ya existe
+    if Proveedores.objects.filter(nombre=nombreProv).exists():
+        messages.error(request, '¡El proveedor ya esta registrado!')
+    else:
+        # Leer los datos de la imagen como bytes
+        imagen_bytes = imagenProv.read()
+        
+        # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
+        prov = Proveedores(nombre=nombreProv, contacto=contactoProv, telefono=telefonoProv, email=emailProv, calle=calle, noExt=noExt, noInt=noInt, colonia=colonia, cp=cp, municipio=municipio, estado=estado, pais=pais, imagen=imagen_bytes, estatus=estatus)
+        # Guardar la instancia en la base de datos
+        prov.save()
+        messages.success(request, '¡Proveedor registrado!')
+    return redirect('/prov/')
+
+#edicion de proveedores
+
+#para acceder a la pagina de edicion proveedores
+@login_required(login_url='signin')
+def edicionproveedor(request, idProveedor):
+    proveedor = Proveedores.objects.get(idProveedor=idProveedor) 
+    imagen_url = get_imagen_url(proveedor.imagen)
+    return render(request, "StockMaster_app/edicionproveedor.html", {"proveedor": proveedor, "imagen_url": imagen_url})
+
+#funcion de editar proveedores
+@login_required(login_url='signin')
+def editarproveedor(request):
+    idProveedor = request.POST.get('idProveedor')
+    nombre = request.POST.get('nombre')
+    contacto = request.POST.get('contacto')
+    telefono = request.POST.get('telefono')
+    email = request.POST.get('email')
+    calle = request.POST.get('calle')
+    noExt = request.FILES.get('noExt') 
+    noInt = request.POST.get('noInt') 
+    colonia = request.POST.get('colonia')
+    cp = request.POST.get('cp')
+    municipio = request.POST.get('municipio')
+    estado = request.POST.get('estado')
+    nueva_imagen = request.FILES.get('imagen') 
+    pais = request.POST.get('pais')
+
+
+    proveedor = Proveedores.objects.get(idProveedor=idProveedor)
+
+    proveedor.nombre = nombre
+    proveedor.contacto = contacto
+    proveedor.telefono = telefono
+    proveedor.email = email
+    proveedor.calle = calle
+    proveedor.noExt = noExt
+    if nueva_imagen:
+        proveedor.imagen = nueva_imagen.read()
+    proveedor.save()
+
+    messages.success(request, '¡Proveedor Editado!')
+    return redirect('/prov')
+ 
+ #eliminar proveedor (se cambia el estatus a 0)
+@login_required(login_url='signin')
+def eliminaProveedor(request, idProveedor):
+    proveedor = Proveedores.objects.get(idProveedor=idProveedor)
+    proveedor.estatus = 0
+    proveedor.save()
+    messages.success(request, '¡Proveedor Eliminado!')
+    return redirect('/prov')

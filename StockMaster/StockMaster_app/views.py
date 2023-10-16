@@ -292,13 +292,13 @@ def cambio_statusre(request, idproducts):
 
 def cambio_statusre(request, idProveedor):
     proveedor = Proveedores.objects.get(idProveedor=idProveedor)
-    if producto.status != 1:
-        producto.status = 1
+    if productos.status != 1:
+        productos.status = 1
 
-        producto.fecha_edit = timezone.now()
-        producto.username = request.user.username
-        producto.movimiento = 'Recuperacion de Producto'
-        producto.save()
+        productos.fecha_edit = timezone.now()
+        productos.username = request.user.username
+        productos.movimiento = 'Recuperacion de Producto'
+        productos.save()
     messages.success(request, '¡Producto recuperado¡')
     return redirect('/recuperar_producto')
 #mio gael

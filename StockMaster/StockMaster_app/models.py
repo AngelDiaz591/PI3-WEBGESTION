@@ -49,7 +49,7 @@ class Productos(models.Model):
     imagen = models.BinaryField(null=True, blank=True)
 
     id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE, default=1)
+    id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
     hora_baja = models.DateTimeField(default=timezone.now, null=True)
     username = models.CharField(max_length=255, null=True)
     status = models.BooleanField(default=True)

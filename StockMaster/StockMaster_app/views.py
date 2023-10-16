@@ -171,7 +171,7 @@ def registrarProducto(request):
     cantPro = request.POST['CantPro'] 
     imagen = request.FILES['imagen'] 
     categoria_id = request.POST['categoria']
-    fecha_edit = timezone.now()
+    idProveedor = request.POST['proveedor']
 
     # Comprobar si el producto ya existe
     if Productos.objects.filter(codigo=codigo).exists():
@@ -183,7 +183,7 @@ def registrarProducto(request):
         imagen_bytes = imagen.read()
         
         # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
-        producto = Productos(codigo=codigo, nombre=nombre, precio=precio, marca=marca, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Producto creado')
+        producto = Productos(codigo=codigo, nombre=nombre, precio=precio, marca=marca, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Producto creado', id_Proveedores_id=idProveedor)
         # Guardar la instancia en la base de datos
         producto.save()
         messages.success(request, '¡Producto registrado!')

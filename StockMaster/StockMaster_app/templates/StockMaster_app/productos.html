@@ -67,6 +67,7 @@
                     <th>Cantidad</th>
                     <th>Imagen</th>
                     <th>Categoría</th>
+                    <th>Proveedor</th>
                     <th colspan="2">Opciones</th>
                 </tr>
             </thead>
@@ -86,6 +87,7 @@
                                 </div>
                             </td>
                             <td>{{ c.id_categorias.nombre }}</td>
+                            <td>{{ c.id_Proveedores.nombre }}</td>
                             <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info">
                                 <span class="material-symbols-outlined">edit</span>
                             </a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->

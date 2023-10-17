@@ -569,8 +569,7 @@ def registrarProv(request):
     municipio = request.POST['Municipio']
     estado = request.POST['Estado']
     pais = request.POST['Pais']
-    if status_mov != 1:
-        status_mov = 1
+    status_mov = 1
 
     # Comprobar si el producto ya existe
     if Proveedores.objects.filter(nombre=nombreProv).exists():

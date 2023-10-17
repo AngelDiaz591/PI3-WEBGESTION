@@ -137,8 +137,8 @@
                                     <select name="categoria" id="categoria" class="updatess" required>
                                         <option value="" disabled>Selecciona una categoría</option>
                                         {% for c in Categoria %}
-                                        <option value="{{ c.categoria_id }}"
-                                            {% if c.categoria_id == productos.id_categorias %}selected{% endif %}>{{ c.nombre }}</option>
+                                            <option value="{{ c.categoria_id }}"
+                                                {% if c.categoria_id == productos.id_categorias.categoria_id %}selected="selected"{% endif %}>{{ c.nombre }}</option>
                                         {% endfor %}
                                     </select>
                                     <span class="error-message error"></span>
@@ -150,7 +150,7 @@
                                         <option value="" disabled>Selecciona un proveedor</option>
                                         {% for c in Proveedor %}
                                         <option value="{{ c.idProveedor }}"
-                                            {% if c.idProveedor == productos.id_Proveedors %}selected{% endif %}>{{ c.nombre }}</option>
+                                            {% if c.idProveedor == productos.id_Proveedores.idProveedor %}selected{% endif %}>{{ c.nombre }}</option>
                                         {% endfor %}
                                     </select>
                                     <span class="error-message error"></span>

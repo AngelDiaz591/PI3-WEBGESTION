@@ -37,12 +37,13 @@
                         <tr>
                             <th>Codigo</th>
                             <th>Producto</th>
-                            <th>Movimiento</th>
                             {% if request.user.is_superuser %}
+                                <th>Movimiento</th>
                                 <th>Usuario</th>
                                 <th>Fecha</th>
                             {% else %}
-                                <th colspan="2">Editar Cantidad</th>
+                                <th>Cantidad</th>
+                                <th colspan="4">Editar Cantidad</th>
                             {% endif %}
                         </tr>
                     </thead>
@@ -61,7 +62,7 @@
                                         <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
                                             {% csrf_token %}
                                             <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                            <td><button type="submit">Editar Cantidad</button></td>
+                                            <td><button class="Editar" type="submit">Editar Cantidad</button></td>
                                         </form>                                    
                                     {% endif %}
                                     <td class="elimina">
@@ -83,7 +84,7 @@
                                         <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
                                             {% csrf_token %}
                                             <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                            <td><button type="submit">Editar Cantidad</button></td>
+                                            <td><button class="edita" style="background-color: blueviolet; color: white; padding-left: -55rem; width: 5rem;"type="submit">Editar Cantidad</button></td>
                                         </form>                                    
                                     {% endif %}
                                 </tr>

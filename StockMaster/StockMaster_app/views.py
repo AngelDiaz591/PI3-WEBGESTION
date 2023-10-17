@@ -237,8 +237,7 @@ def editarProducto(request):
 @login_required(login_url='signin')
 def eliminaInventario(request, idproducts):
     productos = Productos.objects.get(idproducts=idproducts)
-    productos.status = 0
-    productos.save()
+    productos.delete()
     messages.success(request, '¡Producto Eliminado!')
     return redirect('/recuperar_producto')
 

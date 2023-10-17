@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib import messages as men
 from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
-from .models import Productos, Mensajes, Categoria, Proveedores
+from .models import Productos, Mensajes, Categoria, Proveedores, Historial
 from django.http.response import JsonResponse
 import base64
 from django.shortcuts import get_object_or_404
@@ -185,6 +185,9 @@ def registrarProducto(request):
         # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
         producto = Productos(codigo=codigo, nombre=nombre, precio=precio, marca=marca, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Producto creado', id_Proveedores_id=idProveedor)
         # Guardar la instancia en la base de datos
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Producto Creado',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+        historial.save()
         producto.save()
         messages.success(request, '¡Producto registrado!')
     return redirect('/productos/')
@@ -223,6 +226,9 @@ def editarProducto(request):
     productos.id_Proveedores_id = idProveedor
     if nueva_imagen:
         productos.imagen = nueva_imagen.read()
+    historial= Historial.objects.all()
+    historial = Historial(movimiento='Edicion de Producto',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+    historial.save()
     productos.save()
 
     messages.success(request, '¡Producto Editado!')
@@ -259,48 +265,79 @@ def cambio_status(request, idproducts):
     messages.success(request, '¡Producto Eliminado!')
     if producto.status != 0:
         producto.status = 0
-
+        if producto.status_mov !=1:
+            producto.status_mov = 1
         producto.fecha_edit = timezone.now()
         producto.username = request.user.username
         producto.movimiento = 'Eliminacion de Producto'
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Eliminacion de Producto',usuario=request.user.username,fecha=timezone.now(),nombre=producto.nombre)
+        historial.save()
         producto.save()
     return redirect('/productos')
-def cambio_status(request, idProveedor):
-    proveedor = Proveedores.objects.get(idProveedor=idProveedor)
-    messages.success(request, '¡Proveedor Eliminado!')
-    if proveedor.estatus != 0:
-        proveedor.estatus = 0
-
-        proveedor.fecha_edit = timezone.now()
-        proveedor.username = request.user.username
-        proveedor.movimiento = 'Eliminacion de Proveedor'
-        proveedor.save()
-
-    return redirect('/prov')
 
 def cambio_statusre(request, idproducts):
-    producto = Productos.objects.get(idproducts=idproducts)
-    if producto.status != 1:
+   producto = Productos.objects.get(idproducts=idproducts)
+   if producto.status != 1:
         producto.status = 1
+        if producto.status_mov !=1:
+            producto.status_mov = 1
 
         producto.fecha_edit = timezone.now()
         producto.username = request.user.username
         producto.movimiento = 'Recuperacion de Producto'
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Recuperacion de Producto',usuario=request.user.username,fecha=timezone.now(),nombre=producto.nombre)
+        historial.save()
         producto.save()
-    messages.success(request, '¡Producto recuperado¡')
-    return redirect('/recuperar_producto')
+   messages.success(request, '¡Producto recuperado¡')
+   return redirect('/recuperar_producto')
 
-def cambio_statusre(request, idProveedor):
+def cambio_statuspro(request, idProveedor):
     proveedor = Proveedores.objects.get(idProveedor=idProveedor)
-    if productos.status != 1:
-        productos.status = 1
+    messages.success(request, '¡Proveedor Eliminado!')
+    if proveedor.status != 0:
+        proveedor.status = 0
+        if proveedor.status_mov !=1:
+            proveedor.status_mov = 1
+        proveedor.fecha_edit = timezone.now()
+        proveedor.username = request.user.username
+        proveedor.movimiento = 'Eliminacion de Proveedor'
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Eliminacion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+        historial.save()
+        proveedor.save()
+    return redirect('/prov')
 
-        productos.fecha_edit = timezone.now()
-        productos.username = request.user.username
-        productos.movimiento = 'Recuperacion de Producto'
-        productos.save()
-    messages.success(request, '¡Producto recuperado¡')
+def cambio_statusrepro(request,idProveedor):
+    proveedor = Proveedores.objects.get(idProveedor=idProveedor)
+    if proveedor.status != 1:
+        proveedor.status = 1
+        if proveedor.status_mov !=1:
+            proveedor.status_mov = 1
+        proveedor.fecha_edit = timezone.now()
+        proveedor.username = request.user.username
+        proveedor.movimiento = 'Recuperacion de Proveedor'
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Recuperacion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+        historial.save()
+        proveedor.save()
+    messages.success(request, '¡Proveedor Recuperado¡')
     return redirect('/recuperar_producto')
+    
+def elimina_menpro(request, idProveedor):
+    proveedores = Proveedores.objects.get(idProveedor=idProveedor)
+    if proveedores.status_mov !=0:
+        proveedores.status_mov = 0
+        proveedores.save()
+    return redirect('/actividades')
+
+def elimina_men(request, idproducts):
+    productos = Productos.objects.get(idproducts=idproducts)
+    if productos.status_mov !=0:
+        productos.status_mov = 0
+        productos.save()
+    return redirect('/actividades')
 #mio gael
 @login_required(login_url='signin')
 def soporte(request):
@@ -316,6 +353,9 @@ def comentario(request):
 
         if comentario and username:  # Verificar que se haya proporcionado un comentario y que el usuario esté autenticado
             comentario_obj = Mensajes(comentario=comentario, username=username)
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Nuevo Mensaje',usuario=request.user.username,fecha=timezone.now(),nombre='Mensaje')
+            historial.save()
             comentario_obj.save()
             men.success(request, 'Comentario listo!')
         else:
@@ -343,10 +383,24 @@ def contestarcomentarios(request,idcomentario):
     if request.method == 'POST':
         respuestascomentarios = request.POST.get('respuestascomentarios')
         mensaje.respuestascomentarios = respuestascomentarios
+        mensaje.tiem_res = timezone.now()
+        mensaje.admincont = request.user.username
+        if mensaje.status_mov != 1:
+            mensaje.status_mov = 1
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Mensaje Contestado',usuario=request.user.username,fecha=timezone.now(),nombre='Mensaje')
+        historial.save()
         mensaje.save()
         return redirect('/soporte/')  # Redirigir a la página de soporte o a donde corresponda
 
     return render(request, 'StockMaster_app/soporte.html', {'mensaje': mensaje})
+@login_required(login_url='signin')
+def status_mov (resquest,idcomentario):
+    status=Mensajes.objects.get(idcomentario=idcomentario)
+    if status.status_mov != 0:
+        status.status_mov = 0
+        status.save()
+    return redirect('/actividades')
 
 @login_required(login_url='signin')
 def example_view(request):
@@ -378,7 +432,8 @@ def recuperar_producto(request):
     cantidad_mensajes =mensajes.count()
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
+    proveedores = Proveedores.objects.all()
+    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores})
 
 @login_required(login_url='signin')
 def registrar_categoria(request):
@@ -390,8 +445,10 @@ def registrar_categoria(request):
         messages.error(request, '¡Esta categoría ya existe!')
     else:
             # Crear una nueva instancia de Categoria con el nombre proporcionado
-        categoria = Categoria(nombre=nombre)
-            
+        categoria = Categoria(nombre=nombre,username=request.user.username,fech_cate=timezone.now(),movi='Creacion de Categoria')
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Categoria Agregada',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+        historial.save() 
             # Guardar la instancia en la base de datos
         categoria.save()
             
@@ -415,18 +472,66 @@ def editarCat(request):
         messages.error(request, '¡Esta categoría no recibio cambios!')
     else:
         categoria.nombre = nombre
-
+        categoria.username = request.user.username
+        categoria.movi = 'Edicion de Categoria'
+        categoria.fech_cate = timezone.now()
+        if categoria.status_mov !=1:
+            categoria.status_mov = 1 
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Edicion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+        historial.save()
         categoria.save()
 
         messages.success(request, '¡Categoria  Editada!')
     return redirect('configuraciones77')
+@login_required(login_url='signin')
+def status_categoria(request,categoria_id):
+    categoria = Categoria.objects.get(categoria_id=categoria_id)
+    if categoria.status !=0:
+        categoria.status=0
+        categoria.fech_cate = timezone.now()
+        categoria.movi = 'Eliminacion de Categoria'
+        categoria.username = request.user.username
+        if categoria.status_mov != 1:
+            categoria.status_mov = 1
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Eliminacion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
+        historial.save()
+        categoria.save()
+        messages.success(request, '¡Categoría Eliminada!')
+    return redirect('configuraciones77')
+
+@login_required(login_url='signin')
+def status_categoriare(request,categoria_id):
+    categoria = Categoria.objects.get(categoria_id=categoria_id)
+    if categoria.status !=1:
+            categoria.status=1
+            categoria.fech_cate = timezone.now()
+            categoria.movi = 'Recuperacion de Categoria'
+            categoria.username = request.user.username
+            if categoria.status_mov != 1:
+                categoria.status_mov = 1
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Recuperacion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
+            historial.save()
+            categoria.save()
+            messages.success(request, '¡Categoría Recuperada!')
+    return redirect('/recuperar_producto')
+
+@login_required(login_url='signin')
+def status_mov_cate (resquest,categoria_id):
+    status_cate=Categoria.objects.get(categoria_id=categoria_id)
+    if status_cate.status_mov != 0:
+        status_cate.status_mov = 0
+        status_cate.save()
+    return redirect('/actividades')
 
 @login_required(login_url='signin')
 def eliminar_categoria(request, categoria_id):
     categoria = Categoria.objects.get(categoria_id=categoria_id)
     categoria.delete()
     messages.success(request, '¡Categoría Eliminada!')
-    return redirect('configuraciones77')  # O redirige a donde desees después de la eliminación
+    return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
 
 @login_required(login_url='signin')
 def exit(request):
@@ -464,7 +569,8 @@ def registrarProv(request):
     municipio = request.POST['Municipio']
     estado = request.POST['Estado']
     pais = request.POST['Pais']
-    estatus = request.POST['Estatus']
+    if status_mov != 1:
+        status_mov = 1
 
     # Comprobar si el producto ya existe
     if Proveedores.objects.filter(nombre=nombreProv).exists():
@@ -474,8 +580,11 @@ def registrarProv(request):
         imagen_bytes = imagenProv.read()
         
         # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
-        prov = Proveedores(nombre=nombreProv, contacto=contactoProv, telefono=telefonoProv, email=emailProv, calle=calle, noExt=noExt, noInt=noInt, colonia=colonia, cp=cp, municipio=municipio, estado=estado, pais=pais, imagen=imagen_bytes, estatus=estatus)
+        prov = Proveedores(nombre=nombreProv, contacto=contactoProv, telefono=telefonoProv, email=emailProv, calle=calle, noExt=noExt, noInt=noInt, colonia=colonia, cp=cp, municipio=municipio, estado=estado, pais=pais, imagen=imagen_bytes,username=request.user.username,movimiento='Registro de Proveedor',status_mov=status_mov)
         # Guardar la instancia en la base de datos
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Registro de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=prov.nombre)
+        historial.save()
         prov.save()
         messages.success(request, '¡Proveedor registrado!')
     return redirect('/prov/')
@@ -516,8 +625,16 @@ def editarproveedor(request):
     proveedor.email = email
     proveedor.calle = calle
     proveedor.noExt = noExt
+    proveedor.username = request.user.username
+    proveedor.fecha_edit = timezone.now()
+    proveedor.movimiento = 'Edicion de Proveedor'
+    if proveedor.status_mov != 1:
+        proveedor.status_mov = 1
     if nueva_imagen:
         proveedor.imagen = nueva_imagen.read()
+    historial= Historial.objects.all()
+    historial = Historial(movimiento='Edicion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+    historial.save()
     proveedor.save()
 
     messages.success(request, '¡Proveedor Editado!')
@@ -527,7 +644,17 @@ def editarproveedor(request):
 @login_required(login_url='signin')
 def eliminaProveedor(request, idProveedor):
     proveedor = Proveedores.objects.get(idProveedor=idProveedor)
-    proveedor.estatus = 0
-    proveedor.save()
+    historial= Historial.objects.all()
+    historial = Historial(movimiento='Proveedor Eliminado',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+    historial.save()
+    proveedor.delete()
     messages.success(request, '¡Proveedor Eliminado!')
-    return redirect('/prov')
+    return redirect('/recuperar_producto')
+@login_required(login_url='signin')
+def historial(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    historial = Historial.objects.all()
+    return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})

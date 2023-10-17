@@ -72,7 +72,7 @@
                 </thead>
                 <tbody>
                     {% for c in Proveedor %}
-                    {% if c.estatus == 1 %}
+                    {% if c.status  %}
                         <tr>
                             <td>{{ c.nombre }}</td>
                             <td>{{ c.contacto }}</td>
@@ -89,7 +89,7 @@
                             <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
                                 <span class="material-symbols-outlined">edit</span>
                             </a></td>
-                            <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
+                            <td class="elimina"><a href="cambio_statuspro/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
                                 <span class="material-symbols-outlined">delete</span>
                             </a></td>
                         </tr>

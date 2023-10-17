@@ -36,7 +36,7 @@
 
 <main>
     
-    <h1>Productos/Proveedores dados de baja</h1>
+    <h1>Dados de Baja</h1>
     <div class="recent-orders">
         <div class="principal">
             <div class="search-bar-v2">
@@ -54,6 +54,7 @@
             {% endfor %}
         </div>
         <br>
+        <h2>Productos</h2>
         <table>
             <thead>
                 <tr>
@@ -84,6 +85,84 @@
                                 <span class="material-symbols-outlined">restart_alt</span>
                             </a></td>
                             <td class="elimina"><a href="recuperar_producto/eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
+    <h2>Categorias</h2>
+    
+    <div class="recent-orders">
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Categoria</th>
+                    <th>Elimino Usuario</th>
+                    <th>Fecha</th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in Categoria %}
+                    {% if c.status %}
+
+                    {% else %}
+                        <tr>
+                            
+                            <td>{{forloop.counter}}</td>
+                            <td>{{ c.nombre }} </td>
+                            <td>{{ c.username }}</td>
+                            <td>{{ c.fech_cate}}</td>
+                            <td class="edita"><a href="{% url 'status_categoriare' categoria_id=c.categoria_id %}" class="btn btn-info">                                 
+                                <span class="material-symbols-outlined">restart_alt</span>
+                            </a></td>
+                            <td class="elimina"><a href="eliminar_categoria/{{c.categoria_id}}" class="btn btn-danger btnEliminacion">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
+    <h2>Proveedores</h2>
+    
+    <div class="recent-orders">
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Proveedor</th>
+                    <th>Elimino Usuario</th>
+                    <th>Fecha</th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in proveedores %}
+                    {% if c.status %}
+
+                    {% else %}
+                        <tr>
+                            
+                            <td>{{forloop.counter}}</td>
+                            <td>{{ c.nombre }} </td>
+                            <td>{{ c.username }}</td>
+                            <td>{{ c.fecha_edit}}</td>
+                            <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info">                                 
+                                <span class="material-symbols-outlined">restart_alt</span>
+                            </a></td>
+                            <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">
                                 <span class="material-symbols-outlined">delete</span>
                             </a></td>
                         </tr>

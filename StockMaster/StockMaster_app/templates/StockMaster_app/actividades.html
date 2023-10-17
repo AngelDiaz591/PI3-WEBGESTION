@@ -47,38 +47,144 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for ca in Productos|dictsortreversed:"fecha_edit" %}
-                            {% if request.user.is_superuser %}
+                        {% for ca in Productos|dictsortreversed:"fecha_edit"|slice:":5"  %}
+                        {% if request.user.is_superuser%}
+                        {% if ca.status_mov == 1%}
                                 <tr>
                                     <td>{{ ca.codigo }}</td>
                                     <td>{{ ca.nombre }}</td>
-                                    <td>{{ ca.movimiento }}</td>
-                                    <td>{{ ca.username }}</td>
-                                    <td>{{ ca.fecha_edit }}</td>                                   
-                                </tr>
-                            {% else %}
-                                {% if ca and ca.status  %}
-                                    <tr>
-                                        <td>{{ ca.id_categorias.nombre }}</td>
-                                        <td>{{ ca.codigo }}</td>
-                                        <td>{{ ca.cantPro }}</td>
+                                    {% if request.user.is_superuser %}
+                                        <td>{{ ca.movimiento }}</td>
+                                        <td>{{ ca.username }}</td>
+                                        <td>{{ ca.fecha_edit }}</td>
+                                    {% else %}
                                         <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
                                             {% csrf_token %}
                                             <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                            <td>
-                                                <button type="submit" class="btn-registrar">
-                                                    <span class="material-symbols-outlined">
-                                                    edit
-                                                    </span>
-                                                </button>
-                                            </td>
+                                            <td><button type="submit">Editar Cantidad</button></td>
                                         </form>                                    
-                                    </tr>
-                                {% endif%}
+                                    {% endif %}
+                                    <td class="elimina">
+                                        <a href="elimina_men/{{ca.idproducts}}" >Eliminar</a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                        {% else %}
+                            {% if ca and ca.status  %}
+                            
+                                <tr>
+                                    <td>{{ ca.id_categorias.nombre }}</td>
+                                    <td>{{ ca.codigo }}</td>
+                                    <td>{{ ca.cantPro }}</td>
+                                    {% if request.user.is_superuser %}
+                                        <td>{{ ca.useredit }}</td>
+                                        <td>{{ ca.fecha_edit }}</td>
+                                    {% else %}
+                                        <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
+                                            {% csrf_token %}
+                                            <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
+                                            <td><button type="submit">Editar Cantidad</button></td>
+                                        </form>                                    
+                                    {% endif %}
+                                </tr>
+                            {% endif%}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br>
+                <br>
+                <h2>Mensajes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Mensaje</th>
+                            <th>Fecha</th>
+                            <th>Respuesta</th>
+                            <th>Usario que contesto</th>
+                            {% if request.user.is_superuser %}
+                                <th>Fecha</th>
+                                <th>Opcion</th>
+                            {% endif%}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for men in Mensajes|dictsortreversed:"tiem_res"|slice:":5" %}
+                            {% if men.status_mov == 1 %}
+                                <tr>
+                                    <td>{{ men.username }}</td>
+                                    <td>{{ men.comentario}}</td>
+                                    <td>{{ men.tiempo_creacion}}</td>
+                                    <td>{{ men.respuestascomentarios }}</td>
+                                    <td>{{ men.admincont }}</td>
+                                    {% if request.user.is_superuser %}
+                                        {% if men.respuestascomentarios %}
+                                            <td>{{ men.tiem_res }}</td>
+                                        {% else %}
+                                            <td>none</td>
+                                        {% endif %}
+                                        <td class="elimina"><a href="status_mov/{{men.idcomentario}}" >Eliminar</a></td>
+                                    {% endif %}
+                                </tr>
                             {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
+                <br>
+                <br>
+                {% if request.user.is_superuser %}
+                    <h2>Categoria</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Movimiento</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                                <th>Opcion</th>
+                            </tr>
+                        </thead>
+                        {% for cate in CategoriaListados|dictsortreversed:"fech_cate"|slice:":5"%}
+                            {% if cate.status_mov %}
+                                <tbody>
+                                        <td>{{ cate.nombre }}</td>
+                                        <td>{{ cate.movi }}</td>
+                                        <td>{{ cate.username }}</td>
+                                        <td>{{ cate.fech_cate }}</td>
+                                        <td class="elimina"><a href="status_mov_cate/{{ cate.categoria_id}}" >Eliminar</a></td>                    
+                                </tbody>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                <br>
+                <br>
+                {% if request.user.is_superuser %}
+                    <h2>Proveedor</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Proveedor</th>
+                                <th>Movimiento</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                                <th>Opcion</th>
+                            </tr>
+                        </thead>
+                        {% for cate in ProveedoresListados|dictsortreversed:"fecha_edit"|slice:":5"%}
+                            {% if cate.status_mov %}
+                                <tbody>
+                                        <td>{{ cate.nombre }}</td>
+                                        <td>{{ cate.movimiento }}</td>
+                                        <td>{{ cate.username }}</td>
+                                        <td>{{ cate.fecha_edit }}</td>
+                                        <td class="elimina"><a href="elimina_menpro/{{ cate.idProveedor}}" >Eliminar</a></td>                    
+                                </tbody>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                {% endif %}
             </div>
         </div>
     </main>

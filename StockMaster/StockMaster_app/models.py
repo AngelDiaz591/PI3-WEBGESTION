@@ -7,7 +7,11 @@ from django.utils import timezone
 class Categoria(models.Model):
     categoria_id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
-
+    movi = models.CharField(max_length=255, null=True)
+    username = models.CharField(max_length=255, null=True)
+    fech_cate = models.DateTimeField(default=timezone.now, null=True)
+    status = models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
     def __str__(self):
         return self.nombre
 
@@ -28,7 +32,8 @@ class Proveedores(models.Model):
     estado = models.CharField(max_length=100, default="")
     pais = models.CharField(max_length=100, default="")
     imagen = models.BinaryField(null=True, blank=True)
-    estatus = models.PositiveIntegerField()
+    status = models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
     hora_baja = models.DateTimeField(default=timezone.now, null=True)
     username = models.CharField(max_length=255, null=True)
     fecha_edit = models.DateTimeField(default=timezone.now, null=True)
@@ -56,7 +61,8 @@ class Productos(models.Model):
     fecha_edit = models.DateTimeField(default=timezone.now, null=True)
     useredit = models.CharField(max_length=255, null=True)
     movimiento = models.CharField(max_length=255, null=True)
-    
+    status_mov = models.BooleanField(default=True)
+
     def __str__(self):
         texto = "{0} ({1})"
         return texto.format(self.nombre, self.precio)
@@ -67,7 +73,16 @@ class Mensajes(models.Model):
     username = models.CharField(max_length=255)
     tiempo_creacion = models.DateTimeField(default=timezone.now)
     respuestascomentarios=models.CharField(max_length=255, null=True)
+    admincont= models.CharField(max_length=255,null=True)
+    tiem_res = models.DateTimeField(default=timezone.now, null=True)
+    status = models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
 
     def __str__(self):
         return self.comentario
-    
+class Historial(models.Model):
+    idhistorial = models.AutoField(primary_key=True)
+    movimiento = models.CharField(max_length=255)
+    usuario = models.CharField(max_length=255)
+    fecha = models.DateTimeField(default=timezone.now, null=True)
+    nombre = models.CharField(max_length=255, null=True)

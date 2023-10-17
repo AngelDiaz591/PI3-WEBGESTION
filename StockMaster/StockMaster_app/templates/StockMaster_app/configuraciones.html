@@ -71,6 +71,7 @@
                 </thead>
                 <tbody style="font-size: 15px;">
                     {% for c in Categoria %}
+                    {% if c.status%}
                         <tr>
                             <td>{{ forloop.counter }}</td>
                             <td>{{ c.nombre }}</td>
@@ -79,10 +80,11 @@
                                     <span class="material-symbols-outlined">edit</span>
                                 </a>
                             </td>
-                            <td class="elimina"><a href="{% url 'eliminarcategoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
+                            <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
                                 <span class="material-symbols-outlined">delete</span>
                             </a></td>
                         </tr>
+                    {% endif %}
                     {% endfor %}
                 </tbody>
             </table>

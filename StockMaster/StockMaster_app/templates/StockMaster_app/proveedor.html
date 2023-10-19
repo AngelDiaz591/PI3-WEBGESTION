@@ -117,7 +117,7 @@
                                     <label for="">Proveedor:</label>
                                     <div class="update">
                                         <div class="message">
-                                            <input type="text" id="NombreProv" name="NombreProv" class="updatess" placeholder="Nombre" maxlength="50" required>
+                                            <input type="text" id="NombreProv" name="NombreProv" class="updatess" placeholder="Nombre" maxlength="50" required oninput="convertirMayusculas()">
                                             <br><span class="error-message" style="color: red;"></span>
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                                         <div class="profile-photo">
                                         </div>
                                         <div class="message">
-                                            <input type="text" id="ContactoProv" name="ContactoProv" placeholder="Contacto" class="updatess" maxlength="50" required>
+                                            <input type="text" id="ContactoProv" name="ContactoProv" placeholder="Contacto" class="updatess" maxlength="50" required oninput="convertirMayusculas()">
                                             <br>
                                             <span class="error-message error" style="color: red;"></span>
                                         </div>
@@ -142,7 +142,7 @@
                                         <div class="profile-photo">
                                         </div>
                                         <div class="message">
-                                            <input type="email" id="EmailProv" name="EmailProv" placeholder="Email" class="updatess" maxlength="100" required>
+                                            <input type="email" id="EmailProv" name="EmailProv" placeholder="Email" class="updatess" maxlength="100" required oninput="convertirMayusculas()">
                                             <br>
                                             <span class="error-message" style="color: red;"></span>
                                         </div>
@@ -154,7 +154,7 @@
                                     <label for="">Direccion:</label>
                                     <div class="update">
                                         <div class="message">
-                                            <input type="text" id="Calle" name="Calle" class="updatess" placeholder="Calle" maxlength="50" required>
+                                            <input type="text" id="Calle" name="Calle" class="updatess" placeholder="Calle" maxlength="50" required oninput="convertirMayusculas()">
                                             <span class="error-message" style="color: red;"></span>
                                     </div>
                                     <div class="update">
@@ -175,7 +175,7 @@
                                     </div>
                                     <div class="update">
                                         <div class="message">
-                                            <input type="text" id="Colonia" name="Colonia" class="updatess" placeholder="Colonia" maxlength="50" required>
+                                            <input type="text" id="Colonia" name="Colonia" class="updatess" placeholder="Colonia" maxlength="50" required oninput="convertirMayusculas()">
                                             <br> <span class="error-message" style="color: red;"></span></br>
                                         </div>
                                     </div>
@@ -187,19 +187,19 @@
                                     </div>
                                     <div class="update">
                                         <div class="message">
-                                            <input type="text" id="Municipio" name="Municipio" class="updatess" placeholder="Municipio" maxlength="50" required>
+                                            <input type="text" id="Municipio" name="Municipio" class="updatess" placeholder="Municipio" maxlength="50" required oninput="convertirMayusculas()">
                                             <br> <span class="error-message" style="color: red;"></span></br>
                                         </div>
                                     </div>
                                     <div class="update">
                                         <div class="message">
-                                            <input type="text" id="Estado" name="Estado" class="updatess" placeholder="Estado" maxlength="50" required>
+                                            <input type="text" id="Estado" name="Estado" class="updatess" placeholder="Estado" maxlength="50" required oninput="convertirMayusculas()">
                                             <br> <span class="error-message" style="color: red;"></span></br>
                                         </div>
                                     </div>
                                     <div class="update">
                                         <div class="message">
-                                            <input type="text" id="Pais" name="Pais" class="updatess" placeholder="Pais" maxlength="50" required>
+                                            <input type="text" id="Pais" name="Pais" class="updatess" placeholder="Pais" maxlength="50" required oninput="convertirMayusculas()">
                                             <br> <span class="error-message" style="color: red;"></span></br>
                                         </div>
                                     </div>
@@ -250,6 +250,34 @@
     </div>
 </main>
 <script>
+    function convertirMayusculas(){
+        var upercase = document.getElementById('NombreProv').value.toUpperCase();
+        document.getElementById('NombreProv').value = upercase;
+        
+        var upercase = document.getElementById('ContactoProv').value.toUpperCase();
+        document.getElementById('ContactoProv').value = upercase;
+
+        var upercase = document.getElementById('EmailProv').value.toUpperCase();
+        document.getElementById('EmailProv').value = upercase;
+
+        var upercase = document.getElementById('Calle').value.toUpperCase();
+        document.getElementById('Calle').value = upercase;
+
+        var upercase = document.getElementById('Colonia').value.toUpperCase();
+        document.getElementById('Colonia').value = upercase;
+
+        var upercase = document.getElementById('Colonia').value.toUpperCase();
+        document.getElementById('Colonia').value = upercase;
+
+        var upercase = document.getElementById('Municipio').value.toUpperCase();
+        document.getElementById('Municipio').value = upercase;
+
+        var upercase = document.getElementById('Estado').value.toUpperCase();
+        document.getElementById('Estado').value = upercase;
+
+        var upercase = document.getElementById('Pais').value.toUpperCase();
+        document.getElementById('Pais').value = upercase;
+    }
     function validarNumeros(input) {
         // Obtener el valor actual del campo de entrada
         let valor = input.value;

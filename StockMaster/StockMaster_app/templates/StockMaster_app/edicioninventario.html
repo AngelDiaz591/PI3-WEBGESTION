@@ -111,7 +111,7 @@
                                 <div class="form-group">
                                     <label for="NumPrecio">Precio:</label>
                                     <input type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio"
-                                        value="{{ productos.precio }}" pattern="[0-9]{1,7}" class="form-control" maxlength="7" required>
+                                        value="{{ productos.precio }}" pattern="[0-9]{1,7}" class="form-control" maxlength="7" required oninput="validarNumeros(this)">
                                     <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                                     <span class="error-message error"></span>
                                 </div>
@@ -127,7 +127,7 @@
                                 <div class="form-group">
                                     <label for="CantPro">Cantidad de Producto:</label>
                                     <input type="text" id="CantPro" name="CantPro" placeholder="Cantidad de Producto"
-                                        pattern="[0-9]{1,7}" value="{{ productos.cantPro }}" class="form-control" maxlength="7" required>
+                                        pattern="[0-9]{1,7}" value="{{ productos.cantPro }}" class="form-control" maxlength="7" required oninput="validarNumeros(this)">
                                     <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                                     <span class="error-message error"></span>
                                 </div>
@@ -137,8 +137,8 @@
                                     <select name="categoria" id="categoria" class="updatess" required>
                                         <option value="" disabled>Selecciona una categoría</option>
                                         {% for c in Categoria %}
-                                        <option value="{{ c.categoria_id }}"
-                                            {% if c.categoria_id == productos.id_categorias %}selected{% endif %}>{{ c.nombre }}</option>
+                                            <option value="{{ c.categoria_id }}"
+                                                {% if c.categoria_id == productos.id_categorias.categoria_id %}selected="selected"{% endif %}>{{ c.nombre }}</option>
                                         {% endfor %}
                                     </select>
                                     <span class="error-message error"></span>
@@ -150,7 +150,7 @@
                                         <option value="" disabled>Selecciona un proveedor</option>
                                         {% for c in Proveedor %}
                                         <option value="{{ c.idProveedor }}"
-                                            {% if c.idProveedor == productos.id_Proveedors %}selected{% endif %}>{{ c.nombre }}</option>
+                                            {% if c.idProveedor == productos.id_Proveedores.idProveedor %}selected{% endif %}>{{ c.nombre }}</option>
                                         {% endfor %}
                                     </select>
                                     <span class="error-message error"></span>
@@ -245,7 +245,23 @@ campos.forEach(function (campoId) {
 
     </script>
     <script src="{% static 'js/inventario.js' %}"></script>
-    <script src="{% static 'js/edit.js' %}"></script>
+    <script>
+        function validarNumeros(input) {
+            // Obtener el valor actual del campo de entrada
+            let valor = input.value;
+    
+            // Reemplazar cualquier caracter que no sea un número con una cadena vacía
+            valor = valor.replace(/[^0-9]/g, '');
+    
+            // Limitar la longitud del valor a 7 caracteres
+            if (valor.length > 7) {
+                valor = valor.slice(0, 7);
+            }
+    
+            // Actualizar el valor del campo de entrada con la versión filtrada
+            input.value = valor;
+        }
+    </script>
 </body>
 </html>
 {% endblock %}

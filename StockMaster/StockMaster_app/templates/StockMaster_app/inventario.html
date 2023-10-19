@@ -64,7 +64,6 @@
                 </div>
             </div>
         </form>
-        <div style="overflow: auto; height: 400px;">
             {% for producto in Productos %} 
                 {% if producto.status %}
                     {% if not request.GET.categoria or producto.id_categorias.nombre == request.GET.categoria %}
@@ -97,7 +96,6 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-        </div>
     </div>
 </main>
 

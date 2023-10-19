@@ -30,15 +30,17 @@
                         {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
                                 {% for us in Usuarios %}
-                                    <tr>
-                                        <td>{{ us.first_name }}</td>
-                                        <td>{{ us.last_name }}</td>
-                                        <td>{{ us.email }}</td>
-                                        <td>{% if us.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                        <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id}}">
-                                            <span class="material-symbols-outlined">delete</span>
-                                        </a></td>
-                                    </tr>
+                                    {% if us != request.user%}
+                                        <tr>
+                                            <td>{{ us.first_name }}</td>
+                                            <td>{{ us.last_name }}</td>
+                                            <td>{{ us.email }}</td>
+                                            <td>{% if us.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
+                                            <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id}}">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a></td>
+                                        </tr>
+                                    {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endif %}

@@ -83,6 +83,10 @@
                     {% endif %}
                 {% endif %}
                 {% if request.user.is_authenticated %}
+                <a href="{% url 'historial' %}">
+                    <span class="material-symbols-outlined">history</span>
+                    <h3>Historial</h3>
+                </a>
                 <a href="{% url 'exit' %}">
                     <span class="material-symbols-outlined">logout</span>
                     <h3>Cerrar Sesion</h3>

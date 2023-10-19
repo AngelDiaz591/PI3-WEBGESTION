@@ -4,7 +4,9 @@
     display: flex;
     width: 100%;
 }
-
+.container-modal .content-modal .recent-updates h2,label,input{
+    color: var(--color-modal);
+}
 .boton-modal label{
     padding: 10px 15px;
     background-color: #5488a3;

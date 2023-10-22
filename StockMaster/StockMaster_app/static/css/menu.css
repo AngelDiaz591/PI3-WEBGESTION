@@ -221,7 +221,7 @@ main .recent-orders table tbody tr{
     border: none;
 }
 main .recent-orders table tbody tr:hover{
-    /* background: var(--color-tabla); */
+    background: var(--color-tabla);
 }
 main table tbody td{
     height: 4.8rem;
@@ -428,4 +428,58 @@ textarea{
     align-items: center;
     position: absolute;
     padding: 0.5rem 0;
+}
+
+/* Estilo para el menú desplegable */
+.dropdown {
+    position: relative;
+}
+
+/* Estilo para el enlace del menú desplegable */
+.dropdown a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s;
+}
+
+/* Estilo para el enlace activo del menú desplegable */
+.dropdown a.active {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para el ícono del menú desplegable (puedes cambiar el ícono según tus preferencias) */
+.dropdown a .material-symbols-outlined {
+    margin-right: 10px;
+}
+
+/* Estilo para el submenú */
+.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Estilo para los enlaces del submenú */
+.dropdown .dropdown-content a {
+    color: #333;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+/* Estilo para los enlaces del submenú al pasar el cursor por encima */
+.dropdown .dropdown-content a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Mostrar el submenú cuando se hace hover en el menú desplegable */
+.dropdown:hover .dropdown-content {
+    display: block;
 }

@@ -84,11 +84,17 @@
                     {% endif %}
                 {% endif %}
                 {% if request.user.is_authenticated %}
-                <a href="{% url 'historial' %}">
-                    <span class="material-symbols-outlined">history</span>
-                    <h3>Historial</h3>
-                </a>
-                <a href="{% url 'exit' %}">
+                <div class="dropdown">
+                    <a href="{% url 'historial' %}" class="active">
+                        <span class="material-symbols-outlined">history</span>
+                        <h3>Historial</h3>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#" class="active">Opción 1</a>
+                        <a href="#" class="active">Opción 2</a>
+                    </div>
+                </div>
+                <a href="{% url 'exit' %}" class="active">
                     <span class="material-symbols-outlined">logout</span>
                     <h3>Cerrar Sesion</h3>
                 </a>
@@ -103,6 +109,27 @@
         <!--Fin del contenido-->
 
     </div>
+
+    
+    <!-- Agrega el siguiente script en la parte inferior de tu archivo HTML, antes de la etiqueta </body> -->
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdown = document.querySelector('.dropdown');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+    
+        dropdown.addEventListener('click', function() {
+            dropdownContent.classList.toggle('show');
+        });
+    
+        // Cierra el submenú si se hace clic fuera de él
+        document.addEventListener('click', function(event) {
+            if (!dropdown.contains(event.target)) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+    });
+    </script>
+
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>

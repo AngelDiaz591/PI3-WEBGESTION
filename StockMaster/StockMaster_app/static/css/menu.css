@@ -76,7 +76,7 @@ h2{
     font-size: 1.4rem;
 }
 h3{
-    font-size: 0.87rem;
+    font-size: 0.95rem;
 }
 h4
 {
@@ -429,6 +429,8 @@ textarea{
     position: absolute;
     padding: 0.5rem 0;
 }
+
+
 
 /* Estilo para el menú desplegable */
 .dropdown {

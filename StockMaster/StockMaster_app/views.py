@@ -206,9 +206,37 @@ def edicioninventario(request, idproducts):
     ProveedorListados = Proveedores.objects.all()
     imagen_url = get_imagen_url(productos.imagen)
     return render(request, "StockMaster_app/edicioninventario.html", {"productos": productos, "imagen_url": imagen_url, "Categoria": CategoriaListados, 'Proveedor' : ProveedorListados})
-
 @login_required(login_url='signin')
 def editarProducto(request):
+    idproducts = request.POST.get('idproducts')
+    codigo = request.POST.get('txtCodigo')
+    nombre = request.POST.get('txtNombre')
+    precio = request.POST.get('NumPrecio')
+    marca = request.POST.get('NomMarca')
+    cantPro = request.POST.get('CantPro')
+    nueva_imagen = request.FILES.get('imagen') 
+    categoria_id = request.POST.get('categoria') 
+
+    productos = Productos.objects.get(idproducts=idproducts)
+
+    productos.codigo = codigo
+    productos.nombre = nombre
+    productos.precio = precio
+    productos.marca = marca
+    productos.cantPro = cantPro
+    productos.username = request.user.username
+    productos.movimiento = 'Edicion de Producto'
+    productos.fecha_edit = timezone.now()
+    productos.id_categorias_id = categoria_id
+    if nueva_imagen:
+        productos.imagen = nueva_imagen.read()
+    productos.save()
+
+    messages.success(request, '¡Producto Editado!')
+    return redirect('/productos/')
+
+@login_required(login_url='signin')
+def editarProductoMod(request):
     try:
         idproducts = request.POST.get('productId')
         codigo = request.POST.get('txtCodigo')
@@ -249,7 +277,7 @@ def editarProducto(request):
         return redirect('/productos/')  # Puedes redirigir a donde desees
 
 
-# EDICON DENTRO DEL MODAL CAERGANDO LOS DATOS
+# EDICON DENTRO DEL MODAL CARGANDO LOS DATOS
 
 
 

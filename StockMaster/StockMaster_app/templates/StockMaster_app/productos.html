@@ -350,7 +350,7 @@
                         }, 5000);
                     </script>
                     {% endif %}
-                    <form action="/editarProducto/" method="POST" enctype="multipart/form-data" value="{{c.idproducts }}">
+                    <form action="/editarProducto2/" method="POST" enctype="multipart/form-data" value="{{c.idproducts }}">
                         {% csrf_token %}
                         <input type="hidden" id="editProductId" name="productId" value="{{ c.idproducts }}">
                         <div class="columnas"> <!-- class="form-columns" -->

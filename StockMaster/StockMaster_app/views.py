@@ -16,6 +16,7 @@ import base64
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist 
 # Create your views here.
 
 class CustomUserCreationForm(UserCreationForm):
@@ -172,6 +173,7 @@ def registrarProducto(request):
     imagen = request.FILES['imagen'] 
     categoria_id = request.POST['categoria']
     idProveedor = request.POST['proveedor']
+    
 
     # Comprobar si el producto ya existe
     if Productos.objects.filter(codigo=codigo).exists():
@@ -192,6 +194,11 @@ def registrarProducto(request):
         messages.success(request, '¡Producto registrado!')
     return redirect('/productos/')
 
+
+
+
+
+#EDICION DE OTRA PAGINA
 @login_required(login_url='signin')
 def edicioninventario(request, idproducts):
     productos = Productos.objects.get(idproducts= idproducts)
@@ -202,37 +209,62 @@ def edicioninventario(request, idproducts):
 
 @login_required(login_url='signin')
 def editarProducto(request):
-    idproducts = request.POST.get('idproducts')
-    codigo = request.POST.get('txtCodigo')
-    nombre = request.POST.get('txtNombre')
-    precio = request.POST.get('NumPrecio')
-    marca = request.POST.get('NomMarca')
-    cantPro = request.POST.get('CantPro')
-    nueva_imagen = request.FILES.get('imagen') 
-    categoria_id = request.POST.get('categoria') 
-    idProveedor = request.POST.get('proveedor')
+    try:
+        idproducts = request.POST.get('productId')
+        codigo = request.POST.get('txtCodigo')
+        nombre = request.POST.get('txtNombre')
+        precio = request.POST.get('NumPrecio')
+        marca = request.POST.get('NomMarca')
+        cantPro = request.POST.get('CantPro')
+        nueva_imagen = request.FILES.get('imagen') 
+        categoria_id = request.POST.get('categoria') 
+        idProveedor = request.POST.get('proveedor')
 
-    productos = Productos.objects.get(idproducts=idproducts)
+        try:
+            productos = Productos.objects.get(idproducts=idproducts)
+        except ObjectDoesNotExist:
+            messages.error(request, 'El producto no se encontró o no existe.')
+            return redirect('/productos/')  # Puedes redirigir a donde desees
 
-    productos.codigo = codigo
-    productos.nombre = nombre
-    productos.precio = precio
-    productos.marca = marca
-    productos.cantPro = cantPro
-    productos.username = request.user.username
-    productos.movimiento = 'Edicion de Producto'
-    productos.fecha_edit = timezone.now()
-    productos.id_categorias_id = categoria_id
-    productos.id_Proveedores_id = idProveedor
-    if nueva_imagen:
-        productos.imagen = nueva_imagen.read()
-    historial= Historial.objects.all()
-    historial = Historial(movimiento='Edicion de Producto',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
-    historial.save()
-    productos.save()
+        productos.codigo = codigo
+        productos.nombre = nombre
+        productos.precio = precio
+        productos.marca = marca
+        productos.cantPro = cantPro
+        productos.username = request.user.username
+        productos.movimiento = 'Edicion de Producto'
+        productos.fecha_edit = timezone.now()
+        productos.id_categorias_id = categoria_id
+        productos.id_Proveedores_id = idProveedor
+        if nueva_imagen:
+            productos.imagen = nueva_imagen.read()
+        historial = Historial(movimiento='Edicion de Producto', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
+        historial.save()
+        productos.save()
 
-    messages.success(request, '¡Producto Editado!')
-    return redirect('/productos/')
+        messages.success(request, '¡Producto Editado!')
+        return redirect('/productos/')
+    except ObjectDoesNotExist:
+        messages.error(request, 'El producto no se encontró o no existe.')
+        return redirect('/productos/')  # Puedes redirigir a donde desees
+
+
+# EDICON DENTRO DEL MODAL CAERGANDO LOS DATOS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required(login_url='signin')
 def eliminaInventario(request, idproducts):

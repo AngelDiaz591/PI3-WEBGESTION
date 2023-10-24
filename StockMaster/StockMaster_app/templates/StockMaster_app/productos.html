@@ -92,9 +92,9 @@
                                 <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info" style="margin-left: 2rem;">
                                     <span class="material-symbols-outlined">edit</span>
                                 </a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
-                                <!-- <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
-                                    <span class="material-symbols-outlined">edit</span> -->
-                                </a></td>
+                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
+                                    <span class="material-symbols-outlined">edit</span></a>
+                                </td>
                                 <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
                                     <span class="material-symbols-outlined">delete</span>
                                 </a></td>
@@ -350,15 +350,12 @@
                         }, 5000);
                     </script>
                     {% endif %}
-                    <form action="/editarProducto/" method="POST" enctype="multipart/form-data">
+                    <form action="/editarProducto/" method="POST" enctype="multipart/form-data" value="{{c.idproducts }}">
                         {% csrf_token %}
-                        <input type="hidden" id="editProductId" name="productId" value="">
-                        <div class="columnas"> <!-- class="form-columns" --
+                        <input type="hidden" id="editProductId" name="productId" value="{{ c.idproducts }}">
+                        <div class="columnas"> <!-- class="form-columns" -->
                             <!-- Primer columna -->
                             <div class="primerColum">
-                                <div >
-                                    <input type="hidden" name="idproducts" value="{{ productos.idproducts }}">
-                                </div>
                                 <div class="formulario">
                                     <!-- <label class="sub" for="txtCodigo">Código:</label> -->
                                     <input class="ingresar" type="text" id="txtCodigo" name="txtCodigo" value="{{ productos.codigo }}"
@@ -404,12 +401,23 @@
                                     </select>
                                     <span class="error-message error"></span>
                                 </div>
-                                
+                                <div class="update">
+                                    <div class="message"></div>
+                                    <label for="proveedor">Proveedor:</label>
+                                    <select name="proveedor" id="proveedor" class="updatess" required>
+                                        <option value="" disabled>Selecciona un proveedor</option>
+                                        {% for c in Proveedor %}
+                                        <option value="{{ c.idProveedor }}"
+                                            {% if c.idProveedor == productos.id_Proveedores.idProveedor %}selected{% endif %}>{{ c.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="error-message error"></span>
+                                </div>
                             </div>
                         
                             <div class="secondColumn">
                                 {% if imagen_url %}
-                                <center><img src="{{ imagen_url }}" alt="Imagen actual" style="max-width: 150px; max-height: 150px"><center>
+                                <center><img src="{{ imagen_url }}" alt="Imagen actual" style="max-width: 150px; max-height: 150px"></center>
                                 {% else %}
                                 <p>No hay imagen disponible.</p>
                                 {% endif %}

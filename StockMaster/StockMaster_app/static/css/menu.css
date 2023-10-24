@@ -430,58 +430,21 @@ textarea{
     padding: 0.5rem 0;
 }
 
-
-
-/* Estilo para el menú desplegable */
-.dropdown {
-    position: relative;
+.menu,
+.active {
+  list-style-type: none;
 }
-
-/* Estilo para el enlace del menú desplegable */
-.dropdown a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    transition: background-color 0.3s;
+.logo {
+  font-size: 20px;
+  padding: 7.5px 10px 7.5px 0;
 }
-
-/* Estilo para el enlace activo del menú desplegable */
-.dropdown a.active {
-    background-color: #f0f0f0;
+.item {
+  padding: 10px;
 }
-
-/* Estilo para el ícono del menú desplegable (puedes cambiar el ícono según tus preferencias) */
-.dropdown a .material-symbols-outlined {
-    margin-right: 10px;
+.item.button {
+  padding: 9px 5px;
 }
-
-/* Estilo para el submenú */
-.dropdown .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    min-width: 200px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-/* Estilo para los enlaces del submenú */
-.dropdown .dropdown-content a {
-    color: #333;
-    padding: 10px;
-    display: block;
-    text-decoration: none;
-}
-
-/* Estilo para los enlaces del submenú al pasar el cursor por encima */
-.dropdown .dropdown-content a:hover {
-    background-color: #f0f0f0;
-}
-
-/* Mostrar el submenú cuando se hace hover en el menú desplegable */
-.dropdown:hover .dropdown-content {
-    display: block;
+.item:not(.button) a:hover,
+.item a:hover::after {
+  color: #ccc;
 }

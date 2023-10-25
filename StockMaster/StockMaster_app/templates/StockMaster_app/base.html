@@ -90,8 +90,14 @@
                     <i class="submenu-icon fas fa-chevron-right"></i>
                 </a>
                 <div class="submenu">
-                    <a href="{% url 'soporte' %}" class="active">Design</a>
-                    <a href="#" class="active">Development</a>
+                    <a href="{% url 'soporte' %}" class="active">
+                        <span class="material-symbols-outlined">browse_activity</span>
+                        Movimientos
+                    </a>
+                    <a href="#" class="active">
+                        <span class="material-symbols-outlined">conveyor_belt</span>
+                        Productos
+                    </a>
                 </div>
                 <a href="{% url 'exit' %}" class="active">
                     <span class="material-symbols-outlined">logout</span>

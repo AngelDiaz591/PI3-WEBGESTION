@@ -76,7 +76,7 @@ h2{
     font-size: 1.4rem;
 }
 h3{
-    font-size: 0.95rem;
+    font-size: 0.89rem;
 }
 h4
 {
@@ -430,12 +430,13 @@ textarea{
     padding: 0.5rem 0;
 }
 
-/* Estilos iniciales para ocultar los submenús */
+
+/* ocultar los submenús */
 .submenu {
     display: none;
 }
 
-/* Mostrar el submenú cuando se pasa el cursor sobre la etiqueta "a" */
+/* Mostrar el submenú */
 .submenu-trigger:hover + .submenu,
 .submenu:hover {
     display: block;
@@ -446,7 +447,7 @@ textarea{
 }
 
 .submenu.active .submenu-icon:hover {
-    transform: rotate(180deg); /* Rota 180 grados cuando el submenú está abierto */
+    transform: rotate(180deg); /* Rota icono con el hover */
 }
 
 .rotate-icon {

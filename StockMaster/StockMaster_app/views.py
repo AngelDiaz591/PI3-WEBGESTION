@@ -207,6 +207,7 @@ def edicioninventario(request, idproducts):
     imagen_url = get_imagen_url(productos.imagen)
     return render(request, "StockMaster_app/edicioninventario.html", {"productos": productos, "imagen_url": imagen_url, "Categoria": CategoriaListados, 'Proveedor' : ProveedorListados})
 @login_required(login_url='signin')
+
 def editarProducto(request):
     idproducts = request.POST.get('idproducts')
     codigo = request.POST.get('txtCodigo')
@@ -216,7 +217,7 @@ def editarProducto(request):
     cantPro = request.POST.get('CantPro')
     nueva_imagen = request.FILES.get('imagen') 
     categoria_id = request.POST.get('categoria') 
-
+    idProveedor = request.POST.get('proveedor')
     productos = Productos.objects.get(idproducts=idproducts)
 
     productos.codigo = codigo
@@ -228,12 +229,45 @@ def editarProducto(request):
     productos.movimiento = 'Edicion de Producto'
     productos.fecha_edit = timezone.now()
     productos.id_categorias_id = categoria_id
+    productos.id_Proveedores_id= idProveedor
     if nueva_imagen:
         productos.imagen = nueva_imagen.read()
     productos.save()
 
     messages.success(request, '¡Producto Editado!')
     return redirect('/productos/')
+
+
+
+
+# EDICON DENTRO DEL MODAL CARGANDO LOS DATOS
+
+#EDICION MODAL
+@login_required
+def edicioninventario2(request, idproducts):
+    productos = Productos.objects.get(idproducts=idproducts)
+    CategoriaListados = Categoria.objects.all()
+    ProveedorListados = Proveedores.objects.all()
+    imagen_url = get_imagen_url(productos.imagen)
+
+    data = {
+        "productos": {
+            "codigo": productos.codigo,
+            "nombre": productos.nombre,
+            "precio": productos.precio,
+            "marca": productos.marca,
+            "cantPro": productos.cantPro,
+            "id_categorias": productos.id_categorias.categoria_id,
+            "id_Proveedores": productos.id_Proveedores.idProveedor,
+        },
+        "imagen_url": imagen_url,
+        "Categoria": [{"categoria_id": c.categoria_id, "nombre": c.nombre} for c in CategoriaListados],
+        "Proveedor": [{"idProveedor": c.idProveedor, "nombre": c.nombre} for c in ProveedorListados],
+    }
+
+    
+    return JsonResponse(data)      
+    #return render(request, 'StockMaster_app/productos.html', data)   
 
 @login_required(login_url='signin')
 def editarProductoMod(request):
@@ -275,10 +309,6 @@ def editarProductoMod(request):
     except ObjectDoesNotExist:
         messages.error(request, 'El producto no se encontró o no existe.')
         return redirect('/productos/')  # Puedes redirigir a donde desees
-
-
-# EDICON DENTRO DEL MODAL CARGANDO LOS DATOS
-
 
 
 

@@ -212,6 +212,7 @@ main .recent-orders table{
     text-align: center;
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
+    /* border-collapse: collapse; */
 }
 main .recent-orders table:hover{
     box-shadow: none;

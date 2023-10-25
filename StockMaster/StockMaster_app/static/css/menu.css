@@ -430,21 +430,26 @@ textarea{
     padding: 0.5rem 0;
 }
 
-.menu,
-.active {
-  list-style-type: none;
+/* Estilos iniciales para ocultar los submenús */
+.submenu {
+    display: none;
 }
-.logo {
-  font-size: 20px;
-  padding: 7.5px 10px 7.5px 0;
+
+/* Mostrar el submenú cuando se pasa el cursor sobre la etiqueta "a" */
+.submenu-trigger:hover + .submenu,
+.submenu:hover {
+    display: block;
 }
-.item {
-  padding: 10px;
+
+.submenu-icon {
+    transition: transform 0.3s ease;
 }
-.item.button {
-  padding: 9px 5px;
+
+.submenu.active .submenu-icon:hover {
+    transform: rotate(180deg); /* Rota 180 grados cuando el submenú está abierto */
 }
-.item:not(.button) a:hover,
-.item a:hover::after {
-  color: #ccc;
+
+.rotate-icon {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
 }

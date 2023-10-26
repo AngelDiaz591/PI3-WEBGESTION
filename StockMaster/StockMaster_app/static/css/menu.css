@@ -76,7 +76,11 @@ h2{
     font-size: 1.4rem;
 }
 h3{
+<<<<<<< HEAD
     font-size: 0.89rem;
+=======
+    font-size: 0.87rem;
+>>>>>>> parent of 0ed4bab (Modificacion de letras, menu)
 }
 h4
 {
@@ -440,9 +444,40 @@ textarea{
     padding: 0.5rem 0;
 }
 
+<<<<<<< HEAD
 
 /* ocultar los submenús */
 .submenu {
+=======
+/* Estilo para el menú desplegable */
+.dropdown {
+    position: relative;
+}
+
+/* Estilo para el enlace del menú desplegable */
+.dropdown a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s;
+}
+
+/* Estilo para el enlace activo del menú desplegable */
+.dropdown a.active {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para el ícono del menú desplegable (puedes cambiar el ícono según tus preferencias) */
+.dropdown a .material-symbols-outlined {
+    margin-right: 10px;
+}
+
+/* Estilo para el submenú */
+.dropdown .dropdown-content {
+>>>>>>> parent of 0ed4bab (Modificacion de letras, menu)
     display: none;
 }
 

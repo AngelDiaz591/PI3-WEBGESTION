@@ -34,9 +34,15 @@ urlpatterns = [
     path('editarcant/<int:idproducts>/', views.editarcant, name='editarcant'),
 
     path('productos/edicioninventario/<int:idproducts>', views.edicioninventario),
+    path('productos/edicioninventario2/<int:idproducts>/', views.edicioninventario2, name='edicioninventario2'),
+    path('editarProducto2/', views.editarProductoMod),
+
+
 
     path('editarProducto/', views.editarProducto),
-    path('editarProducto2/', views.editarProductoMod),
+
+
+    
 
     path('productos/status/<int:idproducts>/', views.cambio_status, name='cambio_status'),
     path('actividades/elimina_men/<int:idproducts>/', views.elimina_men, name='elimina_men'),

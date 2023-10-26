@@ -326,7 +326,7 @@
 }
 </style>
 
-
+{% comment %} modal  {% endcomment %}
 <!-- Modal edición -->
 <div id="editModal" class="modal">
     <div class="modal-content">
@@ -439,8 +439,49 @@
     </div>
 </div>
 <!-- Fin Modal edición -->
+<!-- Script modal edicion
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtén todos los elementos con la clase "edit-product-button"
+        const editButtons = document.querySelectorAll('.edit-product-button');
+        const editModal = document.getElementById('editModal');
+        const editProductIdField = document.getElementById('editProductId');
 
-<!-- Script modal edicion-->
+        // Función para abrir el modal de edición y redirigir a la URL deseada
+        function openEditModal(productId) {
+            editProductIdField.value = productId;
+
+            // Redirige a la URL con el ID del producto
+            window.location.href = `/productos/edicioninventario2/${productId}`;
+        }
+
+        // Asigna un evento de clic a cada botón de edición
+        editButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                const productId = button.getAttribute('data-id');
+                openEditModal(productId);
+            });
+        });
+
+        // Resto del código para cerrar el modal y otros eventos
+
+// Cierra el modal de edición cuando se hace clic en la "x"
+const closeEditModal = document.getElementById('closeEditModal');
+closeEditModal.addEventListener("click", function() {
+    editModal.style.display = "none";
+});
+
+// Cierra el modal de edición si se hace clic fuera del contenido del modal
+window.addEventListener("click", function(event) {
+    if (event.target === editModal) {
+        editModal.style.display = "none";
+    }
+});
+    });
+
+</script> -->
+<!-- Fin Script modal edicion-->
+<!-- Script modal edicion -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     // Obtén todos los elementos con la clase "edit-product-button"
@@ -484,8 +525,8 @@
 
         
     });
-    
-</script>
+
+</script>-->
 <!-- Fin Script modal edicion-->
 
 </main>

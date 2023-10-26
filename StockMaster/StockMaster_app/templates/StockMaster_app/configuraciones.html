@@ -35,18 +35,10 @@
 </div>
 
 <main>
-    <h1>Configuraciones</h1>
+    <h1>Etiquetas Master</h1>
     <div class="recent-orders">
-        <div class="boton-modal">
-            <label for="btn-modal">
-                <i class="fa-solid fa-plus"></i>    Agregar Categorias
-            </label>
-        </div>
         <div class="principal">
-            <div>
-                <h2 class="agregar">Categorias</h2>
-            </div>
-            <div class="search-bar">
+            <div class="search-bar-v1">
                 <input type="text" id="search-input" placeholder="Buscar categoria..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
@@ -60,36 +52,85 @@
                 </div>
             {% endfor %}
         </div>
-        <div style="overflow:auto; height: 450px;"">
-            <table class="table table-striped" ">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Categorias</th>
-                        <th colspan="2">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody style="font-size: 15px;">
-                    {% for c in Categoria %}
-                    {% if c.status%}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ c.nombre }}</td>
-                            <td class="edita">
-                                <a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="margin-left: 15rem;">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </a>
-                            </td>
-                            <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
-                        </tr>
-                    {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="mitad">
+            <div>      
+                <div class="boton-modal">
+                    <h2 class="agregar">Categorias</h2>
+                    <label for="btn-modal">
+                        <i class="fa-solid fa-plus"></i>    Agregar Categorias
+                    </label>
+                </div>      
+                <div style="overflow:auto; height: 450px;">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                
+                                <th>#</th>
+                                <th>Categorias</th>
+                                <th colspan="2">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 15px;">
+                            {% for c in Categoria %}
+                            {% if c.status%}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ c.nombre }}</td>
+                                    <td class="edita">
+                                        <a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="margin-left: 15rem;">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </a>
+                                    </td>
+                                    <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="boton-modal">
+                    <h2 class="agregar">Marcas</h2>
+                    <label for="btn-modal-segundo">
+                        <i class="fa-solid fa-plus"></i>     Marca
+                    </label>
+                </div>
+                
+                <div style="overflow:auto; height: 450px;"">
+                    <table class="table table-striped" ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Marcas</th>
+                                <th colspan="2">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 15px;">
+                            {% for c in Categoria %}
+                            {% if c.status%}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ c.nombre }}</td>
+                                    <td class="edita">
+                                        <a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="margin-left: 15rem;">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </a>
+                                    </td>
+                                    <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <!--Ventana Modal-->
+        <!--Ventana Modal Categorias-->
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
             <div class="content-modal" style="width: 100%; max-width: 400px;">
@@ -128,17 +169,57 @@
         <!--Fin de Ventana Modal-->
         </div>
         <!--Fin ventana modal-->
+
+        <!--Ventana Modal Marcas-->
+        <input type="checkbox" id="btn-modal-segundo">
+        <div class="container-modal-segundo">
+            <div class="content-modal" style="width: 100%; max-width: 400px;">
+                <label for="btn-modal-segundo" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
+                <div class="recent-updates">
+                    <h2>Agregar Nueva Marca</h2>
+                    <br>
+                    <div class="updates">
+                        <form action="/registrar_categoria/" method="POST" enctype="multipart/form-data" id="mi_formulario">
+                            {% csrf_token %}
+                            <div class="updatess">
+                                <input type="text" id="txtNombreCat" name="txtNombreCat" placeholder="Nombre" pattern="[A-Za-z0-9]{6,1}" minlength="0" maxlength="10" required>
+                                <span class="error-message" style="color: red;"></span>
+                            </div>
+                            <div class="btn-cerrar">
+                                <button type="submit">Guardar</button>
+                                <label for="btn-modal-segundo">Cancelar</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    // Obtén todos los elementos con la clase "close-btn"
+                    var closeBtns = document.querySelectorAll('.close-btnn');
+
+                    // Agrega un evento de clic a cada elemento
+                    closeBtns.forEach(function (closeBtn) {
+                        closeBtn.addEventListener('click', function () {
+                            // Oculta el elemento al hacer clic
+                            closeBtn.style.display = 'none';
+                        });
+                    });
+                </script>
+            <label for="btn-modal-segundo" class="cerrar-modal"></label>
+            </div>
+        </div>
+        <!--Fin ventana modal-->
+        
 </main>
 
-    <script>
-        // Función para eliminar el mensaje al hacer clic en el botón de cerrar
-        function dismissMessage(button) {
-            const messageContainer = button.closest('.alert');
-            if (messageContainer) {
-                messageContainer.remove();
-            }
-        }   
-    </script>
+<script>
+    // Función para eliminar el mensaje al hacer clic en el botón de cerrar
+    function dismissMessage(button) {
+        const messageContainer = button.closest('.alert');
+        if (messageContainer) {
+            messageContainer.remove();
+        }
+    }   
+</script>
 
 <script src="{% static 'login/js/busqueda.js' %}"></script>
 

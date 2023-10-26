@@ -34,7 +34,7 @@
             <div class="sidebar">
                 <a href="{% url 'actividades' %}" class="active">
                     <span class="material-symbols-outlined">grid_view</span>
-                    <h3>Actividad Reciente</h3>
+                    <h3>Actividad Recient</h3>
                 </a>
                 <a href="{% url 'inventario' %}" class="active">
                     <span class="material-symbols-outlined">receipt_long</span>
@@ -42,14 +42,26 @@
                 </a>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
-                        <a href="{% url 'productos' %}" class="active">
-                            <span class="material-symbols-outlined">inventory</span>
-                            <h3>Productos</h3>
+                        <a class="active submenu-trigger">
+                            <span class="material-symbols-outlined">history</span>
+                            <h3>Gestion</h3>
+                            <i class="submenu-icon fas fa-chevron-right"></i>
                         </a>
-                        <a href="{% url 'prov' %}">
-                            <span class="material-symbols-outlined">local_shipping</span>
-                            <h3>Proveedores</h3>
-                        </a>
+                        <div class="submenu">
+                            <a href="{% url 'productos' %}" class="active">
+                                <span class="material-symbols-outlined">inventory</span>
+                                <h3>Productos</h3>
+                            </a>
+                            <a href="{% url 'prov' %}" class="active">
+                                <span class="material-symbols-outlined">local_shipping</span>
+                                <h3>Proveedores</h3>
+                            </a>
+                            <a href="{% url 'configuraciones77' %}" class="active">
+                                <span class="material-symbols-outlined">settings</span>
+                                <h3>Categorias y Marcas</h3>
+                            </a>
+                        </div>
+                        
                         <a href="{% url 'recuperar_producto' %}" class="active">
                             <span class="material-symbols-outlined">restart_alt</span>
                             <h3>Recuperacion</h3>
@@ -75,14 +87,6 @@
                         {% endif %}
                     </span>
                 </a>
-                {% if request.user.is_authenticated %}
-                    {% if request.user.is_superuser %}
-                        <a href="{% url 'configuraciones77' %}" class="active">
-                            <span class="material-symbols-outlined">settings</span>
-                            <h3>Configuraciones</h3>
-                        </a>
-                    {% endif %}
-                {% endif %}
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'historial' %}" class="active submenu-trigger">
                     <span class="material-symbols-outlined">history</span>

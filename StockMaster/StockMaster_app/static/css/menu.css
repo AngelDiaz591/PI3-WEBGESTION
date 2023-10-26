@@ -109,12 +109,24 @@ aside h3{
     gap: 1.8rem;
     grid-template-columns: auto 23rem;
 }
+.mitad{
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 50% auto;
+}
 .profile-photo{
     width: 1.8rem;
     height: 2.8rem;
 }
 .text-muted{
     color: var(--color-info-dark);
+}
+.agregar{
+    text-align: center;
+    margin-right: 10rem;
+    margin-left: 3rem;
 }
 aside{
     height: 100vh;
@@ -212,17 +224,14 @@ main .recent-orders table{
     text-align: center;
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
-    /* border-collapse: collapse; */
+    
 }
 main .recent-orders table:hover{
     box-shadow: none;
 }
 main .recent-orders table tbody tr{
     background: var(--color-white);
-    border: none;
-}
-main .recent-orders table tbody tr:hover{
-    background: var(--color-tabla);
+    
 }
 main table tbody td{
     height: 4.8rem;

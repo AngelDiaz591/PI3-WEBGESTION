@@ -119,126 +119,6 @@
 
     </div>
 
-<!--    <script>
-        let submenuTriggers; // Declara submenuTriggers en un ámbito global
-        let openSubmenu = null; // Variable para rastrear el submenú abierto actualmente
-    
-        document.addEventListener('DOMContentLoaded', function() {
-            submenuTriggers = document.querySelectorAll('.submenu-trigger');
-    
-            submenuTriggers.forEach(trigger => {
-                trigger.addEventListener('click', function() {
-                    // Si el mismo submenú ya está abierto, ciérralo
-                    if (openSubmenu === this) {
-                        closeSubmenu(this);
-                        openSubmenu = null;
-                    } else {
-                        // Cierra el submenú anteriormente abierto (si lo hay)
-                        if (openSubmenu) {
-                            closeSubmenu(openSubmenu);
-                        }
-    
-                        // Abre el submenú actual
-                        openSubmenu = this;
-                        openSubmenu.querySelector('.submenu').classList.add('active');
-    
-                        // Agrega la clase CSS para rotar el icono
-                        const icon = openSubmenu.querySelector('.submenu-icon');
-                        icon.classList.add('rotate-icon');
-                    }
-                });
-            });
-        });
-    
-        function closeSubmenu(trigger) {
-            const submenu = trigger.querySelector('.submenu');
-            submenu.classList.remove('active');
-    
-            // Remueve la clase CSS de rotación del icono
-            const icon = trigger.querySelector('.submenu-icon');
-            icon.classList.remove('rotate-icon');
-        }
-    </script> -->
-
-<!-- Opcion: prueba 2, NO QUITAR NI MOVER-->
-<!-- <script>
-    // Selecciona todos los elementos con la clase 'submenu-trigger'
-    document.addEventListener('DOMContentLoaded', function() {
-        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
-
-        // Selecciona todos los elementos con la clase 'submenu-trigger'
-        submenuTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault(); // Evita el comportamiento predeterminado de los enlaces
-
-                // Busca el elemento 'submenu' y 'submenu-icon' dentro del 'trigger'
-                const submenu = trigger.querySelector('.submenu');
-                const icon = trigger.querySelector('.submenu-icon');
-
-                // Si el 'submenu' tiene la clase 'active', quítala y gira el 'icon'
-                if (submenu.classList.contains('active')) {
-                    submenu.classList.remove('active');
-                    icon.classList.remove('rotate-icon');
-                } else {
-                    // De lo contrario, agrega la clase 'active' al 'submenu' y rota el 'icon'
-                    submenu.classList.add('active');
-                    icon.classList.add('rotate-icon');
-                }
-            });
-        });
-
-        // Cierra el submenú si se hace clic en una opción del menú principal
-        const mainMenuLinks = document.querySelectorAll('.sidebar a:not(.submenu-trigger)');
-
-        mainMenuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                // Recorre todos los 'submenu-trigger' y cierra los submenús activos
-                submenuTriggers.forEach(trigger => {
-                    const submenu = trigger.querySelector('.submenu');
-                    const icon = trigger.querySelector('.submenu-icon');
-                    submenu.classList.remove('active');
-                    icon.classList.remove('rotate-icon');
-                });
-            });
-        });
-    });
-</script> -->
-
-
-<!--  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
-
-        submenuTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault(); // Evita el comportamiento predeterminado de los enlaces
-
-                // Busca el elemento 'submenu' y 'submenu-icon' dentro del 'trigger'
-                const submenu = trigger.querySelector('.submenu');
-                const icon = trigger.querySelector('.submenu-icon');
-
-                // Cierra todos los submenús abiertos, excepto el submenú actual
-                closeAllSubmenus(submenuTriggers, submenu);
-
-                // Abre o cierra el submenú actual y rota el icono
-                submenu.classList.toggle('active');
-                icon.classList.toggle('rotate-icon');
-            });
-        });
-
-        function closeAllSubmenus(triggers, except = null) {
-            triggers.forEach(trigger => {
-                const submenu = trigger.querySelector('.submenu');
-                const icon = trigger.querySelector('.submenu-icon');
-                if (submenu !== except && submenu.classList.contains('active')) {
-                    submenu.classList.remove('active');
-                    icon.classList.remove('rotate-icon');
-                }
-            });
-        }
-    });
-</script> -->
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const submenuTriggers = document.querySelectorAll('.submenu-trigger');
@@ -282,6 +162,7 @@
         });
     });
 </script>
+
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>

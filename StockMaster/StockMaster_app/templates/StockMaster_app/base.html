@@ -34,7 +34,7 @@
             <div class="sidebar">
                 <a href="{% url 'actividades' %}" class="active">
                     <span class="material-symbols-outlined">grid_view</span>
-                    <h3>Actividad Recient</h3>
+                    <h3>Dashboard</h3>
                 </a>
                 <a href="{% url 'inventario' %}" class="active">
                     <span class="material-symbols-outlined">receipt_long</span>
@@ -58,7 +58,7 @@
                             </a>
                             <a href="{% url 'configuraciones77' %}" class="active">
                                 <span class="material-symbols-outlined">settings</span>
-                                <h3>Categorias y Marcas</h3>
+                                <h3>Categorización</h3>
                             </a>
                         </div>
                         
@@ -91,7 +91,7 @@
                 <a href="{% url 'historial' %}" class="active submenu-trigger">
                     <span class="material-symbols-outlined">history</span>
                     <h3>Historial</h3>
-                    <i class="submenu-icon fas fa-chevron-right"></i>
+                    <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
                 </a>
                 <div class="submenu">
                     <a href="{% url 'soporte' %}" class="active">
@@ -119,7 +119,7 @@
 
     </div>
 
-    <script>
+<!--    <script>
         let submenuTriggers; // Declara submenuTriggers en un ámbito global
         let openSubmenu = null; // Variable para rastrear el submenú abierto actualmente
     
@@ -158,10 +158,10 @@
             const icon = trigger.querySelector('.submenu-icon');
             icon.classList.remove('rotate-icon');
         }
-    </script>
+    </script> -->
 
-<!-- Opcion: prueba 2, NO QUITAR NI MOVER
-    <script>
+<!-- Opcion: prueba 2, NO QUITAR NI MOVER-->
+<!-- <script>
     // Selecciona todos los elementos con la clase 'submenu-trigger'
     document.addEventListener('DOMContentLoaded', function() {
         const submenuTriggers = document.querySelectorAll('.submenu-trigger');
@@ -205,6 +205,83 @@
 </script> -->
 
 
+<!--  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
+
+        submenuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault(); // Evita el comportamiento predeterminado de los enlaces
+
+                // Busca el elemento 'submenu' y 'submenu-icon' dentro del 'trigger'
+                const submenu = trigger.querySelector('.submenu');
+                const icon = trigger.querySelector('.submenu-icon');
+
+                // Cierra todos los submenús abiertos, excepto el submenú actual
+                closeAllSubmenus(submenuTriggers, submenu);
+
+                // Abre o cierra el submenú actual y rota el icono
+                submenu.classList.toggle('active');
+                icon.classList.toggle('rotate-icon');
+            });
+        });
+
+        function closeAllSubmenus(triggers, except = null) {
+            triggers.forEach(trigger => {
+                const submenu = trigger.querySelector('.submenu');
+                const icon = trigger.querySelector('.submenu-icon');
+                if (submenu !== except && submenu.classList.contains('active')) {
+                    submenu.classList.remove('active');
+                    icon.classList.remove('rotate-icon');
+                }
+            });
+        }
+    });
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
+        const mainMenuLinks = document.querySelectorAll('.sidebar a:not(.submenu-trigger)');
+
+        submenuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const submenu = this.nextElementSibling; // El siguiente elemento es el submenú
+                const icon = this.querySelector('.submenu-icon');
+
+                if (submenu.style.display === 'block') {
+                    submenu.style.display = 'none';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    submenu.style.display = 'block';
+                    icon.style.transform = 'rotate(90deg)';
+                }
+
+                // Cierra otros submenús abiertos y restaura sus iconos
+                submenuTriggers.forEach(otherTrigger => {
+                    if (otherTrigger !== this) {
+                        const otherSubmenu = otherTrigger.nextElementSibling;
+                        const otherIcon = otherTrigger.querySelector('.submenu-icon');
+
+                        otherSubmenu.style.display = 'none';
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+        });
+
+        mainMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                submenuTriggers.forEach(trigger => {
+                    const submenu = trigger.nextElementSibling;
+                    const icon = trigger.querySelector('.submenu-icon');
+                    submenu.style.display = 'none';
+                    icon.style.transform = 'rotate(0deg)';
+                });
+            });
+        });
+    });
+</script>
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>

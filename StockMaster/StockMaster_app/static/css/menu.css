@@ -195,7 +195,6 @@ aside .sidebar a.active span{
 }
 aside .sidebar a:hover{
     color: var(--color-primary);
-    cursor: pointer;
 }
 aside .sidebar a:hover span{
     margin-left: 1rem;
@@ -446,9 +445,13 @@ textarea{
 /* Oculta los submenús por defecto */
 .submenu {
     display: none;
-    padding-left: 3rem;
+    /* padding-left: 3rem; */
 }
 
+/* Muestra el submenú cuando el elemento .submenu-trigger está en :hover */
+.submenu-trigger:hover + .submenu {
+    display: block;
+}
 
 /* Estilo predeterminado del icono */
 .submenu-icon {

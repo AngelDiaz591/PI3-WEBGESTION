@@ -442,27 +442,6 @@ textarea{
     padding: 0.5rem 0;
 }
 
-/* Oculta los submenús por defecto */
-/* .submenu {
-    display: none;
-    /* padding-left: 3rem; *
-}
-
-/* Muestra el submenú cuando el elemento .submenu-trigger está en :hover *
-.submenu-trigger:hover + .submenu,
-.submenu:hover {
-    display: block;
-}
-
-/* Transición del icono cuando está en :hover *
-.submenu-icon {
-    transition: transform 0.3s ease;
-}
-
-/* Gira el icono cuando está en :hover *
-.submenu-trigger:hover .submenu-icon {
-    transform: rotate(90deg);
-} */
 
 /* Oculta los submenús por defecto */
 .submenu {
@@ -480,4 +459,9 @@ textarea{
 /* Gira el icono cuando está en :hover */
 .submenu-trigger:hover .submenu-icon {
     transform: rotate(90deg);
+}
+
+
+.cbabhuegyf{
+    pad: -moz-element(absolute);
 }

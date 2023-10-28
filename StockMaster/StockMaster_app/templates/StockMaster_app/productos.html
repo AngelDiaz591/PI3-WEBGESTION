@@ -64,11 +64,11 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Precio</th>
-                        <th>Marca</th>
                         <th>Cantidad</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
                         <th>Proveedor</th>
+                        <th>Marca</th>
                         <th colspan="4">Opciones</th>
                     </tr>
                 </thead>
@@ -80,7 +80,6 @@
                                 <td>{{ c.codigo }}</td>
                                 <td>{{ c.nombre }}</td>
                                 <td>${{ c.precio }}mxn</td>
-                                <td>{{ c.marca }}</td>
                                 <td>{{ c.cantPro }}</td>
                                 <td class="imagen" style="position: relative;">
                                     <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
@@ -89,6 +88,7 @@
                                 </td>
                                 <td>{{ c.id_categorias.nombre }}</td>
                                 <td>{{ c.id_Proveedores.nombre }}</td>
+                                <td>{{c.id_marca}}
                                 <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info" style="margin-left: 2rem;">
                                     <span class="material-symbols-outlined">edit</span>
                                 </a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
@@ -153,11 +153,11 @@
                                 <div class="update">
                                     <div class="profile-photo">
                                     </div>
-                                    <div class="message">
+                                    {% comment %} <div class="message">
                                         <input type="text" id="NomMarca" name="NomMarca" class="updatess" placeholder="Marca"  pattern="[A-Za-z0-9]{6,20}" maxlength="20" required>
                                         <br> <span class="error-message" style="color: red;"></span></br>
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
                                 <div class="update">
                                     <div class="profile-photo">
                                     </div>
@@ -191,6 +191,17 @@
                                                 <option value="" disabled selected>Selecciona un proveedor</option>
                                                 {% for c in Proveedor %}
                                                     <option value="{{ c.idProveedor }}">{{ c.nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="message"></div>
+                                            <label for="marca">Marca:</label>
+                                            <br>
+                                            <select name="marca" id="marca" class="updatess" required>
+
+                                                <option value="" disabled selected>Selecciona un Marca</option>
+                                                {% for c in marca %}
+                                                    <option value="{{ c.marca_id }}">{{ c.nombre }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>

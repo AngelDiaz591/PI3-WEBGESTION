@@ -109,18 +109,18 @@
                             </tr>
                         </thead>
                         <tbody style="font-size: 15px;">
-                            {% for c in Categoria %}
-                            {% if c.status%}
+                            {% for marca in marcas %}
+                            {% if marca.status%}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ c.nombre }}</td>
+                                    <td>{{ marca.nombre }}</td>
                                     <td class="edita">
-                                        <a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="margin-left: 15rem;">
+                                        <a href="{% url 'edicionMarcaView' marca_id=marca.marca_id %}" class="btn btn-info" style="margin-left: 15rem;">
                                             <span class="material-symbols-outlined">edit</span>
                                         </a>
-                                    </td>
-                                    <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
-                                        <span class="material-symbols-outlined">delete</span>
+                                    
+                                    <td class="elimina"><a href="{% url 'eliminarmarcas' marca_id=marca.marca_id %}"  class="btn btn-danger btnEliminacion">
+                                            <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>
                             {% endif %}
@@ -179,10 +179,10 @@
                     <h2>Agregar Nueva Marca</h2>
                     <br>
                     <div class="updates">
-                        <form action="/registrar_categoria/" method="POST" enctype="multipart/form-data" id="mi_formulario">
+                        <form action="/MarcaAgregada/" method="POST" enctype="multipart/form-data" id="mi_formulario">
                             {% csrf_token %}
                             <div class="updatess">
-                                <input type="text" id="txtNombreCat" name="txtNombreCat" placeholder="Nombre" pattern="[A-Za-z0-9]{6,1}" minlength="0" maxlength="10" required>
+                                <input type="text" id="txtMarcaNew" name="txtMarcaNew" placeholder="Nombre" pattern="[A-Za-z0-9]{6,1}" minlength="0" maxlength="10" required>
                                 <span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="btn-cerrar">

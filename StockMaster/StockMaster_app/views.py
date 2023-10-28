@@ -10,9 +10,10 @@ from django.contrib import messages
 from django.contrib import messages as men
 from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
-from .models import Productos, Mensajes, Categoria, Proveedores, Historial
+from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca
 from django.http.response import JsonResponse
 import base64
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
@@ -116,7 +117,8 @@ def productos(request):
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
     ProveedoresListados = Proveedores.objects.all()
-    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes, 'Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
+    MarcaListados = Marca.objects.all()
+    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes,'marca': MarcaListados, ' Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
 
 def editarcant(request, idproducts):
     if request.method == 'POST':
@@ -152,10 +154,11 @@ def pro(request):
         cantidad_mensajes =mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
-        ProveedoresListados = Proveedores.objects.all() 
+        ProveedoresListados = Proveedores.objects.all()
+        MarcaListados = Marca.objects.all() 
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados,"Categoria": CategoriaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
         return redirect('/actividades')
     
@@ -168,24 +171,24 @@ def registrarProducto(request):
     codigo = request.POST['txtCodigo']
     nombre = request.POST['txtNombre']
     precio = request.POST['NumPrecio']
-    marca = request.POST['NomMarca']
+    #marca = request.POST['NomMarca']
     cantPro = request.POST['CantPro'] 
     imagen = request.FILES['imagen'] 
     categoria_id = request.POST['categoria']
     idProveedor = request.POST['proveedor']
-    
+    marca_id = request.POST['marca']
 
-    # Comprobar si el producto ya existe
+    # Comprobar si el producto ya existe marca=marca
     if Productos.objects.filter(codigo=codigo).exists():
         messages.error(request, '¡El producto con este código ya existe!')
-    elif Productos.objects.filter(marca=marca, nombre=nombre).exists():
+    elif Productos.objects.filter( nombre=nombre).exists():
         messages.error(request, 'Este producto ya existe!')
     else:
         # Leer los datos de la imagen como bytes
         imagen_bytes = imagen.read()
         
         # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
-        producto = Productos(codigo=codigo, nombre=nombre, precio=precio, marca=marca, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Producto creado', id_Proveedores_id=idProveedor)
+        producto = Productos(codigo=codigo, nombre=nombre, precio=precio, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Producto creado', id_Proveedores_id=idProveedor, id_marca_id= marca_id)
         # Guardar la instancia en la base de datos
         historial= Historial.objects.all()
         historial = Historial(movimiento='Producto Creado',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
@@ -204,8 +207,9 @@ def edicioninventario(request, idproducts):
     productos = Productos.objects.get(idproducts= idproducts)
     CategoriaListados = Categoria.objects.all() 
     ProveedorListados = Proveedores.objects.all()
+    MarcaListados = Marca.objects.all()
     imagen_url = get_imagen_url(productos.imagen)
-    return render(request, "StockMaster_app/edicioninventario.html", {"productos": productos, "imagen_url": imagen_url, "Categoria": CategoriaListados, 'Proveedor' : ProveedorListados})
+    return render(request, "StockMaster_app/edicioninventario.html", {"productos": productos, "imagen_url": imagen_url, "Categoria": CategoriaListados, 'Proveedor' : ProveedorListados, 'marca' : MarcaListados})
 @login_required(login_url='signin')
 
 def editarProducto(request):
@@ -213,23 +217,25 @@ def editarProducto(request):
     codigo = request.POST.get('txtCodigo')
     nombre = request.POST.get('txtNombre')
     precio = request.POST.get('NumPrecio')
-    marca = request.POST.get('NomMarca')
+    #marca = request.POST.get('NomMarca')
     cantPro = request.POST.get('CantPro')
     nueva_imagen = request.FILES.get('imagen') 
     categoria_id = request.POST.get('categoria') 
     idProveedor = request.POST.get('proveedor')
+    marca_id = request.POST.get('marca')
     productos = Productos.objects.get(idproducts=idproducts)
 
     productos.codigo = codigo
     productos.nombre = nombre
     productos.precio = precio
-    productos.marca = marca
+    #productos.marca = marca
     productos.cantPro = cantPro
     productos.username = request.user.username
     productos.movimiento = 'Edicion de Producto'
     productos.fecha_edit = timezone.now()
     productos.id_categorias_id = categoria_id
     productos.id_Proveedores_id= idProveedor
+    productos.id_marca_id= marca_id
     if nueva_imagen:
         productos.imagen = nueva_imagen.read()
     productos.save()
@@ -513,7 +519,8 @@ def configuraciones(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes =mensajes.count()
     CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/configuraciones.html',{"Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+    MarcaListados = Marca.objects.all()
+    return render(request, 'StockMaster_app/configuraciones.html',{"Categoria": CategoriaListados,"marcas":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
 
 @login_required(login_url='signin')
 def recuperar_producto(request):
@@ -746,3 +753,60 @@ def historial(request):
     CategoriaListados = Categoria.objects.all()
     historial = Historial.objects.all()
     return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+@login_required(login_url='signin')
+def MarcaView(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes = mensajes.count()
+    MarcaListados = Marca.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    return render(request, 'StockMaster_app/configuraciones.html', {"marcas": MarcaListados,"Categoria": CategoriaListados,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes})
+
+@login_required(login_url='signin')
+def registrar_marca(request):
+    if request.method == 'POST':
+        nombre = request.POST['txtMarcaNew']
+        if Marca.objects.filter(nombre=nombre).exists():
+            messages.error(request, 'La marca ya está registrada.')
+        else:
+            marca = Marca(nombre=nombre, username=request.user.username, fech_cate=timezone.now(), movi='Creación de Marca')
+            historial = Historial(movimiento='Marca Agregada', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
+            historial.save()
+            marca.save()
+            messages.success(request, '¡Marca registrada con éxito!')
+        return HttpResponseRedirect('/MarcaVista/')  # Redirige a la URL deseada después de procesar el formulario
+    return render(request, 'StockMaster_app/configuraciones.html')
+
+@login_required(login_url='signin')
+def edicionMarcaView(request, marca_id):
+    marca = Marca.objects.get(marca_id= marca_id)
+    return render(request, "StockMaster_app/edicion_marca.html", {"marca": marca})
+
+@login_required(login_url='signin')
+def editarMarca(request):
+    marca_id = request.POST.get('idMarca')
+    nombre = request.POST.get('txtMarcaNew')
+    marca = Marca.objects.get(marca_id= marca_id)
+    if Marca.objects.filter(nombre=nombre).exists():
+        messages.error(request, '¡Esta Marca no recibio cambios!')
+    else:
+        marca.nombre = nombre
+        marca.username = request.user.username
+        marca.movi = 'Edicion de Marca'
+        marca.fech_cate = timezone.now()
+        if marca.status_mov !=1:
+            marca.status_mov = 1 
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Edicion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+        historial.save()
+        marca.save()
+
+        messages.success(request, '¡Marca  Editada!')
+    return redirect('marca')
+
+@login_required(login_url='signin')
+def eliminar_marca(request, marca_id):
+    marca = Marca.objects.get(marca_id=marca_id)
+    marca.delete()
+    messages.success(request, '¡Marca Eliminada!')
+    return redirect('marca')  # O redirige a donde desees después de la eliminación

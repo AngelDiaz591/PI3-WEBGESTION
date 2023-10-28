@@ -70,4 +70,10 @@ urlpatterns = [
     path('prov/cambio_statuspro/<int:idProveedor>',views.cambio_statuspro, name='cambio_statuspro'),
     path('editarproveedor/', views.editarproveedor),
     path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
+     #Marca
+    path("MarcaVista/",views.MarcaView, name="marca"),
+    path("MarcaAgregada/", views.registrar_marca, name="marcaAgred"),
+    path('edicion_marca/<int:marca_id>/', views.edicionMarcaView, name='edicionMarcaView'),
+    path('editarMarca/', views.editarMarca, name='editar_marca'),
+    path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
     ]

@@ -118,12 +118,12 @@
                             </div>
                             <!-- Segunda columna -->
                             <div class="form-column">
-                                <div class="form-group">
+                                {% comment %} <div class="form-group">
                                     <label for="NomMarca">Marca:</label>
                                     <input type="text" id="NomMarca" name="NomMarca"   pattern="[A-Za-z0-9\s]{2-20}" class="form-control"
                                         value="{{ productos.marca }}" placeholder="Marca" minlength="6" maxlength="20" required>
                                     <span class="error-message"></span>
-                                </div>
+                                </div> {% endcomment %}
                                 <div class="form-group">
                                     <label for="CantPro">Cantidad de Producto:</label>
                                     <input type="text" id="CantPro" name="CantPro" placeholder="Cantidad de Producto"
@@ -151,6 +151,18 @@
                                         {% for c in Proveedor %}
                                         <option value="{{ c.idProveedor }}"
                                             {% if c.idProveedor == productos.id_Proveedores.idProveedor %}selected{% endif %}>{{ c.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="error-message error"></span>
+                                </div>
+                                <div class="update">
+                                    <div class="message"></div>
+                                    <label for="marca">Marca:</label>
+                                    <select name="marca" id="marca" class="updatess" required>
+                                        <option value="" disabled>Selecciona un Marca</option>
+                                        {% for c in marca %}
+                                        <option value="{{ c.marca_id }}"
+                                            {% if c.marca_id == productos.id_marca.marca_id %}selected{% endif %}>{{ c.nombre }}</option>
                                         {% endfor %}
                                     </select>
                                     <span class="error-message error"></span>

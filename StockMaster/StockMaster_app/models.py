@@ -14,6 +14,17 @@ class Categoria(models.Model):
     status_mov = models.BooleanField(default=True)
     def __str__(self):
         return self.nombre
+    
+class Marca(models.Model):
+    marca_id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    movi = models.CharField(max_length=100, null= True)
+    username = models.CharField(max_length=100, null=True)
+    fech_cate= models.DateTimeField(default=timezone.now, null= True)
+    status= models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
+    def __str__(self):
+        return self.nombre
 
 #Modelo de proveedores
 
@@ -49,12 +60,15 @@ class Productos(models.Model):
     codigo = models.CharField(max_length=255)
     nombre = models.CharField(max_length=50)
     precio = models.PositiveBigIntegerField()
-    marca = models.CharField(max_length=255)
+   # marca = models.CharField(max_length=255, null=True)
     cantPro = models.CharField(max_length=255)
     imagen = models.BinaryField(null=True, blank=True)
 
     id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
+    id_marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
+
+
     hora_baja = models.DateTimeField(default=timezone.now, null=True)
     username = models.CharField(max_length=255, null=True)
     status = models.BooleanField(default=True)

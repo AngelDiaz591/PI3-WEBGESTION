@@ -243,38 +243,6 @@ def editarProducto(request):
     messages.success(request, '¡Producto Editado!')
     return redirect('/productos/')
 
-
-
-
-# EDICON DENTRO DEL MODAL CARGANDO LOS DATOS
-
-#EDICION MODAL
-@login_required
-def edicioninventario2(request, idproducts):
-    productos = Productos.objects.get(idproducts=idproducts)
-    CategoriaListados = Categoria.objects.all()
-    ProveedorListados = Proveedores.objects.all()
-    imagen_url = get_imagen_url(productos.imagen)
-
-    data = {
-        "productos": {
-            "codigo": productos.codigo,
-            "nombre": productos.nombre,
-            "precio": productos.precio,
-            "marca": productos.marca,
-            "cantPro": productos.cantPro,
-            "id_categorias": productos.id_categorias.categoria_id,
-            "id_Proveedores": productos.id_Proveedores.idProveedor,
-        },
-        "imagen_url": imagen_url,
-        "Categoria": [{"categoria_id": c.categoria_id, "nombre": c.nombre} for c in CategoriaListados],
-        "Proveedor": [{"idProveedor": c.idProveedor, "nombre": c.nombre} for c in ProveedorListados],
-    }
-
-    
-    return JsonResponse(data)      
-    #return render(request, 'StockMaster_app/productos.html', data)   
-
 @login_required(login_url='signin')
 def editarProductoMod(request):
     try:
@@ -282,12 +250,12 @@ def editarProductoMod(request):
         codigo = request.POST.get('txtCodigo')
         nombre = request.POST.get('txtNombre')
         precio = request.POST.get('NumPrecio')
-        marca = request.POST.get('NomMarca')
         cantPro = request.POST.get('CantPro')
         nueva_imagen = request.FILES.get('imagen') 
         categoria_id = request.POST.get('categoria') 
         idProveedor = request.POST.get('proveedor')
-
+        marca_id = request.POST.get('marca')
+        
         try:
             productos = Productos.objects.get(idproducts=idproducts)
         except ObjectDoesNotExist:
@@ -297,13 +265,13 @@ def editarProductoMod(request):
         productos.codigo = codigo
         productos.nombre = nombre
         productos.precio = precio
-        productos.marca = marca
         productos.cantPro = cantPro
         productos.username = request.user.username
         productos.movimiento = 'Edicion de Producto'
         productos.fecha_edit = timezone.now()
         productos.id_categorias_id = categoria_id
         productos.id_Proveedores_id = idProveedor
+        productos.id_marca_id= marca_id
         if nueva_imagen:
             productos.imagen = nueva_imagen.read()
         historial = Historial(movimiento='Edicion de Producto', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
@@ -810,3 +778,32 @@ def eliminar_marca(request, marca_id):
     marca.delete()
     messages.success(request, '¡Marca Eliminada!')
     return redirect('marca')  # O redirige a donde desees después de la eliminación
+
+@login_required
+def edicioninventario2(request, idproducts):
+
+    productos = Productos.objects.get(idproducts=idproducts)
+    CategoriaListados = Categoria.objects.all()
+    ProveedorListados = Proveedores.objects.all()
+    MarcaListado = Marca.objects.all()
+    imagen_url = get_imagen_url(productos.imagen)
+
+    data = {
+        "codigo": productos.codigo,
+        "nombre": productos.nombre,
+        "precio": productos.precio,
+        "cantPro": productos.cantPro,
+        "id_categorias": productos.id_categorias.categoria_id,
+        "id_Proveedores": productos.id_Proveedores.idProveedor,
+        "id_marca": productos.id_marca.marca_id,
+        "imagen_url": imagen_url,
+        "Categoria": [{"categoria_id": c.categoria_id, "nombre": c.nombre} for c in CategoriaListados],
+        "Proveedor": [{"idProveedor": c.idProveedor, "nombre": c.nombre} for c in ProveedorListados],
+        "Marca": [{"id_marca": c.marca_id, "nombre": c.nombre} for c in MarcaListado]
+    }
+
+    
+    #return JsonResponse(data)    
+    #return render(request, 'Stockmaster_app/productos.html', { idproducts : idproducts})
+    return JsonResponse(data)
+    return render(request, 'StockMaster_app/productos.html', data)

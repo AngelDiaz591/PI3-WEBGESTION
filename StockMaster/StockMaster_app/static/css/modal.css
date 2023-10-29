@@ -1,4 +1,5 @@
-/*Boton-Modal-1*/
+/*Modal de agregar datos*/
+/*Boton-Modal*/
 .boton-modal{
     padding: 40px 0px 20px 0px;
     display: flex;
@@ -20,15 +21,24 @@
     background-color: #185E83;
 }
 /*Fin Boton-Modal*/
-
-/*Ventana Modal-1*/
-#btn-modal{
+.cerrar{
+    display: flex; 
+    justify-content: flex-end; 
+    cursor: pointer;
+    color: rgb(144, 144, 144);
+    font-size: 25px;
+}
+.cerrar:hover{
+    color:#e90404;
+}
+/*Ventana Modal*/
+/*Primer modal*/#btn-modal{
     display: none;
 }
-#btn-modal-segundo{
+/*Segundo modal*/#btn-modal-segundo{
     display: none;
 }
-.container-modal{
+/*Primer modal*/.container-modal{
     width: 100%;
     height: 100vh;
     position: fixed;
@@ -40,7 +50,7 @@
     align-items: center;
     z-index: 100;
 }
-.container-modal-segundo{
+/*Segundo modal*/.container-modal-segundo{
     width: 100%;
     height: 100vh;
     position: fixed;
@@ -52,10 +62,10 @@
     align-items: center;
     z-index: 100;
 }
-#btn-modal:checked ~ .container-modal{
+/*Primer modal*/#btn-modal:checked ~ .container-modal{
     display: flex;
 }
-#btn-modal-segundo:checked ~ .container-modal-segundo{
+/*Segundo modal*/#btn-modal-segundo:checked ~ .container-modal-segundo{
     display: flex;
 }
 .content-modal{
@@ -63,7 +73,7 @@
     max-width: 600px;
     padding: 20px;
     background-color: #fff;
-    border-radius: 4px;
+    border-radius: 20px;
 }
 .content-modal p{
     padding: 15px 0px;
@@ -77,6 +87,7 @@
     justify-content: flex-end;
 }
 .content-modal .btn-cerrar label{
+    border: 1px solid rgb(0, 0, 0);
     padding: 7px 10px;
     background-color: #e90404;
     color: #fff;
@@ -88,12 +99,14 @@
     background-color: #960808;
 }
 .content-modal .btn-cerrar button{
+    border: 1px solid rgb(0, 0, 0);
     padding: 7px 10px;
     margin-right: 10px;
     background-color: #5488a3;
     color: #fff;
-    border: 1px solid #5488a3;
+    border-radius: 4px;
     cursor: pointer;
+    transition: all 300ms ease;
 }
 .content-modal .btn-cerrar button:hover{
     background-color: #204a60;
@@ -102,6 +115,7 @@
     width:100%;
     height: 100vh;
     position: absolute;
+    cursor: pointer;
     top:0; left: 0;
     z-index: -1;
 }
@@ -111,7 +125,60 @@
     }
 }
 /*Fin Ventana Modal*/
+/*FIn de Modal de agregar*/
 
+/*Inicio de modal de editar*/
+.container-modal-editar{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    background-color: rgba(144, 148, 150, 0.8);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+.content-modal-editar{
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+}
+.content-modal-editar .btn-cerrar{
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+.content-modal-editar .btn-cerrar label{
+    border: 1px solid rgb(0, 0, 0);
+    padding: 7px 10px;
+    background-color: #e90404;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+.content-modal-editar .btn-cerrar label:hover{
+    background-color: #960808;
+}
+.content-modal-editar .btn-cerrar button{
+    border: 1px solid rgb(0, 0, 0);
+    padding: 7px 10px;
+    margin-right: 10px;
+    background-color: #5488a3;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+.content-modal-editar .btn-cerrar button:hover{
+    background-color: #204a60;
+}
+/*Fin de modal de editar*/
 
 /*Inicio de las columnas*/
 .form-columns {
@@ -129,6 +196,40 @@
 }
 /*Fin de las columnas*/
 
+/*Diseño de los apartados de los modales*/
+.titulo-modal{
+    color: #363949;
+    text-transform: uppercase;
+}
+.divisor{
+    margin-top: 2rem;
+}
+.titulo{
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.campos{
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 5px;
+    align-items: center;
+}
+.campos-seleccion{
+    width: 100%; /* Ancho del menú desplegable, puedes ajustarlo según tus necesidades */
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+}
+.divisor img{
+    max-width: 150px; 
+    height: 150px
+}
+/*Fin*/
 
 /* Estilo personalizado para el mensaje de alerta */
 .alert-custom {
@@ -165,15 +266,7 @@
     background-color: transparent; /* Cambia a rojo al pasar el mouse */
 }
 /* Estilos para el menú desplegable */
-select.updatess {
-    width: 100%; /* Ancho del menú desplegable, puedes ajustarlo según tus necesidades */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #fff;
-    color: #333;
-}
+
 .imagen:hover .img-container img {
     transform: scale(1.5); /* Escala la imagen al 150% */
     z-index: 1; /* Coloca la imagen ampliada sobre la imagen de abajo */

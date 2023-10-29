@@ -117,6 +117,10 @@ aside h3{
     gap: 1.8rem;
     grid-template-columns: 50% auto;
 }
+.profile-photo{
+    width: 1.8rem;
+    height: 2.8rem;
+}
 .text-muted{
     color: var(--color-info-dark);
 }
@@ -191,6 +195,7 @@ aside .sidebar a.active span{
 }
 aside .sidebar a:hover{
     color: var(--color-primary);
+    cursor: pointer;
 }
 aside .sidebar a:hover span{
     margin-left: 1rem;
@@ -326,6 +331,12 @@ main table th{
     gap: 2rem;
     text-align: right;
 }
+.updatess{
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 5px;
+    align-items: center;
+}
 .right .recent-updates{
     margin-top: 1rem;
     text-align: center;
@@ -435,13 +446,11 @@ textarea{
 /* Oculta los submenús por defecto */
 .submenu {
     display: none;
-    /* padding-left: 3rem; */
-}
-
-/* Muestra el submenú cuando el elemento .submenu-trigger está en :hover */
-.submenu-trigger:hover + .submenu {
-    display: block;
-}
+    margin-left: 2.5rem;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+   /*  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em; */
+/*     box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+ */}
 
 /* Estilo predeterminado del icono */
 .submenu-icon {
@@ -454,7 +463,7 @@ textarea{
     transform: rotate(90deg);
 }
 
-
-.cbabhuegyf{
-    pad: -moz-element(absolute);
-}
+/* Muestra el submenú cuando el elemento .submenu-trigger está en :hover */
+/* .submenu-trigger:hover + .submenu {
+    display: block;
+} */

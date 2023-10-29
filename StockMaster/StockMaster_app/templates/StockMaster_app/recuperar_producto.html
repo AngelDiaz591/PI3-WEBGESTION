@@ -35,7 +35,6 @@
 </div>
 
 <main>
-    
     <h1>Dados de Baja</h1>
     <div class="recent-orders">
         <div class="principal">
@@ -53,53 +52,50 @@
                 </div>
             {% endfor %}
         </div>
-        <br>
-        <h2>Productos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <!-- <th>#</th> -->
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Categoria</th>
-                    <th>Elimino Usuario</th>
-                    <th>Fecha</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Productos %}
-                    {% if c.status %}
-                    {% else %}
+        <div class="mitad">
+            <div>
+                <h2>Productos</h2>
+                <table>
+                    <thead>
                         <tr>
-                            
-                            <!-- <td>{{forloop.counter}}</td> -->
-                            <td>{{ c.codigo }} </td>
-                            <td>{{ c.nombre }}</td>
-                            <td>{{ c.marca}}</td>
-                            <td>{{ c.id_categorias.nombre }}</td>
-                            <td>{{ c.username }}</td>
-                            <td>{{ c.hora_baja }}</td>
-                            <td class="edita"><a href="statusre/{{c.idproducts}}" class="btn btn-info">
-                                <span class="material-symbols-outlined">restart_alt</span>
-                            </a></td>
-                            <td class="elimina"><a href="recuperar_producto/eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
+                            <!-- <th>#</th> -->
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Categoria</th>
+                            <th>Elimino Usuario</th>
+                            <th>Fecha</th>
+                            <th colspan="2">Opciones</th>
                         </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <br>
-    <h2>Categorias</h2>
-    
-    <div class="recent-orders">
-        <br>
-        <table>
+                    </thead>
+                    <tbody>
+                        {% for c in Productos %}
+                            {% if c.status %}
+                            {% else %}
+                                <tr>
+                                    
+                                    <!-- <td>{{forloop.counter}}</td> -->
+                                    <td>{{ c.codigo }} </td>
+                                    <td>{{ c.nombre }}</td>
+                                    <td>{{ c.marca}}</td>
+                                    <td>{{ c.id_categorias.nombre }}</td>
+                                    <td>{{ c.username }}</td>
+                                    <td>{{ c.hora_baja }}</td>
+                                    <td class="edita"><a href="statusre/{{c.idproducts}}" class="btn btn-info">
+                                        <span class="material-symbols-outlined">restart_alt</span>
+                                    </a></td>
+                                    <td class="elimina"><a href="recuperar_producto/eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h2>Categorias</h2>
+                <table>
             <thead>
                 <tr>
                     <!-- <th>#</th> -->
@@ -130,111 +126,82 @@
                     {% endif %}
                 {% endfor %}
             </tbody>
-        </table>
-    </div>
-    <br>
-    <br>
-    <h2>Proveedores</h2>
-    
-    <div class="recent-orders">
-        <br>
-        <table>
-            <thead>
-                <tr>
-                    <!-- <th>#</th> -->
-                    <th>Proveedor</th>
-                    <th>Elimino Usuario</th>
-                    <th>Fecha</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in proveedores %}
-                    {% if c.status %}
-
-                    {% else %}
+                </table>
+            </div>
+        </div>
+        <div class="mitad">
+            <div>
+                <h2>Proveedores</h2>
+                <table>
+                    <thead>
                         <tr>
-                            
-                            <!-- <td>{{forloop.counter}}</td> -->
-                            <td>{{ c.nombre }} </td>
-                            <td>{{ c.username }}</td>
-                            <td>{{ c.fecha_edit}}</td>
-                            <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info">                                 
-                                <span class="material-symbols-outlined">restart_alt</span>
-                            </a></td>
-                            <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
+                            <!-- <th>#</th> -->
+                            <th>Proveedor</th>
+                            <th>Elimino Usuario</th>
+                            <th>Fecha</th>
+                            <th colspan="2">Opciones</th>
                         </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <br>
-    <h2>Marca</h2>
-    <div class="recent-orders">
-        <br>
-        <table>
-            <thead>
-                <tr>
-                    <!-- <th>#</th> -->
-                    <th>Marca</th>
-                    <th>Elimino Usuario</th>
-                    <th>Fecha</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Marca %}
-                    {% if c.status %}
+                    </thead>
+                    <tbody>
+                        {% for c in proveedores %}
+                            {% if c.status %}
 
-                    {% else %}
+                            {% else %}
+                                <tr>
+                                    
+                                    <!-- <td>{{forloop.counter}}</td> -->
+                                    <td>{{ c.nombre }} </td>
+                                    <td>{{ c.username }}</td>
+                                    <td>{{ c.fecha_edit}}</td>
+                                    <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info">                                 
+                                        <span class="material-symbols-outlined">restart_alt</span>
+                                    </a></td>
+                                    <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h2>Marca</h2>
+                <table>
+                    <thead>
                         <tr>
-                            
-                            <!-- <td>{{forloop.counter}}</td> -->
-                            <td>{{ c.nombre }} </td>
-                            <td>{{ c.username }}</td>
-                            <td>{{ c.fech_cate}}</td>
-                            <td class="edita"><a href="cambio_statusremar/{{ c.marca_id }}" class="btn btn-info">                                 
-                                <span class="material-symbols-outlined">restart_alt</span>
-                            </a></td>
-                            <td class="elimina"><a href="eliminar-marca/{{ c.marca_id }}" class="btn btn-danger btnEliminacion">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
+                            <!-- <th>#</th> -->
+                            <th>Marca</th>
+                            <th>Elimino Usuario</th>
+                            <th>Fecha</th>
+                            <th colspan="2">Opciones</th>
                         </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        {% for c in Marca %}
+                            {% if c.status %}
+
+                            {% else %}
+                                <tr>
+                                    
+                                    <!-- <td>{{forloop.counter}}</td> -->
+                                    <td>{{ c.nombre }} </td>
+                                    <td>{{ c.username }}</td>
+                                    <td>{{ c.fech_cate}}</td>
+                                    <td class="edita"><a href="cambio_statusremar/{{ c.marca_id }}" class="btn btn-info">                                 
+                                        <span class="material-symbols-outlined">restart_alt</span>
+                                    </a></td>
+                                    <td class="elimina"><a href="eliminar-marca/{{ c.marca_id }}" class="btn btn-danger btnEliminacion">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </main>
 
-<script>
-    function validarNumeros(input) {
-        // Obtener el valor actual del campo de entrada
-        let valor = input.value;
-
-        // Reemplazar cualquier caracter que no sea un número con una cadena vacía
-        valor = valor.replace(/[^0-9]/g, '');
-
-        // Limitar la longitud del valor a 7 caracteres
-        if (valor.length > 7) {
-            valor = valor.slice(0, 7);
-        }
-
-        // Actualizar el valor del campo de entrada con la versión filtrada
-        input.value = valor;
-    }
-</script>
-<script>
-    // Función para eliminar el mensaje al hacer clic en el botón de cerrar
-    function dismissMessage(button) {
-        const messageContainer = button.closest('.alert');
-        if (messageContainer) {
-            messageContainer.remove();
-        }
-    }
-</script>
 {% endblock %}

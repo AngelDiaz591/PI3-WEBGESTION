@@ -110,3 +110,28 @@ window.addEventListener('beforeunload', () => {
   localStorage.setItem('theme', document.body.classList.contains('dark-theme-variables') ? 'dark' : 'light');
 });
 // <---------------------------------------------------Fin de Guardar el tema--------------------------------------------------->
+
+// <---------------------------------------------------Inicio Validar Numeros--------------------------------------------------->
+function validarNumeros(input) {
+  // Obtener el valor actual del campo de entrada
+  let valor = input.value;
+
+  // Reemplazar cualquier caracter que no sea un número con una cadena vacía
+  valor = valor.replace(/[^0-9]/g, '');
+
+  // Limitar la longitud del valor a 7 caracteres
+  if (valor.length > 10) {
+      valor = valor.slice(0, 5);
+  }
+  // Actualizar el valor del campo de entrada con la versión filtrada
+  input.value = valor;
+}
+// <---------------------------------------------------Fin Validar Numeros--------------------------------------------------->
+
+// Función para eliminar el mensaje al hacer clic en el botón de cerrar
+function dismissMessage(button) {
+  const messageContainer = button.closest('.alert');
+  if (messageContainer) {
+      messageContainer.remove();
+  }
+}

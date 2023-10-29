@@ -282,10 +282,25 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function(){
+        // show stats on Mouseover
+        $('.product-card').hover(function(){
+            $(this).addClass('animate');
+            $('div.carouselNext, div.carouselPrev').addClass('visible');
+        }, function(){
+            $(this).removeClass('animate');
+            $('div.carouselNext, div.carouselPrev').removeClass('visible');
+        });
+    });
+</script>
+
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>
     <script src="{% static 'js/inventario.js' %}"></script>
+    <script src="{% static 'js/modalEditar.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--Fin Scripts-->
 </body>
 </html>

@@ -42,9 +42,6 @@ def signup(request):
             is_superuser = form.cleaned_data.get('is_superuser')
             if is_superuser is not None and is_superuser.isdigit():
                 user.is_superuser = bool(int(is_superuser))
-            if 'user_img' in request.FILES:
-                user.user_img = request.FILES['user_img']
-                        # Guarda la imagen de usuario
 
             user.save()
 
@@ -387,7 +384,49 @@ def cambio_statusrepro(request,idProveedor):
         proveedor.save()
     messages.success(request, '¡Proveedor Recuperado¡')
     return redirect('/recuperar_producto')
-    
+
+def cambio_statusmar(request,marca_id):
+    marca = Marca.objects.get(marca_id= marca_id)
+    if marca.status != 0:
+        marca.status = 0
+        if marca.status_mov !=1:
+            marca.status_mov = 1
+        marca.fech_cate = timezone.now()
+        marca.username = request.user.username
+        marca.movi = "Eliminacion de Marca"
+        historial = Historial.objects.all()
+        historial = Historial(movimiento='Eliminacion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
+        historial.save()
+        marca.save()
+    messages.success(request, '¡Marca Eliminada¡')
+    return redirect('/config')
+
+
+def cambio_statusremar(request,marca_id):
+    marca = Marca.objects.get(marca_id= marca_id)
+    if marca.status != 1:
+        marca.status = 1
+        if marca.status_mov !=1:
+            marca.status_mov = 1
+        marca.fech_cate = timezone.now()
+        marca.username = request.user.username
+        marca.movi = 'Recuperacion de marca'
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Recuperacion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
+        historial.save()
+        marca.save()
+    messages.success(request, '¡Marca Recuperada¡')
+    return redirect('/recuperar_producto')
+
+
+def elimina_menmar(request,marca_id):
+    marca= Marca.objects.get(marca_id=marca_id)
+    if marca.status_mov !=0:
+        marca.status_mov = 0
+        marca.save()
+
+    return redirect('/actividades')
+
 def elimina_menpro(request, idProveedor):
     proveedores = Proveedores.objects.get(idProveedor=idProveedor)
     if proveedores.status_mov !=0:
@@ -497,7 +536,8 @@ def recuperar_producto(request):
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
     proveedores = Proveedores.objects.all()
-    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores})
+    MarcaListados = Marca.objects.all() 
+    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,"Marca":MarcaListados})
 
 @login_required(login_url='signin')
 def registrar_categoria(request):

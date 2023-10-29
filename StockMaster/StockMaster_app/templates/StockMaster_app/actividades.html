@@ -186,6 +186,33 @@
                         {% endfor %}
                     </table>
                 {% endif %}
+                <br>
+                <br>
+                {% if request.user.is_superuser %}
+                    <h2>Marca</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Movimiento</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                                <th>Opcion</th>
+                            </tr>
+                        </thead>
+                        {% for marca in marca|dictsortreversed:"fech_cate"|slice:":5"%}
+                            {% if marca.status_mov %}
+                                <tbody>
+                                        <td>{{ marca.nombre }}</td>
+                                        <td>{{ marca.movi }}</td>
+                                        <td>{{ marca.username }}</td>
+                                        <td>{{ marca.fech_cate }}</td>
+                                        <td class="elimina"><a href="elimina_menmar/{{ marca.marca_id}}" >Eliminar</a></td>                    
+                                </tbody>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                {% endif %}
             </div>
         </div>
     </main>

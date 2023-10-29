@@ -76,4 +76,7 @@ urlpatterns = [
     path('edicion_marca/<int:marca_id>/', views.edicionMarcaView, name='edicionMarcaView'),
     path('editarMarca/', views.editarMarca, name='editar_marca'),
     path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
+    path('cambio_statusmar/<int:marca_id>/', views.cambio_statusmar, name='cambio_statusmar'),
+    path('cambio_statusremar/<int:marca_id>/', views.cambio_statusremar, name="cambio_statusremar"),
+    path('actividades/elimina_menmar/<int:marca_id>/', views.elimina_menmar,name= "elimina_menmar"),
     ]

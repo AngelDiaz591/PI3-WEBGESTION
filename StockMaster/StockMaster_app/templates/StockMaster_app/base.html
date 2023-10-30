@@ -42,7 +42,7 @@
                 </a>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
-                        <a class="active submenu-trigger">
+                        <a class="submenu-trigger active">
                             <span class="material-symbols-outlined">history</span>
                             <h3>Gestion</h3>
                             <i class="submenu-icon fas fa-chevron-right"></i>
@@ -88,7 +88,7 @@
                     </span>
                 </a>
                 {% if request.user.is_authenticated %}
-                <a class="active submenu-trigger">
+                <a class="submenu-trigger active">
                     <span class="material-symbols-outlined">history</span>
                     <h3>Historial</h3>
                     <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
@@ -123,7 +123,7 @@
 
     </div>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const submenuTriggers = document.querySelectorAll('.submenu-trigger');
         const mainMenuLinks = document.querySelectorAll('.sidebar a:not(.submenu-trigger)');
@@ -186,12 +186,90 @@
     function getStoredSubmenuState(submenu) {
         return localStorage.getItem('submenuState');
     }
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
+
+        submenuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const submenu = this.nextElementSibling; // El siguiente elemento es el submenú
+                const icon = this.querySelector('.submenu-icon');
+                toggleSubmenu(submenu, icon);
+                closeOtherSubmenus(submenu); // Cierra otros submenús
+                storeSubmenuState(submenu);
+            });
+        });
+
+        // Recupera y aplica el estado del submenú almacenado en localStorage
+        submenuTriggers.forEach(trigger => {
+            const submenu = trigger.nextElementSibling;
+            const icon = trigger.querySelector('.submenu-icon');
+            const storedState = getStoredSubmenuState(submenu);
+            if (storedState === 'open') {
+                openSubmenu(submenu, icon);
+            } else {
+                closeSubmenu(submenu, icon);
+            }
+        });
+    });
+
+    function toggleSubmenu(submenu, icon) {
+        if (submenu.style.display === 'block') {
+            closeSubmenu(submenu, icon);
+        } else {
+            openSubmenu(submenu, icon);
+        }
+    }
+
+    function openSubmenu(submenu, icon) {
+        submenu.style.display = 'block';
+        icon.style.transform = 'rotate(90deg)';
+    }
+
+    function closeSubmenu(submenu, icon) {
+        submenu.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    }
+
+    function storeSubmenuState(submenu) {
+        const submenuState = submenu.style.display === 'block' ? 'open' : 'closed';
+        localStorage.setItem('submenuState', submenuState);
+    }
+
+    function getStoredSubmenuState(submenu) {
+        return localStorage.getItem('submenuState');
+    }
+
+    function closeOtherSubmenus(currentSubmenu) {
+        const allSubmenus = document.querySelectorAll('.submenu');
+        allSubmenus.forEach(submenu => {
+            if (submenu !== currentSubmenu) {
+                closeSubmenu(submenu, submenu.previousElementSibling.querySelector('.submenu-icon'));
+            }
+        });
+    }
+
+/*     function getRandomColor() {
+    // Genera un color aleatorio en formato hexadecimal
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+// Obtiene todos los submenús y les asigna colores aleatorios
+const submenus = document.querySelectorAll('.submenu');
+submenus.forEach(submenu => {
+    submenu.style.backgroundColor = getRandomColor();
+}); */
 </script>
+
+
 
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>
     <script src="{% static 'js/inventario.js' %}"></script>
+    <script src="{% static 'js/modalEditar.js' %}"></script>
     <!--Fin Scripts-->
 </body>
 </html>

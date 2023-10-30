@@ -181,6 +181,7 @@ aside .sidebar a span{
 aside .sidebar a.active{
     background: var(--color-info-light);
     margin-left: 0;
+    color: var(--color-primary);
 }
 
 aside .sidebar a.active:before{
@@ -442,28 +443,75 @@ textarea{
     padding: 0.5rem 0;
 }
 
-
 /* Oculta los submenús por defecto */
 .submenu {
+    background-color: var(--color-white);
     display: none;
-    margin-left: 2.5rem;
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-   /*  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em; */
-/*     box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
- */}
+    margin-left: 2rem;
+    /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
+    box-shadow: var(--color-light) 0px 50px 100px -20px, var(--color-white) 0px 30px 60px -30px, var(--color-light) 0px -2px 6px 0px inset;
 
-/* Estilo predeterminado del icono */
+    /* box-shadow: var(--color-light) 3px 3px 6px 0px inset, var(--color-white) -3px -3px 6px 1px inset; */
+   /*  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em; */
+/*     box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;*/
+}
+
 .submenu-icon {
     transform: rotate(0deg);
     transition: transform 0.3s ease;
 }
 
-/* Gira el icono cuando está en :hover */
 .submenu-trigger:hover .submenu-icon {
     transform: rotate(90deg);
 }
 
-/* Muestra el submenú cuando el elemento .submenu-trigger está en :hover */
-/* .submenu-trigger:hover + .submenu {
-    display: block;
-} */
+/* Aplicar el mismo diseño a .submenu-trigger que a las otras opciones principales del menú */
+.sidebar a.submenu-trigger {
+    /* Agrega aquí tus estilos para que se vea igual que las otras opciones del menú */
+     /* Asegúrate de quitar cualquier fondo adicional si se agrega cuando se activa *
+    /*background-color: var(--color-info-light);/* Cambia esto al color deseado */
+    margin-left: 0rem; /* Ajusta el margen izquierdo si es necesario */
+}
+
+/* Cambia los estilos cuando .submenu-trigger está activo */
+.sidebar a.submenu-trigger.active {
+    margin-left: 0rem;
+    background-color: var(--color-info-light);
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    color: var(--color-primary);
+}
+
+aside .sidebar a.submenu-trigger:before{
+    content: "";
+    width: 6px;
+    height: 100%;
+    background: var(--color-primary);
+}
+aside .sidebar a.submenu-trigger span{
+    color: var(--color-primary);
+    margin-left: calc(1rem - 3 px);
+} 
+
+
+
+aside .sidebar .submenu a.active {
+    /* background: #e2e3e7; */
+    background-color: var(--color-info-light);
+    margin-left: 0;
+    color: #ff006f;
+}
+
+aside .sidebar .submenu a.active:before {
+    content: "";
+    width: 6px;
+    height: 100%;
+    background: #ff006f;
+}
+
+aside .sidebar .submenu a.active span {
+    color: #ff006f;
+}
+
+aside .sidebar .submenu a:hover{
+    color: #ff006f;
+}

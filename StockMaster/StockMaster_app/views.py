@@ -65,10 +65,11 @@ def signup(request):
             # Agrega otros mensajes de error personalizados según tus necesidades
             if 'is_superuser' in form.errors:
                 messages.error(request, 'error de admin')
+            return redirect('/usuarios')
     else:
         form = CustomUserCreationForm()
 
-    return render(request, 'StockMaster_app/registro.html', {'form': form})
+    return render(request, 'StockMaster_app/usuarios.html', {'form': form})
 
 @login_required
 def cambio_password(request):

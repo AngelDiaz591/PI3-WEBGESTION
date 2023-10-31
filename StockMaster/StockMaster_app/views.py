@@ -18,6 +18,9 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist 
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.shortcuts import render, redirect
 # Create your views here.
 
 class CustomUserCreationForm(UserCreationForm):
@@ -67,6 +70,18 @@ def signup(request):
 
     return render(request, 'StockMaster_app/registro.html', {'form': form})
 
+@login_required
+def cambio_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Actualiza la sesión del usuario para evitar que se cierre la sesión después de cambiar la contraseña
+            update_session_auth_hash(request, user)
+            return redirect('/actividades')  # Reemplaza 'perfil' con la URL a la que deseas redirigir al usuario después de cambiar la contraseña
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form})
 def eliminaruser(request, id):
     try:
         user_to_delete = User.objects.get(id=id)

@@ -42,7 +42,7 @@
                 </a>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
-                        <a class="active submenu-trigger">
+                        <a class="submenu-trigger active">
                             <span class="material-symbols-outlined">history</span>
                             <h3>Gestion</h3>
                             <i class="submenu-icon fas fa-chevron-right"></i>
@@ -58,7 +58,7 @@
                             </a>
                             <a href="{% url 'configuraciones77' %}" class="active">
                                 <span class="material-symbols-outlined">settings</span>
-                                <h3>Categorización</h3>
+                                <h3>Etiquetas</h3>
                             </a>
                         </div>
                         
@@ -88,13 +88,17 @@
                     </span>
                 </a>
                 {% if request.user.is_authenticated %}
-                <a href="{% url 'historial' %}" class="active submenu-trigger">
+                <a class="submenu-trigger active">
                     <span class="material-symbols-outlined">history</span>
                     <h3>Historial</h3>
                     <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
                 </a>
                 <div class="submenu">
-                    <a href="{% url 'soporte' %}" class="active">
+                    <a href="{% url 'historial' %}" class="active">
+                        <span class="material-symbols-outlined">browse_activity</span>
+                        General
+                    </a>
+                    <a href="" class="active">
                         <span class="material-symbols-outlined">browse_activity</span>
                         Movimientos
                     </a>
@@ -119,127 +123,7 @@
 
     </div>
 
-<!--    <script>
-        let submenuTriggers; // Declara submenuTriggers en un ámbito global
-        let openSubmenu = null; // Variable para rastrear el submenú abierto actualmente
-    
-        document.addEventListener('DOMContentLoaded', function() {
-            submenuTriggers = document.querySelectorAll('.submenu-trigger');
-    
-            submenuTriggers.forEach(trigger => {
-                trigger.addEventListener('click', function() {
-                    // Si el mismo submenú ya está abierto, ciérralo
-                    if (openSubmenu === this) {
-                        closeSubmenu(this);
-                        openSubmenu = null;
-                    } else {
-                        // Cierra el submenú anteriormente abierto (si lo hay)
-                        if (openSubmenu) {
-                            closeSubmenu(openSubmenu);
-                        }
-    
-                        // Abre el submenú actual
-                        openSubmenu = this;
-                        openSubmenu.querySelector('.submenu').classList.add('active');
-    
-                        // Agrega la clase CSS para rotar el icono
-                        const icon = openSubmenu.querySelector('.submenu-icon');
-                        icon.classList.add('rotate-icon');
-                    }
-                });
-            });
-        });
-    
-        function closeSubmenu(trigger) {
-            const submenu = trigger.querySelector('.submenu');
-            submenu.classList.remove('active');
-    
-            // Remueve la clase CSS de rotación del icono
-            const icon = trigger.querySelector('.submenu-icon');
-            icon.classList.remove('rotate-icon');
-        }
-    </script> -->
-
-<!-- Opcion: prueba 2, NO QUITAR NI MOVER-->
 <!-- <script>
-    // Selecciona todos los elementos con la clase 'submenu-trigger'
-    document.addEventListener('DOMContentLoaded', function() {
-        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
-
-        // Selecciona todos los elementos con la clase 'submenu-trigger'
-        submenuTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault(); // Evita el comportamiento predeterminado de los enlaces
-
-                // Busca el elemento 'submenu' y 'submenu-icon' dentro del 'trigger'
-                const submenu = trigger.querySelector('.submenu');
-                const icon = trigger.querySelector('.submenu-icon');
-
-                // Si el 'submenu' tiene la clase 'active', quítala y gira el 'icon'
-                if (submenu.classList.contains('active')) {
-                    submenu.classList.remove('active');
-                    icon.classList.remove('rotate-icon');
-                } else {
-                    // De lo contrario, agrega la clase 'active' al 'submenu' y rota el 'icon'
-                    submenu.classList.add('active');
-                    icon.classList.add('rotate-icon');
-                }
-            });
-        });
-
-        // Cierra el submenú si se hace clic en una opción del menú principal
-        const mainMenuLinks = document.querySelectorAll('.sidebar a:not(.submenu-trigger)');
-
-        mainMenuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                // Recorre todos los 'submenu-trigger' y cierra los submenús activos
-                submenuTriggers.forEach(trigger => {
-                    const submenu = trigger.querySelector('.submenu');
-                    const icon = trigger.querySelector('.submenu-icon');
-                    submenu.classList.remove('active');
-                    icon.classList.remove('rotate-icon');
-                });
-            });
-        });
-    });
-</script> -->
-
-
-<!--  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
-
-        submenuTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault(); // Evita el comportamiento predeterminado de los enlaces
-
-                // Busca el elemento 'submenu' y 'submenu-icon' dentro del 'trigger'
-                const submenu = trigger.querySelector('.submenu');
-                const icon = trigger.querySelector('.submenu-icon');
-
-                // Cierra todos los submenús abiertos, excepto el submenú actual
-                closeAllSubmenus(submenuTriggers, submenu);
-
-                // Abre o cierra el submenú actual y rota el icono
-                submenu.classList.toggle('active');
-                icon.classList.toggle('rotate-icon');
-            });
-        });
-
-        function closeAllSubmenus(triggers, except = null) {
-            triggers.forEach(trigger => {
-                const submenu = trigger.querySelector('.submenu');
-                const icon = trigger.querySelector('.submenu-icon');
-                if (submenu !== except && submenu.classList.contains('active')) {
-                    submenu.classList.remove('active');
-                    icon.classList.remove('rotate-icon');
-                }
-            });
-        }
-    });
-</script> -->
-
-<script>
     document.addEventListener('DOMContentLoaded', function() {
         const submenuTriggers = document.querySelectorAll('.submenu-trigger');
         const mainMenuLinks = document.querySelectorAll('.sidebar a:not(.submenu-trigger)');
@@ -248,25 +132,8 @@
             trigger.addEventListener('click', function() {
                 const submenu = this.nextElementSibling; // El siguiente elemento es el submenú
                 const icon = this.querySelector('.submenu-icon');
-
-                if (submenu.style.display === 'block') {
-                    submenu.style.display = 'none';
-                    icon.style.transform = 'rotate(0deg)';
-                } else {
-                    submenu.style.display = 'block';
-                    icon.style.transform = 'rotate(90deg)';
-                }
-
-                // Cierra otros submenús abiertos y restaura sus iconos
-                submenuTriggers.forEach(otherTrigger => {
-                    if (otherTrigger !== this) {
-                        const otherSubmenu = otherTrigger.nextElementSibling;
-                        const otherIcon = otherTrigger.querySelector('.submenu-icon');
-
-                        otherSubmenu.style.display = 'none';
-                        otherIcon.style.transform = 'rotate(0deg)';
-                    }
-                });
+                toggleSubmenu(submenu, icon);
+                storeSubmenuState(submenu);
             });
         });
 
@@ -275,17 +142,146 @@
                 submenuTriggers.forEach(trigger => {
                     const submenu = trigger.nextElementSibling;
                     const icon = trigger.querySelector('.submenu-icon');
-                    submenu.style.display = 'none';
-                    icon.style.transform = 'rotate(0deg)';
+                    closeSubmenu(submenu, icon);
                 });
             });
         });
+
+        // Recupera y aplica el estado del submenú almacenado en localStorage
+        submenuTriggers.forEach(trigger => {
+            const submenu = trigger.nextElementSibling;
+            const icon = trigger.querySelector('.submenu-icon');
+            const storedState = getStoredSubmenuState(submenu);
+            if (storedState === 'open') {
+                openSubmenu(submenu, icon);
+            } else {
+                closeSubmenu(submenu, icon);
+            }
+        });
+    });
+
+    function toggleSubmenu(submenu, icon) {
+        if (submenu.style.display === 'block') {
+            closeSubmenu(submenu, icon);
+        } else {
+            openSubmenu(submenu, icon);
+        }
+    }
+
+    function openSubmenu(submenu, icon) {
+        submenu.style.display = 'block';
+        icon.style.transform = 'rotate(90deg)';
+    }
+
+    function closeSubmenu(submenu, icon) {
+        submenu.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    }
+
+    function storeSubmenuState(submenu) {
+        const submenuState = submenu.style.display === 'block' ? 'open' : 'closed';
+        localStorage.setItem('submenuState', submenuState);
+    }
+
+    function getStoredSubmenuState(submenu) {
+        return localStorage.getItem('submenuState');
+    }
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
+
+        submenuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const submenu = this.nextElementSibling; // El siguiente elemento es el submenú
+                const icon = this.querySelector('.submenu-icon');
+                toggleSubmenu(submenu, icon);
+                closeOtherSubmenus(submenu); // Cierra otros submenús
+                storeSubmenuState(submenu);
+            });
+        });
+
+        // Recupera y aplica el estado del submenú almacenado en localStorage
+        submenuTriggers.forEach(trigger => {
+            const submenu = trigger.nextElementSibling;
+            const icon = trigger.querySelector('.submenu-icon');
+            const storedState = getStoredSubmenuState(submenu);
+            if (storedState === 'open') {
+                openSubmenu(submenu, icon);
+            } else {
+                closeSubmenu(submenu, icon);
+            }
+        });
+    });
+
+    function toggleSubmenu(submenu, icon) {
+        if (submenu.style.display === 'block') {
+            closeSubmenu(submenu, icon);
+        } else {
+            openSubmenu(submenu, icon);
+        }
+    }
+
+    function openSubmenu(submenu, icon) {
+        submenu.style.display = 'block';
+        icon.style.transform = 'rotate(90deg)';
+    }
+
+    function closeSubmenu(submenu, icon) {
+        submenu.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    }
+
+    function storeSubmenuState(submenu) {
+        const submenuState = submenu.style.display === 'block' ? 'open' : 'closed';
+        localStorage.setItem('submenuState', submenuState);
+    }
+
+    function getStoredSubmenuState(submenu) {
+        return localStorage.getItem('submenuState');
+    }
+
+    function closeOtherSubmenus(currentSubmenu) {
+        const allSubmenus = document.querySelectorAll('.submenu');
+        allSubmenus.forEach(submenu => {
+            if (submenu !== currentSubmenu) {
+                closeSubmenu(submenu, submenu.previousElementSibling.querySelector('.submenu-icon'));
+            }
+        });
+    }
+
+/*     function getRandomColor() {
+    // Genera un color aleatorio en formato hexadecimal
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+// Obtiene todos los submenús y les asigna colores aleatorios
+const submenus = document.querySelectorAll('.submenu');
+submenus.forEach(submenu => {
+    submenu.style.backgroundColor = getRandomColor();
+}); */
+</script>
+<script>
+    $(document).ready(function(){
+        // show stats on Mouseover
+        $('.product-card').hover(function(){
+            $(this).addClass('animate');
+            $('div.carouselNext, div.carouselPrev').addClass('visible');
+        }, function(){
+            $(this).removeClass('animate');
+            $('div.carouselNext, div.carouselPrev').removeClass('visible');
+        });
     });
 </script>
+
+
     <!--Scripts-->
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/busquedas.js' %}"></script>
     <script src="{% static 'js/inventario.js' %}"></script>
+    <script src="{% static 'js/modalEditar.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--Fin Scripts-->
 </body>
 </html>

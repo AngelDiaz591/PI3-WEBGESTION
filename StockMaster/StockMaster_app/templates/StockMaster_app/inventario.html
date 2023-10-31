@@ -102,17 +102,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static 'js/search.js' %}"></script>
-<script>
-    $(document).ready(function(){
-        // show stats on Mouseover
-        $('.product-card').hover(function(){
-            $(this).addClass('animate');
-            $('div.carouselNext, div.carouselPrev').addClass('visible');
-        }, function(){
-            $(this).removeClass('animate');
-            $('div.carouselNext, div.carouselPrev').removeClass('visible');
-        });
-    });
-</script>
+
 
 {% endblock %}

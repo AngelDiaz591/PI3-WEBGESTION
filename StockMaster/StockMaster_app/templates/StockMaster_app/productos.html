@@ -89,9 +89,6 @@
                                 <td>{{ c.id_categorias.nombre }}</td>
                                 <td>{{ c.id_Proveedores.nombre }}</td>
                                 <td>{{c.id_marca}}
-                                <td class="edita"><a href="edicioninventario/{{c.idproducts}}" class="btn btn-info" style="margin-left: 2rem;">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </a></td> <!-- href="edicioninventario/{{c.idproducts}}"-->
                                 <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
                                     <span class="material-symbols-outlined">edit</span></a>
                                 </td>
@@ -105,125 +102,89 @@
             </table>
         </div>
     </div>
+    <!--Ventana Modal-->
     <div>
-        <!--Ventana Modal-->
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
             <div class="content-modal">
-                <label for="btn-modal" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
-                <div class="recent-updates">
-                    <h2>Agregar Nuevo Producto</h2>
-                    <div class="updates">
-                        <form action="/registrarProducto/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
-                            <!--Inicio de la tabla de columnas-->
-                            <div class="form-columns">
-                            <!--Datos-->
-                                <!--Primer columna-->
-                                <div class="form-column">
-                                    <div class="update">
-                                        <div class="profile-photo">
-                                        </div>
-                                        <div class="message">
-                                            <input type="text" id="txtCodigo" name="txtCodigo" class="updatess" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" required>
-                                            <br><span class="error-message" style="color: red;"></span>
-                                        </div>
-                                    </div>
-                                    <div class="update">
-                                        <div class="profile-photo">
-                                        </div>
-                                        <div class="message">
-                                            <input type="text" id="txtNombre" name="txtNombre" class="updatess" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
-                                            <br><span class="error-message" style="color: red;"></span>
-                                        </div>
-                                    </div>
-                                    <div class="update">
-                                        <div class="profile-photo">
-                                        </div>
-                                        <div class="message">
-                                            <input type="text" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="updatess" maxlength="7" required oninput="validarNumeros(this)">
-                                            <br>
-                                            <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
-                                            <span class="error-message error" style="color: red;"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Termino de la 1 columna-->
-                                <!--Inicio de la 2 columna-->
-                                <div class="form-column">
-                                    <div class="update">
-                                        <div class="profile-photo">
-                                        </div>
-                                        {% comment %} <div class="message">
-                                            <input type="text" id="NomMarca" name="NomMarca" class="updatess" placeholder="Marca"  pattern="[A-Za-z0-9]{6,20}" maxlength="20" required>
-                                            <br> <span class="error-message" style="color: red;"></span></br>
-                                        </div>
-                                    </div> {% endcomment %}
-                                    <div class="update">
-                                        <div class="profile-photo">
-                                        </div>
-                                        <div class="message">
-                                            <input type="number" id="CantPro" name="CantPro" placeholder="Cantidad de Producto" pattern="[0-9]{1,7}" class="updatess" maxlength="7"  required oninput="validarNumeros(this)" >
-                                            <br>
-                                            <small class="text-muted">Ingrese un numero (entre 1 y 100 000).</small><br>
-                                            <span class="error-message" style="color: red;"></span>
-                                        </div>
-                                    </div>
-                                    <div class="update">
-                                        <div class="profile-photo">
-                                        </div>
-                                        <div class="message"></div>
-                                            <label for="categoria">Categoría:</label>
-                                            <br>
-                                            <select name="categoria" id="categoria" class="updatess" required>
-                                                <option value="" disabled selected>Selecciona una categoría</option>
-                                                {% for c in Categoria %}
-                                                    <option value="{{ c.categoria_id }}">{{ c.nombre }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="update">
-                                            <div class="profile-photo">
-                                            </div>
-                                            <div class="message"></div>
-                                                <label for="proveedor">Proveedor:</label>
-                                                <br>
-                                                <select name="proveedor" id="proveedor" class="updatess" required>
-                                                    <option value="" disabled selected>Selecciona un proveedor</option>
-                                                    {% for c in Proveedor %}
-                                                        <option value="{{ c.idProveedor }}">{{ c.nombre }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="message"></div>
-                                                <label for="marca">Marca:</label>
-                                                <br>
-                                                <select name="marca" id="marca" class="updatess" required>
-
-                                                    <option value="" disabled selected>Selecciona un Marca</option>
-                                                    {% for c in marca %}
-                                                        <option value="{{ c.marca_id }}">{{ c.nombre }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                    </div>
-                                </div>
-                                <!--Termino de la 2 columna-->
+                <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
+                <h2 class="titulo-modal">Agregar Nuevo Producto</h2>
+                <form action="/registrarProducto/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
+                    <!--Inicio de la tabla de columnas-->
+                    <div class="form-columns">
+                    <!--Datos-->
+                        <!--Primer columna-->
+                        <div class="form-column">
+                            <div class="divisor">
+                                <div class="titulo">Código:</div>
+                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" required>
+                                <br><span class="error-message" style="color: red;"></span>
                             </div>
-                            <!--Termino de la tabla de columnas-->
-                                <div class="update">
-                                    <div class="profile-photo">
-                                    </div>
-                                    <div class="message" style="align-items: center;">
-                                        <input type="file" name="imagen" id="id_imagen" accept="image/*" required>
-                                    </div>
-                                </div>
-                                <div class="btn-cerrar">
-                                    <button type="submit" class="updatess">Guardar</button>
-                                    <label for="btn-modal">Cancelar</label>
-                                </div>
-                            <!--Fin datos-->
-
-                        </form>
+                            <div class="divisor">
+                                <div class="titulo">Nombre:</div>
+                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
+                                <br><span class="error-message" style="color: red;"></span>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Precio:</div>
+                                <input type="number" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="campos" maxlength="7" required oninput="validarNumeros(this)">
+                                <br>
+                                <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
+                                <span class="error-message error" style="color: red;"></span>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Cantidad Producto:</div>
+                                <input type="number" id="CantPro" name="CantPro" placeholder="Cantidad de Producto" pattern="[0-9]{1,7}" class="campos" maxlength="7"  required oninput="validarNumeros(this)" >
+                                <br>
+                                <small class="text-muted">Ingrese un numero (entre 1 y 100 000).</small><br>
+                                <span class="error-message" style="color: red;"></span>
+                            </div>
+                        </div>
+                        <!--Termino de la 1 columna-->
+                        <!--Inicio de la 2 columna-->
+                        <div class="form-column">
+                            <div class="divisor">
+                                <div class="titulo">Categoría:</div>
+                                <select name="categoria" id="categoria" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Selecciona una categoría</option>
+                                    {% for c in Categoria %}
+                                        <option value="{{ c.categoria_id }}">{{ c.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Proveedor:</div>
+                                <select name="proveedor" id="proveedor" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Selecciona un proveedor</option>
+                                    {% for c in Proveedor %}
+                                        <option value="{{ c.idProveedor }}">{{ c.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Marca:</div>
+                                <select name="marca" id="marca" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Selecciona un Marca</option>
+                                    {% for c in marca %}
+                                        <option value="{{ c.marca_id }}">{{ c.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!--Termino de la 2 columna-->
+                    </div>
+                    <!--Termino de la tabla de columnas-->
+                        <div class="divisor">
+                            <div class="message" style="align-items: center;">
+                                <input type="file" name="imagen" id="id_imagen" accept="image/*" required>
+                            </div>
+                        </div>
+                        <div class="btn-cerrar">
+                            <button type="submit">Guardar</button>
+                            <label for="btn-modal">Cancelar</label>
+                        </div>
+                    <!--Fin datos-->
+                </form>
                 <script>
                     // Obtén todos los elementos con la clase "close-btn"
                     var closeBtns = document.querySelectorAll('.close-btnn');
@@ -236,333 +197,100 @@
                         });
                     });
                 </script>
-            </div>
             <label for="btn-modal" class="cerrar-modal"></label>
-        </div>
-        <!--Fin de Ventana Modal-->
-    </div>
-        
-    <style>
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(144, 148, 150, 0.8);
-    backdrop-filter: blur(5px);
-    z-index: 1;
-}
-
-.modal-content {
-    background-color: white;
-    margin: 4% auto; /*posicion modal*/
-    padding: 20px 0px 25px ;
-    width: 60%;
-    height: 85%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    position: relative;
-    color: rgb(0, 0, 0);
-    border-radius: 20px;
-    /* border-radius: 25px; */
-}
-
-.close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    cursor: pointer;
-    color: rgb(144, 144, 144);
-    font-size: 32px;
-}
-
-.close:hover { 
-    color: rgb(255, 0, 0);
-}
-
-.title{
-    text-align: center;
-}
-
-.columnas{
-    margin: 1.5%;
-    /* padding: 3%; */
-    display: grid;
-    grid-template-columns: 390px 1fr; /* Divide el contenedor en dos columnas iguales */
-    height: 100%;
-}
-
-.formulario{
-    /* text-align: center; / / Alinea los elementos en el centro horizontalmente */
-    display: flex;
-    flex-direction: column; /* Apila los elementos en una columna */
-    /* align-items: center;  // Alinea los elementos en el centro verticalmente */
-    margin-bottom: 20px; /* Espacio entre cada grupo de etiqueta y entrada */
-}
-
-.secondColumn{
-    padding: 12%;
-    
-}
-
-.primerColum{
-    padding: 2%;
-}
-
-.sub{
-    font-size: 18px;
-    text-transform: uppercase;
-    color: #434343;
-    font-weight: 500;
-}
-
-.ingresar{
-   /*  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset; */
-    /* box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px; */
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
-/*     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;*/
-    height: 40px;
-    width: 70%;
-    border-radius: 8px;
-    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
-/*     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
- */    font-size: 20px;
- }
-
-.botones{
-    align-self:flex-end;
-}
-    </style>
-
-{% comment %} modal  {% endcomment %}
-<!-- Modal edición -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeEditModal">&times;</span>
-        <!-- Contenido del modal de edición -->
-        <h2 class="title">Editar Producto</h2>
-        {% if error_messages %}
-        <div class="alert alert-danger" id="error-alert">
-            <ul>
-                {% for message in error_messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <script>
-            setTimeout(function() {
-                var errorAlert = document.getElementById('error-alert');
-                if (errorAlert) {
-                    errorAlert.style.display = 'none';
-                }
-            }, 5000);
-        </script>
-        {% endif %}
-        <form action="/editarProducto2/" method="POST" enctype="multipart/form-data" value="{{c.idproducts }}">
-            {% csrf_token %}
-            <input type="hidden" id="editProductId" name="productId" value="{{ c.idproducts }}">
-            <div class="columnas"> <!-- class="form-columns" -->
-                <!-- Primer columna -->
-                <div class="primerColum">
-                    <div class="formulario">
-                        <!-- <label class="sub" for="txtCodigo">Código:</label> -->
-                        <input class="ingresar" type="text" id="EtxtCodigo" name="txtCodigo"
-                                placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
-                        <span class="error-message"></span> 
-                    </div>
-                    <div class="formulario">
-                        <!-- <label class="sub" for="txtNombre">Nombre:</label> -->
-                        <input class="ingresar" type="text" id="EtxtNombre" name="txtNombre"
-                            placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
-                        <span class="error-message"></span>
-                    </div>
-                    <div class="formulario">
-                        <!-- <label class="sub" for="NumPrecio">Precio:</label> -->
-                        <input class="ingresar" type="text" id="ENumPrecio" name="NumPrecio" placeholder="Precio"
-                            pattern="[0-9]{1,7}" maxlength="7" required>
-                        <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
-                        <span class="error-message error"></span>
-                    </div>
-                
-                    <div class="formulario">
-                        <select name="marca" id="marca" class="updatess ingresar" required>
-                            <option value="" disabled>Selecciona una marca</option>
-                            {% for c in marca %}
-                            <option class="marcaOP" id="marcaOP{{ c.marca_id }}" value="{{ c.marca_id }}">{{ c.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                        <span class="error-message error"></span>
-                    </div>
-                    <div class="formulario">
-                        <!-- <label class="sub" for="CantPro">Cantidad de Producto:</label> -->
-                        <input class="ingresar" type="text" id="ECantPro" name="CantPro" placeholder="Cantidad de Producto"
-                            pattern="[0-9]{1,7}"  maxlength="7" required>
-                        <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
-                        <span class="error-message error"></span>
-                    </div>
-                    <div class="formulario"> <!-- class="update" -->
-                        <div class="message"></div>
-                        <!-- <label class="sub" for="categoria">Categoría:</label> -->
-                        <select name="categoria" id="categoria" class="updatess ingresar" required>
-                            <option value="" disabled>Selecciona una categoría</option>
-                            {% for c in Categoria %}
-                            <option class="categoriaOp" id="categoriaOp{{ c.categoria_id }}" value="{{ c.categoria_id }}">{{ c.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                        <span class="error-message error"></span>
-                    </div>
-                    <div class="update">
-                        <div class="message"></div>
-                        <label for="proveedor">Proveedor:</label>
-                        <select name="proveedor" id="proveedor" class="updatess ingresar" required>
-                            <option value="" disabled>Selecciona un proveedor</option>
-                            {% for c in Proveedor %}
-                            <option class="proveedorOp" id="proveedorOp{{ c.idProveedor }}" value="{{ c.idProveedor }}">{{ c.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                        <span class="error-message error"></span>
-                    </div>
-                </div>
-            
-                <div class="secondColumn">
-                    <center><img id="imgActual" src="{{ imagen_url }}" alt="Imagen actual" style="max-width: 150px; max-height: 150px"></center>     
-                    <div class="formulario">
-                        <!-- <label class="sub" for="imagen">Nueva imagen:</label> -->
-                        <input type="file" name="imagen" id="id_imagen" accept="image/*">
-                        <input class="ingresar" type="hidden" name="imagen_actual" value="{{ productos.imagen.url }}">
-                    </div>
-
-                    <div class="botones">
-                        <button type="submit" class="btn-guardar">Guardar</button>
-                        <a class="btn-cancelar">Cancelar</a> <!-- href="{% url 'productos' %}" -->
-                    </div>
-                </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-<!--Script encargado de manejar la informacion del modal de ecicion-->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!-- Fin Modal edición -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    // Obtén todos los elementos con la clase "edit-product-button"
-    const editButtons = document.querySelectorAll('.edit-product-button');
-    const editModal = document.getElementById('editModal');
-    const editProductIdField = document.getElementById('editProductId');
-
-    // Función para abrir el modal de edición
-    function openEditModal(productId) {
-        editProductIdField.value = productId;
-
-        // Realiza una solicitud Ajax para obtener los detalles del producto y llenar el formulario con esos datos
-        // Aquí debes cargar los detalles del producto y llenar el formulario en el modal
-
-        // Abre el modal de edición
-        editModal.style.display = 'block';
-       
-
-        // Obtener el ID del producto y hacer una solicitud AJAX para obtener los detalles
-        var productoId = document.getElementById("editProductId").value
-        var proveedorOp = document.querySelectorAll(".proveedorOp")
-        var categroiaOp = document.querySelectorAll(".categoriaOp")
-        var marcaOP = document.querySelectorAll(".marcaOP")
-        $.ajax({
-            url: 'edicioninventario2/'+ productoId + '',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                console.log(data)
-                $('#EtxtCodigo').val(data.codigo)
-                $('#EtxtNombre').val(data.nombre)
-                $('#ENumPrecio').val(data.precio)
-                $('#ECantPro').val(data.cantPro)
-                if (data.imagen_url) {
-                $('#imgActual').attr('src', data.imagen_url);
-            }          
-                for (var i = 0; i < proveedorOp.length; i++) {
-                 var option = proveedorOp[i];
-                if (option.value == data.id_Proveedores) {
-                $(option).prop('selected', true);
-                break;  // Terminar el bucle después de encontrar la coincidencia
-                }
-            }
-                for (var i = 0; i < categroiaOp.length; i++) {
-                         var option = categroiaOp[i];
-                        if (option.value == data.id_categorias) {
-                        $(option).prop('selected', true);
-                        break;  // Terminar el bucle después de encontrar la coincidencia
-                    }
-                }
-
-                for (var i = 0; i < marcaOP.length; i++) {
-                         var option = marcaOP[i];
-                        if (option.value == data.id_marca) {
-                        $(option).prop('selected', true);
-                        break;  // Terminar el bucle después de encontrar la coincidencia
-                    }
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-            }
-        });
-    }
-    // Asigna un evento de clic a cada botón de edición
-    editButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            const productId = button.getAttribute('data-id');
-            openEditModal(productId);
-        });
-    });
-
-    // Resto del código para cerrar el modal y otros eventos
+    <!--Fin de Ventana Modal-->
     
-        // Cierra el modal de edición cuando se hace clic en la "x"
-        closeEditModal.addEventListener("click", function() {
-            editModal.style.display = "none";
-        });
-    
-        // Cierra el modal de edición si se hace clic fuera del contenido del modal
-        window.addEventListener("click", function(event) {
-            if (event.target === editModal) {
-                editModal.style.display = "none";
-            }
-        });
+    <!-- Modal edición -->
+    <div id="editModal" class="container-modal-editar">
+        <div class="content-modal-editar">
+            <label class="cerrar" id="closeEditModal"><i class="fa-solid fa-xmark"></i></label>
+            <h2 class="titulo-modal">Editar Producto</h2>
+            <form action="/editarProducto2/" method="POST" enctype="multipart/form-data" value="{{c.idproducts }}">
+                {% csrf_token %}
+                <input type="hidden" id="editProductId" name="productId" value="{{ c.idproducts }}">
+                <!--Inicio de la tabla de columnas-->
+                <div class="form-columns">
+                    <!--Primer columna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Código:</div>
+                            <input class="campos" type="text" id="EtxtCodigo" name="txtCodigo"
+                                    placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Nombre:</div>
+                            <input class="campos" type="text" id="EtxtNombre" name="txtNombre"
+                                placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Precio:</div>
+                            <input class="campos" type="text" id="ENumPrecio" name="NumPrecio" placeholder="Precio"
+                                pattern="[0-9]{1,7}" maxlength="7" required>
+                            <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
+                            <br><span class="error-message error" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Cantidad Productos:</div>
+                            <input class="campos" type="text" id="ECantPro" name="CantPro" placeholder="Cantidad de Producto"
+                                pattern="[0-9]{1,7}"  maxlength="7" required>
+                            <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
+                            <br><span class="error-message error" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <!--Fin de Primer columna-->
 
-        
-    });
-
-</script>
-
+                    <!--Segunda columna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Categoría:</div>
+                            <select name="categoria" id="categoria" class="campos-seleccion" required>
+                                <option value="" disabled>Selecciona una categoría</option>
+                                {% for c in Categoria %}
+                                    <option class="categoriaOp" id="categoriaOp{{ c.categoria_id }}" value="{{ c.categoria_id }}">{{ c.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Proveedor:</div>
+                            <select name="proveedor" id="proveedor" class="campos-seleccion" required>
+                                <option value="" disabled>Selecciona un proveedor</option>
+                                {% for c in Proveedor %}
+                                    <option class="proveedorOp" id="proveedorOp{{ c.idProveedor }}" value="{{ c.idProveedor }}">{{ c.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Marca:</div>
+                            <select name="marca" id="marca" class="campos-seleccion" required>
+                                <option value="" disabled>Selecciona una marca</option>
+                                {% for c in marca %}
+                                    <option class="marcaOP" id="marcaOP{{ c.marca_id }}" value="{{ c.marca_id }}">{{ c.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <center><img id="imgActual" src="{{ imagen_url }}" alt="Imagen actual"></center>     
+                        </div>
+                        <div class="divisor">
+                            <input type="file" name="imagen" id="id_imagen" accept="image/*">
+                            <input class="ingresar" type="hidden" name="imagen_actual" value="{{ productos.imagen.url }}">
+                        </div>
+                    </div>
+                    <!--Fin de segunda columna-->
+                </div>
+                <!--Fin de la tabla de columnas-->
+                <div class="btn-cerrar">
+                    <button type="submit">Guardar</button>
+                    <label id="cancelar">Cancelar</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fin Modal edición -->
 </main>
-
-<script>
-    function validarNumeros(input) {
-        // Obtener el valor actual del campo de entrada
-        let valor = input.value;
-
-        // Reemplazar cualquier caracter que no sea un número con una cadena vacía
-        valor = valor.replace(/[^0-9]/g, '');
-
-        // Limitar la longitud del valor a 7 caracteres
-        if (valor.length > 7) {
-            valor = valor.slice(0, 7);
-        }
-
-        // Actualizar el valor del campo de entrada con la versión filtrada
-        input.value = valor;
-    }
-</script>
-<script>
-    // Función para eliminar el mensaje al hacer clic en el botón de cerrar
-    function dismissMessage(button) {
-        const messageContainer = button.closest('.alert');
-        if (messageContainer) {
-            messageContainer.remove();
-        }
-    }
-</script>
-
 {% endblock %}

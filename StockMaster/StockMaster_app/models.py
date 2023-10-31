@@ -64,7 +64,7 @@ class Productos(models.Model):
     cantPro = models.CharField(max_length=255)
     imagen = models.BinaryField(null=True, blank=True)
 
-    id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE, null= True)
     id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
     id_marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
 

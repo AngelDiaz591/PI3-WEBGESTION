@@ -648,6 +648,7 @@ def status_mov_cate (resquest,categoria_id):
 @login_required(login_url='signin')
 def eliminar_categoria(request, categoria_id):
     categoria = Categoria.objects.get(categoria_id=categoria_id)
+    Productos.objects.filter(id_categorias=categoria).update(id_categorias=None)
     categoria.delete()
     messages.success(request, '¡Categoría Eliminada!')
     return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación

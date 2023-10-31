@@ -86,7 +86,17 @@
                                         <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
                                     </div>
                                 </td>
-                                <td>{{ c.id_categorias.nombre }}</td>
+                                <td>
+                                    {% if c.id_categorias %}
+                                      {% if c.id_categorias.status == 1 %}
+                                        {{ c.id_categorias.nombre }}
+                                      {% elif c.id_categorias.status == 0 %}
+                                        Agrega nueva categoría
+                                      {% endif %}
+                                    {% else %}
+                                      Categoría no existe
+                                    {% endif %}
+                                  </td>
                                 <td>{{ c.id_Proveedores.nombre }}</td>
                                 <td>{{c.id_marca}}
                                 <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">

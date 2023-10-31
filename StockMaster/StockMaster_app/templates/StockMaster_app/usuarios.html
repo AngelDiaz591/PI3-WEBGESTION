@@ -8,8 +8,10 @@
         <div class="recent-orders">
             
             <div class="principal">
-                <div class="registrar">
-                    <a class="btn-registrar"href="{% url 'signup' %}">Registrar</a>
+                <div class="boton-modal">
+                    <label for="btn-modal">
+                        <i class="fa-solid fa-plus"></i>    Agregar Producto
+                    </label>
                 </div>
                 <div class="search-bar">
                     <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
@@ -48,6 +50,91 @@
                 </table>
             </div>
         </div>
+            <!--Ventana Modal-->
+            <div>
+                <input type="checkbox" id="btn-modal">
+                <div class="container-modal">
+                    <div class="content-modal">
+                        <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
+                        <h2 class="titulo-modal">Agregar Nuevo Usuario</h2>
+
+                        <form action="/signup/" method="POST" enctype="multipart/form-data" id="registrationForm">{% csrf_token %}
+                            {% csrf_token %}
+                            {% if messages %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            {% endif %}
+                            <!--Inicio de la tabla de columnas-->
+                            <div class="form-columns">
+                                <!--Primer columna-->
+                                <div class="form-column">
+                                    <div class="divisor">
+                                        <div class="titulo">Nombre(s):</div>
+                                        <input type="text" id="first_name" name="first_name" placeholder="Enter your name" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Apellido(s):</div>
+                                        <input type="text" id="last_name" name="last_name" placeholder="Enter your last_name" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Correo:</div>
+                                        <input type="email" id="email" name="email" placeholder="Enter your email" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Nombre de Usuario:</div>
+                                        <input type="text" id="username" name="username" placeholder="Enter your username" class="campos" required>
+                                    </div>
+                                </div>
+                                <!--Termino de primer columna-->
+
+                                <!--Segunda columna-->
+                                <div class="form-column">
+                                    <div class="divisor">
+                                        <div class="titulo">Contraseña:</div>
+                                        <input type="password" id="id_password1" name="password1" placeholder="Enter your password" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Confirmar Contraseña:</div>
+                                        <input type="password" id="id_password2" name="password2" placeholder="confirm your password" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Rol:</div>
+                                        <select name="is_superuser" id="is_superuser" class="campos-seleccion" required>
+                                            <option value="" disabled selected>Selecciona un rol</option>
+                                            <option value="1">Administrador</option>
+                                            <option value="0">Empleado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--Termino de segunda columna-->
+                            </div>
+                            <!--Fin de la tabla columnnas-->
+                                <div class="btn-cerrar">
+                                    <button type="submit">Guardar</button>
+                                    <label for="btn-modal">Cancelar</label>
+                                </div>
+                            <!--Fin datos-->
+                        </form>
+                        <script>
+                            // Obtén todos los elementos con la clase "close-btn"
+                            var closeBtns = document.querySelectorAll('.close-btnn');
+
+                            // Agrega un evento de clic a cada elemento
+                            closeBtns.forEach(function (closeBtn) {
+                                closeBtn.addEventListener('click', function () {
+                                    // Oculta el elemento al hacer clic
+                                    closeBtn.style.display = 'none';
+                                });
+                            });
+                        </script>
+                    <label for="btn-modal" class="cerrar-modal"></label>
+                    </div>
+                </div>
+            </div>
+            <!--Fin de Ventana Modal-->
     </main>
     <div class="right" >
         <div class="top">

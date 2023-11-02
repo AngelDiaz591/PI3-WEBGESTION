@@ -28,204 +28,6 @@ class CustomUserCreationForm(UserCreationForm):
     last_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your last name.')
     email = forms.EmailField()
 
-@login_required(login_url='signin')
-def productos(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes = mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    ProveedoresListados = Proveedores.objects.all()
-    MarcaListados = Marca.objects.all()
-    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes,'marca': MarcaListados, ' Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
-
-def editarcant(request, idproducts):
-    if request.method == 'POST':
-        cantPro = request.POST.get('cantPro')
-        producto = Productos.objects.get(idproducts=idproducts)
-        producto.cantPro = cantPro
-        producto.username = request.user.username
-        producto.fecha_edit = timezone.now()
-        producto.movimiento = 'Edicion de Cantidad'
-        producto.save()
-        messages.success(request, '¡Cantidad Editada!')
-    return redirect('/actividades')
-
-@login_required(login_url='signin')
-def usuarios(request):
-    if request.user.is_superuser:
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
-        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
-        return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes})
-    else:
-        return redirect('/actividades')
-    
-
-
-@login_required(login_url='signin')
-def editarproveedor(request):
-    idProveedor = request.POST.get('idProveedor')
-    nombre = request.POST.get('nombre')
-    contacto = request.POST.get('contacto')
-    telefono = request.POST.get('telefono')
-    email = request.POST.get('email')
-    calle = request.POST.get('calle')
-    noExt = request.POST.get('noExt') 
-    noInt = request.POST.get('noInt') 
-    colonia = request.POST.get('colonia')
-    cp = request.POST.get('cp')
-    municipio = request.POST.get('municipio')
-    estado = request.POST.get('estado')
-    nueva_imagen = request.FILES.get('imagen') 
-    pais = request.POST.get('pais')
-
-
-    proveedor = Proveedores.objects.get(idProveedor=idProveedor)
-
-    proveedor.nombre = nombre
-    proveedor.contacto = contacto
-    proveedor.telefono = telefono
-    proveedor.email = email
-    proveedor.calle = calle
-    proveedor.noExt = noExt
-    proveedor.noInt = noInt
-    proveedor.colonia = colonia
-    proveedor.cp = cp
-    proveedor.municipio = municipio
-    proveedor.estado = estado
-    proveedor.pais = pais
-    
-    proveedor.username = request.user.username
-    proveedor.fecha_edit = timezone.now()
-    proveedor.movimiento = 'Edicion de Proveedor'
-    if proveedor.status_mov != 1:
-        proveedor.status_mov = 1
-    if nueva_imagen:
-        proveedor.imagen = nueva_imagen.read()
-    historial= Historial.objects.all()
-    historial = Historial(movimiento='Edicion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
-    historial.save()
-    proveedor.save()
-
-    messages.success(request, '¡Proveedor Editado!')
-    return redirect('/prov')
- 
-def buscar_productos(request):
-    query = request.GET.get('query', '')
-
-    if query:
-        productos = Productos.objects.filter(
-            Q(codigo__icontains=query) |  # Buscar en código (contiene)
-            Q(nombre__icontains=query) |  # Buscar en nombre (contiene)
-            Q(marca__icontains=query) |  # Buscar en marca (contiene)
-            Q(id_categorias__nombre__icontains=query)  # Buscar en nombre de categoría (contiene)
-        )
-    else:
-        productos = Productos.objects.all()
-
-    return render(request, 'Stockmaster_app/productos.html', {'productos': productos, 'query': query})
-
-def get_char(_request):
-    chart = {}
-    return JsonResponse(chart)
-
-@login_required(login_url='signin')
-def example_view(request):
-    categorias = Categoria.objects.all()  # Obtener todas las categorías
-    productos = []  # Inicializar una lista vacía para productos
-    mensajes = Mensajes.objects.all()
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    categoria_seleccionada = request.GET.get('categoria')  # Obtener la categoría seleccionada por el usuario
-    if categoria_seleccionada:
-        productos = Productos.objects.filter(id_categorias__nombre=categoria_seleccionada)
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all() 
-    for producto in ProductosListados:
-        producto.imagen_url = get_imagen_url(producto.imagen)
-
-    return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
-
-@login_required(login_url='signin')
-def recuperar_producto(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    proveedores = Proveedores.objects.all()
-    MarcaListados = Marca.objects.all() 
-    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,"Marca":MarcaListados})
-
-@login_required(login_url='signin')
-def edicion_categoria(request, categoria_id):
-    categoria = Categoria.objects.get(categoria_id= categoria_id)
-    return render(request, "StockMaster_app/edicion_categoria.html", {"categoria": categoria})
-
-@login_required(login_url='signin')
-def editarCat(request):
-    categoria_id = request.POST.get('idCat')
-    nombre = request.POST.get('txtNombreCat')
-
-    categoria = Categoria.objects.get(categoria_id= categoria_id)
-    if Categoria.objects.filter(nombre=nombre).exists():
-        messages.error(request, '¡Esta categoría no recibio cambios!')
-    else:
-        categoria.nombre = nombre
-        categoria.username = request.user.username
-        categoria.movi = 'Edicion de Categoria'
-        categoria.fech_cate = timezone.now()
-        if categoria.status_mov !=1:
-            categoria.status_mov = 1 
-        historial= Historial.objects.all()
-        historial = Historial(movimiento='Edicion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
-        historial.save()
-        categoria.save()
-
-        messages.success(request, '¡Categoria  Editada!')
-    return redirect('configuraciones77')
-
-@login_required(login_url='signin')
-def edicionproveedor(request, idProveedor):
-    proveedor = Proveedores.objects.get(idProveedor=idProveedor) 
-    imagen_url = get_imagen_url(proveedor.imagen)
-    return render(request, "StockMaster_app/edicionproveedor.html", {"proveedor": proveedor, "imagen_url": imagen_url})
-
-@login_required(login_url='signin')
-def historial(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
-@login_required(login_url='signin')
-def edicionMarcaView(request, marca_id):
-    marca = Marca.objects.get(marca_id= marca_id)
-    return render(request, "StockMaster_app/edicion_marca.html", {"marca": marca})
-
-@login_required(login_url='signin')
-def editarM(request):
-    marca_id = request.POST.get('idMarca')
-    nombre = request.POST.get('txtMarcaNew')
-    marca = Marca.objects.get(marca_id= marca_id)
-    if Marca.objects.filter(nombre=nombre).exists():
-        messages.error(request, '¡Esta Marca no recibio cambios!')
-    else:
-        marca.nombre = nombre
-        marca.username = request.user.username
-        marca.movi = 'Edicion de Marca'
-        marca.fech_cate = timezone.now()
-        if marca.status_mov !=1:
-            marca.status_mov = 1 
-        historial= Historial.objects.all()
-        historial = Historial(movimiento='Edicion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
-        historial.save()
-        marca.save()
-
-        messages.success(request, '¡Marca  Editada!')
-    return redirect('marca')
-
 #____________________________________________________________________________________________________________________________________
  
 #--------------------------------------------------------------- L O G I N --------------------------------------------------------->
@@ -273,29 +75,6 @@ def signup(request):
         form = CustomUserCreationForm()
 
     return render(request, 'StockMaster_app/usuarios.html', {'form': form})
-
-@login_required
-def cambio_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            # Actualiza la sesión del usuario para evitar que se cierre la sesión después de cambiar la contraseña
-            update_session_auth_hash(request, user)
-            return redirect('/actividades')  # Reemplaza 'perfil' con la URL a la que deseas redirigir al usuario después de cambiar la contraseña
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form})
-
-def eliminaruser(request, id):
-    try:
-        user_to_delete = User.objects.get(id=id)
-        user_to_delete.delete()
-        return redirect('/usuarios')
-    except User.DoesNotExist:
-        # Maneja el caso en que el usuario con el ID especificado no existe
-        # Puedes mostrar un mensaje de error o realizar alguna otra acción aquí
-        pass
     
 def signin(request):
     if request.user.is_authenticated:
@@ -327,7 +106,6 @@ def home(request):
         return redirect('/actividades')
     return render(request, 'registration/login.html')
 
-
 @login_required(login_url='signin')
 def exit(request):
     logout(request)
@@ -336,6 +114,44 @@ def exit(request):
 def exit(request):
     logout(request)
     return redirect('/actividades')
+
+#____________________________________________________________________________________________________________________________________
+
+#--------------------------------------------------------- U S U A R I O S --------------------------------------------------------->
+#____________________________________________________________________________________________________________________________________
+
+@login_required(login_url='signin')
+def usuarios(request):
+    if request.user.is_superuser:
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes =mensajes.count()
+        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
+        return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes})
+    else:
+        return redirect('/actividades')
+    
+@login_required(login_url='signin')
+def cambio_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Actualiza la sesión del usuario para evitar que se cierre la sesión después de cambiar la contraseña
+            update_session_auth_hash(request, user)
+            return redirect('/actividades')  # Reemplaza 'perfil' con la URL a la que deseas redirigir al usuario después de cambiar la contraseña
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form})
+
+def eliminaruser(request, id):
+    try:
+        user_to_delete = User.objects.get(id=id)
+        user_to_delete.delete()
+        return redirect('/usuarios')
+    except User.DoesNotExist:
+        # Maneja el caso en que el usuario con el ID especificado no existe
+        # Puedes mostrar un mensaje de error o realizar alguna otra acción aquí
+        pass
 
 #____________________________________________________________________________________________________________________________________
 
@@ -411,25 +227,28 @@ def editarProductoMod(request):
         except ObjectDoesNotExist:
             messages.error(request, 'El producto no se encontró o no existe.')
             return redirect('/productos/')  # Puedes redirigir a donde desees
+        if Productos.objects.filter(nombre=nombre, codigo=codigo, precio=precio, cantPro=cantPro).exists():
+            messages.error(request, '¡Este Proveedor no recibio cambios!')
+            return redirect('/productos/')
+        else:
+            productos.codigo = codigo
+            productos.nombre = nombre
+            productos.precio = precio
+            productos.cantPro = cantPro
+            productos.username = request.user.username
+            productos.movimiento = 'Edicion de Producto'
+            productos.fecha_edit = timezone.now()
+            productos.id_categorias_id = categoria_id
+            productos.id_Proveedores_id = idProveedor
+            productos.id_marca_id= marca_id
+            if nueva_imagen:
+                productos.imagen = nueva_imagen.read()
+            historial = Historial(movimiento='Edicion de Producto', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
+            historial.save()
+            productos.save()
 
-        productos.codigo = codigo
-        productos.nombre = nombre
-        productos.precio = precio
-        productos.cantPro = cantPro
-        productos.username = request.user.username
-        productos.movimiento = 'Edicion de Producto'
-        productos.fecha_edit = timezone.now()
-        productos.id_categorias_id = categoria_id
-        productos.id_Proveedores_id = idProveedor
-        productos.id_marca_id= marca_id
-        if nueva_imagen:
-            productos.imagen = nueva_imagen.read()
-        historial = Historial(movimiento='Edicion de Producto', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
-        historial.save()
-        productos.save()
-
-        messages.success(request, '¡Producto Editado!')
-        return redirect('/productos/')
+            messages.success(request, '¡Producto Editado!')
+            return redirect('/productos/')
     except ObjectDoesNotExist:
         messages.error(request, 'El producto no se encontró o no existe.')
         return redirect('/productos/')  # Puedes redirigir a donde desees
@@ -498,6 +317,9 @@ def cambio_status(request, idproducts):
 @login_required(login_url='signin')
 def eliminaInventario(request, idproducts):
     productos = Productos.objects.get(idproducts=idproducts)
+    historial= Historial.objects.all()
+    historial = Historial(movimiento='¡Producto Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=productos.nombre)
+    historial.save()
     productos.delete()
     messages.success(request, '¡Producto Eliminado!')
     return redirect('/recuperar_producto')
@@ -577,33 +399,37 @@ def editarProveedorMod(request):
         except ObjectDoesNotExist:
             messages.error(request, 'El producto no se encontró o no existe.')
             return redirect('/prov/')  # Puedes redirigir a donde desees
-        proveedor.nombre = nombre
-        proveedor.contacto = contacto
-        proveedor.telefono = telefono
-        proveedor.email = email
-        proveedor.calle = calle
-        proveedor.noExt = noExt
-        proveedor.noInt = noInt
-        proveedor.colonia = colonia
-        proveedor.cp = cp
-        proveedor.municipio = municipio
-        proveedor.estado = estado
-        proveedor.pais = pais
+        if Proveedores.objects.filter(nombre=nombre, contacto=contacto, telefono=telefono, email=email, calle=calle, noExt=noExt, noInt=noInt, colonia=colonia, cp=cp, municipio=municipio, estado=estado, pais=pais).exists():
+            messages.error(request, '¡Este Proveedor no recibio cambios!')
+            return redirect('/prov/') 
+        else:
+            proveedor.nombre = nombre
+            proveedor.contacto = contacto
+            proveedor.telefono = telefono
+            proveedor.email = email
+            proveedor.calle = calle
+            proveedor.noExt = noExt
+            proveedor.noInt = noInt
+            proveedor.colonia = colonia
+            proveedor.cp = cp
+            proveedor.municipio = municipio
+            proveedor.estado = estado
+            proveedor.pais = pais
 
-        proveedor.username = request.user.username
-        proveedor.fecha_edit = timezone.now()
-        proveedor.movimiento = 'Edicion de Proveedor'
-        if proveedor.status_mov != 1:
-            proveedor.status_mov = 1
-        if nueva_imagen:
-            proveedor.imagen = nueva_imagen.read()
-        historial= Historial.objects.all()
-        historial = Historial(movimiento='Edicion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
-        historial.save()
-        proveedor.save()
+            proveedor.username = request.user.username
+            proveedor.fecha_edit = timezone.now()
+            proveedor.movimiento = 'Edicion de Proveedor'
+            if proveedor.status_mov != 1:
+                proveedor.status_mov = 1
+            if nueva_imagen:
+                proveedor.imagen = nueva_imagen.read()
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Edicion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+            historial.save()
+            proveedor.save()
 
-        messages.success(request, '¡Proveedor Editado!')
-        return redirect('/prov/')
+            messages.success(request, '¡Proveedor Editado!')
+            return redirect('/prov/')
     except ObjectDoesNotExist:
         messages.error(request, 'El proveedor no se encontró o no existe.')
         return redirect('/prov/')  # Puedes redirigir a donde desees
@@ -676,7 +502,7 @@ def cambio_statuspro(request, idProveedor):
 def eliminaProveedor(request, idProveedor):
     proveedor = Proveedores.objects.get(idProveedor=idProveedor)
     historial= Historial.objects.all()
-    historial = Historial(movimiento='Proveedor Eliminado',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+    historial = Historial(movimiento='¡Proveedor Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
     historial.save()
     proveedor.delete()
     messages.success(request, '¡Proveedor Eliminado!')
@@ -730,20 +556,25 @@ def editarCategoriaMod(request):
         except ObjectDoesNotExist:
             messages.error(request, 'El producto no se encontró o no existe.')
             return redirect('/config/')  # Puedes redirigir a donde desees
-        categoria.nombre = nombre
+        
+        if Categoria.objects.filter(nombre=nombre).exists():
+            messages.error(request, '¡Esta categoría no recibio cambios!')
+            return redirect('/config/') 
+        else:
+            categoria.nombre = nombre
 
-        categoria.username = request.user.username
-        categoria.movi = 'Edicion de Categoria'
-        categoria.fech_cate = timezone.now()
-        if categoria.status_mov !=1:
-            categoria.status_mov = 1 
-        historial= Historial.objects.all()
-        historial = Historial(movimiento='Edicion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
-        historial.save()
-        categoria.save()
+            categoria.username = request.user.username
+            categoria.movi = 'Edicion de Categoria'
+            categoria.fech_cate = timezone.now()
+            if categoria.status_mov !=1:
+                categoria.status_mov = 1 
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Edicion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+            historial.save()
+            categoria.save()
 
-        messages.success(request, '¡Categoria  Editada!')
-        return redirect('/config/') 
+            messages.success(request, '¡Categoria  Editada!')
+            return redirect('/config/') 
     except ObjectDoesNotExist:
         messages.error(request, 'La categoria no se encontró o no existe.')
         return redirect('/config/')  # Puedes redirigir a donde desees
@@ -801,6 +632,9 @@ def status_categoria(request,categoria_id):
 def eliminar_categoria(request, categoria_id):
     categoria = Categoria.objects.get(categoria_id=categoria_id)
     Productos.objects.filter(id_categorias=categoria).update(id_categorias=None)
+    historial= Historial.objects.all()
+    historial = Historial(movimiento='¡Categoria Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
+    historial.save()
     categoria.delete()
     messages.success(request, '¡Categoría Eliminada!')
     return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
@@ -817,7 +651,7 @@ def MarcaView(request):
     cantidad_mensajes = mensajes.count()
     MarcaListados = Marca.objects.all()
     CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/configuraciones.html', {"marcas": MarcaListados,"Categoria": CategoriaListados,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes})
+    return render(request, 'StockMaster_app/configuraciones.html', {"Marca": MarcaListados,"Categoria": CategoriaListados,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes})
 
 #Registrar Marca
 @login_required(login_url='signin')
@@ -832,7 +666,7 @@ def registrar_marca(request):
         historial.save()
         marca.save()
         messages.success(request, '¡Marca registrada con éxito!')
-    return HttpResponseRedirect('/MarcaVista/')  # Redirige a la URL deseada después de procesar el formulario
+    return HttpResponseRedirect('/config/')  # Redirige a la URL deseada después de procesar el formulario
 
 #Editar Marca
 @login_required(login_url='signin')
@@ -845,28 +679,32 @@ def editarMarcaMod(request):
         except ObjectDoesNotExist:
             messages.error(request, 'El producto no se encontró o no existe.')
             return redirect('/config/')  # Puedes redirigir a donde desees
-        marca.nombre = nombre
+        if Marca.objects.filter(nombre=nombre).exists():
+            messages.error(request, '¡Esta Marca no recibio cambios!')
+            return redirect('/config/') 
+        else:
+            marca.nombre = nombre
 
-        marca.username = request.user.username
-        marca.movi = 'Edicion de Marca'
-        marca.fech_cate = timezone.now()
-        if marca.status_mov !=1:
-            marca.status_mov = 1 
-        historial= Historial.objects.all()
-        historial = Historial(movimiento='Edicion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
-        historial.save()
-        marca.save()
+            marca.username = request.user.username
+            marca.movi = 'Edicion de Marca'
+            marca.fech_cate = timezone.now()
+            if marca.status_mov !=1:
+                marca.status_mov = 1 
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Edicion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+            historial.save()
+            marca.save()
 
-        messages.success(request, '¡Marca  Editada!')
-        return redirect('/config/') 
+            messages.success(request, '¡Marca  Editada!')
+            return redirect('/config/') 
     except ObjectDoesNotExist:
         messages.error(request, 'La categoria no se encontró o no existe.')
         return redirect('/config/')  # Puedes redirigir a donde desees
 
 @login_required(login_url='signin')
 def edicionMarca2(request, marca_id):
-    marca = Marca.objects.get(marca_id=marca_id)
-
+    marca = Marca.objects.get(marca_id= marca_id)
+    
     data = {
         "nombre" : marca.nombre,
     }
@@ -915,13 +753,17 @@ def cambio_statusmar(request,marca_id):
 @login_required(login_url='signin')
 def eliminar_marca(request, marca_id):
     marca = Marca.objects.get(marca_id=marca_id)
+    historial= Historial.objects.all()
+    historial = Historial(movimiento='¡Marca Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
+    historial.save()
     marca.delete()
     messages.success(request, '¡Marca Eliminada!')
-    return redirect('marca')  # O redirige a donde desees después de la eliminación
+    return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
 #____________________________________________________________________________________________________________________________________
 
 #----------------------------------------------------- C O M E N T A R I O S ------------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
+
 @login_required(login_url='signin')
 def soporte(request):
     mensajes = Mensajes.objects.all()
@@ -978,43 +820,91 @@ def contestarcomentarios(request,idcomentario):
 
     return render(request, 'StockMaster_app/soporte.html', {'mensaje': mensaje})
 
+#____________________________________________________________________________________________________________________________________
 
-#Recuperar Producto, Proveedor, Marca, Categoria
-
-def elimina_menmar(request,marca_id):
-    marca= Marca.objects.get(marca_id=marca_id)
-    if marca.status_mov !=0:
-        marca.status_mov = 0
-        marca.save()
-
-    return redirect('/actividades')
-
-def elimina_menpro(request, idProveedor):
-    proveedores = Proveedores.objects.get(idProveedor=idProveedor)
-    if proveedores.status_mov !=0:
-        proveedores.status_mov = 0
-        proveedores.save()
-    return redirect('/actividades')
-
-def elimina_men(request, idproducts):
-    productos = Productos.objects.get(idproducts=idproducts)
-    if productos.status_mov !=0:
-        productos.status_mov = 0
-        productos.save()
-    return redirect('/actividades')
+#------------------------------------------------------- H I S T O R I A L --------------------------------------------------------->
+#____________________________________________________________________________________________________________________________________
 
 @login_required(login_url='signin')
-def status_mov_cate (resquest,categoria_id):
-    status_cate=Categoria.objects.get(categoria_id=categoria_id)
-    if status_cate.status_mov != 0:
-        status_cate.status_mov = 0
-        status_cate.save()
-    return redirect('/actividades')
+def historial(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    historial = Historial.objects.all()
+    return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
 
 @login_required(login_url='signin')
-def status_mov (resquest,idcomentario):
-    status=Mensajes.objects.get(idcomentario=idcomentario)
-    if status.status_mov != 0:
-        status.status_mov = 0
-        status.save()
+def recuperar_producto(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    proveedores = Proveedores.objects.all()
+    MarcaListados = Marca.objects.all() 
+    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,"Marca":MarcaListados})
+
+
+#____________________________________________________________________________________________________________________________________
+
+#------------------------------------------------------- F U N C I O N E S --------------------------------------------------------->
+#____________________________________________________________________________________________________________________________________
+
+@login_required(login_url='signin')
+def productos(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes = mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    ProveedoresListados = Proveedores.objects.all()
+    MarcaListados = Marca.objects.all()
+    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes,'marca': MarcaListados, ' Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
+
+
+def editarcant(request, idproducts):
+    if request.method == 'POST':
+        cantPro = request.POST.get('cantPro')
+        producto = Productos.objects.get(idproducts=idproducts)
+        producto.cantPro = cantPro
+        producto.username = request.user.username
+        producto.fecha_edit = timezone.now()
+        producto.movimiento = 'Edicion de Cantidad'
+        producto.save()
+        messages.success(request, '¡Cantidad Editada!')
     return redirect('/actividades')
+
+def buscar_productos(request):
+    query = request.GET.get('query', '')
+
+    if query:
+        productos = Productos.objects.filter(
+            Q(codigo__icontains=query) |  # Buscar en código (contiene)
+            Q(nombre__icontains=query) |  # Buscar en nombre (contiene)
+            Q(marca__icontains=query) |  # Buscar en marca (contiene)
+            Q(id_categorias__nombre__icontains=query)  # Buscar en nombre de categoría (contiene)
+        )
+    else:
+        productos = Productos.objects.all()
+
+    return render(request, 'Stockmaster_app/productos.html', {'productos': productos, 'query': query})
+
+def get_char(_request):
+    chart = {}
+    return JsonResponse(chart)
+
+@login_required(login_url='signin')
+def example_view(request):
+    categorias = Categoria.objects.all()  # Obtener todas las categorías
+    productos = []  # Inicializar una lista vacía para productos
+    mensajes = Mensajes.objects.all()
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    categoria_seleccionada = request.GET.get('categoria')  # Obtener la categoría seleccionada por el usuario
+    if categoria_seleccionada:
+        productos = Productos.objects.filter(id_categorias__nombre=categoria_seleccionada)
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all() 
+    for producto in ProductosListados:
+        producto.imagen_url = get_imagen_url(producto.imagen)
+
+    return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})

@@ -18,27 +18,15 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path('', views.home, name='home'),
+    
     #paths Login
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
     path('logout/', views.exit, name='exit'),
+    
     #paths Registro
     path('cambio_password/', views.cambio_password, name='cambio_password'),
-
-    path('actividades/',views.productos,name='actividades'),
-    path('usuarios/', views.usuarios, name='usuarios'),
     path('usuarios/eliminaruser/<int:id>', views.eliminaruser, name="eliminaruser"),
-    path('historial/', views.historial, name='historial'),
-    path('soporte/', views.soporte, name='soporte'),
-    path('comentario/',views.comentario),
-    path('actividades/eliminarcomentarios/<int:idcomentario>/', views.eliminarcomentarios, name='eliminar_comentario'),
-    path('contestarcomentarios/<int:idcomentario>/', views.contestarcomentarios, name='contestarcomentarios'),
-    path('actividades/status_mov/<int:idcomentario>/', views.status_mov, name='status_mov'),
-    path('inventario/', views.example_view, name='inventario'),
-    
-    path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
-    
-    path('editarcant/<int:idproducts>/', views.editarcant, name='editarcant'),
 
     #paths Productos
     path('productos/', views.pro, name='productos'),
@@ -46,10 +34,19 @@ urlpatterns = [
     path('productos/edicioninventario2/<int:idproducts>/', views.edicioninventario2, name='edicioninventario2'),
     path('editarProducto2/', views.editarProductoMod),
 
+    path('productos/status/<int:idproducts>/', views.cambio_status, name='cambio_status'),
+    path('statusre/<int:idproducts>/', views.cambio_statusre, name='cambio_statusre'),
+    path('recuperar_producto/eliminaInventario/<idproducts>', views.eliminaInventario),
+    
     #paths Proveedores
-
-
+    path('prov/', views.prov, name='prov'),
+    path('registrarProv/', views.registrarProv),
+    path('prov/edicionProveedor2/<int:idProveedor>', views.edicionProveedor2, name='edicionProveedor2'),
     path('editarProveedor2/', views.editarProveedorMod),
+
+    path('prov/cambio_statuspro/<int:idProveedor>',views.cambio_statuspro, name='cambio_statuspro'),
+    path('cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='cambio_statusrepro'),
+    path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
 
     #paths Categorias
     path('config/', views.configuraciones, name='configuraciones77'),
@@ -57,46 +54,35 @@ urlpatterns = [
     path('config/edicionCategoria2/<int:categoria_id>/', views.edicionCategoria2, name='edicionCategoria2'),
     path('editarCategoria2/', views.editarCategoriaMod),
 
+    path('status_categoria/<int:categoria_id>/',views.status_categoria,name='status_categoria'),
+    path('status_categoriare/<int:categoria_id>/',views.status_categoriare, name="status_categoriare"),
+    path('eliminar_categoria/<int:categoria_id>/', views.eliminar_categoria, name='eliminarcategoria'),
+
     #paths Marcas
-    
+    path("MarcaVista/",views.MarcaView, name="marca"),
+    path("MarcaAgregada/", views.registrar_marca, name="marcaAgred"),
     path('config/edicionMarca2/<int:marca_id>/', views.edicionMarca2, name='edicionMarca2'),
     path('editarMarca2/', views.editarMarcaMod),
 
-
-
-
-    path('productos/status/<int:idproducts>/', views.cambio_status, name='cambio_status'),
-    path('actividades/elimina_men/<int:idproducts>/', views.elimina_men, name='elimina_men'),
-    path('statusre/<int:idproducts>/', views.cambio_statusre, name='cambio_statusre'),
-    path('recuperar_producto/eliminaInventario/<idproducts>', views.eliminaInventario),
-    path('cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='cambio_statusrepro'),
-    path('actividades/elimina_menpro/<int:idProveedor>', views.elimina_menpro, name="elimina_menpro"),
-    path('edicioncategoria/<int:categoria_id>/', views.edicion_categoria, name='edicionicat'),
-    path('editarCat/', views.editarCat, name='editar_cat'),
-    path('status_categoria/<int:categoria_id>/',views.status_categoria,name='status_categoria'),
-    path('actividades/status_mov_cate/<int:categoria_id>/',views.status_mov_cate, name='status_mov_cate'),
-    path('get_char/', views.get_char, name='get_char'),
-    path('eliminar_categoria/<int:categoria_id>/', views.eliminar_categoria, name='eliminarcategoria'),
-    path('status_categoriare/<int:categoria_id>/',views.status_categoriare, name="status_categoriare"),
-    
-    
-    path('buscar_productos/', views.buscar_productos, name='buscar_productos'),
-    
-    #paths de proveedor
-    path('prov/', views.prov, name='prov'),
-    path('registrarProv/', views.registrarProv),
-    path('prov/edicionProveedor2/<int:idProveedor>', views.edicionProveedor2, name='edicionProveedor2'),
-    path('prov/cambio_statuspro/<int:idProveedor>',views.cambio_statuspro, name='cambio_statuspro'),
-    path('editarproveedor/', views.editarproveedor),
-    path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
-    
-    #Marca
-    path("MarcaVista/",views.MarcaView, name="marca"),
-    path("MarcaAgregada/", views.registrar_marca, name="marcaAgred"),
-    path('edicion_marca/<int:marca_id>/', views.edicionMarcaView, name='edicionMarcaView'),
-    path('editarM/', views.editarM, name='editar_marca'),
-    path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
-    path('cambio_statusmar/<int:marca_id>/', views.cambio_statusmar, name='cambio_statusmar'),
     path('cambio_statusremar/<int:marca_id>/', views.cambio_statusremar, name="cambio_statusremar"),
-    path('actividades/elimina_menmar/<int:marca_id>/', views.elimina_menmar,name= "elimina_menmar"),
+    path('cambio_statusmar/<int:marca_id>/', views.cambio_statusmar, name='cambio_statusmar'),
+    path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
+
+    #paths comentarios
+    path('actividades/eliminarcomentarios/<int:idcomentario>/', views.eliminarcomentarios, name='eliminar_comentario'),
+    path('contestarcomentarios/<int:idcomentario>/', views.contestarcomentarios, name='contestarcomentarios'),
+
+    #paths funciones
+    path('get_char/', views.get_char, name='get_char'),
+    path('buscar_productos/', views.buscar_productos, name='buscar_productos'),
+    path('editarcant/<int:idproducts>/', views.editarcant, name='editarcant'),
+
+    #paths html
+    path('actividades/',views.productos,name='actividades'),
+    path('usuarios/', views.usuarios, name='usuarios'),
+    path('historial/', views.historial, name='historial'),
+    path('soporte/', views.soporte, name='soporte'),
+    path('inventario/', views.example_view, name='inventario'),
+    path('comentario/',views.comentario),
+    path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
     ]

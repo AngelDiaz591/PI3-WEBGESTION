@@ -127,24 +127,28 @@
                         <div class="form-column">
                             <div class="divisor">
                                 <div class="titulo">Código:</div>
-                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" required>
+                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Código" 
+                                    pattern="[A-Za-z0-9]{6}"  maxlength="6" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Nombre:</div>
-                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
+                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" 
+                                    pattern="[A-Za-z0-9]{2,50}" maxlength="50" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Precio:</div>
-                                <input type="number" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="campos" maxlength="7" required oninput="validarNumeros(this)">
+                                <input type="number" id="NumPrecio" name="NumPrecio" class="campos" placeholder="Precio"  
+                                    pattern="[0-9]{1,7}" maxlength="7" required oninput="validarNumeros(this)">
                                 <br>
                                 <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
                                 <span class="error-message error" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Cantidad Producto:</div>
-                                <input type="number" id="CantPro" name="CantPro" placeholder="Cantidad de Producto" pattern="[0-9]{1,7}" class="campos" maxlength="7"  required oninput="validarNumeros(this)" >
+                                <input type="number" id="CantPro" name="CantPro" class="campos" placeholder="Cantidad de Producto" 
+                                pattern="[0-9]{1,7}"  maxlength="7"  required oninput="validarNumeros(this)" >
                                 <br>
                                 <small class="text-muted">Ingrese un numero (entre 1 y 100 000).</small><br>
                                 <span class="error-message" style="color: red;"></span>
@@ -227,26 +231,26 @@
                     <div class="form-column">
                         <div class="divisor">
                             <div class="titulo">Código:</div>
-                            <input class="campos" type="text" id="EtxtCodigo" name="txtCodigo"
-                                    placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
+                            <input type="text" id="EtxtCodigo" name="txtCodigo" class="campos" placeholder="Código"
+                                pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Nombre:</div>
-                            <input class="campos" type="text" id="EtxtNombre" name="txtNombre"
-                                placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
+                            <input type="text" id="EtxtNombre" name="txtNombre" class="campos" placeholder="Nombre"
+                                pattern="[A-Za-z0-9]{2,50}" maxlength="50" required>
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Precio:</div>
-                            <input class="campos" type="text" id="ENumPrecio" name="NumPrecio" placeholder="Precio"
+                            <input type="text" id="ENumPrecio" name="NumPrecio" class="campos" placeholder="Precio"
                                 pattern="[0-9]{1,7}" maxlength="7" required>
                             <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                             <br><span class="error-message error" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Cantidad Productos:</div>
-                            <input class="campos" type="text" id="ECantPro" name="CantPro" placeholder="Cantidad de Producto"
+                            <input type="text" id="ECantPro" name="CantPro" class="campos" placeholder="Cantidad de Producto"
                                 pattern="[0-9]{1,7}"  maxlength="7" required>
                             <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                             <br><span class="error-message error" style="color: red;"></span>
@@ -303,4 +307,24 @@
     </div>
     <!-- Fin Modal edición -->
 </main>
+<script>
+// Resto del código para cerrar el modal y otros eventos
+
+    // Cierra el modal de edición cuando se hace clic en la "x"
+    closeEditModal.addEventListener("click", function() {
+        editModal.style.display = "none";
+    });
+
+    //Cierra el modal de edicion cuando se da click a cancelar
+    cancelar.addEventListener("click", function() {
+        editModal.style.display = "none";
+    });
+
+    // Cierra el modal de edición si se hace clic fuera del contenido del modal
+    window.addEventListener("click", function(event) {
+        if (event.target === editModal) {
+            editModal.style.display = "none";
+        }
+    });
+</script>
 {% endblock %}

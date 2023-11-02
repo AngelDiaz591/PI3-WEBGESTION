@@ -86,7 +86,7 @@
                                 {{ c.colonia }}, {{ c.cp }}, <br>{{ c.municipio }}, <br>{{ c.estado }}, {{ c.pais }}
                             </td>
                             <td class="imagen"><img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="100" height="100"></td>    
-                            <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
+                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idProveedor }}">
                                 <span class="material-symbols-outlined">edit</span>
                             </a></td>
                             <td class="elimina"><a href="cambio_statuspro/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
@@ -116,22 +116,26 @@
                             <div class="form-column">
                                 <div class="divisor">
                                     <div class="titulo">Nombre:</div>
-                                    <input type="text" id="NombreProv" name="NombreProv" class="campos" placeholder="Nombre" maxlength="50" required oninput="convertirMayusculas()">
+                                    <input type="text" id="NombreProv" name="NombreProv" class="campos" placeholder="Nombre" 
+                                        maxlength="50" required oninput="convertirMayusculas()">
                                     <br><span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Contacto:</div>
-                                    <input type="text" id="ContactoProv" name="ContactoProv" placeholder="Contacto" class="campos" maxlength="50" required oninput="convertirMayusculas()">
+                                    <input type="text" id="ContactoProv" name="ContactoProv" class="campos" placeholder="Contacto"
+                                        maxlength="50" required oninput="convertirMayusculas()">
                                     <br><span class="error-message error" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Telefono:</div>
-                                    <input type="text" id="TelefonoProv" name="TelefonoProv" class="campos" placeholder="Telefono" maxlength="10" required  oninput="validarNumeros(this)">
+                                    <input type="text" id="TelefonoProv" name="TelefonoProv" class="campos" placeholder="Telefono" 
+                                        pattern="[0-9]{10}" maxlength="10" required  oninput="validarNumeros(this)">
                                     <br> <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Correo:</div>
-                                    <input type="email" id="EmailProv" name="EmailProv" placeholder="Email" class="campos" maxlength="100" required oninput="convertirMayusculas()">
+                                    <input type="email" id="EmailProv" name="EmailProv" class="campos" placeholder="Correo"  
+                                        maxlength="100" required oninput="convertirMayusculas()">
                                     <br><span class="error-message" style="color: red;"></span>
                                 </div>
                             </div>
@@ -141,22 +145,26 @@
                             <div class="form-column">
                                 <div class="divisor">
                                     <div class="titulo">Calle:</div>
-                                    <input type="text" id="Calle" name="Calle" class="campos" placeholder="Calle" maxlength="50" required oninput="convertirMayusculas()">
+                                    <input type="text" id="Calle" name="Calle" class="campos" placeholder="Calle" 
+                                        maxlength="50" required oninput="convertirMayusculas()">
                                     <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">No. Exterior:</div>
-                                    <input type="text" id="NoExt" name="NoExt" placeholder="Número Exterior" class="campos" maxlength="10" oninput="validarNumeros(this)">
+                                    <input type="text" id="NoExt" name="NoExt" class="campos" placeholder="Número Exterior" 
+                                        pattern="[0-9]{1,10}" maxlength="10" oninput="validarNumeros(this)">
                                     <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">No. Interior:</div>
-                                    <input type="text" id="NoInt" name="NoInt" class="campos" placeholder="Número Interior" maxlength="10" oninput="validarNumeros(this)">
+                                    <input type="text" id="NoInt" name="NoInt" class="campos" placeholder="Número Interior" 
+                                        pattern="[0-9]{1,10}" maxlength="10" oninput="validarNumeros(this)">
                                     <br><span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Colonia:</div>
-                                    <input type="text" id="Colonia" name="Colonia" class="campos" placeholder="Colonia" maxlength="50" required oninput="convertirMayusculas()">
+                                    <input type="text" id="Colonia" name="Colonia" class="campos" placeholder="Colonia" 
+                                        maxlength="50" required oninput="convertirMayusculas()">
                                     <br> <span class="error-message" style="color: red;"></span>
                                 </div>
                             </div>
@@ -166,22 +174,26 @@
                             <div class="form-column">
                                 <div class="divisor">
                                     <div class="titulo">Código Postal:</div>
-                                    <input type="text" id="CP" name="CP" class="campos" placeholder="Código Postal" maxlength="5" required  oninput="validarNumeros(this)">
+                                    <input type="text" id="CP" name="CP" class="campos" placeholder="Código Postal" 
+                                        pattern="[0-9]{5}" maxlength="5" required  oninput="validarNumeros(this)">
                                     <br> <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Municipio:</div>
-                                    <input type="text" id="Municipio" name="Municipio" class="campos" placeholder="Municipio" maxlength="50" required oninput="convertirMayusculas()">
+                                    <input type="text" id="Municipio" name="Municipio" class="campos" placeholder="Municipio" 
+                                        maxlength="50" required oninput="convertirMayusculas()">
                                     <br> <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Estado:</div>
-                                    <input type="text" id="Estado" name="Estado" class="campos" placeholder="Estado" maxlength="50" required oninput="convertirMayusculas()">
+                                    <input type="text" id="Estado" name="Estado" class="campos" placeholder="Estado" 
+                                        maxlength="50" required oninput="convertirMayusculas()">
                                     <br> <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Pais:</div>
-                                    <input type="text" id="Pais" name="Pais" class="campos" placeholder="Pais" maxlength="50" required oninput="convertirMayusculas()">
+                                    <input type="text" id="Pais" name="Pais" class="campos" placeholder="Pais" 
+                                        maxlength="50" required oninput="convertirMayusculas()">
                                     <br> <span class="error-message" style="color: red;"></span>
                                 </div>
                             </div>
@@ -218,36 +230,139 @@
         </div>
     </div>
     <!--Fin de Ventana Modal-->
+
+    <!-- Modal edición -->
+    <div id="editModalProveedor" class="container-modal-editar">
+        <div class="content-modal-editar" style="width: 100%; max-width: 700px;">
+            <label class="cerrar" id="closeEditModal"><i class="fa-solid fa-xmark"></i></label>
+            <h2 class="titulo-modal">Editar Proveedor</h2>
+            <form action="/editarProveedor2/" method="POST" enctype="multipart/form-data" value="{{c.idProveedor }}">
+                {% csrf_token %}
+                <input type="hidden" id="editProductId" name="productId" value="{{ c.idProveedor }}">
+                <!--Inicio de la tabla de columnas-->
+                <div class="form-columns">
+                    <!--Primer columna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Nombre:</div>
+                            <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Nombre"
+                                maxlength="50" required oninput="convertirMayusculas()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Contacto:</div>
+                            <input type="text" id="EtxtContacto" name="contacto" class="campos" placeholder="Contacto"
+                                maxlength="50" required oninput="convertirMayusculas()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Telefono:</div>
+                            <input type="text" id="EtxtTelefono" name="telefono" class="campos" placeholder="Telefono"
+                                pattern="[0-9]{10}" maxlength="10" required oninput="validarNumeros(this)">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Correo:</div>
+                            <input type="text" id="EtxtEmail" name="email" class="campos" placeholder="Correo"
+                                maxlength="50" required>
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Calle:</div>
+                            <input type="text" id="EtxtCalle" name="calle" class="campos" placeholder="Calle"
+                                maxlength="50" required oninput="convertirMayusculas()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <!--Fin de Primer columna-->
+                    
+                    <!--Segunda columna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">No. Exterior:</div>
+                            <input type="text" id="EtxtNoExt" name="noExt" class="campos" placeholder="No. Exterior"
+                                pattern="[0-9]{1,10}" maxlength="10" required oninput="validarNumeros(this)">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">No. Interior:</div>
+                            <input type="text" id="EtxtNoInt" name="noInt" class="campos" placeholder="No. Interior"
+                                pattern="[0-9]{1,10}" maxlength="10" oninput="validarNumeros(this)">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Colonia:</div>
+                            <input type="text" id="EtxtColonia" name="colonia" class="campos" placeholder="Colonia"
+                                maxlength="50" required oninput="convertirMayusculas()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Código Postal:</div>
+                            <input type="text" id="EtxtCP" name="cp" class="campos" placeholder="Código Postal"
+                                    pattern="[0-9]{5}" maxlength="5" required oninput="validarNumeros(this)">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Municipio:</div>
+                            <input type="text" id="EtxtMunicipio" name="municipio" class="campos" placeholder="Municipio"
+                                maxlength="50" required oninput="convertirMayusculas()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <!--Fin de segunda columna-->
+
+                    <!--Tercera columnna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Estado:</div>
+                            <input type="text" id="EtxtEstado" name="estado" class="campos" placeholder="Estado"
+                                maxlength="50" required oninput="convertirMayusculas()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">País:</div>
+                            <input type="text" id="EtxtPais" name="pais" class="campos" placeholder="País"
+                                maxlength="50" required oninput="convertirMayusculas()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <center><img id="imgActual" src="{{ imagen_url }}" alt="Imagen actual"></center>     
+                        </div>
+                        <div class="divisor">
+                            <input type="file" name="imagen" id="id_imagen" accept="image/*">
+                            <input class="ingresar" type="hidden" name="imagen_actual" value="{{ proveedor.imagen.url }}">
+                        </div>
+                    </div>
+                    <!--Fin de tercera columna-->
+                </div>
+                <!--Fin de la tabla de columnas-->
+                <div class="btn-cerrar">
+                    <button type="submit">Guardar</button>
+                    <label id="cancelar">Cancelar</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fin Modal edición -->
 </main>
-<!--
+
 <script>
-    function convertirMayusculas(){
-        var upercase = document.getElementById('NombreProv').value.toUpperCase();
-        document.getElementById('NombreProv').value = upercase;
-        
-        var upercase = document.getElementById('ContactoProv').value.toUpperCase();
-        document.getElementById('ContactoProv').value = upercase;
+    // Cierra el modal de edición cuando se hace clic en la "x"
+    closeEditModal.addEventListener("click", function() {
+        editModalProveedor.style.display = "none";
+    });
 
-        var upercase = document.getElementById('EmailProv').value.toUpperCase();
-        document.getElementById('EmailProv').value = upercase;
+    //Cierra el modal de edicion cuando se da click a cancelar
+    cancelar.addEventListener("click", function() {
+        editModalProveedor.style.display = "none";
+    });
 
-        var upercase = document.getElementById('Calle').value.toUpperCase();
-        document.getElementById('Calle').value = upercase;
+    // Cierra el modal de edición si se hace clic fuera del contenido del modal
+    window.addEventListener("click", function(event) {
+        if (event.target === editModalProveedor) {
+            editModalProveedor.style.display = "none";
+        }
+    });
+</script>
 
-        var upercase = document.getElementById('Colonia').value.toUpperCase();
-        document.getElementById('Colonia').value = upercase;
-
-        var upercase = document.getElementById('Colonia').value.toUpperCase();
-        document.getElementById('Colonia').value = upercase;
-
-        var upercase = document.getElementById('Municipio').value.toUpperCase();
-        document.getElementById('Municipio').value = upercase;
-
-        var upercase = document.getElementById('Estado').value.toUpperCase();
-        document.getElementById('Estado').value = upercase;
-
-        var upercase = document.getElementById('Pais').value.toUpperCase();
-        document.getElementById('Pais').value = upercase;
-    }
-</script>-->
 {% endblock %}

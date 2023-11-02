@@ -135,3 +135,40 @@ function dismissMessage(button) {
       messageContainer.remove();
   }
 }
+
+
+// <----------------------------------------------------Inicio Convertir Mayusculas---------------------------------------------------->
+
+function convertirMayusculas(){
+
+  var upercase = document.getElementById('codigo').value.toUpperCase();
+  document.getElementById('codigo').value = upercase;
+
+  var upercase = document.getElementById('NombreProv').value.toUpperCase();
+  document.getElementById('NombreProv').value = upercase;
+  
+  var upercase = document.getElementById('ContactoProv').value.toUpperCase();
+  document.getElementById('ContactoProv').value = upercase;
+
+  var upercase = document.getElementById('EmailProv').value.toUpperCase();
+  document.getElementById('EmailProv').value = upercase;
+
+  var upercase = document.getElementById('Calle').value.toUpperCase();
+  document.getElementById('Calle').value = upercase;
+
+  var upercase = document.getElementById('Colonia').value.toUpperCase();
+  document.getElementById('Colonia').value = upercase;
+
+  var upercase = document.getElementById('Colonia').value.toUpperCase();
+  document.getElementById('Colonia').value = upercase;
+
+  var upercase = document.getElementById('Municipio').value.toUpperCase();
+  document.getElementById('Municipio').value = upercase;
+
+  var upercase = document.getElementById('Estado').value.toUpperCase();
+  document.getElementById('Estado').value = upercase;
+
+  var upercase = document.getElementById('Pais').value.toUpperCase();
+  document.getElementById('Pais').value = upercase;
+}
+// <----------------------------------------------------Fin Convertir Mayusculas---------------------------------------------------->

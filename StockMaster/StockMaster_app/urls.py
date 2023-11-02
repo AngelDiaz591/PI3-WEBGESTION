@@ -18,7 +18,13 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path('', views.home, name='home'),
+    #paths Login
+    path('signup/', views.signup, name='signup'),
+    path('signin/', views.signin, name='signin'),
+    path('logout/', views.exit, name='exit'),
+    #paths Registro
     path('cambio_password/', views.cambio_password, name='cambio_password'),
+
     path('actividades/',views.productos,name='actividades'),
     path('usuarios/', views.usuarios, name='usuarios'),
     path('usuarios/eliminaruser/<int:id>', views.eliminaruser, name="eliminaruser"),
@@ -29,21 +35,35 @@ urlpatterns = [
     path('contestarcomentarios/<int:idcomentario>/', views.contestarcomentarios, name='contestarcomentarios'),
     path('actividades/status_mov/<int:idcomentario>/', views.status_mov, name='status_mov'),
     path('inventario/', views.example_view, name='inventario'),
-    path('productos/', views.pro, name='productos'),
+    
     path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
-    path('registrarProducto/', views.registrarProducto),
+    
     path('editarcant/<int:idproducts>/', views.editarcant, name='editarcant'),
 
-    path('productos/edicioninventario/<int:idproducts>', views.edicioninventario),
+    #paths Productos
+    path('productos/', views.pro, name='productos'),
+    path('registrarProducto/', views.registrarProducto),
     path('productos/edicioninventario2/<int:idproducts>/', views.edicioninventario2, name='edicioninventario2'),
     path('editarProducto2/', views.editarProductoMod),
 
+    #paths Proveedores
 
 
-    path('editarProducto/', views.editarProducto),
+    path('editarProveedor2/', views.editarProveedorMod),
 
+    #paths Categorias
+    path('config/', views.configuraciones, name='configuraciones77'),
+    path('registrar_categoria/', views.registrar_categoria, name='registrar_cat'),
+    path('config/edicionCategoria2/<int:categoria_id>/', views.edicionCategoria2, name='edicionCategoria2'),
+    path('editarCategoria2/', views.editarCategoriaMod),
 
+    #paths Marcas
     
+    path('config/edicionMarca2/<int:marca_id>/', views.edicionMarca2, name='edicionMarca2'),
+    path('editarMarca2/', views.editarMarcaMod),
+
+
+
 
     path('productos/status/<int:idproducts>/', views.cambio_status, name='cambio_status'),
     path('actividades/elimina_men/<int:idproducts>/', views.elimina_men, name='elimina_men'),
@@ -51,8 +71,6 @@ urlpatterns = [
     path('recuperar_producto/eliminaInventario/<idproducts>', views.eliminaInventario),
     path('cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='cambio_statusrepro'),
     path('actividades/elimina_menpro/<int:idProveedor>', views.elimina_menpro, name="elimina_menpro"),
-    path('config', views.configuraciones, name='configuraciones77'),
-    path('registrar_categoria/', views.registrar_categoria, name='registrar_cat'),
     path('edicioncategoria/<int:categoria_id>/', views.edicion_categoria, name='edicionicat'),
     path('editarCat/', views.editarCat, name='editar_cat'),
     path('status_categoria/<int:categoria_id>/',views.status_categoria,name='status_categoria'),
@@ -60,22 +78,23 @@ urlpatterns = [
     path('get_char/', views.get_char, name='get_char'),
     path('eliminar_categoria/<int:categoria_id>/', views.eliminar_categoria, name='eliminarcategoria'),
     path('status_categoriare/<int:categoria_id>/',views.status_categoriare, name="status_categoriare"),
-    path('signup/', views.signup, name='signup'),
-    path('signin/', views.signin, name='signin'),
-    path('logout/', views.exit, name='exit'),
+    
+    
     path('buscar_productos/', views.buscar_productos, name='buscar_productos'),
+    
     #paths de proveedor
     path('prov/', views.prov, name='prov'),
     path('registrarProv/', views.registrarProv),
-    path('prov/edicionproveedor/<idProveedor>', views.edicionproveedor),
+    path('prov/edicionProveedor2/<int:idProveedor>', views.edicionProveedor2, name='edicionProveedor2'),
     path('prov/cambio_statuspro/<int:idProveedor>',views.cambio_statuspro, name='cambio_statuspro'),
     path('editarproveedor/', views.editarproveedor),
     path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
-     #Marca
+    
+    #Marca
     path("MarcaVista/",views.MarcaView, name="marca"),
     path("MarcaAgregada/", views.registrar_marca, name="marcaAgred"),
     path('edicion_marca/<int:marca_id>/', views.edicionMarcaView, name='edicionMarcaView'),
-    path('editarMarca/', views.editarMarca, name='editar_marca'),
+    path('editarM/', views.editarM, name='editar_marca'),
     path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
     path('cambio_statusmar/<int:marca_id>/', views.cambio_statusmar, name='cambio_statusmar'),
     path('cambio_statusremar/<int:marca_id>/', views.cambio_statusremar, name="cambio_statusremar"),

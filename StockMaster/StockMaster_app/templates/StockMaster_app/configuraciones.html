@@ -76,11 +76,9 @@
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ c.nombre }}</td>
-                                    <td class="edita">
-                                        <a href="{% url 'edicionicat' categoria_id=c.categoria_id %}" class="btn btn-info" style="margin-left: 15rem;">
-                                            <span class="material-symbols-outlined">edit</span>
-                                        </a>
-                                    </td>
+                                    <td class="edita"><a class="btn btn-info edit-product-button-categoria" data-id="{{ c.categoria_id }}">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a></td>
                                     <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
                                         <span class="material-symbols-outlined">delete</span>
                                     </a></td>
@@ -109,17 +107,16 @@
                             </tr>
                         </thead>
                         <tbody style="font-size: 15px;">
-                            {% for marca in marcas %}
-                            {% if marca.status%}
+                            {% for c in Marca %}
+                            {% if c.status%}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ marca.nombre }}</td>
-                                    <td class="edita">
-                                        <a href="{% url 'edicionMarcaView' marca_id=marca.marca_id %}" class="btn btn-info" style="margin-left: 15rem;">
-                                            <span class="material-symbols-outlined">edit</span>
-                                        </a>
+                                    <td>{{ c.nombre }}</td>
+                                    <td class="edita"><a class="btn btn-info edit-product-button-marca" data-id="{{ c.marca_id }}">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a></td>
                                     
-                                    <td class="elimina"><a href="{% url 'cambio_statusmar' marca_id=marca.marca_id %}"  class="btn btn-danger btnEliminacion">
+                                    <td class="elimina"><a href="{% url 'cambio_statusmar' marca_id=c.marca_id %}"  class="btn btn-danger btnEliminacion">
                                             <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>
@@ -131,29 +128,27 @@
             </div>
         </div>
     </div>
+<!--Categorias-->
     <!--Ventana Modal Categorias-->
     <div>
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
             <div class="content-modal" style="width: 100%; max-width: 400px;">
-                <label for="btn-modal" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
-                <div class="recent-updates">
-                    <h2>Agregar Nueva Categoria</h2>
-                    <br>
-                    <div class="updates">
-                        <form action="/registrar_categoria/" method="POST" enctype="multipart/form-data" id="mi_formulario">
-                            {% csrf_token %}
-                            <div class="updatess">
-                                <input type="text" id="txtNombreCat" name="txtNombreCat" placeholder="Nombre" pattern="[A-Za-z0-9]{6,1}" minlength="0" maxlength="10" required>
-                                <span class="error-message" style="color: red;"></span>
-                            </div>
-                            <div class="btn-cerrar">
-                                <button type="submit">Guardar</button>
-                                <label for="btn-modal">Cancelar</label>
-                            </div>
-                        </form>
+                <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
+                <h2 class="titulo-modal">Agregar Nueva Categoria</h2>
+                <form action="/registrar_categoria/" method="POST" enctype="multipart/form-data" id="mi_formulario">
+                    {% csrf_token %}
+                    <div class="divisor">
+                        <div class="titulo">Categoría:</div>
+                        <input type="text" id="txtNombreCat" name="txtNombreCat" class="campos" placeholder="Nombre Categoría" 
+                            maxlength="20" required>
+                        <span class="error-message" style="color: red;"></span>
                     </div>
-                </div>
+                    <div class="btn-cerrar">
+                        <button type="submit">Guardar</button>
+                        <label for="btn-modal">Cancelar</label>
+                    </div>
+                </form>
                 <script>
                     // Obtén todos los elementos con la clase "close-btn"
                     var closeBtns = document.querySelectorAll('.close-btnn');
@@ -173,29 +168,53 @@
     </div>
     <!--Fin ventana modal-->
     
+    <!-- Modal edición -->
+    <div id="editModalCategoria" class="container-modal-editar">
+        <div class="content-modal-editar" style="width: 100%; max-width: 400px;">
+            <label class="cerrar" id="closeEditModal"><i class="fa-solid fa-xmark"></i></label>
+            <h2 class="titulo-modal">Editar Categoria</h2>
+            <form action="/editarCategoria2/" method="POST" enctype="multipart/form-data" value="{{c.categoria_id }}">
+                {% csrf_token %}
+                <input type="hidden" id="editProductId" name="productId" value="{{ c.categoria_id }}">
+                <div class="divisor">
+                    <div class="titulo">Nombre:</div>
+                    <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Categoria"
+                        maxlength="50" required oninput="convertirMayusculas()">
+                    <br><span class="error-message" style="color: red;"></span>
+                </div>
+                <div class="btn-cerrar">
+                    <button type="submit">Guardar</button>
+                    <label id="cancelar">Cancelar</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fin Modal edición -->
+
+<!--Fin Categorias-->
+
+<!--Marcas-->
     <!--Ventana Modal Marcas-->
     <div>
         <input type="checkbox" id="btn-modal-segundo">
         <div class="container-modal-segundo">
             <div class="content-modal" style="width: 100%; max-width: 400px;">
                 <label for="btn-modal-segundo" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
-                <div class="recent-updates">
-                    <h2>Agregar Nueva Marca</h2>
-                    <br>
-                    <div class="updates">
-                        <form action="/MarcaAgregada/" method="POST" enctype="multipart/form-data" id="mi_formulario">
-                            {% csrf_token %}
-                            <div class="updatess">
-                                <input type="text" id="txtMarcaNew" name="txtMarcaNew" placeholder="Nombre" pattern="[A-Za-z0-9]{6,1}" minlength="0" maxlength="10" required>
-                                <span class="error-message" style="color: red;"></span>
-                            </div>
-                            <div class="btn-cerrar">
-                                <button type="submit">Guardar</button>
-                                <label for="btn-modal-segundo">Cancelar</label>
-                            </div>
-                        </form>
+                <h2 class="titulo-modal">Agregar Nueva Marca</h2>
+                <br>
+                <form action="/MarcaAgregada/" method="POST" enctype="multipart/form-data" id="mi_formulario">
+                    {% csrf_token %}
+                    <div class="divisor">
+                        <div class="titulo">Marca:</div>
+                        <input type="text" id="txtMarcaNew" name="txtMarcaNew" class="campos" placeholder="Nombre" 
+                            maxlength="20" required>
+                        <span class="error-message" style="color: red;"></span>
                     </div>
-                </div>
+                    <div class="btn-cerrar">
+                        <button type="submit">Guardar</button>
+                        <label for="btn-modal-segundo">Cancelar</label>
+                    </div>
+                </form>
                 <script>
                     // Obtén todos los elementos con la clase "close-btn"
                     var closeBtns = document.querySelectorAll('.close-btnn');
@@ -208,23 +227,64 @@
                         });
                     });
                 </script>
-            <label for="btn-modal-segundo" class="cerrar-modal"></label>
+                <label for="btn-modal-segundo" class="cerrar-modal"></label>
             </div>
         </div>
     </div>
     <!--Fin ventana modal-->
-        
-</main>
 
+    <!-- Modal edición -->
+    <div id="editModalMarca" class="container-modal-editar">
+        <div class="content-modal-editar" style="width: 100%; max-width: 400px;">
+            <label class="cerrar" id="closeEditModalMarca"><i class="fa-solid fa-xmark"></i></label>
+            <h2 class="titulo-modal">Editar Marca</h2>
+            <form action="/editarMarca2/" method="POST" enctype="multipart/form-data" value="{{ c.marca_id }}">
+                {% csrf_token %}
+                <input type="hidden" id="editProductId" name="productId" value="{{ c.marca_id }}">
+                <div class="divisor">
+                    <div class="titulo">Nombre:</div>
+                    <input type="text" id="txtNombre" name="nombre" class="campos" placeholder="Marca"
+                        maxlength="50" required oninput="convertirMayusculas()">
+                    <br><span class="error-message" style="color: red;"></span>
+                </div>
+                <div class="btn-cerrar">
+                    <button type="submit">Guardar</button>
+                    <label id="cancelarMarca">Cancelar</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fin Modal edición -->
+<!--Fin Marcas-->
+</main>
 <script>
-    // Función para eliminar el mensaje al hacer clic en el botón de cerrar
-    function dismissMessage(button) {
-        const messageContainer = button.closest('.alert');
-        if (messageContainer) {
-            messageContainer.remove();
+    // Cierra el modal de edición cuando se hace clic en la "x"
+    closeEditModal.addEventListener("click", function() {
+        editModalCategoria.style.display = "none";
+    });
+    closeEditModalMarca.addEventListener("click", function() {
+        editModalMarca.style.display = "none";
+    });
+
+    //Cierra el modal de edicion cuando se da click a cancelar
+    cancelar.addEventListener("click", function() {
+        editModalCategoria.style.display = "none";
+    });
+    cancelarMarca.addEventListener("click", function() {
+        editModalMarca.style.display = "none";
+    });
+
+    // Cierra el modal de edición si se hace clic fuera del contenido del modal
+    window.addEventListener("click", function(event) {
+        if (event.target === editModalCategoria) {
+            editModalCategoria.style.display = "none";
         }
-    }   
+        if (event.target === editModalMarca) {
+            editModalMarca.style.display = "none";
+        }
+    });
 </script>
+
 
 <script src="{% static 'login/js/busqueda.js' %}"></script>
 

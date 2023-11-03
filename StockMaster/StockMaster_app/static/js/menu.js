@@ -139,7 +139,7 @@ function dismissMessage(button) {
 
 // <----------------------------------------------------Inicio Convertir Mayusculas---------------------------------------------------->
 
-function convertirMayusculas(){
+/* function convertirMayusculas(){
 
   var upercase = document.getElementById('codigo').value.toUpperCase();
   document.getElementById('codigo').value = upercase;
@@ -170,5 +170,5 @@ function convertirMayusculas(){
 
   var upercase = document.getElementById('Pais').value.toUpperCase();
   document.getElementById('Pais').value = upercase;
-}
+} */
 // <----------------------------------------------------Fin Convertir Mayusculas---------------------------------------------------->

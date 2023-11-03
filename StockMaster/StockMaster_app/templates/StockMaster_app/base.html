@@ -42,7 +42,7 @@
                 </a>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
-                        <a class="submenu-trigger has-submenu" data-submenu-id="submenu_gestion" data-submenu-state="closed">
+                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_gestion" data-submenu-state="closed">
                             <span class="material-symbols-outlined">supervisor_account</span>
                             <h3>Administración</h3>
                             <i class="submenu-icon fas fa-chevron-right"></i>
@@ -65,10 +65,35 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{% url 'recuperar_producto' %}" class="main-menu-link active">
+                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_recuperacion" data-submenu-state="closed">
                             <span class="material-symbols-outlined">restart_alt</span>
                             <h3>Recuperacion</h3>
+                            <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
                         </a>
+                        <div class="submenu-container active">
+                            <div class="submenu">
+                                <div style="margin-left: 1rem;">
+                                    <a href="{% url 'recuperar_producto' %}" class="active">
+                                        <span class="material-symbols-outlined">inventory</span>
+                                        <h3>Productos</h3>
+                                    </a>
+                                    <a href="#" class="active">
+                                        <span class="material-symbols-outlined">local_shipping</span>
+                                        <h3>Categorias</h3>
+                                    </a>
+                                    <a href="#" class="active">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        <h3>Proveedores</h3>
+                                    </a>
+                                    <a href="#" class="active">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        <h3>Marcas</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        
                     {% endif %}
                 {% endif %}
                 {% if request.user.is_authenticated %}
@@ -77,6 +102,38 @@
                         <span class="material-symbols-outlined">person</span>
                         <h3>Usuarios</h3>
                     </a>
+
+                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_supervision" data-submenu-state="closed">
+                        <span class="material-symbols-outlined">history</span>
+                        <h3>Supervision</h3>
+                        <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
+                    </a>
+                    <div class="submenu-container active">
+                        <div class="submenu">
+                            <div style="margin-left: 1rem;">
+                                <a href="#" class="active">
+                                    <span class="material-symbols-outlined">inventory</span>
+                                    <h3>Modificaciones</h3>
+                                </a>
+                                <a href="#" class="active">
+                                    <span class="material-symbols-outlined">local_shipping</span>
+                                    <h3>Mensajes (duda)</h3>
+                                </a>
+                                <a href="#" class="active">
+                                    <span class="material-symbols-outlined">settings</span>
+                                    <h3>Categoria (duda)</h3>
+                                </a>
+                                <a href="#" class="active">
+                                    <span class="material-symbols-outlined">settings</span>
+                                    <h3>Proveedor (duda)</h3>
+                                </a>
+                                <a href="#" class="active">
+                                    <span class="material-symbols-outlined">settings</span>
+                                    <h3>Marca (duda)</h3>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
                 {% endif %}
                 <a href="{% url 'soporte' %}" class="main-menu-link active">
@@ -91,7 +148,7 @@
                     </span>
                 </a>
                 {% if request.user.is_authenticated %}
-                <a class="submenu-trigger has-submenu" data-submenu-id="submenu_historial" data-submenu-state="closed">
+                <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_historial" data-submenu-state="closed">
                     <span class="material-symbols-outlined">history</span>
                     <h3>Historial</h3>
                     <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
@@ -102,6 +159,10 @@
                             <a href="{% url 'historial' %}" class="active">
                                 <span class="material-symbols-outlined">inventory</span>
                                 <h3>General</h3>
+                            </a>
+                            <a href="#" class="active">
+                                <span class="material-symbols-outlined">inventory</span>
+                                <h3>Modificaciones (creo que si)</h3>
                             </a>
                             <a href="#" class="active">
                                 <span class="material-symbols-outlined">local_shipping</span>

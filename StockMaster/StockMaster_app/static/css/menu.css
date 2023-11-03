@@ -448,13 +448,15 @@ textarea{
 .submenu-icon {
     transform: rotate(0deg);
     transition: transform 0.3s ease;
+    margin-left: auto; /* Para alinear el span al final a la derecha del contenedor */
+    margin-right: 1rem;
 }
 
 .submenu-trigger:hover .submenu-icon {
     transform: rotate(90deg);
 }
 
-.sidebar a.submenu-trigger {
+/* .sidebar a.submenu-trigger {
     margin-left: 0rem;
 }
 
@@ -476,7 +478,7 @@ aside .sidebar a.submenu-trigger:before{
 aside .sidebar a.submenu-trigger span{
     color: var(--color-primary);
     margin-left: calc(1rem - 3px);
-} 
+}  */
 
 
 

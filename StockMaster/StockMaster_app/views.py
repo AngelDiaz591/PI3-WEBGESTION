@@ -227,8 +227,8 @@ def editarProductoMod(request):
         except ObjectDoesNotExist:
             messages.error(request, 'El producto no se encontró o no existe.')
             return redirect('/productos/')  # Puedes redirigir a donde desees
-        if Productos.objects.filter(nombre=nombre, codigo=codigo, precio=precio, cantPro=cantPro).exists():
-            messages.error(request, '¡Este Proveedor no recibio cambios!')
+        if Productos.objects.filter(nombre=nombre, codigo=codigo, precio=precio, cantPro=cantPro, id_categorias_id=categoria_id, id_Proveedores_id=idProveedor, id_marca_id=marca_id).exists():
+            messages.error(request, '¡Este Producto no recibio cambios!')
             return redirect('/productos/')
         else:
             productos.codigo = codigo
@@ -341,6 +341,7 @@ def prov(request):
         return render(request, 'StockMaster_app/proveedor.html', { "Proveedor": ProveedoresListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
         return redirect('/prov')
+
 #Registrar Proveedor
 @login_required(login_url='signin')
 def registrarProv(request):

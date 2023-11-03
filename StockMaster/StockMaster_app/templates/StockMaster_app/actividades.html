@@ -18,7 +18,8 @@
                     {% endif %}
                 </div>
                 <div class="search-bar-v1">
-                    <label for="search-input"></label><input type="text" id="search-input" placeholder="Buscar movimientos..." oninput="convertToUppercase()">
+                    <label for="search-input"></label><input type="text" id="search-input" 
+                    placeholder="Buscar movimientos..." oninput="convertToUppercase()">
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
             </div>
@@ -27,7 +28,9 @@
                 {% for message in messages %}
                     <div class="alert alert-custom" role="alert">
                         <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
                     </div>
                 {% endfor %}
             </div>

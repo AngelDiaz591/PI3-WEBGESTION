@@ -43,8 +43,18 @@
                     <label for="categoria" class="apartado">Categoría:</label>
                     <select name="categoria" id="categoria" class="form-control" required>
                         <option value="" disabled selected>-- Selecciona una categoría --</option>
-                        {% for categoria in Categoria %}
-                            <option value="{{ categoria.nombre }}">{{ categoria.nombre }}</option>
+                        {% for c in Categoria %}
+                                        {% if c.status == 1 %}
+                                            <option value="{{ c.categoria_id }}">{{ c.nombre }}</option>
+                                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <select name="marca" id="marca" class="form-control" required>
+                        <option value="" disabled selected>-- Selecciona una marca --</option>
+                        {% for c in Marca %}
+                                        {% if c.status == 1 %}
+                                            <option value="{{ c.marca_id }}">{{ c.nombre }}</option>
+                                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -79,14 +89,43 @@
                                         <div class="stats-container">
                                             <span class="product_price">${{ producto.precio }}</span>
                                             <span class="product_name">{{ producto.nombre }}</span>
-                                            <p><strong style="color: black;">CATEGORIA: {{ producto.id_categorias.nombre }}</strong></p>
+                                            <p><strong style="color: black;">CATEGORIA: {% if producto.id_categorias %}
+                                                {% if producto.id_categorias.status == 1 %}
+                                                  {{ producto.id_categorias.nombre }}
+                                                {% elif producto.id_categorias.status == 0 %}
+                                                NO DISPONIBLE
+                                                {% endif %}
+                                              {% else %}
+                                                NO DISPONIBLE
+                                              {% endif %}</strong></p>
                                             <div class="product-options">
                                                 <strong>CODIGO</strong>
                                                 <span>{{ producto.codigo }}</span>
                                                 <strong>MARCA</strong>
-                                                <span>{{ producto.marca }}</span>
+                                                <span>{% if producto.id_marca %}
+                                                    {% if producto.id_marca.status == 1 %}
+                                                      {{ producto.id_marca.nombre }}
+                                                    {% elif producto.id_marca.status == 0 %}
+                                                    NO DISPONIBLE
+                                                    {% endif %}
+                                                  {% else %}
+                                                    NO DISPONIBLE
+                                                  {% endif %}</span>
                                                 <strong>CANTIDAD DISPONIBLES</strong>
                                                 <span>{{ producto.cantPro }} unidades</span>
+                                                <strong>PROVEEDOR:</strong>
+                                                <span>
+                                                    {% if producto.id_Proveedores %}
+                                                    {% if producto.id_Proveedores.status == 1 %}
+                                                      {{ producto.id_Proveedores.nombre }}
+                                                    {% elif producto.id_Proveedores.status == 0 %}
+                                                    NO DISPONIBLE
+                                                    {% endif %}
+                                                  {% else %}
+                                                    NO DISPONIBLE
+                                                  {% endif %}
+
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

@@ -91,14 +91,34 @@
                                       {% if c.id_categorias.status == 1 %}
                                         {{ c.id_categorias.nombre }}
                                       {% elif c.id_categorias.status == 0 %}
-                                        Agrega nueva categoría
+                                      CATEGORIA NO EXISTE
                                       {% endif %}
                                     {% else %}
-                                      Categoría no existe
+                                      CATEGORIA NO EXISTE
                                     {% endif %}
                                   </td>
-                                <td>{{ c.id_Proveedores.nombre }}</td>
-                                <td>{{c.id_marca}}
+                                <td>
+                                    {% if c.id_Proveedores %}
+                                      {% if c.id_Proveedores.status == 1 %}
+                                        {{ c.id_Proveedores.nombre }}
+                                      {% elif c.id_Proveedores.status == 0 %}
+                                      PROVEEDOR NO EXISTE
+                                      {% endif %}
+                                    {% else %}
+                                      PROVEEDOR NO EXISTE
+                                    {% endif %}
+                                  </td>
+                                <td>
+                                    {% if c.id_marca %}
+                                      {% if c.id_marca.status == 1 %}
+                                        {{ c.id_marca.nombre }}
+                                      {% elif c.id_marca.status == 0 %}
+                                      MARCA NO EXISTE
+                                      {% endif %}
+                                    {% else %}
+                                      MARCA NO EXISTE
+                                    {% endif %}
+                                  </td>
                                 <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
                                     <span class="material-symbols-outlined">edit</span></a>
                                 </td>
@@ -127,28 +147,24 @@
                         <div class="form-column">
                             <div class="divisor">
                                 <div class="titulo">Código:</div>
-                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Código" 
-                                    pattern="[A-Za-z0-9]{6}"  maxlength="6" oninput="convertToUppercase()" required>
+                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Nombre:</div>
-                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" 
-                                    pattern="[A-Za-z0-9]{2,50}" maxlength="50" oninput="convertToUppercase()" required>
+                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Precio:</div>
-                                <input type="number" id="NumPrecio" name="NumPrecio" class="campos" placeholder="Precio"  
-                                    pattern="[0-9]{1,7}" maxlength="7" required oninput="validarNumeros(this)">
+                                <input type="number" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="campos" maxlength="7" required oninput="validarNumeros(this)">
                                 <br>
                                 <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
                                 <span class="error-message error" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Cantidad Producto:</div>
-                                <input type="number" id="CantPro" name="CantPro" class="campos" placeholder="Cantidad de Producto" 
-                                pattern="[0-9]{1,7}"  maxlength="7"  required oninput="validarNumeros(this)" >
+                                <input type="number" id="CantPro" name="CantPro" placeholder="Cantidad de Producto" pattern="[0-9]{1,7}" class="campos" maxlength="7"  required oninput="validarNumeros(this)" >
                                 <br>
                                 <small class="text-muted">Ingrese un numero (entre 1 y 100 000).</small><br>
                                 <span class="error-message" style="color: red;"></span>
@@ -162,7 +178,9 @@
                                 <select name="categoria" id="categoria" class="campos-seleccion" required>
                                     <option value="" disabled selected>Selecciona una categoría</option>
                                     {% for c in Categoria %}
-                                        <option value="{{ c.categoria_id }}">{{ c.nombre }}</option>
+                                        {% if c.status == 1 %}
+                                            <option value="{{ c.categoria_id }}">{{ c.nombre }}</option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
@@ -171,7 +189,9 @@
                                 <select name="proveedor" id="proveedor" class="campos-seleccion" required>
                                     <option value="" disabled selected>Selecciona un proveedor</option>
                                     {% for c in Proveedor %}
-                                        <option value="{{ c.idProveedor }}">{{ c.nombre }}</option>
+                                        {% if c.status == 1 %}
+                                            <option value="{{ c.idProveedor }}">{{ c.nombre }}</option>
+                                        {% endif%}
                                     {% endfor %}
                                 </select>
                             </div>
@@ -180,7 +200,9 @@
                                 <select name="marca" id="marca" class="campos-seleccion" required>
                                     <option value="" disabled selected>Selecciona un Marca</option>
                                     {% for c in marca %}
+                                         {% if c.status == 1 %}
                                         <option value="{{ c.marca_id }}">{{ c.nombre }}</option>
+                                        {% endif%}
                                     {% endfor %}
                                 </select>
                             </div>
@@ -231,26 +253,26 @@
                     <div class="form-column">
                         <div class="divisor">
                             <div class="titulo">Código:</div>
-                            <input type="text" id="EtxtCodigo" name="txtCodigo" class="campos" placeholder="Código"
-                                pattern="[A-Za-z0-9]{6}" maxlength="6" oninput="convertToUppercase()" required> <!-- form-control -->
+                            <input class="campos" type="text" id="EtxtCodigo" name="txtCodigo"
+                                    placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Nombre:</div>
-                            <input type="text" id="EtxtNombre" name="txtNombre" class="campos" placeholder="Nombre"
-                                pattern="[A-Za-z0-9]{2,50}" maxlength="50" oninput="convertToUppercase()" required>
+                            <input class="campos" type="text" id="EtxtNombre" name="txtNombre"
+                                placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Precio:</div>
-                            <input type="text" id="ENumPrecio" name="NumPrecio" class="campos" placeholder="Precio"
+                            <input class="campos" type="text" id="ENumPrecio" name="NumPrecio" placeholder="Precio"
                                 pattern="[0-9]{1,7}" maxlength="7" required>
                             <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                             <br><span class="error-message error" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Cantidad Productos:</div>
-                            <input type="text" id="ECantPro" name="CantPro" class="campos" placeholder="Cantidad de Producto"
+                            <input class="campos" type="text" id="ECantPro" name="CantPro" placeholder="Cantidad de Producto"
                                 pattern="[0-9]{1,7}"  maxlength="7" required>
                             <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                             <br><span class="error-message error" style="color: red;"></span>
@@ -265,8 +287,10 @@
                             <select name="categoria" id="categoria" class="campos-seleccion" required>
                                 <option value="" disabled>Selecciona una categoría</option>
                                 {% for c in Categoria %}
-                                    <option class="categoriaOp" id="categoriaOp{{ c.categoria_id }}" value="{{ c.categoria_id }}">{{ c.nombre }}</option>
-                                {% endfor %}
+                                        {% if c.status == 1 %}
+                                          <option class="categoriaOp" id="categoriaOp{{ c.categoria_id }}" value="{{ c.categoria_id }}">{{ c.nombre }}</option>
+                                        {% endif %}
+                                    {% endfor %}
                             </select>
                         </div>
                         <div class="divisor">
@@ -274,8 +298,10 @@
                             <select name="proveedor" id="proveedor" class="campos-seleccion" required>
                                 <option value="" disabled>Selecciona un proveedor</option>
                                 {% for c in Proveedor %}
-                                    <option class="proveedorOp" id="proveedorOp{{ c.idProveedor }}" value="{{ c.idProveedor }}">{{ c.nombre }}</option>
-                                {% endfor %}
+                                        {% if c.status == 1 %}
+                                           <option class="proveedorOp" id="proveedorOp{{ c.idProveedor }}" value="{{ c.idProveedor }}">{{ c.nombre }}</option>
+                                        {% endif%}
+                                    {% endfor %}
                             </select>
                         </div>
                         <div class="divisor">
@@ -283,8 +309,10 @@
                             <select name="marca" id="marca" class="campos-seleccion" required>
                                 <option value="" disabled>Selecciona una marca</option>
                                 {% for c in marca %}
-                                    <option class="marcaOP" id="marcaOP{{ c.marca_id }}" value="{{ c.marca_id }}">{{ c.nombre }}</option>
-                                {% endfor %}
+                                         {% if c.status == 1 %}
+                                           <option class="marcaOP" id="marcaOP{{ c.marca_id }}" value="{{ c.marca_id }}">{{ c.nombre }}</option>
+                                        {% endif%}
+                                    {% endfor %}
                             </select>
                         </div>
                         <div class="divisor">

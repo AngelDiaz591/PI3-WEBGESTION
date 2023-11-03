@@ -255,20 +255,29 @@ def editarProductoMod(request):
     
 @login_required(login_url='signin')
 def edicioninventario2(request, idproducts):
+
     productos = Productos.objects.get(idproducts=idproducts)
-    CategoriaListados = Categoria.objects.all()
     ProveedorListados = Proveedores.objects.all()
     MarcaListado = Marca.objects.all()
     imagen_url = get_imagen_url(productos.imagen)
+    
+     # Filtra las categorías con status igual a 1 (activas)
+    CategoriaListados = Categoria.objects.filter(status=True)
+
+    # Verifica si el producto tiene una categoría válida
+    if productos.id_categorias:
+        id_categorias = productos.id_categorias.categoria_id
+    else:
+        id_categorias = None
 
     data = {
         "codigo": productos.codigo,
         "nombre": productos.nombre,
         "precio": productos.precio,
         "cantPro": productos.cantPro,
-        "id_categorias": productos.id_categorias.categoria_id,
-        "id_Proveedores": productos.id_Proveedores.idProveedor,
-        "id_marca": productos.id_marca.marca_id,
+        "id_categorias": productos.id_categorias.categoria_id if productos.id_categorias is not None else None,
+        "id_Proveedores": productos.id_Proveedores.idProveedor if productos.id_Proveedores is not None else None,
+        "id_marca": productos.id_marca.marca_id if productos.id_marca is not None else None,
         "imagen_url": imagen_url,
         "Categoria": [{"categoria_id": c.categoria_id, "nombre": c.nombre} for c in CategoriaListados],
         "Proveedor": [{"idProveedor": c.idProveedor, "nombre": c.nombre} for c in ProveedorListados],
@@ -505,6 +514,7 @@ def eliminaProveedor(request, idProveedor):
     historial= Historial.objects.all()
     historial = Historial(movimiento='¡Proveedor Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
     historial.save()
+    Productos.objects.filter(id_Proveedores=proveedor).update(id_Proveedores=None)
     proveedor.delete()
     messages.success(request, '¡Proveedor Eliminado!')
     return redirect('/recuperar_producto')
@@ -636,6 +646,7 @@ def eliminar_categoria(request, categoria_id):
     historial= Historial.objects.all()
     historial = Historial(movimiento='¡Categoria Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
     historial.save()
+    Productos.objects.filter(id_categorias=categoria).update(id_categorias=None)
     categoria.delete()
     messages.success(request, '¡Categoría Eliminada!')
     return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
@@ -757,6 +768,7 @@ def eliminar_marca(request, marca_id):
     historial= Historial.objects.all()
     historial = Historial(movimiento='¡Marca Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
     historial.save()
+    Productos.objects.filter(id_marca=marca).update(id_marca=None)
     marca.delete()
     messages.success(request, '¡Marca Eliminada!')
     return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
@@ -904,8 +916,9 @@ def example_view(request):
     if categoria_seleccionada:
         productos = Productos.objects.filter(id_categorias__nombre=categoria_seleccionada)
     ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all() 
+    CategoriaListados = Categoria.objects.all()
+    MarcaListados = Marca.objects.all() 
     for producto in ProductosListados:
         producto.imagen_url = get_imagen_url(producto.imagen)
 
-    return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+    return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})

@@ -60,13 +60,12 @@ class Productos(models.Model):
     codigo = models.CharField(max_length=255)
     nombre = models.CharField(max_length=50)
     precio = models.PositiveBigIntegerField()
-   # marca = models.CharField(max_length=255, null=True)
     cantPro = models.CharField(max_length=255)
     imagen = models.BinaryField(null=True, blank=True)
 
     id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE, null= True)
-    id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
-    id_marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
+    id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE, null = True)
+    id_marca = models.ForeignKey(Marca, on_delete=models.CASCADE, null= True)
 
 
     hora_baja = models.DateTimeField(default=timezone.now, null=True)

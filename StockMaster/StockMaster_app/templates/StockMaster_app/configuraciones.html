@@ -240,7 +240,7 @@
             <h2 class="titulo-modal">Editar Marca</h2>
             <form action="/editarMarca2/" method="POST" enctype="multipart/form-data" value="{{ c.marca_id }}">
                 {% csrf_token %}
-                <input type="hidden" id="editProductId" name="productId" value="{{ c.marca_id }}">
+                <input type="hidden" id="editProductId2" name="productId" value="{{ c.marca_id }}">
                 <div class="divisor">
                     <div class="titulo">Nombre:</div>
                     <input type="text" id="txtNombre" name="nombre" class="campos" placeholder="Marca"

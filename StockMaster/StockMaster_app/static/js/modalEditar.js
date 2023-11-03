@@ -17,7 +17,7 @@ const editProductIdFieldCategorias = document.getElementById('editProductId');
 // Obtén todos los elementos con la clase "edit-product-button"
 const editButtonsMarcas = document.querySelectorAll('.edit-product-button-marca');
 const editModalMarca = document.getElementById('editModalMarca');
-const editProductIdFieldMarca = document.getElementById('editProductId');
+const editProductIdFieldMarca = document.getElementById('editProductId2');
 
 // Función para abrir el modal de edición Productos
 function openEditModal(productId) {
@@ -154,7 +154,7 @@ function openEditModalMarca(productId) {
     editModalMarca.style.display = 'flex';
     
     // Obtener el ID del producto y hacer una solicitud AJAX para obtener los detalles
-    var productoId = document.getElementById("editProductId").value
+    var productoId = document.getElementById("editProductId2").value
     $.ajax({
         url: 'edicionMarca2/'+ productoId + '',
         type: 'GET',

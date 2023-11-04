@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib import messages as men
 from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
-from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca
+from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca, Usuario
 from django.http.response import JsonResponse
 import base64
 from django.http import HttpResponseRedirect
@@ -21,6 +21,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import render, redirect
+from django.core.mail import send_mail
 # Create your views here.
 
 class CustomUserCreationForm(UserCreationForm):
@@ -38,6 +39,9 @@ def is_superuser(user):
 
 @user_passes_test(is_superuser)
 @login_required(login_url='signin')
+def get_imagen_url(imagen_binaria):
+    imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
+    return f"data:image/jpeg;base64,{imagen_base64}"
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
@@ -52,14 +56,50 @@ def signup(request):
                 user.is_superuser = bool(int(is_superuser))
 
             user.save()
+#<-----------------Datos Adicionales------------------------->
+            calle = request.POST['calle']
+            colonia = request.POST['colonia']
+            num_ext = request.POST['num_ext']
+            num_int = request.POST['num_int']
+            cp = request.POST['cp']
+            col_mun = request.POST['col_mun']
+            pais = request.POST['pais']
+            num_tel = request.POST['num_tel']
+            mun_cel = request.POST['mun_cel']
+            curp = request.POST['curp']
+            t_sangre = request.POST['t_sangre']
+            rfc = request.POST['rfc']
+            n_seg_social = request.POST['n_seg_social']
+            imagen = request.FILES['imagen'] 
 
+
+            imagen_bytes = imagen.read()
+            usuario = Usuario(calle=calle, colonia=colonia, num_ext=num_ext, num_int=num_int, cp=cp, col_mun= col_mun, pais=pais,  num_tel=num_tel, mun_cel= mun_cel, curp=curp, t_sangre=t_sangre, rfc=rfc, n_seg_social=n_seg_social, imagen=imagen_bytes,id_id=user.id)
+            username = user.username  # Asignar el valor del nombre de usuario del usuario actual
+#<-----------------Guarda en el Historial------------------------->
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Nuevo Usuario',usuario=request.user.username, fecha=timezone.now(),nombre=username)
+            historial.save()
+            usuario.save()
+
+#========================Envia Correo=============================
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             
+            subject = 'Bienvenido a nuestra aplicación'
+            message = 'Hola, gracias por registrarte en nuestra aplicación.'
+            from_email = 'gael.jorgito.valencia22@gmail.com'
+            recipient_list = [email]
+
+            try:
+                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            except Exception as e:
+                print(f'Error al enviar el correo de bienvenida: {e}')
+                messages.error(request, f'Error al enviar el correo de bienvenida: {e}')
+#==================retorna==================
             return redirect('/usuarios')
         else:
-            # Maneja los errores específicos y agrega mensajes de error según corresponda
             if 'email' in form.errors:
                 messages.error(request, 'error en la escritura de gmail recomendacion "@gmail.com" "@hotmail.com" "outlook.com"')
             
@@ -67,7 +107,6 @@ def signup(request):
                 messages.error(request, 'El nombre de usuario ya existe. Por favor, elige otro.')
             else:
                 messages.error(request, 'La contraseña debe de tener más de 8 caracteres y no deben ser numeros continuos')
-            # Agrega otros mensajes de error personalizados según tus necesidades
             if 'is_superuser' in form.errors:
                 messages.error(request, 'error de admin')
             return redirect('/usuarios')
@@ -125,8 +164,11 @@ def usuarios(request):
     if request.user.is_superuser:
         mensajes = Mensajes.objects.all()
         cantidad_mensajes =mensajes.count()
+        usuario = Usuario.objects.all()
         form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
-        return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes})
+        for Usuarios in usuario:
+            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario})
     else:
         return redirect('/actividades')
     

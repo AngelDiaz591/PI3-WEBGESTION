@@ -10,7 +10,7 @@
             <div class="principal">
                 <div class="boton-modal">
                     <label for="btn-modal">
-                        <i class="fa-solid fa-plus"></i>    Agregar Producto
+                        <i class="fa-solid fa-plus"></i>    Agregar Usuario
                     </label>
                 </div>
                 <div class="search-bar">
@@ -25,20 +25,26 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Gmail</th>
+                            <th>Imagen</th>
                             <th>Rol</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
-                                {% for us in Usuarios %}
+                                {% for us in usuario %}
                                     {% if us != request.user%}
                                         <tr>
-                                            <td>{{ us.first_name }}</td>
-                                            <td>{{ us.last_name }}</td>
-                                            <td>{{ us.email }}</td>
-                                            <td>{% if us.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                            <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id}}">
+                                            <td>{{ us.id.first_name }}</td>
+                                            <td>{{ us.id.last_name }}</td>
+                                            <td>{{ us.id.email }}</td>
+                                            <td class="imagen" style="position: relative;">
+                                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                                                    <img src="{{ us.imagen_url }}"  width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
+                                                </div>
+                                            </td>
+                                            <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
+                                            <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id.id}}">
                                                 <span class="material-symbols-outlined">delete</span>
                                             </a></td>
                                         </tr>
@@ -112,6 +118,84 @@
                                     </div>
                                 </div>
                                 <!--Termino de segunda columna-->
+
+                                <!--Tercera columna-->
+                                <div class="form-column">
+                                    <h4>Datos adicionales</h4>
+                                    <div class="divisor">
+                                        <div class="titulo">Calle:</div>
+                                        <input type="text" id="calle" name="calle" placeholder="Nombre de Calle" 
+                                        class="campos" oninput="convertToUppercase()" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Colonia:</div>
+                                        <input type="text" id="colonia" name="colonia" placeholder="Nombre de Colonia" 
+                                        class="campos" oninput="convertToUppercase()" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Num_Exterior:</div>
+                                        <input type="number" id="num_ext" name="num_ext" placeholder="Numero Exterior" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Num_Interior:</div>
+                                        <input type="number" id="num_int" name="num_int" placeholder="Opcional" class="campos" >
+                                    </div>
+                                </div>
+                                <!--Termino de Tercera columna-->
+
+                                <!--Cuarta columna-->
+                                <div class="form-column">
+                                    <div class="divisor">
+                                        <div class="titulo">Codigo Postal:</div>
+                                        <input type="number" id="cp" name="cp" placeholder="Codigo Postal" 
+                                        class="campos" oninput="convertToUppercase()" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Municipio:</div>
+                                        <input type="text" id="col_mun" name="col_mun" placeholder="Municipio" 
+                                        class="campos" oninput="convertToUppercase()" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Pais:</div>
+                                        <input type="text" id="pais" name="pais" placeholder="pais" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Numero Telefonico:</div>
+                                        <input type="number" id="num_tel" name="num_tel" placeholder="Numero Telefonico" class="campos" >
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Numero Celular:</div>
+                                        <input type="text" id="mun_cel" name="mun_cel" placeholder="Numero Celular" class="campos" required>
+                                    </div>
+                                </div>
+                                <!--Termino de Cuarta Columna columna-->
+
+                                <!--Quinta columna-->
+                                <div class="form-column">
+                                    <div class="divisor">
+                                        <div class="titulo">Curp:</div>
+                                        <input type="text" id="curp" name="curp" placeholder="Curp" 
+                                        class="campos" oninput="convertToUppercase()" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Tipo de Sangre</div>
+                                        <input type="text" id="t_sangre" name="t_sangre" placeholder="Tipo de Sangre" 
+                                        class="campos" oninput="convertToUppercase()" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">RFC:</div>
+                                        <input type="text" id="rfc" name="rfc" placeholder="RFC" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Numero de Seguro Social:</div>
+                                        <input type="number" id="n_seg_social" name="n_seg_social" placeholder="Numero de Seguro Social" class="campos" required>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Imagen:</div>
+                                        <input type="file" id="imagen" name="imagen" placeholder="Imagen" class="campos" required>
+                                    </div>
+                                </div>
+                                <!--Termino de Quinta Columna columna-->
                             </div>
                             <!--Fin de la tabla columnnas-->
                                 <div class="btn-cerrar">

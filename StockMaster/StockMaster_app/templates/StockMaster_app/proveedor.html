@@ -85,8 +85,11 @@
                                 {% endif %}
                                 {{ c.colonia }}, {{ c.cp }}, <br>{{ c.municipio }}, <br>{{ c.estado }}, {{ c.pais }}
                             </td>
-                            <td class="imagen"><img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" width="100" height="100"></td>    
-                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idProveedor }}">
+                            <td class="imagen" style="position: relative;">
+                                <div class="img-container" style="width: 120px; height: 150px;  justify-content: center;">
+                                    <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: auto; max-height: 130px; transition: transform 0.3s;"></td>    
+                                </div>
+                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idProveedor }}">
                                 <span class="material-symbols-outlined">edit</span>
                             </a></td>
                             <td class="elimina"><a href="cambio_statuspro/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">

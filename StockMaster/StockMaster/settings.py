@@ -94,7 +94,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'gael.jorgito.valencia22@gmail.com'
-EMAIL_HOST_PASSWORD = 'Gaelblack'
+EMAIL_HOST_PASSWORD = 'xhec wduj yrbs rsdd'
 
 
 # Password validation

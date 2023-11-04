@@ -22,6 +22,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
+from smtplib import SMTPException
+from django.template.loader import render_to_string
+
 # Create your views here.
 
 class CustomUserCreationForm(UserCreationForm):
@@ -88,13 +91,18 @@ def signup(request):
             user = authenticate(username=username, password=password)
             
             subject = 'Bienvenido a nuestra aplicación'
-            message = 'Hola, gracias por registrarte en nuestra aplicación.'
             from_email = 'gael.jorgito.valencia22@gmail.com'
             recipient_list = [email]
 
+            accept_link = 'http://127.0.0.1:8000/signin/?next=/actividades/'
+
+            # Crear el mensaje en formato HTML
+            message_html = render_to_string('StockMaster_app/Correo.html', {'accept_link': accept_link})
+
+
             try:
-                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            except Exception as e:
+                send_mail(subject, '', from_email, recipient_list, fail_silently=False, html_message=message_html)
+            except SMTPException as e:
                 print(f'Error al enviar el correo de bienvenida: {e}')
                 messages.error(request, f'Error al enviar el correo de bienvenida: {e}')
 #==================retorna==================

@@ -538,7 +538,8 @@ def cambio_statusrepro(request,idProveedor):
         historial.save()
         proveedor.save()
     messages.success(request, '¡Proveedor Recuperado¡')
-    return redirect('/recuperar_producto')
+    """ return redirect('/recuperar_producto') """
+    return redirect('/recuperar_proveedor') 
 
 #Eliminar Proveedor
 @login_required(login_url='signin')
@@ -567,7 +568,8 @@ def eliminaProveedor(request, idProveedor):
     Productos.objects.filter(id_Proveedores=proveedor).update(id_Proveedores=None)
     proveedor.delete()
     messages.success(request, '¡Proveedor Eliminado!')
-    return redirect('/recuperar_producto')
+    """ return redirect('/recuperar_producto') """
+    return redirect('/recuperar_proveedor')
 
 #____________________________________________________________________________________________________________________________________
 
@@ -669,7 +671,8 @@ def status_categoriare(request,categoria_id):
             historial.save()
             categoria.save()
             messages.success(request, '¡Categoría Recuperada!')
-    return redirect('/recuperar_producto')
+    """ return redirect('/recuperar_producto') """
+    return redirect('/recuperar_categoria')
 
 #Eliminar Categoria
 @login_required(login_url='signin')
@@ -699,7 +702,8 @@ def eliminar_categoria(request, categoria_id):
     Productos.objects.filter(id_categorias=categoria).update(id_categorias=None)
     categoria.delete()
     messages.success(request, '¡Categoría Eliminada!')
-    return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
+    """ return redirect('/recuperar_producto')  """ # O redirige a donde desees después de la eliminación
+    return redirect('/recuperar_categoria')
 
 #____________________________________________________________________________________________________________________________________
 
@@ -792,7 +796,7 @@ def cambio_statusremar(request,marca_id):
         historial.save()
         marca.save()
     messages.success(request, '¡Marca Recuperada¡')
-    return redirect('/recuperar_producto')
+    return redirect('/recuperar_categoria')
 
 #Eliminar Marca
 @login_required(login_url='signin')
@@ -821,7 +825,8 @@ def eliminar_marca(request, marca_id):
     Productos.objects.filter(id_marca=marca).update(id_marca=None)
     marca.delete()
     messages.success(request, '¡Marca Eliminada!')
-    return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
+    """ return redirect('/recuperar_producto') """ # O redirige a donde desees después de la eliminación
+    return redirect('/recuperar_marca')  #nueva idea, ¿confirmación? del caso contrario solo elimine
 #____________________________________________________________________________________________________________________________________
 
 #----------------------------------------------------- C O M E N T A R I O S ------------------------------------------------------->
@@ -906,6 +911,35 @@ def recuperar_producto(request):
     proveedores = Proveedores.objects.all()
     MarcaListados = Marca.objects.all() 
     return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,"Marca":MarcaListados})
+
+
+#nueva idea, ¿confirmación? del caso contrario solo elimine
+def recuperar_marca(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    proveedores = Proveedores.objects.all()
+    MarcaListados = Marca.objects.all() 
+    return render(request, 'StockMaster_app/recuperar_marca.html', { "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"Marca":MarcaListados})
+
+def recuperar_proveedor(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    proveedores = Proveedores.objects.all()
+    MarcaListados = Marca.objects.all() 
+    return render(request, 'StockMaster_app/recuperar_proveedor.html', { "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores})
+
+def recuperar_categoria(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    proveedores = Proveedores.objects.all()
+    MarcaListados = Marca.objects.all() 
+    return render(request, 'StockMaster_app/recuperar_categoria.html', { "Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
 
 
 #____________________________________________________________________________________________________________________________________

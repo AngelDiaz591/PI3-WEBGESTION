@@ -52,41 +52,41 @@
                 </div>
             {% endfor %}
         </div>
-        <h2>Productos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Categoria</th>
-                    <th>Elimino Usuario</th>
-                    <th>Fecha</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Productos %}
+        <div>
+            <h2>Marca</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Marca</th>
+                        <th>Elimino Usuario</th>
+                        <th>Fecha</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in Marca %}
                     {% if c.status %}
                     {% else %}
                         <tr>
-                            <td>{{ c.codigo }} </td>
-                            <td>{{ c.nombre }}</td>
-                            <td>{{ c.marca}}</td>
-                            <td>{{ c.id_categorias.nombre }}</td>
+                            <td>{{ c.nombre }} </td>
                             <td>{{ c.username }}</td>
-                            <td>{{ c.hora_baja }}</td>
-                            <td class="edita"><a href="statusre/{{c.idproducts}}" class="btn btn-info">
-                                <span class="material-symbols-outlined">restart_alt</span>
-                            </a></td>
-                            <td class="elimina"><a href="recuperar_producto/eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
+                            <td>{{ c.fech_cate}}</td>
+                            <td class="edita">
+                                <a href="cambio_statusremar/{{ c.marca_id }}" class="btn btn-info">                                 
+                                    <span class="material-symbols-outlined">restart_alt</span>
+                                </a>
+                            </td>
+                            <td class="elimina">
+                                <a href="eliminar-marca/{{ c.marca_id }}" class="btn btn-danger btnEliminacion">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a>
+                            </td>
                         </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+                        {% endif %}
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 

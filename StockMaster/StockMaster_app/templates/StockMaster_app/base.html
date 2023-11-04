@@ -31,7 +31,7 @@
                     <span class="material-symbols-outlined">close</span>
                 </div>
             </div>
-            <div class="sidebar">
+            <!-- <div class="sidebar">
                 <a href="{% url 'actividades' %}" class="main-menu-link active">
                     <span class="material-symbols-outlined">grid_view</span>
                     <h3>Principal</h3>
@@ -180,6 +180,161 @@
                     <h3>Cerrar Sesion</h3>
                 </a>
                 {% endif %}
+            </div> -->
+
+
+
+
+
+
+            <div class="sidebar">
+                <a href="{% url 'actividades' %}" class="main-menu-link active">
+                    <span class="material-symbols-outlined">grid_view</span>
+                    <h3>Se elimina</h3>
+                </a>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_superuser %}
+                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_administracion" data-submenu-state="closed">
+                            <span class="material-symbols-outlined">supervisor_account</span>
+                            <h3>Administración</h3>
+                            <i class="submenu-icon fas fa-chevron-right"></i>
+                        </a>
+                        <div class="submenu-container active">
+                            <div class="submenu">
+                                <div style="margin-left: 1rem;">
+                                    <a href="{% url 'configuraciones77' %}" class="active">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        <h3>Etiquetas</h3>
+                                    </a>
+                                    <a href="{% url 'inventario' %}" class="active">
+                                        <span class="material-symbols-outlined">receipt_long</span>
+                                        <h3>Inventario</h3>
+                                    </a>
+                                    <a href="{% url 'productos' %}" class="active">
+                                        <span class="material-symbols-outlined">inventory</span>
+                                        <h3>Productos</h3>
+                                    </a>
+                                    <a href="{% url 'prov' %}" class="active">
+                                        <span class="material-symbols-outlined">local_shipping</span>
+                                        <h3>Proveedores</h3>
+                                    </a>                                 
+                                </div>
+                            </div>
+                        </div>
+
+                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_recuperacion" data-submenu-state="closed">
+                            <span class="material-symbols-outlined">restart_alt</span>
+                            <h3>Recuperacion</h3>
+                            <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
+                        </a>
+                        <div class="submenu-container active">
+                            <div class="submenu">
+                                <div style="margin-left: 1rem;">
+                                    <a href="{% url 'recuperar_producto' %}" class="active">
+                                        <span class="material-symbols-outlined">inventory</span>
+                                        <h3>Productos</h3>
+                                    </a>
+                                    <a href="{% url 'recuperar_categoria' %}" class="active">
+                                        <span class="material-symbols-outlined">local_shipping</span>
+                                        <h3>Categorias</h3>
+                                    </a>
+                                    <a href="{% url 'recuperar_proveedor' %}" class="active">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        <h3>Proveedores</h3>
+                                    </a>
+                                    <a href="{% url 'recuperar_marca' %}" class="active">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        <h3>Marcas</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'usuarios' %}" class="main-menu-link active">
+                        <span class="material-symbols-outlined">person</span>
+                        <h3>Usuarios</h3>
+                    </a>
+                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_soporte" data-submenu-state="closed">
+                        <span class="material-symbols-outlined">supervisor_account</span>
+                        <h3>Soporte</h3>
+                        <i class="submenu-icon fas fa-chevron-right"></i>
+                    </a>
+                    <div class="submenu-container active">
+                        <div class="submenu">
+                            <div style="margin-left: 1rem;">
+                                <a href="{% url 'soporte' %}" class="active">
+                                    <span class="material-symbols-outlined">receipt_long</span>
+                                    <h3>Mensajes</h3>
+                                    <span class="message-count">
+                                        {% if cantidad_mensajes > 0 %}
+                                            {{ cantidad_mensajes }}
+                                        {% else %}
+                                        0
+                                        {% endif %}
+                                    </span>
+                                </a>
+                                <a href="#" class="active">
+                                    <span class="material-symbols-outlined">settings</span>
+                                    <h3>Notificaciones</h3>
+                                </a>
+                                                                
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endif %}
+                <!-- <a href="{% url 'soporte' %}" class="main-menu-link active">
+                    <span class="material-symbols-outlined">report_gmailerrorred</span>
+                    <h3>Soporte</h3>
+                    <span class="message-count">
+                        {% if cantidad_mensajes > 0 %}
+                            {{ cantidad_mensajes }}
+                        {% else %}
+                        0
+                        {% endif %}
+                    </span>
+                </a> -->
+
+                {% if request.user.is_authenticated %}
+                <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_historial" data-submenu-state="closed">
+                    <span class="material-symbols-outlined">history</span>
+                    <h3>Historial</h3>
+                    <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
+                </a>
+                <div class="submenu-container active">
+                    <div class="submenu">
+                        <div style="margin-left: 1rem;">
+                            <a href="{% url 'historial' %}" class="active">
+                                <span class="material-symbols-outlined">inventory</span>
+                                <h3>General</h3>
+                            </a>
+                            <a href="#" class="active">
+                                <span class="material-symbols-outlined">inventory</span>
+                                <h3>Eliminación</h3>
+                            </a>
+                            <a href="#" class="active">
+                                <span class="material-symbols-outlined">local_shipping</span>
+                                <h3>Edición</h3>
+                            </a>
+                            <a href="#" class="active">
+                                <span class="material-symbols-outlined">settings</span>
+                                <h3>Recuperación</h3>
+                            </a>
+                            <a href="#" class="active">
+                                <span class="material-symbols-outlined">local_shipping</span>
+                                <h3>Registro</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'exit' %}" class="main-menu-link active">
+                    <span class="material-symbols-outlined">logout</span>
+                    <h3>Cerrar Sesion</h3>
+                </a>
+                {% endif %}
             </div>
         </aside>
         <!--Fin Menú-->
@@ -190,85 +345,6 @@
         <!--Fin del contenido-->
 
     </div>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const submenuTriggers = document.querySelectorAll('.submenu-trigger');
-        const mainMenuLinks = document.querySelectorAll('.main-menu-link');
-
-        // Recuperar el estado de los submenús al cargar la página
-        submenuTriggers.forEach(trigger => {
-            const submenuContainer = trigger.nextElementSibling;
-            const storedState = sessionStorage.getItem(`submenuState_${trigger.dataset.submenuId}`);
-
-            if (storedState === 'open') {
-                openSubmenu(submenuContainer);
-            } else {
-                closeSubmenu(submenuContainer);
-            }
-
-            trigger.addEventListener('click', function(event) {
-                event.preventDefault();
-                const submenuContainer = this.nextElementSibling;
-                toggleSubmenu(submenuContainer);
-            });
-        });
-
-        mainMenuLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                const submenuContainer = link.nextElementSibling;
-                if (submenuContainer && submenuContainer.classList.contains('submenu-container')) {
-                    closeSubmenu(submenuContainer);
-                }
-            });
-        });
-
-        function toggleSubmenu(submenuContainer) {
-            if (submenuContainer.style.display === 'block' || getComputedStyle(submenuContainer).display === 'block') {
-                closeSubmenu(submenuContainer);
-            } else {
-                openSubmenu(submenuContainer);
-                closeOtherSubmenus(submenuContainer);
-                storeSubmenuState(submenuContainer);
-            }
-        }
-
-        function openSubmenu(submenuContainer) {
-            submenuContainer.style.display = 'block';
-            const trigger = submenuContainer.previousElementSibling;
-            sessionStorage.setItem(`submenuState_${trigger.dataset.submenuId}`, 'open');
-        }
-
-        function closeSubmenu(submenuContainer) {
-            submenuContainer.style.display = 'none';
-            const trigger = submenuContainer.previousElementSibling;
-            sessionStorage.setItem(`submenuState_${trigger.dataset.submenuId}`, 'closed');
-        }
-
-        function closeOtherSubmenus(currentSubmenuContainer) {
-            const allSubmenuContainers = document.querySelectorAll('.submenu-container');
-            allSubmenuContainers.forEach(submenuContainer => {
-                if (submenuContainer !== currentSubmenuContainer) {
-                    closeSubmenu(submenuContainer);
-                }
-            });
-        }
-
-        function storeSubmenuState(submenuContainer) {
-            const trigger = submenuContainer.previousElementSibling;
-            sessionStorage.setItem(`submenuState_${trigger.dataset.submenuId}`, 'open');
-        }
-    });
-
-    window.addEventListener('beforeunload', function(event) {
-        // Borrar el estado de los submenús al recargar la página
-        submenuTriggers.forEach(trigger => {
-            const submenuContainer = trigger.nextElementSibling;
-            storeSubmenuState(submenuContainer);
-        });
-    });
-</script>
 
 <script>
     $(document).ready(function(){
@@ -290,6 +366,7 @@
     <script src="{% static 'js/inventario.js' %}"></script>
     <script src="{% static 'js/modalEditar.js' %}"></script>
     <script src="{% static 'js/todoModal.js' %}"></script>
+    <script src="{% static 'js/submenu.js'%}"></script>
     <script src="{% static 'usuarios/js/aviso.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--Fin Scripts-->

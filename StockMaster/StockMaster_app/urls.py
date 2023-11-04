@@ -84,5 +84,10 @@ urlpatterns = [
     path('soporte/', views.soporte, name='soporte'),
     path('inventario/', views.example_view, name='inventario'),
     path('comentario/',views.comentario),
-    path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
+    path('recuperar_producto/', views.recuperar_producto, name='recuperar_producto'),
+
+    #nueva idea, ¿confirmación? del caso contrario solo elimine
+    path('recuperar_marca/', views.recuperar_marca, name='recuperar_marca'),
+    path('recuperar_proveedor/', views.recuperar_proveedor, name='recuperar_proveedor'),
+    path('recuperar_categoria/', views.recuperar_categoria, name='recuperar_categoria'), 
     ]

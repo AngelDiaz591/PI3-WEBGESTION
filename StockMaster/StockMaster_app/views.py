@@ -91,7 +91,7 @@ def signup(request):
             user = authenticate(username=username, password=password)
             
             subject = 'Bienvenido a nuestra aplicación'
-            from_email = 'gael.jorgito.valencia22@gmail.com'
+            from_email = 'stockmaster404@gmail.com'
             recipient_list = [email]
 
             accept_link = 'http://127.0.0.1:8000/signin/?next=/actividades/'

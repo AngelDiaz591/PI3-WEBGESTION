@@ -917,30 +917,55 @@ def recuperar_producto(request):
 def recuperar_marca(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    proveedores = Proveedores.objects.all()
     MarcaListados = Marca.objects.all() 
     return render(request, 'StockMaster_app/recuperar_marca.html', { "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"Marca":MarcaListados})
 
 def recuperar_proveedor(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
     proveedores = Proveedores.objects.all()
-    MarcaListados = Marca.objects.all() 
     return render(request, 'StockMaster_app/recuperar_proveedor.html', { "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores})
 
 def recuperar_categoria(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
-    proveedores = Proveedores.objects.all()
-    MarcaListados = Marca.objects.all() 
     return render(request, 'StockMaster_app/recuperar_categoria.html', { "Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
 
+
+#nueva idea pt2, ¿confirmación? del caso contrario solo elimine
+def historial_eliminacion(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    historial = Historial.objects.all()
+    return render(request, 'StockMaster_app/historial_eliminacion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+
+def historial_edicion(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    historial = Historial.objects.all()
+    return render(request, 'StockMaster_app/historia_edicion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+def historial_recuperacion(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    historial = Historial.objects.all()
+    return render(request, 'StockMaster_app/historial_recuperacion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+def historial_registro(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    historial = Historial.objects.all()
+    return render(request, 'StockMaster_app/historial_registro.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
 
 #____________________________________________________________________________________________________________________________________
 

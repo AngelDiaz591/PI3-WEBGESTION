@@ -949,7 +949,7 @@ def historial_edicion(request):
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
     historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historia_edicion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+    return render(request, 'StockMaster_app/historial_edicion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
 
 def historial_recuperacion(request):
     mensajes = Mensajes.objects.all()

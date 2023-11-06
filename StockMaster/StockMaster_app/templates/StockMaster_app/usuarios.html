@@ -56,171 +56,200 @@
                 </table>
             </div>
         </div>
-            <!--Ventana Modal-->
-            <div>
-                <input type="checkbox" id="btn-modal">
-                <div class="container-modal">
-                    <div class="content-modal">
-                        <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
-                        <h2 class="titulo-modal">Agregar Nuevo Usuario</h2>
+        <!--Ventana Modal-->
+        <div>
+            <input type="checkbox" id="btn-modal">
+            <div class="container-modal">
+                <div class="content-modal-usuarios">
+                    <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
+                    <h2 class="titulo-modal">Agregar Nuevo Usuario</h2>
 
-                        <form action="/signup/" method="POST" enctype="multipart/form-data" id="registrationForm">{% csrf_token %}
-                            {% csrf_token %}
-                            {% if messages %}
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
-                                {% endfor %}
-                            {% endif %}
-                            {% endif %}
-                            <!--Inicio de la tabla de columnas-->
-                            <div class="form-columns">
-                                <!--Primer columna-->
-                                <div class="form-column">
-                                    <div class="divisor">
-                                        <div class="titulo">Nombre(s):</div>
-                                        <input type="text" id="first_name" name="first_name" placeholder="Enter your name" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Apellido(s):</div>
-                                        <input type="text" id="last_name" name="last_name" placeholder="Enter your last_name" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Correo:</div>
-                                        <input type="email" id="email" name="email" placeholder="Enter your email" class="campos" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Nombre de Usuario:</div>
-                                        <input type="text" id="username" name="username" placeholder="Enter your username" class="campos" required>
-                                    </div>
-                                </div>
-                                <!--Termino de primer columna-->
+                    <form action="/signup/" method="POST" enctype="multipart/form-data" id="registrationForm">{% csrf_token %}
+                        {% csrf_token %}
+                        {% if messages %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% endif %}
+                        <!--Inicio de la tabla de columnas-->
+                        <div class="form-columns" style="justify-content: center;">
+                            <!-- ddd -->
+                            <div class="form-column" style="margin-top: 5%; align-items: center; justify-content: center;">
+                                <div class="divisor">
+                                    <div class="titulo">Imagen:</div>
+                                    <!-- <div class="contenedor-imagen"> -->
+                                        <img id="vistaPrevia" alt=""/>
+                                    <!-- </div> -->
+                                        <input type="file" id="imagen" name="imagen" accept="image/*" placeholder="Imagen" 
+                                        class="campos" onchange="previsualizarImagen()" required>     
+                                    <script>
+                                        function previsualizarImagen() {
+                                            var cargador = document.getElementById('imagen');
+                                            var vistaPrevia = document.getElementById('vistaPrevia');
+                                            
+                                            var archivo = cargador.files[0];
+                                            if (archivo) {
+                                                var lector = new FileReader();
 
-                                <!--Segunda columna-->
-                                <div class="form-column">
-                                    <div class="divisor">
-                                        <div class="titulo">Contraseña:</div>
-                                        <input type="password" id="id_password1" name="password1" placeholder="Enter your password" class="campos" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Confirmar Contraseña:</div>
-                                        <input type="password" id="id_password2" name="password2" placeholder="confirm your password" class="campos" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Rol:</div>
-                                        <select name="is_superuser" id="is_superuser" class="campos-seleccion" required>
-                                            <option value="" disabled selected>Selecciona un rol</option>
-                                            <option value="1">Administrador</option>
-                                            <option value="0">Empleado</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--Termino de segunda columna-->
+                                                lector.onload = function(e) {
+                                                    vistaPrevia.src = e.target.result;
+                                                }
 
-                                <!--Tercera columna-->
-                                <div class="form-column">
-                                    <h4>Datos adicionales</h4>
-                                    <div class="divisor">
-                                        <div class="titulo">Calle:</div>
-                                        <input type="text" id="calle" name="calle" placeholder="Nombre de Calle" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Colonia:</div>
-                                        <input type="text" id="colonia" name="colonia" placeholder="Nombre de Colonia" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Num_Exterior:</div>
-                                        <input type="number" id="num_ext" name="num_ext" placeholder="Numero Exterior" class="campos" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Num_Interior:</div>
-                                        <input type="number" id="num_int" name="num_int" placeholder="Opcional" class="campos" >
-                                    </div>
+                                                lector.readAsDataURL(archivo);
+                                            }
+                                        }
+                                    </script>
                                 </div>
-                                <!--Termino de Tercera columna-->
-
-                                <!--Cuarta columna-->
-                                <div class="form-column">
-                                    <div class="divisor">
-                                        <div class="titulo">Codigo Postal:</div>
-                                        <input type="number" id="cp" name="cp" placeholder="Codigo Postal" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Municipio:</div>
-                                        <input type="text" id="col_mun" name="col_mun" placeholder="Municipio" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Pais:</div>
-                                        <input type="text" id="pais" name="pais" placeholder="pais" class="campos" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Numero Telefonico:</div>
-                                        <input type="number" id="num_tel" name="num_tel" placeholder="Numero Telefonico" class="campos" >
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Numero Celular:</div>
-                                        <input type="text" id="mun_cel" name="mun_cel" placeholder="Numero Celular" class="campos" required>
-                                    </div>
-                                </div>
-                                <!--Termino de Cuarta Columna columna-->
-
-                                <!--Quinta columna-->
-                                <div class="form-column">
-                                    <div class="divisor">
-                                        <div class="titulo">Curp:</div>
-                                        <input type="text" id="curp" name="curp" placeholder="Curp" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Tipo de Sangre</div>
-                                        <input type="text" id="t_sangre" name="t_sangre" placeholder="Tipo de Sangre" 
-                                        class="campos" oninput="convertToUppercase()" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">RFC:</div>
-                                        <input type="text" id="rfc" name="rfc" placeholder="RFC" class="campos" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Numero de Seguro Social:</div>
-                                        <input type="number" id="n_seg_social" name="n_seg_social" placeholder="Numero de Seguro Social" class="campos" required>
-                                    </div>
-                                    <div class="divisor">
-                                        <div class="titulo">Imagen:</div>
-                                        <input type="file" id="imagen" name="imagen" placeholder="Imagen" class="campos" required>
-                                    </div>
-                                </div>
-                                <!--Termino de Quinta Columna columna-->
                             </div>
-                            <!--Fin de la tabla columnnas-->
-                                <div class="btn-cerrar">
-                                    <button type="submit">Guardar</button>
-                                    <label for="btn-modal">Cancelar</label>
-                                </div>
-                            <!--Fin datos-->
-                        </form>
-                        <script>
-                            // Obtén todos los elementos con la clase "close-btn"
-                            var closeBtns = document.querySelectorAll('.close-btnn');
 
-                            // Agrega un evento de clic a cada elemento
-                            closeBtns.forEach(function (closeBtn) {
-                                closeBtn.addEventListener('click', function () {
-                                    // Oculta el elemento al hacer clic
-                                    closeBtn.style.display = 'none';
-                                });
+                            <!--Primer columna-->
+                            <div class="form-column">
+                                <div class="divisor">
+                                    <div class="titulo">Nombre(s):</div>
+                                    <input type="text" id="first_name" name="first_name" placeholder="Enter your name" 
+                                    class="campos" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Apellido(s):</div>
+                                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last_name" 
+                                    class="campos" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Correo:</div>
+                                    <input type="email" id="email" name="email" placeholder="Enter your email" class="campos" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Nombre de Usuario:</div>
+                                    <input type="text" id="username" name="username" placeholder="Enter your username" class="campos" required>
+                                </div>
+                            </div>
+                            <!--Termino de primer columna-->
+
+                            <!--Segunda columna-->
+                            <div class="form-column">
+                                <div class="divisor">
+                                    <div class="titulo">Contraseña:</div>
+                                    <input type="password" id="id_password1" name="password1" placeholder="Enter your password" class="campos" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Confirmar Contraseña:</div>
+                                    <input type="password" id="id_password2" name="password2" placeholder="confirm your password" class="campos" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Rol:</div>
+                                    <select name="is_superuser" id="is_superuser" class="campos-seleccion" required>
+                                        <option value="" disabled selected>Selecciona un rol</option>
+                                        <option value="1">Administrador</option>
+                                        <option value="0">Empleado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--Termino de segunda columna-->
+
+                            <!--Tercera columna-->
+                            <div class="form-column">
+                                <div class="divisor">
+                                    <div class="titulo">Calle:</div>
+                                    <input type="text" id="calle" name="calle" placeholder="Calle" 
+                                    class="campos" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Colonia:</div>
+                                    <input type="text" id="colonia" name="colonia" placeholder="Colonia" 
+                                    class="campos" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Num_Exterior:</div>
+                                    <input type="number" id="num_ext" name="num_ext" placeholder="Numero Exterior" class="campos" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Num_Interior:</div>
+                                    <input type="number" id="num_int" name="num_int" placeholder="Opcional" class="campos" >
+                                </div>
+                            </div>
+                            <!--Termino de Tercera columna-->
+
+                            <!--Cuarta columna-->
+                            <div class="form-column">
+                                <h4>Datos adicionales</h4>
+                                <div class="divisor">
+                                    <div class="titulo">Codigo Postal:</div>
+                                    <input type="number" id="cp" name="cp" placeholder="Codigo Postal" 
+                                    class="campos" pattern="[0-9]{5}" maxlength="10" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Municipio:</div>
+                                    <input type="text" id="col_mun" name="col_mun" placeholder="Municipio" 
+                                    class="campos" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Pais:</div>
+                                    <input type="text" id="pais" name="pais" placeholder="Pais" class="campos" 
+                                    oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Numero Telefonico:</div>
+                                    <input type="number" id="num_tel" name="num_tel" placeholder="Numero Telefonico" class="campos">
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Numero Celular:</div>
+                                    <input type="number" id="mun_cel" name="mun_cel" placeholder="Numero Celular" class="campos" 
+                                    maxlength="9" required>
+                                </div>
+                            </div>
+                            <!--Termino de Cuarta Columna columna-->
+
+                            <!--Quinta columna-->
+                            <div class="form-column">
+                                <div class="divisor">
+                                    <div class="titulo">Curp:</div>
+                                    <input type="text" id="curp" name="curp" placeholder="CURP" pattern="[A-Za-z0-9]{18}" 
+                                    maxlength="18" class="campos" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Tipo de Sangre</div>
+                                    <input type="text" id="t_sangre" name="t_sangre" placeholder="Tipo de Sangre" 
+                                    class="campos" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">RFC:</div>
+                                    <input type="text" id="rfc" name="rfc" placeholder="RFC" class="campos" pattern="[A-Za-z0-9]{13}" 
+                                    maxlength="13" oninput="convertToUppercase()" required>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Numero de Seguro Social:</div>
+                                    <input type="number" id="n_seg_social" name="n_seg_social" placeholder="NSS" class="campos" 
+                                    maxlength="11" oninput="convertToUppercase()" required>
+                                </div>
+                            </div>
+                            <!--Termino de Quinta Columna columna-->
+                        </div>
+                        <!--Fin de la tabla columnnas-->
+                            <div class="btn-cerrar">
+                                <button type="submit">Guardar</button>
+                                <label for="btn-modal">Cancelar</label>
+                            </div>
+                        <!--Fin datos-->
+                    </form>
+                    <script>
+                        // Obtén todos los elementos con la clase "close-btn"
+                        var closeBtns = document.querySelectorAll('.close-btnn');
+
+                        // Agrega un evento de clic a cada elemento
+                        closeBtns.forEach(function (closeBtn) {
+                            closeBtn.addEventListener('click', function () {
+                                // Oculta el elemento al hacer clic
+                                closeBtn.style.display = 'none';
                             });
-                        </script>
-                    <label for="btn-modal" class="cerrar-modal"></label>
-                    </div>
+                        });
+                    </script>
+                <label for="btn-modal" class="cerrar-modal"></label>
                 </div>
             </div>
-            <!--Fin de Ventana Modal-->
+        </div>
+        <!--Fin de Ventana Modal-->
     </main>
     <div class="right" >
         <div class="top">
@@ -320,8 +349,6 @@
                     <a href="{% url 'soporte' %}">Mostrar Todas</a>
                 </div>
             </div>
-
-            
             <script>
                 // Obtén todos los elementos con la clase "close-btn"
                 var closeBtns = document.querySelectorAll('.close-btnn');

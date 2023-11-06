@@ -80,6 +80,19 @@ class Productos(models.Model):
         texto = "{0} ({1})"
         return texto.format(self.nombre, self.precio)
     
+class Roles(models.Model):
+    idRoles = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=255)
+    inventario = models.PositiveBigIntegerField(max_length=2)
+    
+    movi = models.CharField(max_length=100, null= True)
+    username = models.CharField(max_length=100, null=True)
+    fech_cate= models.DateTimeField(default=timezone.now, null= True)
+    status= models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
+    def __str__(self):
+        return self.nombre
+
 class Mensajes(models.Model):
     idcomentario = models.AutoField(primary_key=True)
     comentario = models.CharField(max_length=255)

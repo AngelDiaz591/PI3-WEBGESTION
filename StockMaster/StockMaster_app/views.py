@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib import messages as men
 from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
-from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca, Usuario
+from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca, Usuario, Roles
 from django.http.response import JsonResponse
 import base64
 from django.http import HttpResponseRedirect
@@ -45,6 +45,66 @@ def is_superuser(user):
 def get_imagen_url(imagen_binaria):
     imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
     return f"data:image/jpeg;base64,{imagen_base64}"
+    
+def signin(request):
+    if request.user.is_authenticated:
+        return redirect('/actividades')
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('actividades')
+        else:
+            form = AuthenticationForm(request.POST)
+            if not User.objects.filter(username=username).exists():
+                # Agrega un mensaje de error con la etiqueta 'signin'
+                messages.error(request, 'Usuario no Registrado', extra_tags='signin')
+            else:
+                messages.error(request, 'Contraseña Incorrecta', extra_tags='signin')
+        return render(request, 'registration/login.html', {'form': form})
+
+    else:
+        form = AuthenticationForm()
+        return render(request, 'registration/login.html', {'form': form})
+    
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('/actividades')
+    return render(request, 'registration/login.html')
+
+@login_required(login_url='signin')
+def exit(request):
+    logout(request)
+    return redirect('home')
+@login_required(login_url='signin')
+
+def exit(request):
+    logout(request)
+    return redirect('/actividades')
+
+#____________________________________________________________________________________________________________________________________
+
+#--------------------------------------------------------- U S U A R I O S --------------------------------------------------------->
+#____________________________________________________________________________________________________________________________________
+
+@login_required(login_url='signin')
+def usuarios(request):
+    if request.user.is_superuser:
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes =mensajes.count()
+        usuario = Usuario.objects.all()
+        roles = Roles.objects.all()
+        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
+        for Usuarios in usuario:
+            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/usuarios.html', { 'Roles':roles, 'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario})
+    else:
+        return redirect('/actividades')
+
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
@@ -122,64 +182,7 @@ def signup(request):
         form = CustomUserCreationForm()
 
     return render(request, 'StockMaster_app/usuarios.html', {'form': form})
-    
-def signin(request):
-    if request.user.is_authenticated:
-        return redirect('/actividades')
 
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('actividades')
-        else:
-            form = AuthenticationForm(request.POST)
-            if not User.objects.filter(username=username).exists():
-                # Agrega un mensaje de error con la etiqueta 'signin'
-                messages.error(request, 'Usuario no Registrado', extra_tags='signin')
-            else:
-                messages.error(request, 'Contraseña Incorrecta', extra_tags='signin')
-        return render(request, 'registration/login.html', {'form': form})
-
-    else:
-        form = AuthenticationForm()
-        return render(request, 'registration/login.html', {'form': form})
-    
-def home(request):
-    if request.user.is_authenticated:
-        return redirect('/actividades')
-    return render(request, 'registration/login.html')
-
-@login_required(login_url='signin')
-def exit(request):
-    logout(request)
-    return redirect('home')
-@login_required(login_url='signin')
-def exit(request):
-    logout(request)
-    return redirect('/actividades')
-
-#____________________________________________________________________________________________________________________________________
-
-#--------------------------------------------------------- U S U A R I O S --------------------------------------------------------->
-#____________________________________________________________________________________________________________________________________
-
-@login_required(login_url='signin')
-def usuarios(request):
-    if request.user.is_superuser:
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
-        usuario = Usuario.objects.all()
-        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
-        for Usuarios in usuario:
-            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario})
-    else:
-        return redirect('/actividades')
-    
 @login_required(login_url='signin')
 def cambio_password(request):
     if request.method == 'POST':
@@ -220,7 +223,7 @@ def pro(request):
         MarcaListados = Marca.objects.all() 
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
         return redirect('/actividades')
     
@@ -228,6 +231,7 @@ def get_imagen_url(imagen_binaria):
     imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
     return f"data:image/jpeg;base64,{imagen_base64}"
 #Registrar Poducto
+
 @login_required(login_url='signin')
 def registrarProducto(request):
     codigo = request.POST['txtCodigo']
@@ -277,7 +281,7 @@ def editarProductoMod(request):
         except ObjectDoesNotExist:
             messages.error(request, 'El producto no se encontró o no existe.')
             return redirect('/productos/')  # Puedes redirigir a donde desees
-        if Productos.objects.filter(nombre=nombre, codigo=codigo, precio=precio, cantPro=cantPro, id_categorias_id=categoria_id, id_Proveedores_id=idProveedor, id_marca_id=marca_id).exists():
+        if Productos.objects.filter(nombre=nombre, codigo=codigo, precio=precio, cantPro=cantPro, id_categorias_id=categoria_id, id_Proveedores_id=idProveedor, id_marca_id=marca_id, imagen=nueva_imagen.read()).exists():
             messages.error(request, '¡Este Producto no recibio cambios!')
             return redirect('/productos/')
         else:
@@ -538,7 +542,7 @@ def cambio_statusrepro(request,idProveedor):
         historial.save()
         proveedor.save()
     messages.success(request, '¡Proveedor Recuperado¡')
-    return redirect('/recuperar_producto')
+    return redirect('/recuperar_proveedor')
 
 #Eliminar Proveedor
 @login_required(login_url='signin')
@@ -567,7 +571,7 @@ def eliminaProveedor(request, idProveedor):
     Productos.objects.filter(id_Proveedores=proveedor).update(id_Proveedores=None)
     proveedor.delete()
     messages.success(request, '¡Proveedor Eliminado!')
-    return redirect('/recuperar_producto')
+    return redirect('/recuperar_proveedor')
 
 #____________________________________________________________________________________________________________________________________
 
@@ -604,7 +608,7 @@ def registrar_categoria(request):
         messages.success(request, '¡Categoría registrada con éxito!')
 
     # Redireccionar a la página de categorías después del registro
-    return redirect('configuraciones77')
+    return redirect('etiquetas')
 
 #Editar Categoria
 @login_required(login_url='signin')
@@ -687,7 +691,7 @@ def status_categoria(request,categoria_id):
         historial.save()
         categoria.save()
         messages.success(request, '¡Categoría Eliminada!')
-    return redirect('configuraciones77')
+    return redirect('/recuperar_etiquetas')
 
 @login_required(login_url='signin')
 def eliminar_categoria(request, categoria_id):
@@ -699,7 +703,7 @@ def eliminar_categoria(request, categoria_id):
     Productos.objects.filter(id_categorias=categoria).update(id_categorias=None)
     categoria.delete()
     messages.success(request, '¡Categoría Eliminada!')
-    return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
+    return redirect('/recuperar_etiquetas')  # O redirige a donde desees después de la eliminación
 
 #____________________________________________________________________________________________________________________________________
 
@@ -792,7 +796,7 @@ def cambio_statusremar(request,marca_id):
         historial.save()
         marca.save()
     messages.success(request, '¡Marca Recuperada¡')
-    return redirect('/recuperar_producto')
+    return redirect('/recuperar_etiquetas')
 
 #Eliminar Marca
 @login_required(login_url='signin')
@@ -821,7 +825,131 @@ def eliminar_marca(request, marca_id):
     Productos.objects.filter(id_marca=marca).update(id_marca=None)
     marca.delete()
     messages.success(request, '¡Marca Eliminada!')
+    return redirect('/recuperar_etiquetas')  # O redirige a donde desees después de la eliminación
+
+#____________________________________________________________________________________________________________________________________
+
+#----------------------------------------------------------------- R O L E S ------------------------------------------------------->
+#____________________________________________________________________________________________________________________________________
+
+#Visualizar Rol
+@login_required(login_url='signin')
+def RolView(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes = mensajes.count()
+    RolListado = Roles.objects.all()
+    return render(request, 'StockMaster_app/roles.html', {"Roles": RolListado,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes})
+
+#Registrar Rol
+@login_required(login_url='signin')
+def registrar_rol(request):
+    nombre = request.POST['RolNew']
+    inventario = request.POST['inventario']
+    if Roles.objects.filter(nombre=nombre).exists():
+        messages.error(request, 'El Rol ya está registrado.')
+    else:
+        rol = Roles(nombre=nombre, inventario=inventario, username=request.user.username, fech_cate=timezone.now(), movi='Creación de Rol')
+        historial = Historial(movimiento='Rol Agregado', usuario=request.user.username, fecha=timezone.now(), nombre=rol.nombre)
+        historial.save()
+        rol.save()
+        messages.success(request, '¡Rol registrado con éxito!')
+    return HttpResponseRedirect('/rol/')  # Redirige a la URL deseada después de procesar el formulario
+
+#Editar Rol
+@login_required(login_url='signin')
+def editarRolMod(request):
+    try:
+        idRoles = request.POST.get('productId')
+        nombre = request.POST.get('nombre')
+        inventario = request.POST.get('inventario')
+        try:
+            rol = Roles.objects.get(idRoles= idRoles)
+        except ObjectDoesNotExist:
+            messages.error(request, 'El Rol no se encontró o no existe.')
+            return redirect('/rol/')  # Puedes redirigir a donde desees
+        if Roles.objects.filter(nombre=nombre, inventario=inventario).exists():
+            messages.error(request, '¡Este Rol no recibio cambios!')
+            return redirect('/rol/') 
+        else:
+            rol.nombre = nombre
+            rol.inventario = inventario
+
+            rol.username = request.user.username
+            rol.movi = 'Edicion de Marca'
+            rol.fech_cate = timezone.now()
+            if rol.status_mov !=1:
+                rol.status_mov = 1 
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Edicion de Rol',usuario=request.user.username,fecha=timezone.now(),nombre=rol.nombre)
+            historial.save()
+            rol.save()
+
+            messages.success(request, '¡Marca  Editada!')
+            return redirect('/rol/') 
+    except ObjectDoesNotExist:
+        messages.error(request, 'El rol no se encontró o no existe.')
+        return redirect('/rol/')  # Puedes redirigir a donde desees
+
+@login_required(login_url='signin')
+def edicionRol2(request, idRoles):
+    rol = Roles.objects.get(idRoles= idRoles)
+    
+    data = {
+        "nombre" : rol.nombre,
+        "inventario": rol.inventario
+    }
+
+    #return JsonResponse(data)    
+    #return render(request, 'Stockmaster_app/productos.html', { idproducts : idproducts})
+    return JsonResponse(data)
+    return render(request, 'StockMaster_app/roles.html', data)
+
+#Recuperar Rol
+@login_required(login_url='signin')
+def cambio_statusrolre(request,idRoles):
+    rol = Roles.objects.get(idRoles= idRoles)
+    if rol.status != 1:
+        rol.status = 1
+        if rol.status_mov !=1:
+            rol.status_mov = 1
+        rol.fech_cate = timezone.now()
+        rol.username = request.user.username
+        rol.movi = 'Recuperacion de marca'
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Recuperacion de Rol',usuario=request.user.username,fecha=timezone.now(),nombre=rol.nombre)
+        historial.save()
+        rol.save()
+    messages.success(request, '¡Rol Recuperado¡')
+    return redirect('/recuperar_producto')
+
+#Eliminar Rol
+@login_required(login_url='signin')
+def cambio_statusrol(request,idRoles):
+    rol = Roles.objects.get(idRoles= idRoles)
+    if rol.status != 0:
+        rol.status = 0
+        if rol.status_mov !=1:
+            rol.status_mov = 1
+        rol.fech_cate = timezone.now()
+        rol.username = request.user.username
+        rol.movi = "Eliminacion de Rol"
+        historial = Historial.objects.all()
+        historial = Historial(movimiento='Eliminacion de Rol',usuario=request.user.username,fecha=timezone.now(),nombre=rol.nombre)
+        historial.save()
+        rol.save()
+    messages.success(request, '¡Rol Eliminado¡')
+    return redirect('/rol/')
+
+@login_required(login_url='signin')
+def eliminar_rol(request, idRoles):
+    rol = Roles.objects.get(idRoles=idRoles)
+    historial= Historial.objects.all()
+    historial = Historial(movimiento='¡Rol Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=rol.nombre)
+    historial.save()
+    rol.delete()
+    messages.success(request, '¡Rol Eliminado!')
     return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
+
 #____________________________________________________________________________________________________________________________________
 
 #----------------------------------------------------- C O M E N T A R I O S ------------------------------------------------------->
@@ -894,19 +1022,32 @@ def historial(request):
     cantidad_mensajes =mensajes.count()
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
+    RolListados = Roles.objects.all()
     historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+    return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
 
 @login_required(login_url='signin')
 def recuperar_producto(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes =mensajes.count()
     ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    proveedores = Proveedores.objects.all()
-    MarcaListados = Marca.objects.all() 
-    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,"Marca":MarcaListados})
+    return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
 
+@login_required(login_url='signin')
+def recuperar_proveedor(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    proveedores = Proveedores.objects.all()
+    return render(request, 'StockMaster_app/recuperar_proveedor.html', { "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,})
+
+@login_required(login_url='signin')
+def recuperar_etiquetas(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    CategoriaListados = Categoria.objects.all() 
+    RolListados = Roles.objects.all()
+    MarcaListados = Marca.objects.all() 
+    return render(request, 'StockMaster_app/recuperar_etiquetas.html', { "Categoria": CategoriaListados, "Marca":MarcaListados, "Roles": RolListados, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
 
 #____________________________________________________________________________________________________________________________________
 
@@ -920,8 +1061,9 @@ def productos(request):
     ProductosListados = Productos.objects.all()
     CategoriaListados = Categoria.objects.all()
     ProveedoresListados = Proveedores.objects.all()
+    RolListados = Roles.objects.all()
     MarcaListados = Marca.objects.all()
-    return render(request, 'StockMaster_app/actividades.html', {'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes,'marca': MarcaListados, ' Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
+    return render(request, 'StockMaster_app/actividades.html', { "Roles": RolListados, 'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes,'marca': MarcaListados, ' Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
 
 
 def editarcant(request, idproducts):

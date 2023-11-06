@@ -49,7 +49,7 @@ urlpatterns = [
     path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
 
     #paths Categorias
-    path('config/', views.configuraciones, name='configuraciones77'),
+    path('config/', views.configuraciones, name='etiquetas'),
     path('registrar_categoria/', views.registrar_categoria, name='registrar_cat'),
     path('config/edicionCategoria2/<int:categoria_id>/', views.edicionCategoria2, name='edicionCategoria2'),
     path('editarCategoria2/', views.editarCategoriaMod),
@@ -68,6 +68,16 @@ urlpatterns = [
     path('cambio_statusmar/<int:marca_id>/', views.cambio_statusmar, name='cambio_statusmar'),
     path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
 
+    #paths Roles
+    path("rol/",views.RolView, name="rol"),
+    path("registrar_rol/", views.registrar_rol, name="registrar_rol"),
+    path('rol/edicionRol2/<int:idRoles>/', views.edicionRol2, name='edicionRol2'),
+    path('editarRol2/', views.editarRolMod),
+
+    path('cambio_statusrolre/<int:idRoles>/', views.cambio_statusrolre, name="cambio_statusrolre"),
+    path('cambio_statusrol/<int:idRoles>/', views.cambio_statusrol, name='cambio_statusrol'),
+    path('eliminar_rol/<int:idRoles>/', views.eliminar_rol, name='eliminarRol'),
+
     #paths comentarios
     path('actividades/eliminarcomentarios/<int:idcomentario>/', views.eliminarcomentarios, name='eliminar_comentario'),
     path('contestarcomentarios/<int:idcomentario>/', views.contestarcomentarios, name='contestarcomentarios'),
@@ -79,10 +89,15 @@ urlpatterns = [
 
     #paths html
     path('actividades/',views.productos,name='actividades'),
-    path('usuarios/', views.usuarios, name='usuarios'),
+    path('inventario/', views.example_view, name='inventario'),
+    path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
+    path('recuperar_proveedor', views.recuperar_proveedor, name='recuperar_proveedor'),
+    path('recuperar_etiquetas', views.recuperar_etiquetas, name='recuperar_etiquetas'),
+
     path('historial/', views.historial, name='historial'),
     path('soporte/', views.soporte, name='soporte'),
-    path('inventario/', views.example_view, name='inventario'),
     path('comentario/',views.comentario),
-    path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
+    
+    path('usuarios/', views.usuarios, name='usuarios'),
+    
     ]

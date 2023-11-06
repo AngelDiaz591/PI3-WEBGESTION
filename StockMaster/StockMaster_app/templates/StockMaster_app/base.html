@@ -58,8 +58,8 @@
                                         <span class="material-symbols-outlined">local_shipping</span>
                                         <h3>Proveedores</h3>
                                     </a>
-                                    <a href="{% url 'configuraciones77' %}" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
+                                    <a href="{% url 'etiquetas' %}" class="active">
+                                        <span class="material-symbols-outlined">bookmarks</span>
                                         <h3>Etiquetas</h3>
                                     </a>
                                 </div>
@@ -77,17 +77,13 @@
                                         <span class="material-symbols-outlined">inventory</span>
                                         <h3>Productos</h3>
                                     </a>
-                                    <a href="#" class="active">
+                                    <a href="{% url 'recuperar_proveedor' %}" class="active">
                                         <span class="material-symbols-outlined">local_shipping</span>
-                                        <h3>Categorias</h3>
-                                    </a>
-                                    <a href="#" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
                                         <h3>Proveedores</h3>
                                     </a>
-                                    <a href="#" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
-                                        <h3>Marcas</h3>
+                                    <a href="{% url 'recuperar_etiquetas' %}" class="active">
+                                        <span class="material-symbols-outlined">bookmarks</span>
+                                        <h3>Etiquetas</h3>
                                     </a>
                                 </div>
                             </div>
@@ -98,38 +94,21 @@
                 {% endif %}
                 {% if request.user.is_authenticated %}
                 {% if request.user.is_superuser %}
-                    <a href="{% url 'usuarios' %}" class="main-menu-link active">
-                        <span class="material-symbols-outlined">person</span>
-                        <h3>Usuarios</h3>
-                    </a>
-
                     <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_supervision" data-submenu-state="closed">
-                        <span class="material-symbols-outlined">history</span>
-                        <h3>Supervision</h3>
+                        <span class="material-symbols-outlined">person </span>
+                        <h3>Usuarios</h3>
                         <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
                     </a>
                     <div class="submenu-container active">
                         <div class="submenu">
                             <div style="margin-left: 1rem;">
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">inventory</span>
-                                    <h3>Modificaciones</h3>
+                                <a href="{% url 'usuarios' %}" class="active">
+                                    <span class="material-symbols-outlined">person_add</span>
+                                    <h3>Agregar</h3>
                                 </a>
-                                <a href="#" class="active">
+                                <a href="{% url 'rol' %}" class="active">
                                     <span class="material-symbols-outlined">local_shipping</span>
-                                    <h3>Mensajes (duda)</h3>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">settings</span>
-                                    <h3>Categoria (duda)</h3>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">settings</span>
-                                    <h3>Proveedor (duda)</h3>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">settings</span>
-                                    <h3>Marca (duda)</h3>
+                                    <h3>Roles</h3>
                                 </a>
                             </div>
                         </div>
@@ -162,7 +141,7 @@
                             </a>
                             <a href="#" class="active">
                                 <span class="material-symbols-outlined">inventory</span>
-                                <h3>Modificaciones (creo que si)</h3>
+                                <h3>Modificaciones</h3>
                             </a>
                             <a href="#" class="active">
                                 <span class="material-symbols-outlined">local_shipping</span>
@@ -170,7 +149,7 @@
                             </a>
                             <a href="#" class="active">
                                 <span class="material-symbols-outlined">settings</span>
-                                <h3>Productos</h3>
+                                <h3>Eliminados</h3>
                             </a>
                         </div>
                     </div>

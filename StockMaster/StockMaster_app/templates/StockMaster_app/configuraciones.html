@@ -179,7 +179,7 @@
                 <div class="divisor">
                     <div class="titulo">Nombre:</div>
                     <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Categoria"
-                        maxlength="50" required oninput="convertirMayusculas()">
+                        maxlength="50" required oninput="convertToUppercase()">
                     <br><span class="error-message" style="color: red;"></span>
                 </div>
                 <div class="btn-cerrar">
@@ -207,7 +207,7 @@
                     <div class="divisor">
                         <div class="titulo">Marca:</div>
                         <input type="text" id="txtMarcaNew" name="txtMarcaNew" class="campos" placeholder="Nombre" 
-                            maxlength="20" required>
+                            maxlength="20" oninput="convertToUppercase()" required>
                         <span class="error-message" style="color: red;"></span>
                     </div>
                     <div class="btn-cerrar">

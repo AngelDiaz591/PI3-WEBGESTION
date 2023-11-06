@@ -147,12 +147,12 @@
                         <div class="form-column">
                             <div class="divisor">
                                 <div class="titulo">Código:</div>
-                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" required>
+                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" oninput="convertToUppercase()" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Nombre:</div>
-                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
+                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" oninput="convertToUppercase()" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">

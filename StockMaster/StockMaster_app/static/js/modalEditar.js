@@ -194,7 +194,17 @@ function openEditModalRol(productId) {
         success: function (data) {
             console.log(data)
             $('#EtxtNombre').val(data.nombre)
+            $('#Etxprincipal').val(data.principal)
             $('#EtxtInventario').val(data.inventario)
+            $('#Etxtproductos').val(data.productos)
+            $('#Etxtproveedores').val(data.proveedores)
+            $('#Etxtetiquetas').val(data.etiquetas)
+            $('#EtxtproductosRecuperacion').val(data.productosRecuperacion)
+            $('#EtxtproveedoresRecuperacion').val(data.proveedoresRecuperacion)
+            $('#EtxtetiquetasRecuperacion').val(data.etiquetasRecuperacion)
+            $('#Etxtusuarios').val(data.usuarios)
+            $('#Etxtroles').val(data.roles)
+            $('#Etxtsoporte').val(data.soporte)
        
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -240,6 +250,25 @@ editButtonsRol.forEach(function (button) {
         const productId = button.getAttribute('data-id');
         openEditModalRol(productId);
     });
+});
+
+// Cierra el modal de edición si se hace clic fuera del contenido del modal
+window.addEventListener("click", function(event) {
+    if (event.target === editModal) {
+        editModal.style.display = "none";
+    }
+    if (event.target === editModalProveedor) {
+        editModalProveedor.style.display = "none";
+    }
+    if (event.target === editModalCategoria) {
+        editModalCategoria.style.display = "none";
+    }
+    if (event.target === editModalMarca) {
+        editModalMarca.style.display = "none";
+    }
+    if (event.target === editModalRol) {
+        editModalRol.style.display = "none";
+    }
 });
 
 });

@@ -93,8 +93,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'gael.jorgito.valencia22@gmail.com'
-EMAIL_HOST_PASSWORD = 'xhec wduj yrbs rsdd'
+EMAIL_HOST_USER = 'stockmaster404@gmail.com'
+EMAIL_HOST_PASSWORD = 'casl gbma jihe xmrs'
 
 
 # Password validation
@@ -121,7 +121,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
+
 
 USE_I18N = True
 

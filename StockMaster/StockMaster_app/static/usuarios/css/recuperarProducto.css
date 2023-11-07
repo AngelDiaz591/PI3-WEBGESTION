@@ -869,7 +869,7 @@ select.updatess {
     border-radius: 20px;
     outline: none;
     width: 70%;
-    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
+    box-shadow: rgba(132, 139, 200, 0.18) 0px 13px 27px -5px, rgba(132, 139, 200, 0.18) 0px 8px 16px -8px;
     background-color: var(--color-white);
     color: var(--color-dark);
 }

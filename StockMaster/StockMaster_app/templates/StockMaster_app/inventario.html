@@ -39,7 +39,6 @@
         <form method="get">
             <div class="principal">
                 <div class="encabezado">
-
                     <label for="categoria" class="apartado">Categoría:</label>
                     <select name="categoria" id="categoria" class="form-control" required>
                         <option value="" disabled selected>-- Selecciona una categoría --</option>
@@ -89,7 +88,7 @@
                                         <div class="stats-container">
                                             <span class="product_price">${{ producto.precio }}</span>
                                             <span class="product_name">{{ producto.nombre }}</span>
-                                            <p><strong style="color: black;">CATEGORIA: {% if producto.id_categorias %}
+                                            <p><strong style="color: var(--color-dark);">CATEGORIA: {% if producto.id_categorias %}
                                                 {% if producto.id_categorias.status == 1 %}
                                                   {{ producto.id_categorias.nombre }}
                                                 {% elif producto.id_categorias.status == 0 %}

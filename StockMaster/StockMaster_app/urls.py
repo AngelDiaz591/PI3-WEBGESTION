@@ -35,7 +35,7 @@ urlpatterns = [
     path('editarProducto2/', views.editarProductoMod),
 
     path('productos/status/<int:idproducts>/', views.cambio_status, name='cambio_status'),
-    path('statusre/<int:idproducts>/', views.cambio_statusre, name='cambio_statusre'),
+    path('recuperar_producto/statusre/<int:idproducts>/', views.cambio_statusre, name='recuperar_producto/statusre'),
     path('recuperar_producto/eliminaInventario/<idproducts>', views.eliminaInventario),
     
     #paths Proveedores
@@ -45,7 +45,7 @@ urlpatterns = [
     path('editarProveedor2/', views.editarProveedorMod),
 
     path('prov/cambio_statuspro/<int:idProveedor>',views.cambio_statuspro, name='cambio_statuspro'),
-    path('cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='cambio_statusrepro'),
+    path('recuperar_proveedor/cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='recuperar_proveedor/cambio_statusrepro/'),
     path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
 
     #paths Categorias
@@ -64,19 +64,19 @@ urlpatterns = [
     path('config/edicionMarca2/<int:marca_id>/', views.edicionMarca2, name='edicionMarca2'),
     path('editarMarca2/', views.editarMarcaMod),
 
-    path('cambio_statusremar/<int:marca_id>/', views.cambio_statusremar, name="cambio_statusremar"),
+    path('recuperar_marca/cambio_statusremar1/<int:marca_id>/', views.cambio_statusremar, name="recuperar_marca/cambio_statusremar1"),
     path('cambio_statusmar/<int:marca_id>/', views.cambio_statusmar, name='cambio_statusmar'),
     path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
 
     #paths Roles
     path("rol/",views.RolView, name="rol"),
     path("registrar_rol/", views.registrar_rol, name="registrar_rol"),
-    path('rol/edicionRol2/<int:idRoles>/', views.edicionRol2, name='edicionRol2'),
+    path('rol/edicionRol2/<int:id>/', views.edicionRol2, name='edicionRol2'),
     path('editarRol2/', views.editarRolMod),
 
-    path('cambio_statusrolre/<int:idRoles>/', views.cambio_statusrolre, name="cambio_statusrolre"),
-    path('cambio_statusrol/<int:idRoles>/', views.cambio_statusrol, name='cambio_statusrol'),
-    path('eliminar_rol/<int:idRoles>/', views.eliminar_rol, name='eliminarRol'),
+    path('cambio_statusrolre/<int:id>/', views.cambio_statusrolre, name="cambio_statusrolre"),
+    path('cambio_statusrol/<int:id>/', views.cambio_statusrol, name='cambio_statusrol'),
+    path('eliminar_rol/<int:id>/', views.eliminar_rol, name='eliminarRol'),
 
     #paths comentarios
     path('actividades/eliminarcomentarios/<int:idcomentario>/', views.eliminarcomentarios, name='eliminar_comentario'),

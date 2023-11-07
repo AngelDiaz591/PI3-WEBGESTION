@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils import timezone
 
@@ -80,10 +80,19 @@ class Productos(models.Model):
         texto = "{0} ({1})"
         return texto.format(self.nombre, self.precio)
     
-class Roles(models.Model):
-    idRoles = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=255)
-    inventario = models.PositiveBigIntegerField(max_length=2)
+class RolExtra(models.Model):
+    grupo = models.OneToOneField(Group, on_delete=models.CASCADE, primary_key=True)
+    principal = models.BooleanField(default=False)
+    inventario = models.BooleanField(default=False)
+    productos = models.BooleanField(default=False)
+    proveedores = models.BooleanField(default=False)
+    etiquetas = models.BooleanField(default=False)
+    productosRecuperacion = models.BooleanField(default=False)
+    proveedoresRecuperacion = models.BooleanField(default=False)
+    etiquetasRecuperacion = models.BooleanField(default=False)
+    usuarios = models.BooleanField(default=False)
+    roles = models.BooleanField(default=False)
+    soporte = models.BooleanField(default=False)
     
     movi = models.CharField(max_length=100, null= True)
     username = models.CharField(max_length=100, null=True)

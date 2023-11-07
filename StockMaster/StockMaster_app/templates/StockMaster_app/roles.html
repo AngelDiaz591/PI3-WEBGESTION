@@ -62,26 +62,28 @@
                     <tr>
                         <!-- <th>#</th> -->
                         <th>Nombre</th>
-                        <th>Inventario</th>
+                        <th>Permisos</th>
                         <th colspan="2">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for c in Roles %}
-                        {% if c.status %}
-                            <tr>
-                                <!-- <td>{{ forloop.counter }}</td> -->
-                                <td>{{ c.nombre }}</td>
-                                <td>{{ c.inventario }}</td>
-                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idRoles }}">
-                                    <span class="material-symbols-outlined">edit</span></a>
-                                </td>
-                                <td class="elimina"><a href="{% url 'cambio_statusrol' idRoles=c.idRoles %}"  class="btn btn-danger btnEliminacion">
-                                    <span class="material-symbols-outlined">delete</span>
+                        <tr>
+                            <td>{{ c.name }}</td>
+                            <td>
+                                {% for permiso in c.permissions.all %}
+                                    {{ permiso.name }}
+                                {% endfor %}
+                            </td>
+                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.id }}">
+                                <span class="material-symbols-outlined">edit</span></a>
+                            </td>
+                            <td class="elimina"><a href="{% url 'cambio_statusrol' id=c.id %}"  class="btn btn-danger btnEliminacion">
+                                <span class="material-symbols-outlined">delete</span>
                             </a></td>
-                            </tr>
-                        {% endif %}
+                        </tr>
                     {% endfor %}
+
                 </tbody>
             </table>
         </div>
@@ -104,8 +106,24 @@
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
-                                <div class="titulo">Categoría:</div>
+                                <div class="titulo">Principal:</div>
+                                <select name="principal" id="principal" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Inventario:</div>
                                 <select name="inventario" id="inventario" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Productos:</div>
+                                <select name="productos" id="productos" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
                                     <option value="1">1</option>
                                     <option value="0">0</option>
@@ -113,6 +131,80 @@
                             </div>
                         </div>
                         <!--Fin primer columna-->
+
+                        <!--Segunda columna-->
+                        <div class="form-column">
+                            <div class="divisor">
+                                <div class="titulo">Proveedores:</div>
+                                <select name="proveedores" id="proveedores" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Etiquetas:</div>
+                                <select name="etiquetas" id="etiquetas" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Productos recuperacion:</div>
+                                <select name="productosRecuperacion" id="productosRecuperacion" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Proveedores recuperacion:</div>
+                                <select name="proveedoresRecuperacion" id="proveedoresRecuperacion" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--Fin Segunda columna-->
+                        
+                        <!--Tercera columna-->
+                        <div class="form-column">
+                            <div class="divisor">
+                                <div class="titulo">Etiquetas recuperacion:</div>
+                                <select name="etiquetasRecuperacion" id="etiquetasRecuperacion" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                                <div class="divisor">
+                                    <div class="titulo">Usuarios:</div>
+                                    <select name="usuarios" id="usuarios" class="campos-seleccion" required>
+                                        <option value="" disabled selected>Si[1] o No[0]</option>
+                                        <option value="1">1</option>
+                                        <option value="0">0</option>
+                                    </select>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Roles:</div>
+                                    <select name="roles" id="roles" class="campos-seleccion" required>
+                                        <option value="" disabled selected>Si[1] o No[0]</option>
+                                        <option value="1">1</option>
+                                        <option value="0">0</option>
+                                    </select>
+                                </div>
+                                <div class="divisor">
+                                    <div class="titulo">Soporte:</div>
+                                    <select name="soporte" id="soporte" class="campos-seleccion" required>
+                                        <option value="" disabled selected>Si[1] o No[0]</option>
+                                        <option value="1">1</option>
+                                        <option value="0">0</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Fin Tercera columna-->
                     </div>
                     <!--Termino de la tabla de columnas-->
                     <div class="btn-cerrar">
@@ -143,9 +235,9 @@
         <div class="content-modal-editar" style="width: 100%; max-width: 700px;">
             <label class="cerrar" id="closeEditModal"><i class="fa-solid fa-xmark"></i></label>
             <h2 class="titulo-modal">Editar Rol</h2>
-            <form action="/editarRol2/" method="POST" enctype="multipart/form-data" value="{{c.idRoles }}">
+            <form action="/editarRol2/" method="POST" enctype="multipart/form-data" value="{{c.id }}">
                 {% csrf_token %}
-                <input type="hidden" id="editProductId" name="productId" value="{{ c.idRoles }}">
+                <input type="hidden" id="editProductId" name="productId" value="{{ c.id }}">
                 <!--Inicio de la tabla de columnas-->
                 <div class="form-columns">
                     <!--Primer columna-->
@@ -157,8 +249,24 @@
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">
-                            <div class="titulo">Categoría:</div>
+                            <div class="titulo">Principal:</div>
+                            <select name="principal" id="Etxprincipal" class="campos-seleccion" required>
+                                <option value="" disabled>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>                            
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Inventario:</div>
                             <select name="inventario" id="EtxtInventario" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Productos:</div>
+                            <select name="productos" id="Etxtproductos" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
                                 <option value="1">1</option>
                                 <option value="0">0</option>
@@ -167,6 +275,79 @@
                     </div>
                     <!--Fin de Primer columna-->
 
+                    <!--Segunda columna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Proveedores:</div>
+                            <select name="proveedores" id="Etxtproveedores" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Etiquetas:</div>
+                            <select name="etiquetas" id="Etxtetiquetas" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Productos recuperacion:</div>
+                            <select name="productosRecuperacion" id="EtxtproductosRecuperacion" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Proveedores recuperacion:</div>
+                            <select name="proveedoresRecuperacion" id="EtxtproveedoresRecuperacion" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--Fin Segunda columna-->
+                    
+                    <!--Tercera columna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Etiquetas recuperacion:</div>
+                            <select name="etiquetasRecuperacion" id="EtxtetiquetasRecuperacion" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                            <div class="divisor">
+                                <div class="titulo">Usuarios:</div>
+                                <select name="usuarios" id="Etxtusuarios" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Roles:</div>
+                                <select name="roles" id="Etxtroles" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Soporte:</div>
+                                <select name="soporte" id="Etxtsoporte" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Si[1] o No[0]</option>
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Fin Tercera columna-->
                 </div>
                 <!--Fin de la tabla de columnas-->
                 <div class="btn-cerrar">
@@ -181,19 +362,13 @@
 <script>
     // Cierra el modal de edición cuando se hace clic en la "x"
     closeEditModal.addEventListener("click", function() {
-        editModalProveedor.style.display = "none";
+        editModalRol.style.display = "none";
     });
 
     //Cierra el modal de edicion cuando se da click a cancelar
     cancelar.addEventListener("click", function() {
-        editModalProveedor.style.display = "none";
+        editModalRol.style.display = "none";
     });
 
-    // Cierra el modal de edición si se hace clic fuera del contenido del modal
-    window.addEventListener("click", function(event) {
-        if (event.target === editModalProveedor) {
-            editModalProveedor.style.display = "none";
-        }
-    });
 </script>
 {% endblock %}

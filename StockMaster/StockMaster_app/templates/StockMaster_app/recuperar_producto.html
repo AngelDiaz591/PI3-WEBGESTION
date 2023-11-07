@@ -106,23 +106,18 @@
                     </thead>
                     <tbody>
                         {% for c in Roles %}
-                            {% if c.status %}
-
-                            {% else %}
-                                <tr>
-                                    
-                                    <!-- <td>{{forloop.counter}}</td> -->
-                                    <td>{{ c.nombre }} </td>
-                                    <td>{{ c.username }}</td>
-                                    <td>{{ c.fech_cate}}</td>
-                                    <td class="edita"><a href="cambio_statusrolre/{{ c.idRoles }}" class="btn btn-info">                                 
-                                        <span class="material-symbols-outlined">restart_alt</span>
-                                    </a></td>
-                                    <td class="elimina"><a href="{% url 'eliminarRol' idRoles=c.idRoles %}"  class="btn btn-danger btnEliminacion">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a></td>
-                                </tr>
-                            {% endif %}
+                            <tr>
+                                <!-- <td>{{forloop.counter}}</td> -->
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.username }}</td>
+                                <td>{{ c.fech_cate}}</td>
+                                <td class="edita"><a href="cambio_statusrolre/{{ c.id }}" class="btn btn-info">                                 
+                                    <span class="material-symbols-outlined">restart_alt</span>
+                                </a></td>
+                                <td class="elimina"><a href="{% url 'eliminarRol' id=c.id %}"  class="btn btn-danger btnEliminacion">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>

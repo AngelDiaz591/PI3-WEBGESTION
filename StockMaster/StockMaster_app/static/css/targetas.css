@@ -16,7 +16,7 @@
 .product-front{
 	width:300px;
 	height:500px;
-	background:#f3f3f3;
+	background-color: var(--color-white);
 	position:absolute;
 	left:-5px;
 	-webkit-transition: all 100ms ease-out; 
@@ -42,10 +42,8 @@
 	overflow:hidden;
     transform-style: preserve-3d;
     border-radius: 10px;
-    /*box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;*/
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-/*     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
- */	-webkit-transition:  100ms ease-out; 
+    -webkit-transition:  100ms ease-out; 
        -moz-transition:  100ms ease-out; 
          -o-transition:  100ms ease-out; 
             transition:  100ms ease-out;
@@ -62,7 +60,7 @@
             transition:  100ms ease-out; 
 }
 .stats-container{
-	background:#fff;	
+	background: var(--color-white);	
 	position:absolute;
 	top:250px;
 	width:300px;
@@ -82,16 +80,16 @@
 }
 .stats-container .product_name{
 	font-size:22px;
-	color:#393c45;	
+	color: var(--color-dark);	
 }
 .stats-container p{
 	font-size:16px;
-	color:#b1b1b3;	
+	color: var(--color-dark);	
 	padding:2px 0 20px 0;
 }
 .stats-container .product_price{
 	float:right;
-	color:#da0303;
+	color:var(--price);
 	font-size:22px;
 	font-weight:600;
 }
@@ -117,7 +115,7 @@
 }
 .product-options strong{
 	font-weight:700;
-	color:#393c45;
+	color: var(--color-dark);
 	font-size:14px;
 }
 .product-options span{	
@@ -134,7 +132,7 @@
     border: 5px;
     opacity: 0.8;
     border-radius: 4px;
-    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
+    box-shadow: var(--color-light) 0px 13px 27px -5px, var(--color-light) 0px 8px 16px -8px;
     margin-left: 5px;
     align-items: center;
 }
@@ -165,12 +163,9 @@ option:hover{
     padding: 5px;
     display: flex;
     font-size: 20px;
-    /*box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;*/
     background-color: var(--color-white);
     color: var(--color-dark);
-    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
-    /*box-shadow: rgba(84, 85, 86, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;*/
-    /*box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;*/
+    box-shadow: var(--color-light) 0px 13px 27px -5px, var(--color-light) 0px 8px 16px -8px;
 }
 
 .btn:hover{
@@ -180,7 +175,7 @@ option:hover{
     font-size: 20px;
     color: var(--color-white);
     background-color: var(--color-dark);
-    box-shadow: rgba(26, 17, 192, 0.174) 0px 15px 25px, rgba(7, 3, 45, 0.196) 0px 5px 10px;
+    box-shadow: var(--color-light) 0px 13px 27px -5px, var(--color-light) 0px 8px 16px -8px;
     pointer-events: all;
 }
 

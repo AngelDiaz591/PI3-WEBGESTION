@@ -52,42 +52,41 @@
                 </div>
             {% endfor %}
         </div>
-        <div>
-            <h2>Proveedores</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Proveedor</th>
-                        <th>Elimino Usuario</th>
-                        <th>Fecha</th>
-                        <th colspan="2">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for c in proveedores %}
+        <h2>Proveedores</h2>
+        <table>
+            <thead>
+                <tr>
+                    <!-- <th>#</th> -->
+                    <th>Proveedor</th>
+                    <th>Elimino Usuario</th>
+                    <th>Fecha</th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in proveedores %}
                     {% if c.status %}
+
                     {% else %}
-                    <tr>
-                        <td>{{ c.nombre }} </td>
-                        <td>{{ c.username }}</td>
-                        <td>{{ c.fecha_edit}}</td>
-                        <td class="edita">
-                            <a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info">                                 
+                        <tr>
+                            
+                            <!-- <td>{{forloop.counter}}</td> -->
+                            <td>{{ c.nombre }} </td>
+                            <td>{{ c.username }}</td>
+                            <td>{{ c.fecha_edit}}</td>
+                            <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info">                                 
                                 <span class="material-symbols-outlined">restart_alt</span>
-                            </a>
-                        </td>
-                        <td class="elimina">
-                            <a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">
+                            </a></td>
+                            <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacion">
                                 <span class="material-symbols-outlined">delete</span>
-                            </a>
-                        </td>
-                    </tr>
+                            </a></td>
+                        </tr>
                     {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+
 </main>
 
 {% endblock %}

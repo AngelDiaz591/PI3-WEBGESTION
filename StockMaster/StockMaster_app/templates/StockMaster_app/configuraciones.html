@@ -273,16 +273,6 @@
     cancelarMarca.addEventListener("click", function() {
         editModalMarca.style.display = "none";
     });
-
-    // Cierra el modal de edición si se hace clic fuera del contenido del modal
-    window.addEventListener("click", function(event) {
-        if (event.target === editModalCategoria) {
-            editModalCategoria.style.display = "none";
-        }
-        if (event.target === editModalMarca) {
-            editModalMarca.style.display = "none";
-        }
-    });
 </script>
 
 

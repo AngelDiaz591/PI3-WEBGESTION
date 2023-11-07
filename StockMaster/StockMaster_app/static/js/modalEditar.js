@@ -19,6 +19,11 @@ const editButtonsMarcas = document.querySelectorAll('.edit-product-button-marca'
 const editModalMarca = document.getElementById('editModalMarca');
 const editProductIdFieldMarca = document.getElementById('editProductId2');
 
+// Obtén todos los elementos con la clase "edit-product-button"
+const editButtonsRol = document.querySelectorAll('.edit-product-button');
+const editModalRol = document.getElementById('editModalRol');
+const editProductIdFieldRol = document.getElementById('editProductId');
+
 // Función para abrir el modal de edición Productos
 function openEditModal(productId) {
     editProductIdField.value = productId;
@@ -169,6 +174,44 @@ function openEditModalMarca(productId) {
     });
 }
 
+// Función para abrir el modal de edición Roles
+function openEditModalRol(productId) {
+    editProductIdFieldRol.value = productId;
+
+    // Realiza una solicitud Ajax para obtener los detalles del producto y llenar el formulario con esos datos
+    // Aquí debes cargar los detalles del producto y llenar el formulario en el modal
+
+    // Abre el modal de edición
+    editModalRol.style.display = 'flex';
+    
+
+    // Obtener el ID del producto y hacer una solicitud AJAX para obtener los detalles
+    var productoId = document.getElementById("editProductId").value
+    $.ajax({
+        url: 'edicionRol2/'+ productoId + '',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data)
+            $('#EtxtNombre').val(data.nombre)
+            $('#Etxprincipal').val(data.principal)
+            $('#EtxtInventario').val(data.inventario)
+            $('#Etxtproductos').val(data.productos)
+            $('#Etxtproveedores').val(data.proveedores)
+            $('#Etxtetiquetas').val(data.etiquetas)
+            $('#EtxtproductosRecuperacion').val(data.productosRecuperacion)
+            $('#EtxtproveedoresRecuperacion').val(data.proveedoresRecuperacion)
+            $('#EtxtetiquetasRecuperacion').val(data.etiquetasRecuperacion)
+            $('#Etxtusuarios').val(data.usuarios)
+            $('#Etxtroles').val(data.roles)
+            $('#Etxtsoporte').val(data.soporte)
+       
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        }
+    });
+}
+
 // Asigna un evento de clic a cada botón de edición Productos
 editButtons.forEach(function (button) {
     button.addEventListener('click', function (event) {
@@ -200,7 +243,34 @@ editButtonsMarcas.forEach(function (button) {
         openEditModalMarca(productId);
     });
 });
-        
+
+// Asigna un evento de clic a cada botón de edición Proveedores
+editButtonsRol.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+        const productId = button.getAttribute('data-id');
+        openEditModalRol(productId);
+    });
+});
+
+// Cierra el modal de edición si se hace clic fuera del contenido del modal
+window.addEventListener("click", function(event) {
+    if (event.target === editModal) {
+        editModal.style.display = "none";
+    }
+    if (event.target === editModalProveedor) {
+        editModalProveedor.style.display = "none";
+    }
+    if (event.target === editModalCategoria) {
+        editModalCategoria.style.display = "none";
+    }
+    if (event.target === editModalMarca) {
+        editModalMarca.style.display = "none";
+    }
+    if (event.target === editModalRol) {
+        editModalRol.style.display = "none";
+    }
+});
+
 });
     
 

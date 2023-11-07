@@ -166,7 +166,7 @@
                                     <div class="divisor">
                                         <div class="titulo">Codigo Postal:</div>
                                         <input type="number" id="cp" name="cp" placeholder="Codigo Postal" 
-                                        class="campos" pattern="[0-9]{5}" maxlength="10" oninput="convertToUppercase()" required>
+                                        class="campos" pattern="[0-9]{5}" maxlength="5" oninput="convertToUppercase()" required>
                                     </div>
                                     <div class="divisor">
                                         <div class="titulo">Municipio:</div>
@@ -249,12 +249,12 @@
                             <!--Fin datos-->
                         </div>
                         <!-- <div class="btn-cerrar"> -->
-                            <button id="nextbtn" type="submit">Guardar</button>
+                            <!-- <button id="nextbtn" type="submit">Guardar</button> -->
                         <!-- </div> -->
                         <div style="overflow:auto;">
                             <div class="btn-cerrar" style="float:right; justify-content: space-between;">
-                                <button type="button" id="prevBtn" onclick="nextPrev(-1)">ATRAS</button>
-                                <button type="button" id="nextBtn" onclick="nextPrev(1)">SIGUIENTE</button>
+                                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Atras</button>
+                                <button type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
                                 <button id="nextbtn" type="submit">Guardar</button>
                                 <label for="btn-modal">CANCELAR</label>
                             </div>

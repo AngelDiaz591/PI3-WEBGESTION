@@ -17,6 +17,14 @@
                     <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
+                {% csrf_token %}
+                {% if messages %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% endif %}
             </div>
             <div style="overflow:auto; height: 400px;">
                 <table>
@@ -65,14 +73,7 @@
                         <h2 class="titulo-modal">Agregar Nuevo Usuario</h2>
 
                         <form action="/signup/" method="POST" enctype="multipart/form-data" id="registrationForm">{% csrf_token %}
-                            {% csrf_token %}
-                            {% if messages %}
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
-                                {% endfor %}
-                            {% endif %}
-                            {% endif %}
+                           
                             <!--Inicio de la tabla de columnas-->
                             <div class="form-columns">
                                 <!--Primer columna-->

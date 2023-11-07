@@ -46,6 +46,7 @@ def get_imagen_url(imagen_binaria):
     imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
     return f"data:image/jpeg;base64,{imagen_base64}"
 def signup(request):
+  
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -74,10 +75,11 @@ def signup(request):
             rfc = request.POST['rfc']
             n_seg_social = request.POST['n_seg_social']
             imagen = request.FILES['imagen'] 
-
+            permiso = 0
+            cambio = 0 
 
             imagen_bytes = imagen.read()
-            usuario = Usuario(calle=calle, colonia=colonia, num_ext=num_ext, num_int=num_int, cp=cp, col_mun= col_mun, pais=pais,  num_tel=num_tel, mun_cel= mun_cel, curp=curp, t_sangre=t_sangre, rfc=rfc, n_seg_social=n_seg_social, imagen=imagen_bytes,id_id=user.id)
+            usuario = Usuario(calle=calle, colonia=colonia, num_ext=num_ext, num_int=num_int, cp=cp, col_mun= col_mun, pais=pais,  num_tel=num_tel, mun_cel= mun_cel, curp=curp, t_sangre=t_sangre, rfc=rfc, n_seg_social=n_seg_social, imagen=imagen_bytes,id_id=user.id,permiso = permiso, cambio= cambio)
             username = user.username  # Asignar el valor del nombre de usuario del usuario actual
 #<-----------------Guarda en el Historial------------------------->
             historial= Historial.objects.all()
@@ -134,7 +136,7 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            return redirect('actividades')
+            return redirect('/actividades')
         else:
             form = AuthenticationForm(request.POST)
             if not User.objects.filter(username=username).exists():
@@ -179,7 +181,9 @@ def usuarios(request):
         return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario})
     else:
         return redirect('/actividades')
-    
+
+
+#ya cambia la contra
 @login_required(login_url='signin')
 def cambio_password(request):
     if request.method == 'POST':

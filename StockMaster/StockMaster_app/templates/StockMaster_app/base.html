@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
+    
     <div class="container">
         <!--Menú-->
         <aside>
@@ -34,123 +35,119 @@
                     <span class="material-symbols-outlined">close</span>
                 </div>
             </div>
-            <!-- <div class="sidebar">
-                <a href="{% url 'actividades' %}" class="main-menu-link active">
-                    <span class="material-symbols-outlined">grid_view</span>
-                    <h3>Principal</h3>
-                </a>
-                <a href="{% url 'inventario' %}" class="main-menu-link active">
-                    <span class="material-symbols-outlined">receipt_long</span>
-                    <h3>Inventario</h3>
-                </a>
-                {% if request.user.is_authenticated %}
-                    {% if request.user.is_superuser %}
-                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_gestion" data-submenu-state="closed">
-                            <span class="material-symbols-outlined">supervisor_account</span>
-                            <h3>Administración</h3>
-                            <i class="submenu-icon fas fa-chevron-right"></i>
-                        </a>
-                        <div class="submenu-container active">
-                            <div class="submenu">
-                                <div style="margin-left: 1rem;">
+            <div class="sidebar">
+                {% if perms.StockMaster_app.view_marca %}
+                    <a href="{% url 'actividades' %}" class="main-menu-link active">
+                        <span class="material-symbols-outlined">grid_view</span>
+                        <h3>Principal</h3>
+                    </a>
+                {% endif %}
+                {% if perms.StockMaster_app.delete_marca %}
+                    <a href="{% url 'inventario' %}" class="main-menu-link active">
+                        <span class="material-symbols-outlined">receipt_long</span>
+                        <h3>Inventario</h3>
+                    </a>
+                {% endif %}
+                {% if perms.StockMaster_app.view_productos or perms.StockMaster_app.view_proveedores or perms.StockMaster_app.view_categoria %}
+                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_gestion" data-submenu-state="closed">
+                        <span class="material-symbols-outlined">supervisor_account</span>
+                        <h3>Administración</h3>
+                        <i class="submenu-icon fas fa-chevron-right"></i>
+                    </a>
+                    <div class="submenu-container active">
+                        <div class="submenu">
+                            <div style="margin-left: 1rem;">
+                                {% if perms.StockMaster_app.view_productos %}
                                     <a href="{% url 'productos' %}" class="active">
                                         <span class="material-symbols-outlined">inventory</span>
                                         <h3>Productos</h3>
                                     </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.view_proveedores %}
                                     <a href="{% url 'prov' %}" class="active">
                                         <span class="material-symbols-outlined">local_shipping</span>
                                         <h3>Proveedores</h3>
                                     </a>
-                                    <a href="{% url 'configuraciones77' %}" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
+                                {% endif %}
+                                {% if perms.StockMaster_app.view_categoria %}
+                                    <a href="{% url 'etiquetas' %}" class="active">
+                                        <span class="material-symbols-outlined">bookmarks</span>
                                         <h3>Etiquetas</h3>
                                     </a>
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
-                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_recuperacion" data-submenu-state="closed">
-                            <span class="material-symbols-outlined">restart_alt</span>
-                            <h3>Recuperacion</h3>
-                            <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
-                        </a>
-                        <div class="submenu-container active">
-                            <div class="submenu">
-                                <div style="margin-left: 1rem;">
-                                    <a href="{% url 'recuperar_producto' %}" class="active">
-                                        <span class="material-symbols-outlined">inventory</span>
-                                        <h3>Productos</h3>
-                                    </a>
-                                    <a href="#" class="active">
-                                        <span class="material-symbols-outlined">local_shipping</span>
-                                        <h3>Categorias</h3>
-                                    </a>
-                                    <a href="#" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
-                                        <h3>Proveedores</h3>
-                                    </a>
-                                    <a href="#" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
-                                        <h3>Marcas</h3>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        
-                    {% endif %}
+                    </div>
                 {% endif %}
-                {% if request.user.is_authenticated %}
-                {% if request.user.is_superuser %}
-                    <a href="{% url 'usuarios' %}" class="main-menu-link active">
-                        <span class="material-symbols-outlined">person</span>
-                        <h3>Usuarios</h3>
-                    </a>
-
-                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_supervision" data-submenu-state="closed">
-                        <span class="material-symbols-outlined">history</span>
-                        <h3>Supervision</h3>
+                {% if perms.StockMaster_app.delete_productos or perms.StockMaster_app.delete_proveedores or perms.StockMaster_app.delete_categoria %}
+                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_recuperacion" data-submenu-state="closed">
+                        <span class="material-symbols-outlined">restart_alt</span>
+                        <h3>Recuperacion</h3>
                         <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
                     </a>
                     <div class="submenu-container active">
                         <div class="submenu">
                             <div style="margin-left: 1rem;">
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">inventory</span>
-                                    <h3>Modificaciones</h3>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">local_shipping</span>
-                                    <h3>Mensajes (duda)</h3>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">settings</span>
-                                    <h3>Categoria (duda)</h3>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">settings</span>
-                                    <h3>Proveedor (duda)</h3>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">settings</span>
-                                    <h3>Marca (duda)</h3>
-                                </a>
+                                {% if perms.StockMaster_app.delete_productos %}
+                                    <a href="{% url 'recuperar_producto' %}" class="active">
+                                        <span class="material-symbols-outlined">inventory</span>
+                                        <h3>Productos</h3>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.delete_proveedores %}
+                                    <a href="{% url 'recuperar_proveedor' %}" class="active">
+                                        <span class="material-symbols-outlined">local_shipping</span>
+                                        <h3>Proveedores</h3>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.delete_categoria %}
+                                    <a href="{% url 'recuperar_etiquetas' %}" class="active">
+                                        <span class="material-symbols-outlined">bookmarks</span>
+                                        <h3>Etiquetas</h3>
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 {% endif %}
+                {% if perms.StockMaster_app.view_usuario or perms.StockMaster_app.view_roles %}
+                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_supervision" data-submenu-state="closed">
+                        <span class="material-symbols-outlined">person </span>
+                        <h3>Usuarios</h3>
+                        <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
+                    </a>
+                    <div class="submenu-container active">
+                        <div class="submenu">
+                            <div style="margin-left: 1rem;">
+                                {% if perms.StockMaster_app.view_usuario %}
+                                    <a href="{% url 'usuarios' %}" class="active">
+                                        <span class="material-symbols-outlined">person_add</span>
+                                        <h3>Agregar</h3>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.view_roles %}
+                                    <a href="{% url 'rol' %}" class="active">
+                                        <span class="material-symbols-outlined">local_shipping</span>
+                                        <h3>Roles</h3>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
-                <a href="{% url 'soporte' %}" class="main-menu-link active">
-                    <span class="material-symbols-outlined">report_gmailerrorred</span>
-                    <h3>Soporte</h3>
-                    <span class="message-count">
-                        {% if cantidad_mensajes > 0 %}
-                            {{ cantidad_mensajes }}
-                        {% else %}
-                        0
-                        {% endif %}
-                    </span>
-                </a>
-                {% if request.user.is_authenticated %}
+                {% if perms.StockMaster_app.view_mensajes %}
+                    <a href="{% url 'soporte' %}" class="main-menu-link active">
+                        <span class="material-symbols-outlined">report_gmailerrorred</span>
+                        <h3>Soporte</h3>
+                        <span class="message-count">
+                            {% if cantidad_mensajes > 0 %}
+                                {{ cantidad_mensajes }}
+                            {% else %}
+                            0
+                            {% endif %}
+                        </span>
+                    </a>
+                {% endif %}
                 <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_historial" data-submenu-state="closed">
                     <span class="material-symbols-outlined">history</span>
                     <h3>Historial</h3>
@@ -165,7 +162,7 @@
                             </a>
                             <a href="#" class="active">
                                 <span class="material-symbols-outlined">inventory</span>
-                                <h3>Modificaciones (creo que si)</h3>
+                                <h3>Modificaciones</h3>
                             </a>
                             <a href="#" class="active">
                                 <span class="material-symbols-outlined">local_shipping</span>
@@ -173,7 +170,7 @@
                             </a>
                             <a href="#" class="active">
                                 <span class="material-symbols-outlined">settings</span>
-                                <h3>Productos</h3>
+                                <h3>Eliminados</h3>
                             </a>
                         </div>
                     </div>
@@ -182,163 +179,11 @@
                     <span class="material-symbols-outlined">logout</span>
                     <h3>Cerrar Sesion</h3>
                 </a>
-                {% endif %}
-            </div> -->
-
-
-
-
-
-
-            <div class="sidebar">
-                <a href="{% url 'actividades' %}" class="main-menu-link active">
-                    <span class="material-symbols-outlined">grid_view</span>
-                    <h3>Se elimina</h3>
-                </a>
-                {% if request.user.is_authenticated %}
-                    {% if request.user.is_superuser %}
-                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_administracion" data-submenu-state="closed">
-                            <span class="material-symbols-outlined">supervisor_account</span>
-                            <h3>Administración</h3>
-                            <i class="submenu-icon fas fa-chevron-right"></i>
-                        </a>
-                        <div class="submenu-container active">
-                            <div class="submenu">
-                                <div style="margin-left: 1rem;">
-                                    <a href="{% url 'configuraciones77' %}" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
-                                        <h3>Etiquetas</h3>
-                                    </a>
-                                    <a href="{% url 'inventario' %}" class="active">
-                                        <span class="material-symbols-outlined">receipt_long</span>
-                                        <h3>Inventario</h3>
-                                    </a>
-                                    <a href="{% url 'productos' %}" class="active">
-                                        <span class="material-symbols-outlined">inventory</span>
-                                        <h3>Productos</h3>
-                                    </a>
-                                    <a href="{% url 'prov' %}" class="active">
-                                        <span class="material-symbols-outlined">local_shipping</span>
-                                        <h3>Proveedores</h3>
-                                    </a>                                 
-                                </div>
-                            </div>
-                        </div>
-
-                        <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_recuperacion" data-submenu-state="closed">
-                            <span class="material-symbols-outlined">restart_alt</span>
-                            <h3>Recuperacion</h3>
-                            <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
-                        </a>
-                        <div class="submenu-container active">
-                            <div class="submenu">
-                                <div style="margin-left: 1rem;">
-                                    <a href="{% url 'recuperar_producto' %}" class="active">
-                                        <span class="material-symbols-outlined">inventory</span>
-                                        <h3>Productos</h3>
-                                    </a>
-                                    <a href="{% url 'recuperar_categoria' %}" class="active">
-                                        <span class="material-symbols-outlined">local_shipping</span>
-                                        <h3>Categorias</h3>
-                                    </a>
-                                    <a href="{% url 'recuperar_proveedor' %}" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
-                                        <h3>Proveedores</h3>
-                                    </a>
-                                    <a href="{% url 'recuperar_marca' %}" class="active">
-                                        <span class="material-symbols-outlined">settings</span>
-                                        <h3>Marcas</h3>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endif %}
-                {% if request.user.is_authenticated %}
-                {% if request.user.is_superuser %}
-                    <a href="{% url 'usuarios' %}" class="main-menu-link active">
-                        <span class="material-symbols-outlined">person</span>
-                        <h3>Usuarios</h3>
-                    </a>
-                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_soporte" data-submenu-state="closed">
-                        <span class="material-symbols-outlined">supervisor_account</span>
-                        <h3>Soporte</h3>
-                        <i class="submenu-icon fas fa-chevron-right"></i>
-                    </a>
-                    <div class="submenu-container active">
-                        <div class="submenu">
-                            <div style="margin-left: 1rem;">
-                                <a href="{% url 'soporte' %}" class="active">
-                                    <span class="material-symbols-outlined">receipt_long</span>
-                                    <h3>Mensajes</h3>
-                                    <span class="message-count">
-                                        {% if cantidad_mensajes > 0 %}
-                                            {{ cantidad_mensajes }}
-                                        {% else %}
-                                        0
-                                        {% endif %}
-                                    </span>
-                                </a>
-                                <a href="#" class="active">
-                                    <span class="material-symbols-outlined">settings</span>
-                                    <h3>Notificaciones</h3>
-                                </a>
-                                                                
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% endif %}
-                <!-- <a href="{% url 'soporte' %}" class="main-menu-link active">
-                    <span class="material-symbols-outlined">report_gmailerrorred</span>
-                    <h3>Soporte</h3>
-                    <span class="message-count">
-                        {% if cantidad_mensajes > 0 %}
-                            {{ cantidad_mensajes }}
-                        {% else %}
-                        0
-                        {% endif %}
-                    </span>
-                </a> -->
-
-                {% if request.user.is_authenticated %}
-                <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_historial" data-submenu-state="closed">
-                    <span class="material-symbols-outlined">history</span>
-                    <h3>Historial</h3>
-                    <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
-                </a>
-                <div class="submenu-container active">
-                    <div class="submenu">
-                        <div style="margin-left: 1rem;">
-                            <a href="{% url 'historial' %}" class="active">
-                                <span class="material-symbols-outlined">inventory</span>
-                                <h3>General</h3>
-                            </a>
-                            <a href="{% url 'historial_eliminacion'%}" class="active">
-                                <span class="material-symbols-outlined">inventory</span>
-                                <h3>Eliminación</h3>
-                            </a>
-                            <a href="{% url 'historial_edicion'%}" class="active">
-                                <span class="material-symbols-outlined">local_shipping</span>
-                                <h3>Edición</h3>
-                            </a>
-                            <a href="{% url 'historial_recuperacion'%}" class="active">
-                                <span class="material-symbols-outlined">settings</span>
-                                <h3>Recuperación</h3>
-                            </a>
-                            <a href="{% url 'historial_registro'%}" class="active">
-                                <span class="material-symbols-outlined">local_shipping</span>
-                                <h3>Registro</h3>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <a href="{% url 'exit' %}" class="main-menu-link active">
-                    <span class="material-symbols-outlined">logout</span>
-                    <h3>Cerrar Sesion</h3>
-                </a>
-                {% endif %}
             </div>
+
+
+
+           
         </aside>
         <!--Fin Menú-->
 

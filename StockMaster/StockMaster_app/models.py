@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils import timezone
 
@@ -80,6 +80,28 @@ class Productos(models.Model):
         texto = "{0} ({1})"
         return texto.format(self.nombre, self.precio)
     
+class RolExtra(models.Model):
+    grupo = models.OneToOneField(Group, on_delete=models.CASCADE, primary_key=True)
+    principal = models.BooleanField(default=False)
+    inventario = models.BooleanField(default=False)
+    productos = models.BooleanField(default=False)
+    proveedores = models.BooleanField(default=False)
+    etiquetas = models.BooleanField(default=False)
+    productosRecuperacion = models.BooleanField(default=False)
+    proveedoresRecuperacion = models.BooleanField(default=False)
+    etiquetasRecuperacion = models.BooleanField(default=False)
+    usuarios = models.BooleanField(default=False)
+    roles = models.BooleanField(default=False)
+    soporte = models.BooleanField(default=False)
+    
+    movi = models.CharField(max_length=100, null= True)
+    username = models.CharField(max_length=100, null=True)
+    fech_cate= models.DateTimeField(default=timezone.now, null= True)
+    status= models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
+    def __str__(self):
+        return self.nombre
+
 class Mensajes(models.Model):
     idcomentario = models.AutoField(primary_key=True)
     comentario = models.CharField(max_length=255)

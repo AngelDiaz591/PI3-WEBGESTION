@@ -12,21 +12,18 @@ function resetForm() {
   // Obtén el formulario y sus elementos
   var form = document.querySelector("form");
   var inputs = form.querySelectorAll("input");
+  var selects = form.querySelectorAll("select"); // Agregar selects
 
   // Recorre los elementos del formulario y restablece sus valores
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].value = "";
   }
+  
+  // Restablece los campos de selección a la opción predeterminada
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].selectedIndex = 0;
+  }
 }
-
-  // También puedes restablecer los campos de selección y otros elementos si es necesario
-  // var selects = form.querySelectorAll("select");
-  // for (var i = 0; i < selects.length; i++) {
-  //     selects[i].selectedIndex = 0; // Restablecer selecciones a la opción predeterminada
-  // }
-
-  // Reinicia el formulario si es necesario
-  // form.reset();
 
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -41,9 +38,9 @@ function showTab(n) {
     document.getElementById("prevBtn").style.display = "inline";
   }
   if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").innerHTML = "Guardar";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
+    document.getElementById("nextBtn").innerHTML = "Siguiente";
   }
   fixStepIndicator(n);
 }

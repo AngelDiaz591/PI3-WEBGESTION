@@ -147,7 +147,7 @@
                                     </div>
                                     <div class="divisor">
                                         <div class="titulo">Num_Interior:</div>
-                                        <input type="number" id="num_int" name="num_int" placeholder="Opcional" class="campos optional">
+                                        <input type="number" id="num_int" name="num_int" placeholder="Opcional" class="campos" required>
                                     </div>
                                 </div>
                                 <!--Termino de Tercera columna-->
@@ -173,7 +173,7 @@
                                     </div>
                                     <div class="divisor">
                                         <div class="titulo">Numero Telefonico:</div>
-                                        <input type="number" id="num_tel" name="num_tel" placeholder="Numero Telefonico" class="campos optional">
+                                        <input type="number" id="num_tel" name="num_tel" placeholder="Numero Telefonico" class="campos" required>
                                     </div>
                                     <div class="divisor">
                                         <div class="titulo">Numero Celular:</div>
@@ -257,20 +257,21 @@
                             <span class="step"></span>
                             <span class="step"></span>
                         </div>
-                    </form>
-                    <script src="{% static 'js/modalusuarios.js'%}"></script>
-                    <script>
-                        // Obtén todos los elementos con la clase "close-btn"
-                        var closeBtns = document.querySelectorAll('.close-btnn');
+                    
+                        <script src="{% static 'js/modalusuarios.js'%}"></script>
+                        <script>
+                            // Obtén todos los elementos con la clase "close-btn"
+                            var closeBtns = document.querySelectorAll('.close-btnn');
 
-                        // Agrega un evento de clic a cada elemento
-                        closeBtns.forEach(function (closeBtn) {
-                            closeBtn.addEventListener('click', function () {
-                                // Oculta el elemento al hacer clic
-                                closeBtn.style.display = 'none';
+                            // Agrega un evento de clic a cada elemento
+                            closeBtns.forEach(function (closeBtn) {
+                                closeBtn.addEventListener('click', function () {
+                                    // Oculta el elemento al hacer clic
+                                    closeBtn.style.display = 'none';
+                                });
                             });
-                        });
-                    </script>
+                        </script>
+                    </form>
                     <label for="btn-modal" class="cerrar-modal"></label>
                 </div>
             </div>

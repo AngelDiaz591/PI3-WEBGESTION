@@ -25,47 +25,6 @@ function resetForm() {
   }
 }
 
-// Agregar un manejador de eventos al botón de cerrar modal (x), al botón "Cancelar" y al cerrar el modal
-/* document.querySelector(".cerrar").addEventListener("click", function () {
-  resetForm();
-  resetModalState();
-});
-
-document.querySelector("label[for='btn-modal']").addEventListener("click", function () {
-  resetForm();
-  resetModalState();
-});
-
-document.querySelector(".cerrar-modal").addEventListener("click", function () {
-  resetForm();
-  resetModalState();
-}); */
-
-// Función para restablecer el formulario
-/* function resetForm() {
-  // Obtén el formulario y sus elementos
-  var form = document.querySelector("form");
-  var inputs = form.querySelectorAll("input");
-  var selects = form.querySelectorAll("select"); // Agregar selects
-
-  // Recorre los elementos del formulario y restablece sus valores
-  for (var i = 0; i < inputs.length; i++) {
-    inputs[i].value = "";
-  }
-  
-  // Restablece los campos de selección a la opción predeterminada
-  for (var i = 0; i < selects.length; i++) {
-    selects[i].selectedIndex = 0;
-  }
-}
-
-// Función para restablecer el estado del modal
-function resetModalState() {
-  currentTab = 0; // Restablece la pestaña actual al inicio
-  showTab(currentTab); // Muestra la pestaña actual
-} */
-
-
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 

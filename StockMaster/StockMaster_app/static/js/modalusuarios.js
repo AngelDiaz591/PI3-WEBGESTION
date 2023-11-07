@@ -26,7 +26,7 @@ function resetForm() {
 }
 
 // Agregar un manejador de eventos al botón de cerrar modal (x), al botón "Cancelar" y al cerrar el modal
-document.querySelector(".cerrar").addEventListener("click", function () {
+/* document.querySelector(".cerrar").addEventListener("click", function () {
   resetForm();
   resetModalState();
 });
@@ -39,7 +39,7 @@ document.querySelector("label[for='btn-modal']").addEventListener("click", funct
 document.querySelector(".cerrar-modal").addEventListener("click", function () {
   resetForm();
   resetModalState();
-});
+}); */
 
 // Función para restablecer el formulario
 /* function resetForm() {

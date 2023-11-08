@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if perms.StockMaster_app.view_usuario or perms.StockMaster_app.view_roles %}
+                {% if perms.StockMaster_app.view_usuario or perms.StockMaster_app.view_rolextra %}
                     <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_supervision" data-submenu-state="closed">
                         <span class="material-symbols-outlined">person </span>
                         <h3>Usuarios</h3>
@@ -125,7 +125,7 @@
                                         <h3>Agregar</h3>
                                     </a>
                                 {% endif %}
-                                {% if perms.StockMaster_app.view_roles %}
+                                {% if perms.StockMaster_app.view_rolextra %}
                                     <a href="{% url 'rol' %}" class="active">
                                         <span class="material-symbols-outlined">local_shipping</span>
                                         <h3>Roles</h3>

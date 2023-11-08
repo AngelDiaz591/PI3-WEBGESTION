@@ -96,15 +96,17 @@ def exit(request):
 def usuarios(request):
     if request.user.has_perm('StockMaster_app.view_usuario'):
         mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        cantidad_mensajes = mensajes.count()
         usuario = Usuario.objects.all()
         roles = RolExtra.objects.all()
         form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
+        grupos = Group.objects.all()  # Obtiene todos los grupos
         for Usuarios in usuario:
             Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/usuarios.html', { 'Roles':roles, 'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario})
+        return render(request, 'StockMaster_app/usuarios.html', { 'Roles':roles, 'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario, 'grupos': grupos})
     else:
         return redirect('/actividades')
+
 
 def signup(request):
   
@@ -978,16 +980,16 @@ def registrar_rol(request):
         rol_extra = RolExtra()
         rol_extra.grupo = rol
         # Aquí es donde agregas los permisos
-        rol_extra.principal = principal == '1'
-        rol_extra.inventario = inventario == '1'
-        rol_extra.productos = productos == '1'
-        rol_extra.proveedores = proveedores == '1'
-        rol_extra.productosRecuperacion = productosRecuperacion == '1'
-        rol_extra.proveedoresRecuperacion = proveedoresRecuperacion == '1'
-        rol_extra.etiquetasRecuperacion = etiquetasRecuperacion == '1'
-        rol_extra.usuarios = usuarios == '1'
-        rol_extra.roles = roles == '1'
-        rol_extra.soporte = soporte == '1'
+        rol_extra.principal = principal
+        rol_extra.inventario = inventario
+        rol_extra.productos = productos
+        rol_extra.proveedores = proveedores
+        rol_extra.productosRecuperacion = productosRecuperacion 
+        rol_extra.proveedoresRecuperacion = proveedoresRecuperacion 
+        rol_extra.etiquetasRecuperacion = etiquetasRecuperacion
+        rol_extra.usuarios = usuarios
+        rol_extra.roles = roles
+        rol_extra.soporte = soporte 
         if principal=='1':
             permiso = Permission.objects.get(codename='view_marca')
             rol.permissions.add(permiso)
@@ -1016,7 +1018,7 @@ def registrar_rol(request):
             permiso = Permission.objects.get(codename='view_usuario')
             rol.permissions.add(permiso)
         if roles=='1':
-            permiso = Permission.objects.get(codename='view_roles')
+            permiso = Permission.objects.get(codename='view_rolextra')
             rol.permissions.add(permiso)
         if soporte=='1':
             permiso = Permission.objects.get(codename='view_mensajes')

@@ -37,9 +37,9 @@ function showTab(n) {
     document.getElementById("prevBtn").style.display = "inline";
   }
   if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Guardar";
+    document.getElementById("nextBtn").innerHTML = "GUARDAR";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Siguiente";
+    document.getElementById("nextBtn").innerHTML = "SIGUIENTE";
   }
   fixStepIndicator(n);
 }

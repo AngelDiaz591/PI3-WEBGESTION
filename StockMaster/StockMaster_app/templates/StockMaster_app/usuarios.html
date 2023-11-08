@@ -119,12 +119,16 @@
                                     </div>
                                     <div class="divisor">
                                         <div class="titulo">Rol:</div>
-                                        <select name="is_superuser" id="is_superuser" class="campos-seleccion" required>
+                                        <select name="group" id="group" class="campos-seleccion" required>
                                             <option value="" disabled selected>Selecciona un rol</option>
-                                            <option value="1">Administrador</option>
-                                            <option value="0">Empleado</option>
+                                            {% for Roles in groups %}
+                                                <option value="{{ group.id }}">
+                                                    {{ group.name }}
+                                                </option>
+                                            {% endfor %}
                                         </select>
-                                    </div>
+                                        
+                                    </div>                                    
                                 </div>
                             </div>
                                 <!--Termino de segunda columna--

@@ -123,6 +123,9 @@ def signup(request):
                 user.is_superuser = bool(int(is_superuser))
 
             user.save()
+            # Agrega el grupo al usuario
+            grupo = Group.objects.get(name=request.POST['grupo'])
+            user.groups.add(grupo)
 #<-----------------Datos Adicionales------------------------->
             calle = request.POST['calle']
             colonia = request.POST['colonia']

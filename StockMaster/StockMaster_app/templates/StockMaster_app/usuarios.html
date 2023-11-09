@@ -64,8 +64,9 @@
                 </table>
             </div>
         </div>
+        {% comment %}
         <!--Ventana Modal-->
-        <!-- <div>
+        <div>
             <input type="checkbox" id="btn-modal">
             <div class="container-modal">
                 <div class="content-modal_user">
@@ -80,11 +81,11 @@
                                 {% endfor %}
                             {% endif %}
                             {% endif %}
-                        <!--Inicio de la tabla de columnas--
+                        <!--Inicio de la tabla de columnas-->
                         
                         <div class="form-columns_user">                    
                             <div class="tab" style="justify-content: center;">
-                                <!--Primer columna--> <!-- style="display: flex; position: absolute; left: 41%;" --
+                                <!--Primer columna--> <!-- style="display: flex; position: absolute; left: 41%;" -->
                                 <h2 class="titulo-modal_user" style="margin-left: 50px;">Registro de Nuevo Usuario</h2>
                                 <div class="form-column_user" style="padding: 0 8rem 0 3rem">
                                     <div class="divisor">
@@ -108,7 +109,7 @@
                                 </div>
                                 <!--Termino de primer columna-->
                                 
-                                <!--Segunda columna--
+                                <!--Segunda columna-->
                                 <div class="form-column_user" style="margin-top: 3rem;">
                                     <div class="divisor">
                                         <div class="titulo">Contraseña:</div>
@@ -128,10 +129,10 @@
                                     </div>                                    
                                 </div>
                             </div>
-                                <!--Termino de segunda columna--
+                                <!--Termino de segunda columna-->
                             <div class="tab" style="justify-content: center;">  <!-- style="display: flex; position: absolute; left: 43%;" --
                                 <h2 class="titulo-modal_user" style="/* margin-left: 50px; */">Datos adicionales</h2>
-                                <!--Tercera columna--
+                                <!--Tercera columna-->
                                 <div class="form-column_user">
                                     <div class="divisor">
                                         <div class="titulo">Calle:</div>
@@ -152,7 +153,7 @@
                                         <div class="titulo">Num_Interior:</div>
                                         <input type="number" id="num_int" name="num_int" placeholder="Opcional" 
                                         maxlength="4" class="campos" required>
-                                    </div> --
+                                    </div> -->
                                     <div class="divisor">
                                         <div class="titulo">Codigo Postal:</div>
                                         <input type="number" id="cp" name="cp" placeholder="Codigo Postal" 
@@ -161,7 +162,7 @@
                                 </div>
                                 <!--Termino de Tercera columna-->
                             
-                                <!--Cuarta columna--
+                                <!--Cuarta columna-->
                                 <div class="form-column_user">
                                     <div class="divisor">
                                         <div class="titulo">Municipio:</div>
@@ -185,7 +186,7 @@
                                     </div>
                                 </div>
                                 <!--Termino de Cuarta Columna columna-->
-                                <!--Quinta columna--
+                                <!--Quinta columna-->
                                 <div class="form-column_user">
                                     <div class="divisor">
                                         <div class="titulo">Curp:</div>
@@ -213,34 +214,34 @@
                                 <h2 class="titulo-modal_user">Imagen:</h2>
                                 <div class="form-column_user">
                                         <div class="divisor">
-                                            <!-- <div class="contenedor-imagen"> --
+                                            <!-- <div class="contenedor-imagen"> -->
                                                 <img id="vistaPrevia" alt=""/>
-                                            <!-- </div> --
+                                            <!-- </div> -->
                                                 <input type="file" id="imagen" name="imagen" accept="image/*" placeholder="Imagen" 
                                                 class="campos" onchange="previsualizarImagen()" required>
-                                                <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">   --
+                                                <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">   -->
                                                 <div class="checkbox-wrapper-1">
                                                     <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
                                                     <label for="example-1">Checkbox</label>
                                                   </div>
                                         </div>
                                 </div>
-                                    <!--Termino de Quinta Columna columna--
+                                    <!--Termino de Quinta Columna columna-->
                             </div>
                             <!-- Circles which indicates the steps of the form: -->       
                                 <!-- ddd -->
                             <!--Fin de la tabla columnnas-->
-                            <!--Fin datos--
+                            <!--Fin datos-->
                         </div>
                         <!-- <div class="btn-cerrar">
                             <button type="submit">Guardar</button>
-                        </div> --
-                        <div style="/* overflow:auto; */">
+                        </div> -->
+                        <div>
                             <div class="" style="float:right; justify-content:space-around;">
                                 <button class="button-8" role="button" type="button" id="prevBtn" onclick="nextPrev(-1)">Atras</button>
                                 <button class="button-8" role="button" type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
                                 <!-- <button id="nextbtn" type="submit">Guardar</button> -->
-                                <!-- <label for="btn-modal">CANCELAR</label> --
+                                <!-- <label for="btn-modal">CANCELAR</label> -->
                                 
                             </div>
                         </div>
@@ -267,9 +268,9 @@
                     <label for="btn-modal" class="cerrar-modal"></label>
                 </div>
             </div>
-        </div> -->
+        </div>
         <!--Fin de Ventana Modal-->
-
+        {% endcomment %}
         <!--Ventana Modal-->
         <div>
             <input type="checkbox" id="btn-modal">
@@ -351,12 +352,21 @@
                                     <div class="titulo">Confirmar Contraseña:</div>
                                     <input type="password" id="id_password2" name="password2" placeholder="confirm your password" class="campos" required>
                                 </div>
-                                <div class="divisor">
+                                <!-- <div class="divisor">
                                     <div class="titulo">Rol:</div>
                                     <select name="is_superuser" id="is_superuser" class="campos-seleccion" required>
                                         <option value="" disabled selected>Selecciona un rol</option>
                                         <option value="1">Administrador</option>
                                         <option value="0">Empleado</option>
+                                    </select>
+                                </div> -->
+                                <div class="divisor">
+                                    <div class="titulo">Rol:</div>
+                                    <select name="grupo" id="grupo" class="campos-seleccion" required>
+                                        <option value="" disabled selected>Selecciona un grupo</option>
+                                        {% for group in groups %}
+                                            <option value="{{ group.name }}">{{ group.name }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="divisor">

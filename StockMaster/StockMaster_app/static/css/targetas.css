@@ -155,6 +155,7 @@ option:hover{
     justify-content:flex-start;
     display: flex;
     padding: 1.5rem 0;
+    align-items: center;
 }
 
 

@@ -14,7 +14,7 @@ from django.core.files import File
 from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca, Usuario, RolExtra
 from django.http.response import JsonResponse
 import base64
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
@@ -25,6 +25,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from smtplib import SMTPException
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -109,7 +110,6 @@ def usuarios(request):
 
 @login_required(login_url='signin')
 def signup(request):
-  
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -120,10 +120,8 @@ def signup(request):
             user.last_name = form.cleaned_data.get('last_name')
 
             user.save()
-            # Agrega el grupo al usuario
-            grupo = Group.objects.get(name=request.POST['grupo'])
-            user.groups.add(grupo)
-#<-----------------Datos Adicionales------------------------->
+            
+            # Resto del código para agregar el usuario al grupo, guardar información adicional, etc.
             calle = request.POST['calle']
             colonia = request.POST['colonia']
             num_ext = request.POST['num_ext']
@@ -150,11 +148,7 @@ def signup(request):
             historial.save()
             usuario.save()
 
-#========================Envia Correo=============================
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            
+            # Envío de correo de bienvenida
             subject = 'Bienvenido a nuestra aplicación'
             from_email = 'stockmaster404@gmail.com'
             recipient_list = [email]
@@ -164,30 +158,38 @@ def signup(request):
             # Crear el mensaje en formato HTML
             message_html = render_to_string('StockMaster_app/Correo.html', {'accept_link': accept_link})
 
-
             try:
                 send_mail(subject, '', from_email, recipient_list, fail_silently=False, html_message=message_html)
-            except SMTPException as e:
+                messages.success(request, 'Usuario registrado y correo de bienvenida enviado correctamente.')
+            except Exception as e:
                 print(f'Error al enviar el correo de bienvenida: {e}')
                 messages.error(request, f'Error al enviar el correo de bienvenida: {e}')
-#==================retorna==================
+
+            # Agregar entrada al historial
+            username = user.username
+            historial = Historial(movimiento='Nuevo Usuario', usuario=request.user.username, fecha=timezone.now(), nombre=username)
+            historial.save()
+
             return redirect('/usuarios')
         else:
-            if 'email' in form.errors:
+         if 'email' in form.errors:
                 messages.error(request, 'error en la escritura de gmail recomendacion "@gmail.com" "@hotmail.com" "outlook.com"')
             
-            if 'username' in form.errors:
+         if 'username' in form.errors:
                 messages.error(request, 'El nombre de usuario ya existe. Por favor, elige otro.')
-            else:
+         else:
                 messages.error(request, 'La contraseña debe de tener más de 8 caracteres y no deben ser numeros continuos')
-            if 'is_superuser' in form.errors:
+         if 'is_superuser' in form.errors:
                 messages.error(request, 'error de admin')
-            return redirect('/usuarios')
+        return redirect('/usuarios')  
+            
+
     else:
         form = CustomUserCreationForm()
 
     return render(request, 'StockMaster_app/usuarios.html', {'form': form})
-    
+
+
 def signin(request):
     if request.user.is_authenticated:
         return redirect('/actividades')
@@ -1414,3 +1416,13 @@ def example_view(request):
         producto.imagen_url = get_imagen_url(producto.imagen)
 
     return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+
+def enviar_correo(request):
+    send_mail(
+        'Asunto del Correo',
+        'Cuerpo del Correo',
+        'stockmaster404@gmail.com',         # Reemplaza con tu dirección de correo
+        ['mayelomonti1@gmail.com'],  # Reemplaza con la dirección del destinatario
+        fail_silently=False,
+    )
+    return HttpResponse('Correo enviado correctamente.')

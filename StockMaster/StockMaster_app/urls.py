@@ -104,4 +104,6 @@ urlpatterns = [
     
     path('usuarios/', views.usuarios, name='usuarios'),
     
+
+    path('enviar_correo/', views.enviar_correo, name='enviar_correo'),
     ]

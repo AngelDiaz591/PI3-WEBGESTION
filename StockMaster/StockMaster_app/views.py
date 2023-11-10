@@ -120,7 +120,9 @@ def signup(request):
             user.last_name = form.cleaned_data.get('last_name')
 
             user.save()
-            
+            # Agrega el grupo al usuario
+            grupo = Group.objects.get(name=request.POST['grupo'])
+            user.groups.add(grupo)
             # Resto del código para agregar el usuario al grupo, guardar información adicional, etc.
             calle = request.POST['calle']
             colonia = request.POST['colonia']

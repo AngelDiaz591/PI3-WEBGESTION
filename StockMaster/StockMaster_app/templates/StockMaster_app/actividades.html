@@ -4,26 +4,18 @@
 <div class="ctn">
     <main>
         {% if request.user.is_superuser %}
+        <div class="seccion">
             <h1>Actividad de Usuarios</h1>
+            <div class="search-bar">
+                <label for="search-input"></label><input type="text" id="search-input" 
+                placeholder="Buscar movimientos..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+        </div>
         {% else %}
             <h1>Actividades Recientes</h1>
         {% endif %}
         <div class="recent-orders">
-            <div class="principal">
-                <div class="encabezado">
-                    {% if request.user.is_superuser %}
-                        <h2>Modificaciones del producto</h2>
-                    {% else %}
-                        <h2>Productos Recientes</h2>
-                    {% endif %}
-                </div>
-                <div class="search-bar-v1">
-                    <label for="search-input"></label><input type="text" id="search-input" 
-                    placeholder="Buscar movimientos..." oninput="convertToUppercase()">
-                    <i class="fas fa-search" id="search-icon"></i>
-                </div>
-            </div>
-            <br>
             <div class="messages-container">
                 {% for message in messages %}
                     <div class="alert alert-custom" role="alert">
@@ -34,7 +26,16 @@
                     </div>
                 {% endfor %}
             </div>
-            <div style="overflow: auto; height: 570px;">
+            <div style="overflow: auto; height: 680px;">
+                <div class="principal">
+                    <div class="encabezado">
+                        {% if request.user.is_superuser %}
+                            <h2>Modificaciones del producto</h2>
+                        {% else %}
+                            <h2>Productos Recientes</h2>
+                        {% endif %}
+                    </div>
+                </div>
                 <table>
                     <thead>
                         <tr>

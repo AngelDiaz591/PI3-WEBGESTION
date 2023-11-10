@@ -107,7 +107,7 @@ def usuarios(request):
     else:
         return redirect('/actividades')
 
-
+@login_required(login_url='signin')
 def signup(request):
   
     if request.method == 'POST':
@@ -118,9 +118,6 @@ def signup(request):
             user.email = email
             user.first_name = form.cleaned_data.get('first_name')
             user.last_name = form.cleaned_data.get('last_name')
-            is_superuser = form.cleaned_data.get('is_superuser')
-            if is_superuser is not None and is_superuser.isdigit():
-                user.is_superuser = bool(int(is_superuser))
 
             user.save()
             # Agrega el grupo al usuario
@@ -234,20 +231,6 @@ def exit(request):
 
 #--------------------------------------------------------- U S U A R I O S --------------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
-
-@login_required(login_url='signin')
-def usuarios(request):
-    if request.user.is_superuser:
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
-        usuario = Usuario.objects.all()
-        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
-        for Usuarios in usuario:
-            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario})
-    else:
-        return redirect('/actividades')
-
 
 #ya cambia la contra
 @login_required(login_url='signin')
@@ -1310,6 +1293,38 @@ def historial(request):
     return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
 
 @login_required(login_url='signin')
+def historialModificaciones(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    RolListados = RolExtra.objects.all()
+    historial = Historial.objects.filter(movimiento__in=["Edicion de Proveedor", "Edicion de Producto", "Edicion de Producto", "Edicion de Marca", "Edicion de Categoria", "Edicion de Rol"])
+
+    return render(request, 'StockMaster_app/historialModificaciones.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+@login_required(login_url='signin')
+def historialMovimientos(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    RolListados = RolExtra.objects.all()
+    historial = Historial.objects.filter(movimiento="Rol Agregado")
+    return render(request, 'StockMaster_app/historialMovimientos.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+@login_required(login_url='signin')
+def historialEliminados(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    RolListados = RolExtra.objects.all()
+    historial = Historial.objects.filter(movimiento__in=["Eliminacion de Proveedor", "Eliminacion de Producto", "Eliminacion de Producto", "Eliminacion de Marca", "Eliminacion de Categoria", "Eliminacion de Rol"])
+    return render(request, 'StockMaster_app/historialEliminados.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+
+@login_required(login_url='signin')
 def recuperar_producto(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes = mensajes.count()
@@ -1333,41 +1348,6 @@ def recuperar_etiquetas(request):
     RolListados = RolExtra.objects.all()
     MarcaListados = Marca.objects.all() 
     return render(request, 'StockMaster_app/recuperar_etiquetas.html', { "Categoria": CategoriaListados, "Marca":MarcaListados, "Roles": RolListados, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
-
-
-#nueva idea pt2, ¿confirmación? del caso contrario solo elimine
-def historial_eliminacion(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_eliminacion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
-
-def historial_edicion(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_edicion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
-def historial_recuperacion(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_recuperacion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
-def historial_registro(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_registro.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
 
 #____________________________________________________________________________________________________________________________________
 

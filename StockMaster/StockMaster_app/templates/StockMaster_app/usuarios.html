@@ -17,14 +17,14 @@
                     <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
-                {% csrf_token %}
-                {% if messages %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-                {% endif %}
+            </div>
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-custom" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                {% endfor %}
             </div>
             <div style="overflow:auto; height: 400px;">
                 <table>
@@ -38,28 +38,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% if request.user.is_authenticated %}
-                            {% if request.user.is_superuser %}
-                                {% for us in usuario %}
-                                    {% if us != request.user%}
-                                        <tr>
-                                            <td>{{ us.id.first_name }}</td>
-                                            <td>{{ us.id.last_name }}</td>
-                                            <td>{{ us.id.email }}</td>
-                                            <td class="imagen" style="position: relative;">
-                                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
-                                                    <img src="{{ us.imagen_url }}"  width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
-                                                </div>
-                                            </td>
-                                            <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                            <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id.id}}">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </a></td>
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
+                        {% for us in usuario %}
+                            {% if us != request.user%}
+                                <tr>
+                                    <td>{{ us.id.first_name }}</td>
+                                    <td>{{ us.id.last_name }}</td>
+                                    <td>{{ us.id.email }}</td>
+                                    <td class="imagen" style="position: relative;">
+                                        <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                                            <img src="{{ us.imagen_url }}"  width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
+                                        </div>
+                                    </td>
+                                    <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
+                                    <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id.id}}">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
                             {% endif %}
-                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -251,7 +247,6 @@
                             <span class="step"></span>
                         </div>
                     
-                        <!-- <script src="{% static 'js/modalusuarios.js'%}"></script> -->
                         <script>
                             // Obtén todos los elementos con la clase "close-btn"
                             var closeBtns = document.querySelectorAll('.close-btnn');
@@ -279,7 +274,7 @@
                     <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
                     <h2 class="titulo-modal">Agregar Nuevo Usuario</h2>
 
-                    <form action="/signup/" method="POST" enctype="multipart/form-data" id="registrationForm">{% csrf_token %}
+                    <form action="/signup/" method="POST" enctype="multipart/form-data" id="registrationForm">
                         {% csrf_token %}
                         {% if messages %}
                         {% if messages %}
@@ -352,25 +347,14 @@
                                     <div class="titulo">Confirmar Contraseña:</div>
                                     <input type="password" id="id_password2" name="password2" placeholder="confirm your password" class="campos" required>
                                 </div>
-                                <!-- <div class="divisor">
-                                    <div class="titulo">Rol:</div>
-                                    <select name="is_superuser" id="is_superuser" class="campos-seleccion" required>
-                                        <option value="" disabled selected>Selecciona un rol</option>
-                                        <option value="1">Administrador</option>
-                                        <option value="0">Empleado</option>
-                                    </select>
-                                </div> -->
                                 <div class="divisor">
                                     <div class="titulo">Rol:</div>
                                     <select name="grupo" id="grupo" class="campos-seleccion" required>
                                         <option value="" disabled selected>Selecciona un grupo</option>
-                                        {% for group in groups %}
+                                        {% for group in grupos %}
                                             <option value="{{ group.name }}">{{ group.name }}</option>
                                         {% endfor %}
                                     </select>
-                                </div>
-                                <div class="divisor">
-                                    <input type="hidden" name="grupo" id="grupo" value="Empleado">
                                 </div>
                             </div>
                             <!--Termino de segunda columna-->

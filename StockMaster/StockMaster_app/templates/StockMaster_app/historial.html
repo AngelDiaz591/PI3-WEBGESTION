@@ -3,18 +3,14 @@
 {% load static %}
 <div class="ctn">
     <main>
+        <div class="seccion">
             <h1>Historial</h1>
-        <div class="recent-orders">
-            <div class="principal">
-                <div class="encabezado">
-                    <h2>Movimientos</h2>
-                </div>
-                <div class="search-bar-v1">
-                    <label for="search-input"></label><input type="text" id="search-input" placeholder="Buscar movimientos..." oninput="convertToUppercase()">
-                    <i class="fas fa-search" id="search-icon"></i>
-                </div>
+            <div class="search-bar">
+                <label for="search-input"></label><input type="text" id="search-input" placeholder="Buscar movimientos..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
             </div>
-            <br>
+        </div> 
+        <div class="recent-orders">
             <div class="messages-container">
                 {% for message in messages %}
                     <div class="alert alert-custom" role="alert">
@@ -23,7 +19,12 @@
                     </div>
                 {% endfor %}
             </div>
-            <div style="overflow: auto; height: 400px;">
+            <div style="overflow: auto; height: 650px;">
+                <div class="principal">
+                    <div class="encabezado">
+                            <h2>Movimientos</h2>
+                    </div>
+                </div>
                 <table>
                     <thead>
                         <tr>

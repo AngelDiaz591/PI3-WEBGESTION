@@ -343,12 +343,6 @@
     color: var(--color-white);
 }
 
-.principal{
-    justify-content:space-between;
-    display: flex;
-  /*   padding: 1.5rem -3rem; */
-}
-
 /*------------------------------------- MODAL DE REGISTRO DE USUARIOS ----------------------------------------------*/
 
 .content-modal-usuarios{

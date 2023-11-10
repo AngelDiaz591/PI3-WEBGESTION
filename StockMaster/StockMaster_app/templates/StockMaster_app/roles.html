@@ -109,24 +109,24 @@
                                 <div class="titulo">Principal:</div>
                                 <select name="principal" id="principal" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Inventario:</div>
                                 <select name="inventario" id="inventario" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Productos:</div>
                                 <select name="productos" id="productos" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                         </div>
@@ -138,32 +138,32 @@
                                 <div class="titulo">Proveedores:</div>
                                 <select name="proveedores" id="proveedores" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Etiquetas:</div>
                                 <select name="etiquetas" id="etiquetas" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Productos recuperacion:</div>
                                 <select name="productosRecuperacion" id="productosRecuperacion" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Proveedores recuperacion:</div>
                                 <select name="proveedoresRecuperacion" id="proveedoresRecuperacion" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                         </div>
@@ -175,31 +175,31 @@
                                 <div class="titulo">Etiquetas recuperacion:</div>
                                 <select name="etiquetasRecuperacion" id="etiquetasRecuperacion" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                                 <div class="divisor">
                                     <div class="titulo">Usuarios:</div>
                                     <select name="usuarios" id="usuarios" class="campos-seleccion" required>
                                         <option value="" disabled selected>Si[1] o No[0]</option>
-                                        <option value="1">1</option>
-                                        <option value="0">0</option>
+                                        <option value="1">Si</option>
+                                        <option value="0">No</option>
                                     </select>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Roles:</div>
                                     <select name="roles" id="roles" class="campos-seleccion" required>
                                         <option value="" disabled selected>Si[1] o No[0]</option>
-                                        <option value="1">1</option>
-                                        <option value="0">0</option>
+                                        <option value="1">Si</option>
+                                        <option value="0">No</option>
                                     </select>
                                 </div>
                                 <div class="divisor">
                                     <div class="titulo">Soporte:</div>
                                     <select name="soporte" id="soporte" class="campos-seleccion" required>
                                         <option value="" disabled selected>Si[1] o No[0]</option>
-                                        <option value="1">1</option>
-                                        <option value="0">0</option>
+                                        <option value="1">Si</option>
+                                        <option value="0">No</option>
                                     </select>
                                 </div>
                             </div>
@@ -244,32 +244,32 @@
                     <div class="form-column">
                         <div class="divisor">
                             <div class="titulo">Nombre:</div>
-                            <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Nombre"
+                            <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Nombre" value="""
                                 maxlength="50" required oninput="convertToUppercase()">
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Principal:</div>
                             <select name="principal" id="Etxprincipal" class="campos-seleccion" required>
-                                <option value="" disabled>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="{{c.principal}}" disabled>Si[1] o No[0]</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>                            
                         </div>
                         <div class="divisor">
                             <div class="titulo">Inventario:</div>
                             <select name="inventario" id="EtxtInventario" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Productos:</div>
                             <select name="productos" id="Etxtproductos" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                     </div>
@@ -281,32 +281,32 @@
                             <div class="titulo">Proveedores:</div>
                             <select name="proveedores" id="Etxtproveedores" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Etiquetas:</div>
                             <select name="etiquetas" id="Etxtetiquetas" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Productos recuperacion:</div>
                             <select name="productosRecuperacion" id="EtxtproductosRecuperacion" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Proveedores recuperacion:</div>
                             <select name="proveedoresRecuperacion" id="EtxtproveedoresRecuperacion" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                     </div>
@@ -318,31 +318,31 @@
                             <div class="titulo">Etiquetas recuperacion:</div>
                             <select name="etiquetasRecuperacion" id="EtxtetiquetasRecuperacion" class="campos-seleccion" required>
                                 <option value="" disabled selected>Si[1] o No[0]</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                             <div class="divisor">
                                 <div class="titulo">Usuarios:</div>
                                 <select name="usuarios" id="Etxtusuarios" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Roles:</div>
                                 <select name="roles" id="Etxtroles" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Soporte:</div>
                                 <select name="soporte" id="Etxtsoporte" class="campos-seleccion" required>
                                     <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                         </div>

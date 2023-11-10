@@ -28,24 +28,12 @@ from django.template.loader import render_to_string
 
 # Create your views here.
 
-class CustomUserCreationForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your first name.')
-    last_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your last name.')
-    email = forms.EmailField()
+
 
 #____________________________________________________________________________________________________________________________________
  
 #--------------------------------------------------------------- L O G I N --------------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
-
-def is_superuser(user):
-    return user.is_authenticated and user.is_superuser
-
-@user_passes_test(is_superuser)
-@login_required(login_url='signin')
-def get_imagen_url(imagen_binaria):
-    imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
-    return f"data:image/jpeg;base64,{imagen_base64}"
     
 def signin(request):
     if request.user.is_authenticated:
@@ -107,7 +95,18 @@ def usuarios(request):
     else:
         return redirect('/actividades')
 
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your first name.')
+    last_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your last name.')
+    email = forms.EmailField()
 
+def is_superuser(user):
+    return user.is_authenticated and user.is_superuser
+@user_passes_test(is_superuser)
+@login_required(login_url='signin')
+def get_imagen_url(imagen_binaria):
+    imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
+    return f"data:image/jpeg;base64,{imagen_base64}"
 def signup(request):
   
     if request.method == 'POST':
@@ -127,7 +126,6 @@ def signup(request):
             calle = request.POST['calle']
             colonia = request.POST['colonia']
             num_ext = request.POST['num_ext']
-            num_int = request.POST['num_int']
             cp = request.POST['cp']
             col_mun = request.POST['col_mun']
             pais = request.POST['pais']
@@ -142,7 +140,7 @@ def signup(request):
             cambio = 0 
 
             imagen_bytes = imagen.read()
-            usuario = Usuario(calle=calle, colonia=colonia, num_ext=num_ext, num_int=num_int, cp=cp, col_mun= col_mun, pais=pais,  num_tel=num_tel, mun_cel= mun_cel, curp=curp, t_sangre=t_sangre, rfc=rfc, n_seg_social=n_seg_social, imagen=imagen_bytes,id_id=user.id,permiso = permiso, cambio= cambio)
+            usuario = Usuario(calle=calle, colonia=colonia, num_ext=num_ext, cp=cp, col_mun= col_mun, pais=pais,  num_tel=num_tel, mun_cel= mun_cel, curp=curp, t_sangre=t_sangre, rfc=rfc, n_seg_social=n_seg_social, imagen=imagen_bytes,id_id=user.id,permiso = permiso, cambio= cambio)
             username = user.username  # Asignar el valor del nombre de usuario del usuario actual
 #<-----------------Guarda en el Historial------------------------->
             historial= Historial.objects.all()
@@ -188,31 +186,7 @@ def signup(request):
 
     return render(request, 'StockMaster_app/usuarios.html', {'form': form})
     
-def signin(request):
-    if request.user.is_authenticated:
-        return redirect('/actividades')
 
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('/actividades')
-        else:
-            form = AuthenticationForm(request.POST)
-            if not User.objects.filter(username=username).exists():
-                # Agrega un mensaje de error con la etiqueta 'signin'
-                messages.error(request, 'Usuario no Registrado', extra_tags='signin')
-            else:
-                messages.error(request, 'Contraseña Incorrecta', extra_tags='signin')
-        return render(request, 'registration/login.html', {'form': form})
-
-    else:
-        form = AuthenticationForm()
-        return render(request, 'registration/login.html', {'form': form})
-    
 def home(request):
     if request.user.is_authenticated:
         return redirect('/actividades')
@@ -1053,6 +1027,10 @@ def editarRolMod(request):
         try:
             rol = Group.objects.get(id= id)
             rol_extra = RolExtra.objects.get(grupo=rol)
+            context = {
+                'rol': rol,
+                'rol_extra': rol_extra,
+            }
         except RolExtra.DoesNotExist:
             messages.error(request, 'El Rol no se encontró o no existe.')
             return redirect('/rol/')  # Puedes redirigir a donde desees

@@ -32,7 +32,6 @@
         </div>
     </div>  
 </div>
-
 <main>
     <h1>INVENTARIO</h1>
     <div class="recent-orders">
@@ -56,6 +55,7 @@
                                         {% endif %}
                         {% endfor %}
                     </select>
+                    <!-- HTML !-->
                 </div>
                 <div class="encabezado2">
                     <button type="submit" class="btn btn-filter">
@@ -74,6 +74,19 @@
                 </div>
             </div>
         </form>
+        <br>
+        <div class="principal">
+            <div class="encabezado">
+            {% for c in Categoria %}
+                {% if c.status == 1 %}
+                    <button class="button-17" role="button" value="{{ c.categoria_id }}">{{ c.nombre }}</button>
+                {% endif %}
+            {% endfor %}
+               
+            </div>
+        </div>
+        <br>
+
             {% for producto in Productos %} 
                 {% if producto.status %}
                     {% if not request.GET.categoria or producto.id_categorias.nombre == request.GET.categoria %}

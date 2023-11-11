@@ -107,27 +107,31 @@
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Principal:</div>
-                                <select name="principal" id="principal" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
+                                <div class="check">
+                                    <input type="checkbox" name="principal" id="checkbox1" />
+                                    <label for="checkbox1">Principal</label>
+                                </div>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Inventario:</div>
-                                <select name="inventario" id="inventario" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
+                                <div class="check">
+                                    <input type="checkbox" name="inventario" id="checkbox2" />
+                                    <label for="checkbox2">Inventario</label>
+                                </div>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Productos:</div>
-                                <select name="productos" id="productos" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
+                                <div class="check">
+                                    <input type="checkbox" name="productos" id="checkbox3" />
+                                    <label for="checkbox3">Productos</label>
+                                </div>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Proveedores:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="proveedores" id="checkbox4" />
+                                    <label for="checkbox4">Productos</label>
+                                </div>
                             </div>
                         </div>
                         <!--Fin primer columna-->
@@ -135,36 +139,39 @@
                         <!--Segunda columna-->
                         <div class="form-column">
                             <div class="divisor">
-                                <div class="titulo">Proveedores:</div>
-                                <select name="proveedores" id="proveedores" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
-                            </div>
-                            <div class="divisor">
                                 <div class="titulo">Etiquetas:</div>
-                                <select name="etiquetas" id="etiquetas" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
+                                <div class="check">
+                                    <input type="checkbox" name="etiquetas" id="checkbox5" />
+                                    <label for="checkbox5">Principal</label>
+                                </div>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Productos recuperacion:</div>
-                                <select name="productosRecuperacion" id="productosRecuperacion" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
+                                <div class="check">
+                                    <input type="checkbox" name="productosRecuperacion" id="checkbox6" />
+                                    <label for="checkbox6">Principal</label>
+                                </div>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Proveedores recuperacion:</div>
-                                <select name="proveedoresRecuperacion" id="proveedoresRecuperacion" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
+                                <div class="check">
+                                    <input type="checkbox" name="proveedoresRecuperacion" id="checkbox7" />
+                                    <label for="checkbox7">Principal</label>
+                                </div>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Etiquetas recuperacion:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="etiquetasRecuperacion" id="checkbox8" />
+                                    <label for="checkbox8">Principal</label>
+                                </div>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Usuarios:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="usuarios" id="checkbox9" />
+                                    <label for="checkbox9">Principal</label>
+                                </div>
                             </div>
                         </div>
                         <!--Fin Segunda columna-->
@@ -172,39 +179,61 @@
                         <!--Tercera columna-->
                         <div class="form-column">
                             <div class="divisor">
-                                <div class="titulo">Etiquetas recuperacion:</div>
-                                <select name="etiquetasRecuperacion" id="etiquetasRecuperacion" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
-                                <div class="divisor">
-                                    <div class="titulo">Usuarios:</div>
-                                    <select name="usuarios" id="usuarios" class="campos-seleccion" required>
-                                        <option value="" disabled selected>Si[1] o No[0]</option>
-                                        <option value="1">1</option>
-                                        <option value="0">0</option>
-                                    </select>
+                                <div class="titulo">Roles:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="roles" id="checkbox10" />
+                                    <label for="checkbox10">Principal</label>
                                 </div>
-                                <div class="divisor">
-                                    <div class="titulo">Roles:</div>
-                                    <select name="roles" id="roles" class="campos-seleccion" required>
-                                        <option value="" disabled selected>Si[1] o No[0]</option>
-                                        <option value="1">1</option>
-                                        <option value="0">0</option>
-                                    </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Soporte:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="soporte" id="checkbox11" />
+                                    <label for="checkbox11">Principal</label>
                                 </div>
-                                <div class="divisor">
-                                    <div class="titulo">Soporte:</div>
-                                    <select name="soporte" id="soporte" class="campos-seleccion" required>
-                                        <option value="" disabled selected>Si[1] o No[0]</option>
-                                        <option value="1">1</option>
-                                        <option value="0">0</option>
-                                    </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Contraseña:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="contra" id="checkbox12" />
+                                    <label for="checkbox12">Principal</label>
+                                </div>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Historial General:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialGeneral" id="checkbox13" />
+                                    <label for="checkbox13">Principal</label>
+                                </div>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Historial Modificaciones:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialModificaciones" id="checkbox14" />
+                                    <label for="checkbox14">Principal</label>
                                 </div>
                             </div>
                         </div>
-                        <!--Fin Tercera columna-->
+                        <!-- Fin Tercera columna -->
+
+                        <!-- Cuarta columna -->
+                        <div class="form-column">
+                            <div class="divisor">
+                                <div class="titulo">Historial Movimientos:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialMovimientos" id="checkbox15" />
+                                    <label for="checkbox15">Principal</label>
+                                </div>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Historial Eliminados:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialEliminados" id="checkbox16" />
+                                    <label for="checkbox16">Principal</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Fin Cuarta columna-->
                     </div>
                     <!--Termino de la tabla de columnas-->
                     <div class="btn-cerrar">
@@ -272,11 +301,6 @@
                                 <option value="0">0</option>
                             </select>
                         </div>
-                    </div>
-                    <!--Fin de Primer columna-->
-
-                    <!--Segunda columna-->
-                    <div class="form-column">
                         <div class="divisor">
                             <div class="titulo">Proveedores:</div>
                             <select name="proveedores" id="Etxtproveedores" class="campos-seleccion" required>
@@ -285,6 +309,11 @@
                                 <option value="0">0</option>
                             </select>
                         </div>
+                    </div>
+                    <!--Fin de Primer columna-->
+
+                    <!--Segunda columna-->
+                    <div class="form-column">
                         <div class="divisor">
                             <div class="titulo">Etiquetas:</div>
                             <select name="etiquetas" id="Etxtetiquetas" class="campos-seleccion" required>
@@ -309,11 +338,6 @@
                                 <option value="0">0</option>
                             </select>
                         </div>
-                    </div>
-                    <!--Fin Segunda columna-->
-                    
-                    <!--Tercera columna-->
-                    <div class="form-column">
                         <div class="divisor">
                             <div class="titulo">Etiquetas recuperacion:</div>
                             <select name="etiquetasRecuperacion" id="EtxtetiquetasRecuperacion" class="campos-seleccion" required>
@@ -321,30 +345,77 @@
                                 <option value="1">1</option>
                                 <option value="0">0</option>
                             </select>
-                            <div class="divisor">
-                                <div class="titulo">Usuarios:</div>
-                                <select name="usuarios" id="Etxtusuarios" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Roles:</div>
-                                <select name="roles" id="Etxtroles" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Soporte:</div>
-                                <select name="soporte" id="Etxtsoporte" class="campos-seleccion" required>
-                                    <option value="" disabled selected>Si[1] o No[0]</option>
-                                    <option value="1">1</option>
-                                    <option value="0">0</option>
-                                </select>
-                            </div>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Usuarios:</div>
+                            <select name="usuarios" id="Etxtusuarios" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--Fin Segunda columna-->
+                    
+                    <!--Tercera columna-->
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Roles:</div>
+                            <select name="roles" id="Etxtroles" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Soporte:</div>
+                            <select name="soporte" id="Etxtsoporte" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Contraseña:</div>
+                            <select name="contra" id="Etxtcontra" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Historial General:</div>
+                            <select name="historialGeneral" id="EtxthistorialGeneral" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Historial Modificaciones:</div>
+                            <select name="historialModificaciones" id="EtxthistorialModificaciones" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Historial Movimientos:</div>
+                            <select name="historialMovimientos" id="EtxthistorialMovimientos" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Historial Eliminados:</div>
+                            <select name="historialEliminados" id="EtxthistorialEliminados" class="campos-seleccion" required>
+                                <option value="" disabled selected>Si[1] o No[0]</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                            </select>
                         </div>
                     </div>
                     <!--Fin Tercera columna-->

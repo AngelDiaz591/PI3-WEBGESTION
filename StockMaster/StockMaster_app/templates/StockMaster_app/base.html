@@ -14,6 +14,7 @@
     <link  rel="stylesheet" href="{% static 'css/botones.css' %}">
     <link  rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <link  rel="stylesheet" href="{% static 'css/estructura.css' %}">
+    <link  rel="stylesheet" href="{% static 'css/prueba.css' %}">
 
     <!--Icon-->
     <!-- <link rel="icon" type="image/png" href="{% static 'productos/img/eto2.jpg' %}"> -->
@@ -122,7 +123,7 @@
                             <div style="margin-left: 1rem;">
                                 {% if perms.StockMaster_app.view_rolextra %}
                                     <a href="{% url 'rol' %}" class="active">
-                                        <span class="material-symbols-outlined">local_shipping</span>
+                                        <span class="material-symbols-outlined">groups</span>
                                         <h3>Roles</h3>
                                     </a>
                                 {% endif %}
@@ -142,33 +143,43 @@
                         </div>
                     </div>
                 {% endif %}
-                <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_historial" data-submenu-state="closed">
-                    <span class="material-symbols-outlined">history</span>
-                    <h3>Historial</h3>
-                    <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
-                </a>
-                <div class="submenu-container active">
-                    <div class="submenu">
-                        <div style="margin-left: 1rem;">
-                            <a href="{% url 'historial' %}" class="active">
-                                <span class="material-symbols-outlined">inventory</span>
-                                <h3>General</h3>
-                            </a>
-                            <a href="{% url 'historialModificaciones' %}" class="active">
-                                <span class="material-symbols-outlined">inventory</span>
-                                <h3>Modificaciones</h3>
-                            </a>
-                            <a href="{% url 'historialMovimientos' %}" class="active">
-                                <span class="material-symbols-outlined">local_shipping</span>
-                                <h3>Movimientos</h3>
-                            </a>
-                            <a href="{% url 'historialEliminados' %}" class="active">
-                                <span class="material-symbols-outlined">settings</span>
-                                <h3>Eliminados</h3>
-                            </a>
+                {% if perms.StockMaster_app.view_historial or perms.StockMaster_app.add_historial or perms.StockMaster_app.change_historial or perms.StockMaster_app.delete_historial %}
+                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_historial" data-submenu-state="closed">
+                        <span class="material-symbols-outlined">history</span>
+                        <h3>Historial</h3>
+                        <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
+                    </a>
+                    <div class="submenu-container active">
+                        <div class="submenu">
+                            <div style="margin-left: 1rem;">
+                                {% if perms.StockMaster_app.view_historial %}
+                                    <a href="{% url 'historial' %}" class="active">
+                                        <span class="material-symbols-outlined">inventory</span>
+                                        <h3>General</h3>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.add_historial %}
+                                    <a href="{% url 'historialModificaciones' %}" class="active">
+                                        <span class="material-symbols-outlined">inventory</span>
+                                        <h3>Modificaciones</h3>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.change_historial %}
+                                    <a href="{% url 'historialMovimientos' %}" class="active">
+                                        <span class="material-symbols-outlined">local_shipping</span>
+                                        <h3>Movimientos</h3>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.delete_historial %}
+                                    <a href="{% url 'historialEliminados' %}" class="active">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        <h3>Eliminados</h3>
+                                    </a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
                 {% if perms.StockMaster_app.view_mensajes %}
                     <a href="{% url 'soporte' %}" class="main-menu-link active">
                         <span class="material-symbols-outlined">report_gmailerrorred</span>
@@ -189,10 +200,6 @@
                     <h3>Cerrar Sesion</h3>
                 </a>
             </div>
-
-
-
-           
         </aside>
         <!--Fin Menú-->
 

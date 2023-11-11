@@ -205,6 +205,11 @@ function openEditModalRol(productId) {
             $('#Etxtusuarios').val(data.usuarios)
             $('#Etxtroles').val(data.roles)
             $('#Etxtsoporte').val(data.soporte)
+            $('#Etxtcontra').val(data.contra)
+            $('#EtxthistorialGeneral').val(data.historialGeneral)
+            $('#EtxthistorialModificaciones').val(data.historialModificaciones)
+            $('#EtxthistorialMovimientos').val(data.historialMovimientos)
+            $('#EtxthistorialEliminados').val(data.historialEliminados)
        
         },
         error: function(jqXHR, textStatus, errorThrown){

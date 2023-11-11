@@ -93,6 +93,11 @@ class RolExtra(models.Model):
     usuarios = models.BooleanField(default=False)
     roles = models.BooleanField(default=False)
     soporte = models.BooleanField(default=False)
+    contra = models.BooleanField(default=False)
+    historialGeneral = models.BooleanField(default=False)
+    historialModificaciones = models.BooleanField(default=False)
+    historialMovimientos = models.BooleanField(default=False)
+    historialEliminados = models.BooleanField(default=False)
     
     movi = models.CharField(max_length=100, null= True)
     username = models.CharField(max_length=100, null=True)

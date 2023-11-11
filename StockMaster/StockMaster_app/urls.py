@@ -35,8 +35,8 @@ urlpatterns = [
     path('editarProducto2/', views.editarProductoMod),
 
     path('productos/status/<int:idproducts>/', views.cambio_status, name='cambio_status'),
-    path('recuperar_producto/statusre/<int:idproducts>/', views.cambio_statusre, name='recuperar_producto/statusre'),
-    path('recuperar_producto/eliminaInventario/<idproducts>', views.eliminaInventario),
+    path('statusre/<int:idproducts>/', views.cambio_statusre, name='statusre'),
+    path('eliminaInventario/<idproducts>', views.eliminaInventario),
     
     #paths Proveedores
     path('prov/', views.prov, name='prov'),
@@ -45,7 +45,7 @@ urlpatterns = [
     path('editarProveedor2/', views.editarProveedorMod),
 
     path('prov/cambio_statuspro/<int:idProveedor>',views.cambio_statuspro, name='cambio_statuspro'),
-    path('recuperar_proveedor/cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='recuperar_proveedor/cambio_statusrepro/'),
+    path('cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='cambio_statusrepro'),
     path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
 
     #paths Categorias
@@ -64,7 +64,7 @@ urlpatterns = [
     path('config/edicionMarca2/<int:marca_id>/', views.edicionMarca2, name='edicionMarca2'),
     path('editarMarca2/', views.editarMarcaMod),
 
-    path('recuperar_marca/cambio_statusremar1/<int:marca_id>/', views.cambio_statusremar, name="recuperar_marca/cambio_statusremar1"),
+    path('cambio_statusremar/<int:marca_id>/', views.cambio_statusremar, name="cambio_statusremar"),
     path('cambio_statusmar/<int:marca_id>/', views.cambio_statusmar, name='cambio_statusmar'),
     path('eliminar-marca/<int:marca_id>/', views.eliminar_marca, name='eliminarmarcas'),
 
@@ -101,7 +101,6 @@ urlpatterns = [
 
     path('soporte/', views.soporte, name='soporte'),
     path('comentario/',views.comentario),
-    
     path('usuarios/', views.usuarios, name='usuarios'),
     
 

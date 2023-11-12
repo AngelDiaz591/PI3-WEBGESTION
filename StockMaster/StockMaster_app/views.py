@@ -1005,6 +1005,7 @@ def eliminar_marca(request, marca_id):
 #----------------------------------------------------------------- R O L E S ------------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
 
+
 def get_principal(request):
     return request.POST.get('principal') == 'on'
 def get_inventario(request):
@@ -1014,7 +1015,7 @@ def get_productos(request):
 def get_proveedores(request):
     return request.POST.get('proveedores') == 'on'
 def get_etiquetas(request):
-    return request.POST.get('productos') == 'on'
+    return request.POST.get('etiquetas') == 'on'
 def get_prodRecu(request):
     return request.POST.get('productosRecuperacion') == 'on'
 def get_provRecu(request):
@@ -1096,49 +1097,34 @@ def registrar_rol(request):
 
             if principal:
                 rol.permissions.add(Permission.objects.get(codename='view_marca'))
-
             if inventario:
                 rol.permissions.add(Permission.objects.get(codename='delete_marca'))
-
             if productos:
                 rol.permissions.add(Permission.objects.get(codename='view_productos'))
-
             if proveedores:
                 rol.permissions.add(Permission.objects.get(codename='view_proveedores'))
-
             if etiquetas:
                 rol.permissions.add(Permission.objects.get(codename='view_categoria'))
-
             if productosRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_productos'))
-
             if proveedoresRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_proveedores'))
-
             if etiquetasRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_categoria'))
-
             if usuarios:
                 rol.permissions.add(Permission.objects.get(codename='view_usuario'))
-
             if roles:
                 rol.permissions.add(Permission.objects.get(codename='view_rolextra'))
-
             if soporte:
                 rol.permissions.add(Permission.objects.get(codename='view_mensajes'))
-
             if contra:
                 rol.permissions.add(Permission.objects.get(codename='delete_rolextra'))
-
             if historialGeneral:
                 rol.permissions.add(Permission.objects.get(codename='view_historial'))
-
             if historialModificaciones:
                 rol.permissions.add(Permission.objects.get(codename='add_historial'))
-
             if historialMovimientos:
                 rol.permissions.add(Permission.objects.get(codename='change_historial'))
-                
             if historialEliminados:
                 rol.permissions.add(Permission.objects.get(codename='delete_historial'))
             
@@ -1158,22 +1144,22 @@ def editarRolMod(request):
         try:
             id = request.POST.get('productId')
             nombre = request.POST.get('nombre')
-            principal = request.POST['principal']
-            inventario = request.POST['inventario']
-            productos = request.POST['productos']
-            proveedores = request.POST['proveedores']
-            etiquetas = request.POST['etiquetas']
-            productosRecuperacion = request.POST['productosRecuperacion']
-            proveedoresRecuperacion = request.POST['proveedoresRecuperacion']
-            etiquetasRecuperacion = request.POST['etiquetasRecuperacion']
-            usuarios = request.POST['usuarios']
-            roles = request.POST['roles']
-            contra = request.POST['contra']
-            historialGeneral = request.POST['historialGeneral']
-            historialModificaciones = request.POST['historialModificaciones']
-            historialMovimientos = request.POST['historialMovimientos']
-            historialEliminados = request.POST['historialEliminados']
-            soporte = request.POST['soporte']
+            principal = get_principal(request)
+            inventario = get_inventario(request)
+            productos = get_productos(request)
+            proveedores = get_proveedores(request)
+            etiquetas = get_etiquetas(request)
+            productosRecuperacion = get_prodRecu(request)
+            proveedoresRecuperacion = get_provRecu(request)
+            etiquetasRecuperacion = get_etiqRecu(request)
+            usuarios = get_usuarios(request)
+            roles = get_roles(request)
+            contra = get_contra(request)
+            historialGeneral = get_histGen(request)
+            historialModificaciones = get_histMod(request)
+            historialMovimientos = get_histMov(request)
+            historialEliminados = get_histEli(request)
+            soporte = get_soporte(request)
 
             try:
                 rol = Group.objects.get(id= id)
@@ -1204,99 +1190,83 @@ def editarRolMod(request):
                 rol_extra.historialMovimientos = historialMovimientos 
                 rol_extra.historialEliminados = historialEliminados 
 
-                if principal=='1':
-                    permiso = Permission.objects.get(codename='view_marca')
-                    rol.permissions.add(permiso)
+                if principal:
+                    rol.permissions.add(Permission.objects.get(codename='view_marca'))
                 else:
                     permiso = Permission.objects.get(codename='view_marca')
                     rol.permissions.remove(permiso)
-                if inventario=='1':
-                    permiso = Permission.objects.get(codename='delete_marca')
-                    rol.permissions.add(permiso)
+                if inventario:
+                    rol.permissions.add(Permission.objects.get(codename='delete_marca'))
                 else:
                     permiso = Permission.objects.get(codename='delete_marca')
                     rol.permissions.remove(permiso)
-                if productos=='1':
-                    permiso = Permission.objects.get(codename='view_productos')
-                    rol.permissions.add(permiso)
+                if productos:
+                    rol.permissions.add(Permission.objects.get(codename='view_productos'))
                 else:
                     permiso = Permission.objects.get(codename='view_productos')
                     rol.permissions.remove(permiso)
-                if proveedores=='1':
-                    permiso = Permission.objects.get(codename='view_proveedores')
-                    rol.permissions.add(permiso)
+                if proveedores:
+                    rol.permissions.add(Permission.objects.get(codename='view_proveedores'))
                 else:
                     permiso = Permission.objects.get(codename='view_proveedores')
                     rol.permissions.remove(permiso)
-                if etiquetas=='1':
-                    permiso = Permission.objects.get(codename='view_categoria')
-                    rol.permissions.add(permiso)
+                if etiquetas:
+                    rol.permissions.add(Permission.objects.get(codename='view_categoria'))
                 else:
                     permiso = Permission.objects.get(codename='view_categoria')
                     rol.permissions.remove(permiso)
-                if productosRecuperacion=='1':
-                    permiso = Permission.objects.get(codename='delete_productos')
-                    rol.permissions.add(permiso)
+                if productosRecuperacion:
+                    rol.permissions.add(Permission.objects.get(codename='delete_productos'))
                 else:
                     permiso = Permission.objects.get(codename='delete_productos')
                     rol.permissions.remove(permiso)
-                if proveedoresRecuperacion=='1':
-                    permiso = Permission.objects.get(codename='delete_proveedores')
-                    rol.permissions.add(permiso)
+                if proveedoresRecuperacion:
+                    rol.permissions.add(Permission.objects.get(codename='delete_proveedores'))
                 else:
                     permiso = Permission.objects.get(codename='delete_proveedores')
                     rol.permissions.remove(permiso)
-                if etiquetasRecuperacion=='1':
-                    permiso = Permission.objects.get(codename='delete_categoria')
-                    rol.permissions.add(permiso)
+                if etiquetasRecuperacion:
+                    rol.permissions.add(Permission.objects.get(codename='delete_categoria'))
                 else:
                     permiso = Permission.objects.get(codename='delete_categoria')
                     rol.permissions.remove(permiso)
-                if usuarios=='1':
-                    permiso = Permission.objects.get(codename='view_usuario')
-                    rol.permissions.add(permiso)
+                if usuarios:
+                    rol.permissions.add(Permission.objects.get(codename='view_usuario'))
                 else:
                     permiso = Permission.objects.get(codename='view_usuario')
                     rol.permissions.remove(permiso)
-                if roles=='1':
-                    permiso = Permission.objects.get(codename='view_rolextra')
-                    rol.permissions.add(permiso)
+                if roles:
+                    rol.permissions.add(Permission.objects.get(codename='view_rolextra'))
                 else:
                     permiso = Permission.objects.get(codename='view_rolextra')
                     rol.permissions.remove(permiso)
-                if soporte=='1':
-                    permiso = Permission.objects.get(codename='view_mensajes')
-                    rol.permissions.add(permiso)
+                if soporte:
+                    rol.permissions.add(Permission.objects.get(codename='view_mensajes'))
                 else:
                     permiso = Permission.objects.get(codename='view_mensajes')
                     rol.permissions.remove(permiso)
-                if contra=='1':
-                    permiso = Permission.objects.get(codename='delete_rolextra')
-                    rol.permissions.add(permiso)
+                if contra:
+                    rol.permissions.add(Permission.objects.get(codename='delete_rolextra'))
                 else:
                     permiso = Permission.objects.get(codename='delete_rolextra')
                     rol.permissions.remove(permiso)
-                if historialGeneral=='1':
-                    permiso = Permission.objects.get(codename='view_historial')
-                    rol.permissions.add(permiso)
+                if historialGeneral:
+                    rol.permissions.add(Permission.objects.get(codename='view_historial'))
                 else:
                     permiso = Permission.objects.get(codename='view_historial')
                     rol.permissions.remove(permiso)
-                if historialModificaciones=='1':
-                    permiso = Permission.objects.get(codename='add_historial')
-                    rol.permissions.add(permiso)
+                if historialModificaciones:
+                    rol.permissions.add(Permission.objects.get(codename='add_historial'))
                 else:
                     permiso = Permission.objects.get(codename='add_historial')
                     rol.permissions.remove(permiso)
-                if historialMovimientos=='1':
-                    permiso = Permission.objects.get(codename='change_historial')
-                    rol.permissions.add(permiso)
+                if historialMovimientos:
+                    rol.permissions.add(Permission.objects.get(codename='change_historial'))
                 else:
                     permiso = Permission.objects.get(codename='change_historial')
                     rol.permissions.remove(permiso)
-                if historialEliminados=='1':
-                    permiso = Permission.objects.get(codename='delete_historial')
-                    rol.permissions.add(permiso)
+                if historialEliminados:
+                    rol.permissions.add(Permission.objects.get(codename='delete_historial'))
                 else:
                     permiso = Permission.objects.get(codename='delete_historial')
                     rol.permissions.remove(permiso)

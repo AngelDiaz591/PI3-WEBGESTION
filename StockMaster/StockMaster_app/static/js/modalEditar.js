@@ -210,7 +210,29 @@ function openEditModalRol(productId) {
             $('#EtxthistorialModificaciones').val(data.historialModificaciones)
             $('#EtxthistorialMovimientos').val(data.historialMovimientos)
             $('#EtxthistorialEliminados').val(data.historialEliminados)
-       
+            // Obtiene los checkbox
+            const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
+
+            // Recorre todos los checkbox
+            for (let i = 0; i < checkboxes.length; i++) {
+              const checkbox = checkboxes[i];
+
+              // Obtiene el nombre del checkbox
+              const checkboxName = checkbox.getAttribute('name');
+
+              // Obtiene el valor del checkbox de la base de datos
+              const checkboxValue = data[checkboxName];
+
+              // Si el valor del checkbox es 1 o true, activa el checkbox
+              if (checkboxValue === 1 || checkboxValue === true) {
+                checkbox.checked = true;
+              }
+              // Obtiene el checkbox52
+              const checkbox52 = document.querySelector('#checkbox52');
+
+              // Desactiva el checkbox52
+              checkbox52.checked = false;
+            }
         },
         error: function(jqXHR, textStatus, errorThrown){
         }
@@ -272,6 +294,16 @@ window.addEventListener("click", function(event) {
         editModalMarca.style.display = "none";
     }
     if (event.target === editModalRol) {
+        // Recorre todos los checkbox
+        const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
+
+        // Recorre todos los checkbox
+        for (let i = 0; i < checkboxes.length; i++) {
+            const checkbox = checkboxes[i];
+
+            // Desactiva el checkbox
+            checkbox.checked = false;
+        }
         editModalRol.style.display = "none";
     }
 });

@@ -102,7 +102,7 @@
                     <div class="divisor">
                         <div class="titulo">Area:</div>
                         <input class="campos" type="text" id="nombreArea" name="nombreArea" class="campos" placeholder="Nombre Area" 
-                            maxlength="20" oninput="convertToUppercase()" required>
+                        pattern = "[A-Z0-9]{2,50}" maxlength="50" oninput="convertToUppercase()" required>
                         <span class="error-message" style="color: red;"></span>
                     </div>
                     <div class="btn-cerrar">
@@ -126,8 +126,8 @@
                 <input class="campos" type="hidden" id="editProductId" name="productId" value="{{ c.area_id }}">
                 <div class="divisor">
                     <div class="titulo">Nombre:</div>
-                    <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Area"
-                        maxlength="50" required oninput="convertToUppercase()">
+                    <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Nombre Area"
+                    pattern = "[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
                     <br><span class="error-message" style="color: red;"></span>
                 </div>
                 <div class="btn-cerrar">

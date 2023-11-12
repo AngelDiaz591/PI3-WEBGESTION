@@ -109,7 +109,8 @@
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Nombre:</div>
-                                <input type="text" id="RolNew" name="RolNew" class="campos" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" required>
+                                <input type="text" id="RolNew" name="RolNew" class="campos" placeholder="Nombre" 
+                                pattern="[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
@@ -292,7 +293,7 @@
                         <div class="divisor">
                             <div class="titulo">Nombre:</div>
                             <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Nombre"
-                                maxlength="50" required oninput="convertToUppercase()">
+                            pattern = "[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">

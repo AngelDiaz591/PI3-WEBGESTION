@@ -239,6 +239,20 @@
                                     <label for="checkbox16">Principal</label>
                                 </div>
                             </div>
+                            <div class="divisor">
+                                <div class="titulo">Recuperacion Designados:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="designadoRecuperacion" id="checkbox17" />
+                                    <label for="checkbox17">Principal</label>
+                                </div>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Area:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="area" id="checkbox18" />
+                                    <label for="checkbox18">Principal</label>
+                                </div>
+                            </div>
                         </div>
                         <!--Fin Cuarta columna-->
                     </div>
@@ -408,6 +422,20 @@
                                 <label for="checkbox40">Principal</label>
                             </div> 
                         </div>
+                        <div class="divisor">
+                            <div class="titulo">Recuperacion Designados:</div>
+                            <div class="check">
+                                <input type="checkbox" name="designadoRecuperacion" id="checkbox41" />
+                                <label for="checkbox41">Principal</label>
+                            </div> 
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Area:</div>
+                            <div class="check">
+                                <input type="checkbox" name="area" id="checkbox42" />
+                                <label for="checkbox42">Principal</label>
+                            </div> 
+                        </div>
                     </div>
                     <!--Fin Cuarta columna-->
                     
@@ -466,7 +494,7 @@
     // Agrega un evento de cambio a la casilla de verificación
     checkbox51.addEventListener('change', function() {
     // Activa o desactiva todas las demás casillas de verificación
-    for (let i = 1; i <= 16; i++) {
+    for (let i = 1; i <= 18; i++) {
         const checkbox = document.querySelector(`#checkbox${i}`);
         checkbox.checked = this.checked;
     }
@@ -480,7 +508,7 @@
     // Agrega un evento de cambio a la casilla de verificación
     checkbox52.addEventListener('change', function() {
     // Activa o desactiva todas las demás casillas de verificación
-    for (let i = 25; i <= 40; i++) {
+    for (let i = 25; i <= 42; i++) {
         const checkbox = document.querySelector(`#checkbox${i}`);
         checkbox.checked = this.checked;
     }

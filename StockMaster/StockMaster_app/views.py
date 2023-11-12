@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.contrib import messages as men
 from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
-from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca, Usuario, RolExtra
+from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca, Usuario, RolExtra, Area
 from django.http.response import JsonResponse
 import base64
 from django.http import HttpResponse, HttpResponseRedirect
@@ -710,6 +710,154 @@ def eliminaProveedor(request, idProveedor):
 
 #____________________________________________________________________________________________________________________________________
 
+#----------------------------------------------------------------- A R E A S ------------------------------------------------------->
+#____________________________________________________________________________________________________________________________________
+
+#Visualizar Area
+@login_required(login_url='signin')
+def area(request):
+    if request.user.has_perm('StockMaster_app.view_area'):
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes = mensajes.count()
+        AreaListado = Area.objects.all()
+        return render(request, 'StockMaster_app/area.html', { "Area": AreaListado, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+    else:
+        return redirect('/actividades')
+
+#Registrar Areas
+@login_required(login_url='signin')
+def registrar_area(request):
+    if request.user.has_perm('StockMaster_app.view_area'):
+        nombre = request.POST['nombreArea']
+        # Comprobar si la categoría ya existe
+        if Area.objects.filter(nombre=nombre).exists():
+            messages.error(request, '¡Esta Area ya existe!')
+        else:
+                # Crear una nueva instancia de Categoria con el nombre proporcionado
+            area = Area(nombre=nombre,username=request.user.username,fech_cate=timezone.now(),movi='Creacion de Area')
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Area Agregada',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+            historial.save() 
+                # Guardar la instancia en la base de datos
+            area.save()
+                
+            messages.success(request, '¡Area registrada con éxito!')
+
+        # Redireccionar a la página de categorías después del registro
+        return redirect('area')
+    else:
+        return redirect('/actividades')
+    
+#Editar Areas
+@login_required(login_url='signin')
+def editarAreaMod(request):
+    if request.user.has_perm('StockMaster_app.view_area'):
+        try:
+            area_id = request.POST.get('productId')
+            nombre = request.POST.get('nombre')
+            try:
+                area = Area.objects.get(area_id= area_id)
+            except ObjectDoesNotExist:
+                messages.error(request, 'El area no se encontró o no existe.')
+                return redirect('/area/')  # Puedes redirigir a donde desees
+            
+            if Area.objects.filter(nombre=nombre).exists():
+                messages.error(request, '¡Esta area no recibio cambios!')
+                return redirect('/area/') 
+            else:
+                area.nombre = nombre
+
+                area.username = request.user.username
+                area.movi = 'Edicion de Area'
+                area.fech_cate = timezone.now()
+                if area.status_mov !=1:
+                    area.status_mov = 1 
+                historial= Historial.objects.all()
+                historial = Historial(movimiento='Edicion de Area',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+                historial.save()
+                area.save()
+
+                messages.success(request, '¡Area  Editada!')
+                return redirect('/area/') 
+        except ObjectDoesNotExist:
+            messages.error(request, 'El Area no se encontró o no existe.')
+            return redirect('/area/')  # Puedes redirigir a donde desees
+    else:
+        return redirect('/actividades')
+
+@login_required(login_url='signin')
+def edicionArea2(request, area_id):
+    if request.user.has_perm('StockMaster_app.view_area'):
+        area = Area.objects.get(area_id=area_id)
+
+        data = {
+            "nombre" : area.nombre,
+        }
+
+        #return JsonResponse(data)    
+        #return render(request, 'Stockmaster_app/productos.html', { idproducts : idproducts})
+        return JsonResponse(data)
+        return render(request, 'StockMaster_app/configuraciones.html', data)
+    else:
+        return redirect('/actividades')
+
+#Recuperar Areas
+@login_required(login_url='signin')
+def status_areare(request,area_id):
+    if request.user.has_perm('StockMaster_app.delete_area'):
+        area = Area.objects.get(area_id=area_id)
+        if area.status !=1:
+                area.status=1
+                area.fech_cate = timezone.now()
+                area.movi = 'Recuperacion de Categoria'
+                area.username = request.user.username
+                if area.status_mov != 1:
+                    area.status_mov = 1
+                historial= Historial.objects.all()
+                historial = Historial(movimiento='Recuperacion de Area',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
+                historial.save()
+                area.save()
+                messages.success(request, '¡Area Eliminada!')
+        return redirect('/recuperar_designaciones')
+    else:
+        return redirect('/actividades')
+
+#Eliminar Areas
+@login_required(login_url='signin')
+def status_area(request,area_id):
+    if request.user.has_perm('StockMaster_app.view_area'):
+        area = Area.objects.get(area_id=area_id)
+        if area.status !=0:
+            area.status=0
+            area.fech_cate = timezone.now()
+            area.movi = 'Eliminacion de Categoria'
+            area.username = request.user.username
+            if area.status_mov != 1:
+                area.status_mov = 1
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Eliminacion de Area',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
+            historial.save()
+            area.save()
+            messages.success(request, '¡Area Eliminada!')
+        return redirect('/area')
+    else:
+        return redirect('/actividades')
+
+@login_required(login_url='signin')
+def eliminar_area(request, area_id):
+    if request.user.has_perm('StockMaster_app.delete_area'):
+        area = Area.objects.get(area_id=area_id)
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='¡Area Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
+        historial.save()
+        area.delete()
+        messages.success(request, '¡Area Eliminada!')
+        return redirect('/recuperar_designaciones')  # O redirige a donde desees después de la eliminación
+    else:
+        return redirect('/actividades')
+
+#____________________________________________________________________________________________________________________________________
+
 #---------------------------------------------------------- C A T E G O R I A S ---------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
 
@@ -719,7 +867,7 @@ def configuraciones(request):
     if request.user.has_perm('StockMaster_app.view_categoria'):
         mensajes = Mensajes.objects.all()
         cantidad_mensajes =mensajes.count()
-        CategoriaListados = Categoria.objects.all()
+        CategoriaListados = Categoria.objects.all().order_by('-categoria_id')
         MarcaListados = Marca.objects.all()
         return render(request, 'StockMaster_app/configuraciones.html',{"Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
@@ -1016,12 +1164,16 @@ def get_proveedores(request):
     return request.POST.get('proveedores') == 'on'
 def get_etiquetas(request):
     return request.POST.get('etiquetas') == 'on'
+def get_area(request):
+    return request.POST.get('area') == 'on'
 def get_prodRecu(request):
     return request.POST.get('productosRecuperacion') == 'on'
 def get_provRecu(request):
     return request.POST.get('proveedoresRecuperacion') == 'on'
 def get_etiqRecu(request):
     return request.POST.get('etiquetasRecuperacion') == 'on'
+def get_degRecu(request):
+    return request.POST.get('designadoRecuperacion') == 'on'
 def get_usuarios(request):
     return request.POST.get('usuarios') == 'on'
 def get_roles(request):
@@ -1060,9 +1212,11 @@ def registrar_rol(request):
         productos = get_productos(request)
         proveedores = get_proveedores(request)
         etiquetas = get_etiquetas(request)
+        area = get_area(request)
         productosRecuperacion = get_prodRecu(request)
         proveedoresRecuperacion = get_provRecu(request)
         etiquetasRecuperacion = get_etiqRecu(request)
+        designadoRecuperacion = get_degRecu(request)
         usuarios = get_usuarios(request)
         roles = get_roles(request)
         contra = get_contra(request)
@@ -1083,9 +1237,12 @@ def registrar_rol(request):
             rol_extra.inventario = inventario
             rol_extra.productos = productos
             rol_extra.proveedores = proveedores
+            rol_extra.etiquetas = etiquetas
+            rol_extra.area = area
             rol_extra.productosRecuperacion = productosRecuperacion 
             rol_extra.proveedoresRecuperacion = proveedoresRecuperacion 
             rol_extra.etiquetasRecuperacion = etiquetasRecuperacion
+            rol_extra.designadoRecuperacion = designadoRecuperacion
             rol_extra.usuarios = usuarios
             rol_extra.roles = roles
             rol_extra.soporte = soporte 
@@ -1105,12 +1262,16 @@ def registrar_rol(request):
                 rol.permissions.add(Permission.objects.get(codename='view_proveedores'))
             if etiquetas:
                 rol.permissions.add(Permission.objects.get(codename='view_categoria'))
+            if area:
+                rol.permissions.add(Permission.objects.get(codename='view_area'))
             if productosRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_productos'))
             if proveedoresRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_proveedores'))
             if etiquetasRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_categoria'))
+            if designadoRecuperacion:
+                rol.permissions.add(Permission.objects.get(codename='delete_area'))
             if usuarios:
                 rol.permissions.add(Permission.objects.get(codename='view_usuario'))
             if roles:
@@ -1149,9 +1310,11 @@ def editarRolMod(request):
             productos = get_productos(request)
             proveedores = get_proveedores(request)
             etiquetas = get_etiquetas(request)
+            area = get_area(request)
             productosRecuperacion = get_prodRecu(request)
             proveedoresRecuperacion = get_provRecu(request)
             etiquetasRecuperacion = get_etiqRecu(request)
+            designadoRecuperacion = get_degRecu(request)
             usuarios = get_usuarios(request)
             roles = get_roles(request)
             contra = get_contra(request)
@@ -1178,9 +1341,11 @@ def editarRolMod(request):
                 rol_extra.productos = productos
                 rol_extra.proveedores = proveedores
                 rol_extra.etiquetas = etiquetas
+                rol_extra.area = area
                 rol_extra.productosRecuperacion = productosRecuperacion
                 rol_extra.proveedoresRecuperacion = proveedoresRecuperacion
                 rol_extra.etiquetasRecuperacion = etiquetasRecuperacion
+                rol_extra.designadoRecuperacion = designadoRecuperacion
                 rol_extra.usuarios = usuarios
                 rol_extra.roles = roles
                 rol_extra.soporte = soporte
@@ -1215,6 +1380,11 @@ def editarRolMod(request):
                 else:
                     permiso = Permission.objects.get(codename='view_categoria')
                     rol.permissions.remove(permiso)
+                if area:
+                    rol.permissions.add(Permission.objects.get(codename='view_area'))
+                else:
+                    permiso = Permission.objects.get(codename='view_area')
+                    rol.permissions.remove(permiso)
                 if productosRecuperacion:
                     rol.permissions.add(Permission.objects.get(codename='delete_productos'))
                 else:
@@ -1229,6 +1399,11 @@ def editarRolMod(request):
                     rol.permissions.add(Permission.objects.get(codename='delete_categoria'))
                 else:
                     permiso = Permission.objects.get(codename='delete_categoria')
+                    rol.permissions.remove(permiso)
+                if designadoRecuperacion:
+                    rol.permissions.add(Permission.objects.get(codename='delete_area'))
+                else:
+                    permiso = Permission.objects.get(codename='delete_area')
                     rol.permissions.remove(permiso)
                 if usuarios:
                     rol.permissions.add(Permission.objects.get(codename='view_usuario'))
@@ -1301,9 +1476,11 @@ def edicionRol2(request, id):
             "productos":rol_extra.productos,
             "proveedores":rol_extra.proveedores,
             "etiquetas":rol_extra.etiquetas,
+            "area":rol_extra.area,
             "productosRecuperacion":rol_extra.productosRecuperacion,
             "proveedoresRecuperacion":rol_extra.proveedoresRecuperacion,
             "etiquetasRecuperacion":rol_extra.etiquetasRecuperacion,
+            "designadoRecuperacion":rol_extra.designadoRecuperacion,
             "usuarios":rol_extra.usuarios,
             "roles": rol_extra.roles,
             "soporte":rol_extra.soporte,
@@ -1324,7 +1501,7 @@ def edicionRol2(request, id):
 #Recuperar Rol
 @login_required(login_url='signin')
 def cambio_statusrolre(request,id):
-    if request.user.has_perm('StockMaster_app.delete_productos'):
+    if request.user.has_perm('StockMaster_app.delete_area'):
         rol = Group.objects.get(id= id)
         rol_extra = RolExtra.objects.get(grupo=rol)
         if rol_extra.status != 1:
@@ -1339,7 +1516,7 @@ def cambio_statusrolre(request,id):
             historial.save()
             rol_extra.save()
         messages.success(request, '¡Rol Recuperado¡')
-        return redirect('/recuperar_producto')
+        return redirect('/recuperar_designaciones')
     else:
         return redirect('/actividades')
 
@@ -1368,14 +1545,14 @@ def cambio_statusrol(request,id):
 
 @login_required(login_url='signin')
 def eliminar_rol(request, id):
-    if request.user.has_perm('StockMaster_app.delete_productos'):
+    if request.user.has_perm('StockMaster_app.delete_area'):
         rol = Group.objects.get(id= id)
         historial= Historial.objects.all()
         historial = Historial(movimiento='¡Rol Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=rol.name)
         historial.save()
         rol.delete()
         messages.success(request, '¡Rol Eliminado!')
-        return redirect('/recuperar_producto')  # O redirige a donde desees después de la eliminación
+        return redirect('/recuperar_designaciones')  # O redirige a donde desees después de la eliminación
     else:
         return redirect('/actividades')
 
@@ -1521,11 +1698,14 @@ def historialEliminados(request):
 def recuperar_producto(request):
     if request.user.has_perm('StockMaster_app.delete_productos'):
         mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
+        cantidad_mensajes =mensajes.count()
         ProductosListados = Productos.objects.all()
-        roles = Group.objects.all()
-        roles_con_status_1 = [rol for rol in roles if RolExtra.objects.get(grupo=rol).status == 0]
-        return render(request, 'StockMaster_app/recuperar_producto.html', {"Productos": ProductosListados, "Roles": roles_con_status_1,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes})
+        CategoriaListados = Categoria.objects.all()
+        ProveedoresListados = Proveedores.objects.all()
+        MarcaListados = Marca.objects.all() 
+        for producto in ProductosListados:
+            producto.imagen_url = get_imagen_url(producto.imagen)
+        return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
         return redirect('/actividades')
 
@@ -1548,6 +1728,18 @@ def recuperar_etiquetas(request):
         RolListados = RolExtra.objects.all()
         MarcaListados = Marca.objects.all() 
         return render(request, 'StockMaster_app/recuperar_etiquetas.html', { "Categoria": CategoriaListados, "Marca":MarcaListados, "Roles": RolListados, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
+    else:
+        return redirect('/actividades')
+
+@login_required(login_url='signin')
+def recuperar_designaciones(request):
+    if request.user.has_perm('StockMaster_app.delete_area'):
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes =mensajes.count()
+        AreasListado = Area.objects.all()
+        roles = Group.objects.all()
+        roles_con_status_1 = [rol for rol in roles if RolExtra.objects.get(grupo=rol).status == 0]
+        return render(request, 'StockMaster_app/recuperar_designaciones.html', { "Area":AreasListado, "Roles": roles_con_status_1, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
     else:
         return redirect('/actividades')
 

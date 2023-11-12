@@ -74,19 +74,29 @@
                 </div>
             </div>
         </form>
-        <br>
-        <div class="principal">
+        <!-- <div class="principal">
             <div class="encabezado">
             {% for c in Categoria %}
                 {% if c.status == 1 %}
                     <button class="button-17" role="button" value="{{ c.categoria_id }}">{{ c.nombre }}</button>
                 {% endif %}
             {% endfor %}
-               
+            </div>
+        </div> -->
+        <div class="button-container"> <!-- style="overflow:auto; justify-content: space-around; height: 800px; padding: 1rem 0 0 0.5rem; display: flex;" -->
+            <div class="scrollable-buttons">
+                <button class="scroll-button lefr-button">&lt</button>
+                {% for c in Categoria %}
+                    {% if c.status == 1 %}
+                        <button class="configurable-button" role="button" value="{{ c.categoria_id }}">{{ c.nombre }}</button>
+                    {% endif %}
+                {% endfor %}
+                <button class="scroll-button lefr-button">&gt</button>
             </div>
         </div>
-        <br>
 
+        <div class="product-cards">
+            <!-- Contenido de las tarjetas de producto -->
             {% for producto in Productos %} 
                 {% if producto.status %}
                     {% if not request.GET.categoria or producto.id_categorias.nombre == request.GET.categoria %}
@@ -148,12 +158,14 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
+        </div>
     </div>
 </main>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static 'js/search.js' %}"></script>
+<script src="{% static 'js/botonesColor.js' %}"></script>
 
 
 {% endblock %}

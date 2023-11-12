@@ -31,6 +31,7 @@ main{
 
 main .recent-orders{
     margin-top: 1.2rem;
+    width: max-content;
 }
 main .recent-orders h2{
     margin-bottom: 0.8rem;
@@ -92,7 +93,7 @@ main table th{
 }
 .right-v2{
     margin-top: 1.4rem;
-    margin-left: 82.6rem; /* 90 */
+    margin-left: 90.6rem; /* 90 */
     position: absolute;
 }
 

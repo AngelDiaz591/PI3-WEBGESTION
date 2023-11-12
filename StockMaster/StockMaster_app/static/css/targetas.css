@@ -204,10 +204,10 @@ option:hover{
 
 /*Menu button*/
 /* CSS */
-.button-17 {
+/* .button-17 {
   align-items: center;
   appearance: none;
-  background-color: #fff;
+  background-color: transparent;
   border-radius: 24px;
   border-style: none;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
@@ -217,13 +217,13 @@ option:hover{
   cursor: pointer;
   display: inline-flex;
   fill: currentcolor;
-  font-size: 0.8rem;
+  font-size: 1.5rem;
   font-weight: 500;
-  height: 48px;
+  height: 18%;
   justify-content: center;
-  letter-spacing: .25px;
+  letter-spacing: .25rem;
   line-height: normal;
-  max-width: 100%;
+  min-width: 20%;
   overflow: visible;
   padding: 0.1rem 0.8rem;
   position: relative;
@@ -270,4 +270,50 @@ option:hover{
 
 .button-17:disabled {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+} */
+
+.button-container {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0 0 0;
+  width: 87%;
+  overflow-x: scroll;
+}
+
+.scrollable-buttons {
+  display: flex;
+  justify-content:baseline;
+}
+
+.configurable-button {
+  background-color: var(--color-white); /* Fondo del botón */
+  color: var(--color-dark); /* Color del texto */
+  font-size: 14px; /* Tamaño de fuente */
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s, color 0.3s, font-size 0.3s;
+}
+
+.product-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Estilos al pasar el ratón sobre el botón */
+.configurable-button:hover {
+  background-color: var(--color-dark); /* Fondo del botón al pasar el ratón */
+  color: var(--color-white); /* Color del texto al pasar el ratón */
+}
+
+/* Estilos al hacer clic en el botón */
+.configurable-button:active {
+  background-color: var(--color-dark); /* Fondo del botón al hacer clic */
+  color: var(--color-white); /* Color del texto al hacer clic */
 }

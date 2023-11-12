@@ -1,88 +1,4 @@
-/* // Array de colores pasteles
-const pastelColors = ["#FFC3A0", "#B2A0E2", "#D9B4A0", "#A0E2E0", "#FFD1B3", "#C8B4E3", "#E6D4A0", "#A0E3D9"];
-
-// Mantener un registro del botón activo
-let activeButton = null;
-
-// Función para obtener un color aleatorio de la paleta de colores pasteles
-function getRandomPastelColor() {
-    const randomIndex = Math.floor(Math.random() * pastelColors.length);
-    return pastelColors[randomIndex];
-}
-
-// Cambiar el color de fondo y gestionar el botón activo
-function handleButtonClick(button) {
-    if (activeButton) {
-        activeButton.style.backgroundColor = "var(--color-white)"; // Restablecer el color del botón anterior
-    }
-    const newColor = getRandomPastelColor();
-    button.style.backgroundColor = newColor;
-    activeButton = button; // Establecer el nuevo botón activo
-}
-
-// Agregar un controlador de eventos a cada botón con la clase "colorButton"
-const colorButtons = document.querySelectorAll(".colorButton");
-colorButtons.forEach(button => {
-    button.addEventListener("click", function() {
-        handleButtonClick(this);
-    });
-});
-
-const productCards = document.querySelectorAll(".prod");
-
-// Agrega un evento de clic a cada botón
-colorButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-        // Oculta todas las tarjetas de productos
-        productCards.forEach((card) => {
-            card.classList.add("hidden");
-        });
-
-        // Muestra la tarjeta de producto correspondiente al botón
-        productCards[index].classList.remove("hidden");
-    });
-}); */
-
 /* const configurableButtons = document.querySelectorAll(".configurable-button");
-const productCards = document.querySelectorAll(".prod");
-const scrollableButtons = document.querySelector(".scrollable-buttons");
-const leftButton = document.querySelector(".left-button");
-const rightButton = document.querySelector(".right-button");
-
-let scrollPosition = 0;
-
-configurableButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-        productCards.forEach((card) => {
-            card.style.display = "none";
-        });
-        productCards[index].style.display = "block";
-    });
-
-    const bgColor = button.getAttribute("data-bg-color");
-    const textColor = button.getAttribute("data-text-color");
-    const fontSize = button.getAttribute("data-font-size");
-
-    button.style.backgroundColor = bgColor;
-    button.style.color = textColor;
-    button.style.fontSize = fontSize + "px";
-});
-
-leftButton.addEventListener("click", () => {
-    if (scrollPosition > 0) {
-        scrollPosition -= 100;
-        scrollableButtons.style.transform = `translateX(-${scrollPosition}px)`;
-    }
-});
-
-rightButton.addEventListener("click", () => {
-    if (scrollPosition < scrollableButtons.scrollWidth - scrollableButtons.clientWidth) {
-        scrollPosition += 100;
-        scrollableButtons.style.transform = `translateX(-${scrollPosition}px)`;
-    }
-}); */
-
-const configurableButtons = document.querySelectorAll(".configurable-button");
 const productCards = document.querySelectorAll(".prod");
 const scrollContainer = document.querySelector(".scroll-container");
 const scrollLeftButton = document.querySelector(".scroll-button.left-button");
@@ -116,7 +32,115 @@ configurableButtons.forEach((button, index) => {
         });
         productCards[index].style.display = "block";
     });
+}); */
 
+
+
+/* const configurableButtons = document.querySelectorAll(".configurable-button");
+const productCards = document.querySelectorAll(".prod");
+const scrollContainer = document.querySelector(".scroll-container");
+const scrollLeftButton = document.querySelector(".scroll-button.left-button");
+const scrollRightButton = document.querySelector(".scroll-button.right-button");
+
+let scrollPosition = 0;
+let selectedButton = null; // Mantener un registro del botón seleccionado
+
+function scrollButtons(direction) {
+    const buttonContainerWidth = scrollContainer.clientWidth;
+    const buttonWidth = configurableButtons[0].offsetWidth;
+    const maxScroll = scrollContainer.scrollWidth - buttonContainerWidth;
+
+    scrollPosition += direction * buttonWidth;
+    scrollPosition = Math.max(0, Math.min(scrollPosition, maxScroll));
+
+    scrollContainer.style.transform = `translateX(-${scrollPosition}px}`;
+}
+
+function activateButton(button) {
+    if (selectedButton) {
+        selectedButton.classList.remove("selected");
+    }
+    button.classList.add("selected");
+    selectedButton = button;
+}
+
+scrollLeftButton.addEventListener("click", () => {
+    scrollButtons(-1);
+});
+
+scrollRightButton.addEventListener("click", () => {
+    scrollButtons(1);
+});
+
+configurableButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+        productCards.forEach((card) => {
+            card.style.display = "none";
+        });
+        productCards[index].style.display = "block";
+        activateButton(button);
+    });
+}); */
+
+
+const configurableButtons = document.querySelectorAll(".configurable-button");
+const productCards = document.querySelectorAll(".prod");
+const scrollContainer = document.querySelector(".scroll-container");
+const scrollLeftButton = document.querySelector(".scroll-button.left-button");
+const scrollRightButton = document.querySelector(".scroll-button.right-button");
+let scrollPosition = 0;
+let selectedButton = null; // Mantén un registro del botón seleccionado
+
+function scrollButtons(direction) {
+    const buttonContainerWidth = scrollContainer.clientWidth;
+    const buttonWidth = configurableButtons[0].offsetWidth;
+    const maxScroll = scrollContainer.scrollWidth - buttonContainerWidth;
+    scrollPosition += direction * buttonWidth;
+    scrollPosition = Math.max(0, Math.min(scrollPosition, maxScroll));
+    scrollContainer.style.transform = `translateX(-${scrollPosition}px)`;
+}
+
+function activateButton(button) {
+    if (selectedButton) {
+        selectedButton.classList.remove("selected");
+    }
+    button.classList.add("selected");
+    selectedButton = button;
+}
+
+configurableButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+        // Productos relacionados con la categoría seleccionada
+        const categoriaId = button.value;
+        // Realiza una solicitud a tu servidor para obtener los productos de la categoría
+        fetch(`/api/productos?categoriaId=${categoriaId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                // Oculta todos los productos
+                productCards.forEach((card) => {
+                    card.style.display = "none";
+                });
+                // Muestra los productos obtenidos
+                data.forEach((producto) => {
+                    const index = productos.findIndex((p) => p === producto);
+                    productCards[index].style.display = "block";
+                });
+            })
+            .catch((error) => {
+                console.error("Error al obtener los productos", error);
+            });
+
+        scrollButtons(index); // Desplaza el contenedor al botón seleccionado
+        activateButton(button); // Activa el botón seleccionado
+    });
+});
+
+scrollLeftButton.addEventListener("click", () => {
+    scrollButtons(-1);
+});
+
+scrollRightButton.addEventListener("click", () => {
+    scrollButtons(1);
 });
 
 

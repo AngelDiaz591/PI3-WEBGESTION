@@ -26,6 +26,18 @@ class Marca(models.Model):
     def __str__(self):
         return self.nombre
 
+class Area(models.Model):
+    area_id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    movi = models.CharField(max_length=100, null= True)
+    username = models.CharField(max_length=100, null=True)
+    fech_cate= models.DateTimeField(default=timezone.now, null= True)
+    status= models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
+    def __str__(self):
+        return self.nombre
+
+
 #Modelo de proveedores
 
 class Proveedores(models.Model):    
@@ -87,9 +99,11 @@ class RolExtra(models.Model):
     productos = models.BooleanField(default=False)
     proveedores = models.BooleanField(default=False)
     etiquetas = models.BooleanField(default=False)
+    area = models.BooleanField(default=False)
     productosRecuperacion = models.BooleanField(default=False)
     proveedoresRecuperacion = models.BooleanField(default=False)
     etiquetasRecuperacion = models.BooleanField(default=False)
+    designadoRecuperacion = models.BooleanField(default=False)
     usuarios = models.BooleanField(default=False)
     roles = models.BooleanField(default=False)
     soporte = models.BooleanField(default=False)

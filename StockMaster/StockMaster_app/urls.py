@@ -48,6 +48,16 @@ urlpatterns = [
     path('cambio_statusrepro/<int:idProveedor>', views.cambio_statusrepro, name='cambio_statusrepro'),
     path('eliminaProveedor/<idProveedor>', views.eliminaProveedor),
 
+    #paths Areas
+    path('area/', views.area, name='area'),
+    path('registraArea/', views.registrar_area),
+    path('area/edicionArea2/<int:area_id>/', views.edicionArea2, name='edicionArea2'),
+    path('editarArea2/', views.editarAreaMod),
+
+    path('status_area/<int:area_id>/',views.status_area,name='status_area'),
+    path('status_areare/<int:area_id>/',views.status_areare, name="status_areare"),
+    path('eliminar_area/<int:area_id>/', views.eliminar_area, name='eliminar_area'),
+
     #paths Categorias
     path('config/', views.configuraciones, name='etiquetas'),
     path('registrar_categoria/', views.registrar_categoria, name='registrar_cat'),
@@ -90,8 +100,10 @@ urlpatterns = [
     #paths html
     path('actividades/',views.productos,name='actividades'),
     path('inventario/', views.example_view, name='inventario'),
+
     path('recuperar_producto', views.recuperar_producto, name='recuperar_producto'),
     path('recuperar_proveedor', views.recuperar_proveedor, name='recuperar_proveedor'),
+    path('recuperar_designaciones', views.recuperar_designaciones, name='recuperar_designaciones'),
     path('recuperar_etiquetas', views.recuperar_etiquetas, name='recuperar_etiquetas'),
 
     path('historial/', views.historial, name='historial'),

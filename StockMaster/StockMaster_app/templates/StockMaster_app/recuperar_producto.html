@@ -90,39 +90,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <div class="mitad">
-            <div>
-                <h2>Roles</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <!-- <th>#</th> -->
-                            <th>Rol</th>
-                            <th>Elimino Usuario</th>
-                            <th>Fecha</th>
-                            <th colspan="2">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for c in Roles %}
-                            <tr>
-                                <!-- <td>{{forloop.counter}}</td> -->
-                                <td>{{ c.name }}</td>
-                                <td>{{ c.username }}</td>
-                                <td>{{ c.fech_cate}}</td>
-                                <td class="edita"><a href="cambio_statusrolre/{{ c.id }}" class="btn btn-info">                                 
-                                    <span class="material-symbols-outlined">restart_alt</span>
-                                </a></td>
-                                <td class="elimina"><a href="{% url 'eliminarRol' id=c.id %}"  class="btn btn-danger btnEliminacion">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 </main>
 

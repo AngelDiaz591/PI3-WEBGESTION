@@ -43,7 +43,7 @@ colorButtons.forEach((button, index) => {
     });
 }); */
 
-const configurableButtons = document.querySelectorAll(".configurable-button");
+/* const configurableButtons = document.querySelectorAll(".configurable-button");
 const productCards = document.querySelectorAll(".prod");
 const scrollableButtons = document.querySelector(".scrollable-buttons");
 const leftButton = document.querySelector(".left-button");
@@ -80,6 +80,46 @@ rightButton.addEventListener("click", () => {
         scrollPosition += 100;
         scrollableButtons.style.transform = `translateX(-${scrollPosition}px)`;
     }
+}); */
+
+const configurableButtons = document.querySelectorAll(".configurable-button");
+const productCards = document.querySelectorAll(".prod");
+const scrollContainer = document.querySelector(".scroll-container");
+const scrollLeftButton = document.querySelector(".scroll-button.left-button");
+const scrollRightButton = document.querySelector(".scroll-button.right-button");
+
+let scrollPosition = 0;
+
+function scrollButtons(direction) {
+    const buttonContainerWidth = scrollContainer.clientWidth;
+    const buttonWidth = configurableButtons[0].offsetWidth;
+    const maxScroll = scrollContainer.scrollWidth - buttonContainerWidth;
+
+    scrollPosition += direction * buttonWidth;
+    scrollPosition = Math.max(0, Math.min(scrollPosition, maxScroll));
+
+    scrollContainer.style.transform = `translateX(-${scrollPosition}px)`;
+}
+
+scrollLeftButton.addEventListener("click", () => {
+    scrollButtons(-1);
 });
+
+scrollRightButton.addEventListener("click", () => {
+    scrollButtons(1);
+});
+
+configurableButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+        productCards.forEach((card) => {
+            card.style.display = "none";
+        });
+        productCards[index].style.display = "block";
+    });
+
+});
+
+
+
 
 

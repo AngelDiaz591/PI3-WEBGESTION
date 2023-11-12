@@ -31,7 +31,6 @@ main{
 
 main .recent-orders{
     margin-top: 1.2rem;
-    width: max-content;
 }
 main .recent-orders h2{
     margin-bottom: 0.8rem;
@@ -53,7 +52,7 @@ main .recent-orders h2{
 }
 
 .principal{
-    justify-content:space-between;
+    justify-content: space-between;
     display: flex;
 }
 

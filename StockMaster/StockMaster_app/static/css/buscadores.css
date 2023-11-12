@@ -3,9 +3,10 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: 2rem;
+    margin-left: 1rem;
     width: 30%;
 }
+
 .search-bar-v3 {
     position: relative;
     display: flex;

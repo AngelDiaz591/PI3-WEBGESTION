@@ -35,7 +35,7 @@
 <main>
     <h1>INVENTARIO</h1>
     <div class="recent-orders">
-        <form method="get">
+        <form method="get" style="width: 90%;">
             <div class="principal">
                 <div class="encabezado">
                     <label for="categoria" class="apartado">Categoría:</label>
@@ -47,14 +47,14 @@
                                         {% endif %}
                         {% endfor %}
                     </select>
-                    <select name="marca" id="marca" class="form-control" required>
+                    <!-- <select name="marca" id="marca" class="form-control" required>
                         <option value="" disabled selected>-- Selecciona una marca --</option>
                         {% for c in Marca %}
                                         {% if c.status == 1 %}
                                             <option value="{{ c.marca_id }}">{{ c.nombre }}</option>
                                         {% endif %}
                         {% endfor %}
-                    </select>
+                    </select> -->
                     <!-- HTML !-->
                 </div>
                 <div class="encabezado2">
@@ -83,16 +83,22 @@
             {% endfor %}
             </div>
         </div> -->
-        <div class="button-container"> <!-- style="overflow:auto; justify-content: space-around; height: 800px; padding: 1rem 0 0 0.5rem; display: flex;" -->
-            <div class="scrollable-buttons">
-                <button class="scroll-button lefr-button">&lt</button>
-                {% for c in Categoria %}
-                    {% if c.status == 1 %}
-                        <button class="configurable-button" role="button" value="{{ c.categoria_id }}">{{ c.nombre }}</button>
-                    {% endif %}
-                {% endfor %}
-                <button class="scroll-button lefr-button">&gt</button>
+        <div class="button-container"> 
+            <button class="scroll-button left-button" style="background: transparent;" onclick="scrollButtons(-1)">
+                <span class="material-symbols-outlined">navigate_before</span>
+            </button>
+            <div class="scroll-container">
+                <div class="scrollable-buttons">
+                    {% for c in Categoria %}
+                        {% if c.status == 1 %}
+                            <button class="configurable-button" role="button" value="{{ c.categoria_id }}">{{ c.nombre }}</button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
+            <button class="scroll-button right-button" style="background: transparent;" onclick="scrollButtons(1)">
+                <span class="material-symbols-outlined">navigate_next</span>
+            </button>
         </div>
 
         <div class="product-cards">

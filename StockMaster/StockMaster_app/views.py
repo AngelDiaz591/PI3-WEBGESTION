@@ -147,7 +147,7 @@ def signup(request):
                 username = user.username  # Asignar el valor del nombre de usuario del usuario actual
                 #<-----------------Guarda en el Historial------------------------->
                 historial= Historial.objects.all()
-                historial = Historial(movimiento='Nuevo Usuario',usuario=request.user.username, fecha=timezone.now(),nombre=username)
+                historial = Historial(movimiento='Creacion de Usuario',usuario=request.user.username, fecha=timezone.now(),nombre=username)
                 historial.save()
                 usuario.save()
 
@@ -168,11 +168,6 @@ def signup(request):
                     print(f'Error al enviar el correo de bienvenida: {e}')
                     messages.error(request, f'Error al enviar el correo de bienvenida: {e}')
 
-                # Agregar entrada al historial
-                username = user.username
-                historial = Historial(movimiento='Nuevo Usuario', usuario=request.user.username, fecha=timezone.now(), nombre=username)
-                historial.save()
-
                 return redirect('/usuarios')
             else:
                 if 'email' in form.errors:
@@ -190,7 +185,6 @@ def signup(request):
         return render(request, 'StockMaster_app/usuarios.html', {'form': form})
     else:
         return redirect('/actividades')
-
 
 def signin(request):
     if request.user.is_authenticated:
@@ -226,6 +220,7 @@ def home(request):
 def exit(request):
     logout(request)
     return redirect('home')
+
 @login_required(login_url='signin')
 def exit(request):
     logout(request)
@@ -275,9 +270,10 @@ def pro(request):
         CategoriaListados = Categoria.objects.all()
         ProveedoresListados = Proveedores.objects.all()
         MarcaListados = Marca.objects.all() 
+        AreaListado = Area.objects.all()
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados, "Area": AreaListado, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
     else:
         return redirect('/actividades')
     
@@ -297,6 +293,7 @@ def registrarProducto(request):
         categoria_id = request.POST['categoria']
         idProveedor = request.POST['proveedor']
         marca_id = request.POST['marca']
+        area_id = request.POST['area']
 
         # Comprobar si el producto ya existe marca=marca
         if Productos.objects.filter(codigo=codigo).exists():
@@ -308,13 +305,13 @@ def registrarProducto(request):
             imagen_bytes = imagen.read()
             
             # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
-            producto = Productos(codigo=codigo, nombre=nombre, precio=precio, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Producto creado', id_Proveedores_id=idProveedor, id_marca_id= marca_id)
+            producto = Productos(codigo=codigo, nombre=nombre, precio=precio, cantPro=cantPro, imagen=imagen_bytes, id_categorias_id=categoria_id, id_area_id=area_id,username=request.user.username,fecha_edit = timezone.now(),movimiento='Creacion de Producto', id_Proveedores_id=idProveedor, id_marca_id= marca_id)
             # Guardar la instancia en la base de datos
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Producto Creado',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+            historial = Historial(movimiento='Creacion de Producto',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
             historial.save()
             producto.save()
-            messages.success(request, '¡Producto registrado!')
+            messages.success(request, '¡Producto registrado con exito!')
         return redirect('/productos/')
     else:
         return redirect('/actividades')
@@ -333,13 +330,14 @@ def editarProductoMod(request):
             categoria_id = request.POST.get('categoria') 
             idProveedor = request.POST.get('proveedor')
             marca_id = request.POST.get('marca')
+            area_id = request.POST.get('area')
             
             try:
                 productos = Productos.objects.get(idproducts=idproducts)
             except ObjectDoesNotExist:
                 messages.error(request, 'El producto no se encontró o no existe.')
                 return redirect('/productos/')  # Puedes redirigir a donde desees
-            if Productos.objects.filter(nombre=nombre, codigo=codigo, precio=precio, cantPro=cantPro, id_categorias_id=categoria_id, id_Proveedores_id=idProveedor, id_marca_id=marca_id).exists():
+            if Productos.objects.filter(nombre=nombre, codigo=codigo, precio=precio, cantPro=cantPro, id_categorias_id=categoria_id, id_Proveedores_id=idProveedor, id_marca_id=marca_id, id_area_id = area_id).exists():
                 if nueva_imagen:
                     productos.codigo = codigo
                     productos.nombre = nombre
@@ -351,6 +349,7 @@ def editarProductoMod(request):
                     productos.id_categorias_id = categoria_id
                     productos.id_Proveedores_id = idProveedor
                     productos.id_marca_id= marca_id
+                    productos.id_area_id= area_id
                     productos.imagen = nueva_imagen.read()
                     historial = Historial(movimiento='Edicion de Producto', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
                     historial.save()
@@ -371,7 +370,8 @@ def editarProductoMod(request):
                 productos.fecha_edit = timezone.now()
                 productos.id_categorias_id = categoria_id
                 productos.id_Proveedores_id = idProveedor
-                productos.id_marca_id= marca_id
+                productos.id_marca_id = marca_id
+                productos.id_area_id= area_id
                 if nueva_imagen:
                     productos.imagen = nueva_imagen.read()
                 historial = Historial(movimiento='Edicion de Producto', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
@@ -392,6 +392,7 @@ def edicioninventario2(request, idproducts):
         productos = Productos.objects.get(idproducts=idproducts)
         ProveedorListados = Proveedores.objects.all()
         MarcaListado = Marca.objects.all()
+        AreaListado = Area.objects.all()
         imagen_url = get_imagen_url(productos.imagen)
         
         # Filtra las categorías con status igual a 1 (activas)
@@ -414,7 +415,8 @@ def edicioninventario2(request, idproducts):
             "imagen_url": imagen_url,
             "Categoria": [{"categoria_id": c.categoria_id, "nombre": c.nombre} for c in CategoriaListados],
             "Proveedor": [{"idProveedor": c.idProveedor, "nombre": c.nombre} for c in ProveedorListados],
-            "Marca": [{"id_marca": c.marca_id, "nombre": c.nombre} for c in MarcaListado]
+            "Marca": [{"id_marca": c.marca_id, "nombre": c.nombre} for c in MarcaListado],
+            "Area": [{"area_id": c.area_id, "nombre": c.nombre} for c in AreaListado]
         }
         return JsonResponse(data)
         return render(request, 'StockMaster_app/productos.html', data)
@@ -455,9 +457,9 @@ def cambio_status(request, idproducts):
                 producto.status_mov = 1
             producto.fecha_edit = timezone.now()
             producto.username = request.user.username
-            producto.movimiento = 'Eliminacion de Producto'
+            producto.movimiento = 'Producto Dado de Baja'
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Eliminacion de Producto',usuario=request.user.username,fecha=timezone.now(),nombre=producto.nombre)
+            historial = Historial(movimiento='Producto Dado de Baja',usuario=request.user.username,fecha=timezone.now(),nombre=producto.nombre)
             historial.save()
             producto.save()
         return redirect('/productos')
@@ -469,13 +471,14 @@ def eliminaInventario(request, idproducts):
     if request.user.has_perm('StockMaster_app.delete_productos'):
         productos = Productos.objects.get(idproducts=idproducts)
         historial= Historial.objects.all()
-        historial = Historial(movimiento='¡Producto Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=productos.nombre)
+        historial = Historial(movimiento='Eliminacion de Producto',usuario=request.user.username,fecha=timezone.now(),nombre=productos.nombre)
         historial.save()
         productos.delete()
         messages.success(request, '¡Producto Eliminado!')
         return redirect('/recuperar_producto')
     else:
         return redirect('/actividades')
+    
 #____________________________________________________________________________________________________________________________________
 
 #---------------------------------------------------------- P R O V E E D O R E S -------------------------------------------------->
@@ -521,10 +524,10 @@ def registrarProv(request):
             imagen_bytes = imagenProv.read()
             
             # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
-            prov = Proveedores(nombre=nombreProv, contacto=contactoProv, telefono=telefonoProv, email=emailProv, calle=calle, noExt=noExt, noInt=noInt, colonia=colonia, cp=cp, municipio=municipio, estado=estado, pais=pais, imagen=imagen_bytes,username=request.user.username,movimiento='Registro de Proveedor',status_mov=status_mov)
+            prov = Proveedores(nombre=nombreProv, contacto=contactoProv, telefono=telefonoProv, email=emailProv, calle=calle, noExt=noExt, noInt=noInt, colonia=colonia, cp=cp, municipio=municipio, estado=estado, pais=pais, imagen=imagen_bytes,username=request.user.username,movimiento='Creacion de Proveedor',status_mov=status_mov)
             # Guardar la instancia en la base de datos
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Registro de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=prov.nombre)
+            historial = Historial(movimiento='Creacion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=prov.nombre)
             historial.save()
             prov.save()
             messages.success(request, '¡Proveedor registrado!')
@@ -685,9 +688,9 @@ def cambio_statuspro(request, idProveedor):
                 proveedor.status_mov = 1
             proveedor.fecha_edit = timezone.now()
             proveedor.username = request.user.username
-            proveedor.movimiento = 'Eliminacion de Proveedor'
+            proveedor.movimiento = 'Proveedor Dado de Baja'
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Eliminacion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+            historial = Historial(movimiento='Proveedor Dado de Baja',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
             historial.save()
             proveedor.save()
         return redirect('/prov')
@@ -699,7 +702,7 @@ def eliminaProveedor(request, idProveedor):
     if request.user.has_perm('StockMaster_app.delete_proveedores'):
         proveedor = Proveedores.objects.get(idProveedor=idProveedor)
         historial= Historial.objects.all()
-        historial = Historial(movimiento='¡Proveedor Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
+        historial = Historial(movimiento='Eliminacion de Proveedor',usuario=request.user.username,fecha=timezone.now(),nombre=proveedor.nombre)
         historial.save()
         Productos.objects.filter(id_Proveedores=proveedor).update(id_Proveedores=None)
         proveedor.delete()
@@ -736,7 +739,7 @@ def registrar_area(request):
                 # Crear una nueva instancia de Categoria con el nombre proporcionado
             area = Area(nombre=nombre,username=request.user.username,fech_cate=timezone.now(),movi='Creacion de Area')
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Area Agregada',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+            historial = Historial(movimiento='Creacion de Area',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
             historial.save() 
                 # Guardar la instancia en la base de datos
             area.save()
@@ -777,7 +780,7 @@ def editarAreaMod(request):
                 historial.save()
                 area.save()
 
-                messages.success(request, '¡Area  Editada!')
+                messages.success(request, '¡Area Editada!')
                 return redirect('/area/') 
         except ObjectDoesNotExist:
             messages.error(request, 'El Area no se encontró o no existe.')
@@ -809,7 +812,7 @@ def status_areare(request,area_id):
         if area.status !=1:
                 area.status=1
                 area.fech_cate = timezone.now()
-                area.movi = 'Recuperacion de Categoria'
+                area.movi = 'Recuperacion de Area'
                 area.username = request.user.username
                 if area.status_mov != 1:
                     area.status_mov = 1
@@ -817,7 +820,7 @@ def status_areare(request,area_id):
                 historial = Historial(movimiento='Recuperacion de Area',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
                 historial.save()
                 area.save()
-                messages.success(request, '¡Area Eliminada!')
+                messages.success(request, '¡Area Recuperada!')
         return redirect('/recuperar_designaciones')
     else:
         return redirect('/actividades')
@@ -830,12 +833,12 @@ def status_area(request,area_id):
         if area.status !=0:
             area.status=0
             area.fech_cate = timezone.now()
-            area.movi = 'Eliminacion de Categoria'
+            area.movi = 'Area Dado de Baja'
             area.username = request.user.username
             if area.status_mov != 1:
                 area.status_mov = 1
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Eliminacion de Area',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
+            historial = Historial(movimiento='Area Dado de Baja',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
             historial.save()
             area.save()
             messages.success(request, '¡Area Eliminada!')
@@ -848,8 +851,9 @@ def eliminar_area(request, area_id):
     if request.user.has_perm('StockMaster_app.delete_area'):
         area = Area.objects.get(area_id=area_id)
         historial= Historial.objects.all()
-        historial = Historial(movimiento='¡Area Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
+        historial = Historial(movimiento='Eliminacion de Area',usuario=request.user.username,fecha=timezone.now(),nombre=area.nombre)
         historial.save()
+        Productos.objects.filter(id_area=area_id).update(id_area=None)
         area.delete()
         messages.success(request, '¡Area Eliminada!')
         return redirect('/recuperar_designaciones')  # O redirige a donde desees después de la eliminación
@@ -885,7 +889,7 @@ def registrar_categoria(request):
                 # Crear una nueva instancia de Categoria con el nombre proporcionado
             categoria = Categoria(nombre=nombre,username=request.user.username,fech_cate=timezone.now(),movi='Creacion de Categoria')
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Categoria Agregada',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
+            historial = Historial(movimiento='Creacion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=nombre)
             historial.save() 
                 # Guardar la instancia en la base de datos
             categoria.save()
@@ -980,12 +984,12 @@ def status_categoria(request,categoria_id):
         if categoria.status !=0:
             categoria.status=0
             categoria.fech_cate = timezone.now()
-            categoria.movi = 'Eliminacion de Categoria'
+            categoria.movi = 'Categoria Dado de Baja'
             categoria.username = request.user.username
             if categoria.status_mov != 1:
                 categoria.status_mov = 1
             historial= Historial.objects.all()
-            historial = Historial(movimiento='Eliminacion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
+            historial = Historial(movimiento='Categoria Dado de Baja',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
             historial.save()
             categoria.save()
             messages.success(request, '¡Categoría Eliminada!')
@@ -999,7 +1003,7 @@ def eliminar_categoria(request, categoria_id):
         categoria = Categoria.objects.get(categoria_id=categoria_id)
         Productos.objects.filter(id_categorias=categoria).update(id_categorias=None)
         historial= Historial.objects.all()
-        historial = Historial(movimiento='¡Categoria Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
+        historial = Historial(movimiento='Eliminacion de Categoria',usuario=request.user.username,fecha=timezone.now(),nombre=categoria.nombre)
         historial.save()
         Productos.objects.filter(id_categorias=categoria).update(id_categorias=None)
         categoria.delete()
@@ -1032,7 +1036,7 @@ def registrar_marca(request):
             messages.error(request, 'La marca ya está registrada.')
         else:
             marca = Marca(nombre=nombre, username=request.user.username, fech_cate=timezone.now(), movi='Creación de Marca')
-            historial = Historial(movimiento='Marca Agregada', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
+            historial = Historial(movimiento='Creacion de Marca', usuario=request.user.username, fecha=timezone.now(), nombre=nombre)
             historial.save()
             marca.save()
             messages.success(request, '¡Marca registrada con éxito!')
@@ -1124,9 +1128,9 @@ def cambio_statusmar(request,marca_id):
                 marca.status_mov = 1
             marca.fech_cate = timezone.now()
             marca.username = request.user.username
-            marca.movi = "Eliminacion de Marca"
+            marca.movi = "Marca Dado de Baja"
             historial = Historial.objects.all()
-            historial = Historial(movimiento='Eliminacion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
+            historial = Historial(movimiento='Marca Dado de Baja',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
             historial.save()
             marca.save()
         messages.success(request, '¡Marca Eliminada¡')
@@ -1139,7 +1143,7 @@ def eliminar_marca(request, marca_id):
     if request.user.has_perm('StockMaster_app.delete_categoria'):
         marca = Marca.objects.get(marca_id=marca_id)
         historial= Historial.objects.all()
-        historial = Historial(movimiento='¡Marca Eliminada!',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
+        historial = Historial(movimiento='Eliminacion de Marca',usuario=request.user.username,fecha=timezone.now(),nombre=marca.nombre)
         historial.save()
         Productos.objects.filter(id_marca=marca).update(id_marca=None)
         marca.delete()
@@ -1247,6 +1251,7 @@ def registrar_rol(request):
             rol_extra.roles = roles
             rol_extra.soporte = soporte 
             rol_extra.contra = contra 
+            rol_extra.movi = 'Creacion de Rol'
             rol_extra.historialGeneral = historialGeneral 
             rol_extra.historialModificaciones = historialModificaciones 
             rol_extra.historialMovimientos = historialMovimientos 
@@ -1290,7 +1295,7 @@ def registrar_rol(request):
                 rol.permissions.add(Permission.objects.get(codename='delete_historial'))
             
             rol_extra.save()
-            historial = Historial(movimiento='Rol Agregado', usuario=request.user.username, fecha=timezone.now(), nombre=rol.name)
+            historial = Historial(movimiento='Creacion de Rol', usuario=request.user.username, fecha=timezone.now(), nombre=rol.name)
             historial.save()
             
             messages.success(request, '¡Rol registrado con éxito!')
@@ -1350,6 +1355,7 @@ def editarRolMod(request):
                 rol_extra.roles = roles
                 rol_extra.soporte = soporte
                 rol_extra.contra = contra 
+                rol_extra.movi = 'Edicion de Rol'
                 rol_extra.historialGeneral = historialGeneral 
                 rol_extra.historialModificaciones = historialModificaciones 
                 rol_extra.historialMovimientos = historialMovimientos 
@@ -1456,7 +1462,7 @@ def editarRolMod(request):
                 historial.save()
                 rol_extra.save()
 
-                messages.success(request, '¡Marca  Editada!')
+                messages.success(request, '¡Rol  Editado!')
                 return redirect('/rol/') 
         except ObjectDoesNotExist:
             messages.error(request, 'El rol no se encontró o no existe.')
@@ -1510,7 +1516,7 @@ def cambio_statusrolre(request,id):
                 rol_extra.status_mov = 1
             rol_extra.fech_cate = timezone.now()
             rol_extra.username = request.user.username
-            rol_extra.movi = 'Recuperacion de marca'
+            rol_extra.movi = 'Recuperacion de Rol'
             historial= Historial.objects.all()
             historial = Historial(movimiento='Recuperacion de Rol',usuario=request.user.username,fecha=timezone.now(), nombre=rol.name)
             historial.save()
@@ -1532,9 +1538,9 @@ def cambio_statusrol(request,id):
                 rol_extra.status_mov = 1
             rol_extra.fech_cate = timezone.now()
             rol_extra.username = request.user.username
-            rol_extra.movi = "Eliminacion de Rol"
+            rol_extra.movi = "Rol Dado de Baja"
             historial = Historial.objects.all()
-            historial = Historial(movimiento='Eliminacion de Rol',usuario=request.user.username,fecha=timezone.now(), nombre=rol.name)
+            historial = Historial(movimiento='Rol Dado de Baja',usuario=request.user.username,fecha=timezone.now(), nombre=rol.name)
             historial.save()
             rol.save()
             rol_extra.save()
@@ -1548,10 +1554,10 @@ def eliminar_rol(request, id):
     if request.user.has_perm('StockMaster_app.delete_area'):
         rol = Group.objects.get(id= id)
         historial= Historial.objects.all()
-        historial = Historial(movimiento='¡Rol Eliminado!',usuario=request.user.username,fecha=timezone.now(),nombre=rol.name)
+        historial = Historial(movimiento='Eliminacion de Rol',usuario=request.user.username,fecha=timezone.now(),nombre=rol.name)
         historial.save()
         rol.delete()
-        messages.success(request, '¡Rol Eliminado!')
+        messages.success(request, '¡Rol Eliminado¡')
         return redirect('/recuperar_designaciones')  # O redirige a donde desees después de la eliminación
     else:
         return redirect('/actividades')
@@ -1657,7 +1663,11 @@ def historialModificaciones(request):
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         RolListados = RolExtra.objects.all()
-        historial = Historial.objects.filter(movimiento__in=["Edicion de Proveedor", "Edicion de Producto", "Edicion de Producto", "Edicion de Marca", "Edicion de Categoria", "Edicion de Rol"])
+
+        historial = Historial.objects.filter(movimiento__in=[
+        "Edicion de Producto", "Edicion de Proveedor", "Edicion de Area", "Edicion de Categoria", "Edicion de Marca", "Edicion de Rol"
+        "Creacion de Producto", "Creacion de Proveedor", "Creacion de Area", "Creacion de Categoria", "Creacion de Marca", "Creacion de Rol", "Creacion de Usuario"
+        ])
 
         return render(request, 'StockMaster_app/historialModificaciones.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
     else:
@@ -1671,7 +1681,11 @@ def historialMovimientos(request):
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         RolListados = RolExtra.objects.all()
-        historial = Historial.objects.filter(movimiento="Rol Agregado")
+
+        historial = Historial.objects.filter(movimiento__in=[
+        "Recuperacion de Producto", "Recuperacion de Proveedor", "Recuperacion de Area", "Recuperacion de Categoria", "Recuperacion de Marca","Recuperacion de Rol"
+        ])
+
         return render(request, 'StockMaster_app/historialMovimientos.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
     else:
         return redirect('/actividades')
@@ -1684,7 +1698,12 @@ def historialEliminados(request):
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         RolListados = RolExtra.objects.all()
-        historial = Historial.objects.filter(movimiento__in=["Eliminacion de Proveedor", "Eliminacion de Producto", "Eliminacion de Producto", "Eliminacion de Marca", "Eliminacion de Categoria", "Eliminacion de Rol"])
+
+        historial = Historial.objects.filter(movimiento__in=[
+        "Eliminacion de Producto", "Eliminacion de Proveedor", "Eliminacion de Producto", "Eliminacion de Area", "Eliminacion de Marca", "Eliminacion de Categoria", "Eliminacion de Rol",
+        "¡Producto Dado de Baja!", "¡Proveedor Dado de Baja!", "¡Rol Dado de Baja!", "¡Area Dado de Baja!", "¡Categoria Dado de Baja!", "¡Marca Dado de Baja!"
+        ])
+        
         return render(request, 'StockMaster_app/historialEliminados.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
     else:
         return redirect('/actividades')

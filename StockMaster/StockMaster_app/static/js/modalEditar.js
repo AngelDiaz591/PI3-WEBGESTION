@@ -45,6 +45,7 @@ function openEditModal(productId) {
     var proveedorOp = document.querySelectorAll(".proveedorOp")
     var categroiaOp = document.querySelectorAll(".categoriaOp")
     var marcaOP = document.querySelectorAll(".marcaOP")
+    var areaOP = document.querySelectorAll(".areaOP")
     $.ajax({
         url: 'edicioninventario2/'+ productoId + '',
         type: 'GET',
@@ -76,6 +77,14 @@ function openEditModal(productId) {
             for (var i = 0; i < marcaOP.length; i++) {
                         var option = marcaOP[i];
                     if (option.value == data.id_marca) {
+                    $(option).prop('selected', true);
+                    break;  // Terminar el bucle después de encontrar la coincidencia
+                }
+            }
+
+            for (var i = 0; i < areaOP.length; i++) {
+                        var option = areaOP[i];
+                    if (option.value == data.id_area) {
                     $(option).prop('selected', true);
                     break;  // Terminar el bucle después de encontrar la coincidencia
                 }

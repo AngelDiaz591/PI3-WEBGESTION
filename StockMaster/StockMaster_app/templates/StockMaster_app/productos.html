@@ -69,6 +69,7 @@
                         <th>Categoría</th>
                         <th>Proveedor</th>
                         <th>Marca</th>
+                        <th>Area</th>
                         <th colspan="4">Opciones</th>
                     </tr>
                 </thead>
@@ -119,6 +120,17 @@
                                       MARCA NO EXISTE
                                     {% endif %}
                                   </td>
+                                <td>
+                                    {% if c.id_area %}
+                                    {% if c.id_area.status == 1 %}
+                                        {{ c.id_area.nombre }}
+                                    {% elif c.id_area.status == 0 %}
+                                    AREA NO EXISTE
+                                    {% endif %}
+                                    {% else %}
+                                    AREA NO EXISTE
+                                    {% endif %}
+                                </td>
                                 <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
                                     <span class="material-symbols-outlined">edit</span></a>
                                 </td>
@@ -202,6 +214,17 @@
                                     {% for c in marca %}
                                          {% if c.status == 1 %}
                                         <option value="{{ c.marca_id }}">{{ c.nombre }}</option>
+                                        {% endif%}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="divisor">
+                                <div class="titulo">Area:</div>
+                                <select name="area" id="area" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Selecciona un Area</option>
+                                    {% for c in Area %}
+                                         {% if c.status == 1 %}
+                                        <option value="{{ c.area_id }}">{{ c.nombre }}</option>
                                         {% endif%}
                                     {% endfor %}
                                 </select>
@@ -311,6 +334,17 @@
                                 {% for c in marca %}
                                          {% if c.status == 1 %}
                                            <option class="marcaOP" id="marcaOP{{ c.marca_id }}" value="{{ c.marca_id }}">{{ c.nombre }}</option>
+                                        {% endif%}
+                                    {% endfor %}
+                            </select>
+                        </div>
+                        <div class="divisor">
+                            <div class="titulo">Area:</div>
+                            <select name="area" id="area" class="campos-seleccion" required>
+                                <option value="" disabled>Selecciona un area</option>
+                                {% for c in Area %}
+                                         {% if c.status == 1 %}
+                                           <option class="areaOP" id="areaOP{{ c.area_id }}" value="{{ c.area_id }}">{{ c.nombre }}</option>
                                         {% endif%}
                                     {% endfor %}
                             </select>

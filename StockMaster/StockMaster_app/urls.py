@@ -51,7 +51,7 @@ urlpatterns = [
     #paths Areas
     path('area/', views.area, name='area'),
     path('registraArea/', views.registrar_area),
-    path('area/edicionArea2/<int:area_id>/', views.edicionArea2, name='edicionArea2'),
+    path('area/edicionArea2/<int:area_id>', views.edicionArea2, name='edicionArea2'),
     path('editarArea2/', views.editarAreaMod),
 
     path('status_area/<int:area_id>/',views.status_area,name='status_area'),

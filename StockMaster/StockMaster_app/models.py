@@ -78,6 +78,7 @@ class Productos(models.Model):
     id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE, null= True)
     id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE, null = True)
     id_marca = models.ForeignKey(Marca, on_delete=models.CASCADE, null= True)
+    id_area = models.ForeignKey(Area, on_delete=models.CASCADE, null= True)
 
 
     hora_baja = models.DateTimeField(default=timezone.now, null=True)

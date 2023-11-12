@@ -121,7 +121,7 @@
         <div class="content-modal-editar" style="width: 100%; max-width: 400px;">
             <label class="cerrar" id="closeEditModal"><i class="fa-solid fa-xmark"></i></label>
             <h2 class="titulo-modal">Editar Area</h2>
-            <form action="/edicionArea2/" method="POST" enctype="multipart/form-data" value="{{c.area_id }}">
+            <form action="/editarArea2/" method="POST" enctype="multipart/form-data" value="{{c.area_id }}">
                 {% csrf_token %}
                 <input class="campos" type="hidden" id="editProductId" name="productId" value="{{ c.area_id }}">
                 <div class="divisor">

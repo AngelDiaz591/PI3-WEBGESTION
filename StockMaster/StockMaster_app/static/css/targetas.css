@@ -137,8 +137,10 @@
     align-items: center;
 }
 .apartado{
-    font-size: 22px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-dark);
+    text-transform: uppercase;
 }
 
 option{
@@ -159,6 +161,7 @@ option:hover{
     background-color: var(--color-white);
     color: var(--color-dark);
     box-shadow: var(--color-light) 0px 13px 27px -5px, var(--color-light) 0px 8px 16px -8px;
+    margin-left: 1rem;
 }
 
 .btn:hover{
@@ -170,11 +173,6 @@ option:hover{
     background-color: var(--color-dark);
     box-shadow: var(--color-light) 0px 13px 27px -5px, var(--color-light) 0px 8px 16px -8px;
     pointer-events: all;
-}
-
-.btn-filter{
-    margin-right: 20px;
-    padding: -8px;
 }
 
 .filter:hover{
@@ -193,12 +191,6 @@ option:hover{
 .filter{
     color: var(--color-dark);
     align-items: center;
-}
-
-.encabezado2{
-    display: flex;
-    justify-content: space-between;
-    /* margin-left: 3rem; */
 }
 
 .button-container {
@@ -222,6 +214,21 @@ option:hover{
   color: var(--color-dark);
 }
 
+.scroll-container{
+  width: 83%;
+  background-color: none;
+}
+
+.product-cards{
+  /* height: 78%; */
+  height: 78%;
+  /* width: 84.5%; */
+  width: 83.5%;
+  overflow: auto;
+  overflow-x: hidden;
+  position: absolute;
+}
+
 .configurable-button {
   background-color: var(--color-white);
   color: var(--color-dark);
@@ -239,37 +246,12 @@ option:hover{
   color: var(--color-white);
 }
 
-.scroll-container{
-  width: 83%;
-  background-color: none;
+.configurable-button.active {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-size: 16px;
 }
 
-.product-cards{
-  /* height: 78%; */
-  height: 78%;
-  /* width: 84.5%; */
-  width: 83.5%;
-  overflow: auto;
-  overflow-x: hidden;
-  position: absolute;
-}
 
-.configurable-button.selected {
-  background-color: var(--color-dark); /* Color de fondo para botones seleccionados */
-  color: var(--color-white); /* Color de texto para botones seleccionados */
-  font-size: 16px; /* Tamaño de fuente para botones seleccionados */
-}
-
-/* Estilos al pasar el ratón sobre el botón */
-.configurable-button.selected:hover {
-  background-color: var(--color-dark); /* Color de fondo al pasar el ratón sobre botones seleccionados */
-  color: var(--color-white); /* Color de texto al pasar el ratón sobre botones seleccionados */
-}
-
-/* Estilos al hacer clic en el botón seleccionado */
-.configurable-button.selected:active {
-  background-color: var(--color-white); /* Color de fondo al hacer clic en botones seleccionados */
-  color: var(--color-dark); /* Color de texto al hacer clic en botones seleccionados */
-}
 
 

@@ -256,17 +256,21 @@ option:hover{
 
 .category-cards {
   position: relative;
-  top: 0;
-  left: 0;
+  /* top: 0; */
+  /* left: 0; */
   width: 100%;
-  z-index: 1;
+  /* z-index: 1; */
   background: var(--color-background);
-  padding: 4rem 0 0 0;
+  /* padding: 4rem 0 0 0; */
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  /* letter-spacing: unset; */
+  justify-content: center;
 }
 
 .category-card {
   width: 200px;
-  height: 200px;
+  height: 150px;
   background-color: var(--color-white);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -275,7 +279,10 @@ option:hover{
   justify-content: center;
   cursor: pointer;
   transition: transform 0.2s;
-  margin: 0 1rem;
+  margin: 1rem 1rem;
+  letter-spacing: 0.2rem;
+  /* border-color: var(--color-dark); */
+  border: 0.3rem solid var(--color-dark);
 }
 
 .category-card:hover {

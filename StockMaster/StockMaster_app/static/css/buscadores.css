@@ -1,16 +1,9 @@
-.search-bar-v1 {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-left: 0.5rem;
-    width: 50%;
-    justify-content: right;
-}
+
 .search-bar-v2 {
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: 2rem; /*10*/
+    margin-left: 2rem;
     width: 30%;
 }
 .search-bar-v3 {
@@ -45,11 +38,12 @@
 
 .encabezado{
     display: flex;
-    margin-left: 1rem;
+    align-items: center;
 }
 
 .encabezado2{
     display: flex;
     justify-content: space-between;
-    margin-left: 3rem;
+    margin-left: 1rem;
+    align-items: center;
 }

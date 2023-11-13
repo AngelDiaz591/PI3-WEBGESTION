@@ -1,0 +1,89 @@
+{% extends "./base.html" %}
+{% block body %}
+{% load static %}
+
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+
+<main>
+    <h1>Dados de Baja</h1>
+    <div class="recent-orders">
+        <div class="principal">
+            <div class="search-bar-v2">
+                <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+            <br><br>
+        </div>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <h2>Categorias</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Elimino Usuario</th>
+                        <th>Fecha</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in Categoria %}
+                    {% if c.status %}
+                    {% else %}
+                        <tr>
+                            <td>{{ c.nombre }} </td>
+                            <td>{{ c.username }}</td>
+                            <td>{{ c.fech_cate}}</td>
+                            <td class="edita"><a href="{% url 'status_categoriare' categoria_id=c.categoria_id %}" class="btn btn-info">                                 
+                                <span class="material-symbols-outlined">restart_alt</span>
+                            </a></td>
+                            <td class="elimina"><a href="eliminar_categoria/{{c.categoria_id}}" class="btn btn-danger btnEliminacion">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a></td>
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -62,10 +62,10 @@
                         <span class="material-symbols-outlined">tune</span>
                         <p class="filter">Filtrar</p>
                     </button>
-                    <a type="submit" href="{% url 'inventario' %}" class="btn btn-all">
-                        <span class="material-symbols-outlined">grid_on</span>
-                        <p class="filter">Mostrar todo</p>
-                    </a>
+                    <button onclick="window.location.href='{% url 'inventario' %}'" class="btn btn-all">
+                            <span class="material-symbols-outlined">grid_on</span>
+                            <p class="filter">Mostrar todo</p>
+                    </button>
                 </div>
                 <div class="search-bar-v2">
                     <label for="search-input"></label><input type="text" id="search-input" 

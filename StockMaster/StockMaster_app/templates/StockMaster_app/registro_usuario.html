@@ -1,0 +1,76 @@
+{% extends 'StockMaster_app/base.html'%}
+
+{% block content%}
+{% if request.user.is_authenticated %}
+<h4>
+    {{user.username | upper }}, Bienvenido
+</h4>
+{% else %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+</head>
+<body>
+    <h1>Registro</h1>
+    <div class="container">
+        <form class="row g-3 needs-validation" novalidate>
+            <div class="col-md-4 position-relative">
+              <label for="validationTooltip01" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="validationTooltip01" value="" required>
+              <div class="invalid-tooltip">
+                Nombre no ingresado
+              </div>
+            </div>
+            <div class="col-md-4 position-relative">
+              <label for="validationTooltip02" class="form-label">Apellido Paterno</label>
+              <input type="text" class="form-control" id="validationTooltip02" value="" required>
+              <div class="invalid-tooltip">
+                Apellido no ingresado
+              </div>
+            </div>
+            <div class="col-md-4 position-relative">
+                <label for="validationTooltip02" class="form-label">Apellido Materno</label>
+                <input type="text" class="form-control" id="validationTooltip02" value="" required>
+                <div class="invalid-tooltip">
+                  Apellido no ingresado
+                </div>
+            </div>
+            <div class="col-md1 position-relative"></div>
+            <div class="col-md-3 position-relative">
+              <label for="validationTooltip03" class="form-label">Correo Electronico</label>
+              <input type="email" class="form-control" id="validationTooltip03" required>
+              <div class="invalid-tooltip">
+                Proporciona un correo Correcto
+              </div>
+            </div>
+            <div class="col-md-2 position-relative">
+              <label for="validationTooltip04" class="form-label">Sexo</label>
+              <select class="form-select" id="validationTooltip04" required>
+                <option selected disabled value="">...</option>
+                <option>Masculino</option>
+                <option>Femenino</option>
+              </select>
+              <div class="invalid-tooltip">
+                Eliga su Sexo 
+              </div>
+            </div>
+            <div class="col-md-3 position-relative">
+              <label for="validationTooltip05" class="form-label">Numero De Telefono</label>
+              <input type="text" class="form-control" id="validationTooltip05" required>
+              <div class="invalid-tooltip">
+                Ingrese su numero bien
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endif %}
+{% endblock %}

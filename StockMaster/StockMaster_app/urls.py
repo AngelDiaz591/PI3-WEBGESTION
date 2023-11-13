@@ -95,9 +95,15 @@ urlpatterns = [
     path('recuperar_etiquetas', views.recuperar_etiquetas, name='recuperar_etiquetas'),
 
     path('historial/', views.historial, name='historial'),
+    path('historialModificaciones/', views.historialModificaciones, name='historialModificaciones'),
+    path('historialMovimientos/', views.historialMovimientos, name='historialMovimientos'),
+    path('historialEliminados/', views.historialEliminados, name='historialEliminados'),
+
     path('soporte/', views.soporte, name='soporte'),
     path('comentario/',views.comentario),
     
     path('usuarios/', views.usuarios, name='usuarios'),
     
+
+    path('enviar_correo/', views.enviar_correo, name='enviar_correo'),
     ]

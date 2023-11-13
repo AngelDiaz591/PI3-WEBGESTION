@@ -14,7 +14,7 @@ from django.core.files import File
 from .models import Productos, Mensajes, Categoria, Proveedores, Historial, Marca, Usuario, RolExtra
 from django.http.response import JsonResponse
 import base64
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
@@ -25,6 +25,11 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from smtplib import SMTPException
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.db.models.functions import ExtractMonth
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
+import pytz
 
 # Create your views here.
 
@@ -108,7 +113,6 @@ def get_imagen_url(imagen_binaria):
     imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
     return f"data:image/jpeg;base64,{imagen_base64}"
 def signup(request):
-  
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -117,12 +121,12 @@ def signup(request):
             user.email = email
             user.first_name = form.cleaned_data.get('first_name')
             user.last_name = form.cleaned_data.get('last_name')
-            is_superuser = form.cleaned_data.get('is_superuser')
-            if is_superuser is not None and is_superuser.isdigit():
-                user.is_superuser = bool(int(is_superuser))
 
             user.save()
-#<-----------------Datos Adicionales------------------------->
+            # Agrega el grupo al usuario
+            grupo = Group.objects.get(name=request.POST['grupo'])
+            user.groups.add(grupo)
+            # Resto del código para agregar el usuario al grupo, guardar información adicional, etc.
             calle = request.POST['calle']
             colonia = request.POST['colonia']
             num_ext = request.POST['num_ext']
@@ -148,11 +152,7 @@ def signup(request):
             historial.save()
             usuario.save()
 
-#========================Envia Correo=============================
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            
+            # Envío de correo de bienvenida
             subject = 'Bienvenido a nuestra aplicación'
             from_email = 'stockmaster404@gmail.com'
             recipient_list = [email]
@@ -162,30 +162,36 @@ def signup(request):
             # Crear el mensaje en formato HTML
             message_html = render_to_string('StockMaster_app/Correo.html', {'accept_link': accept_link})
 
-
             try:
                 send_mail(subject, '', from_email, recipient_list, fail_silently=False, html_message=message_html)
-            except SMTPException as e:
+                messages.success(request, 'Usuario registrado y correo de bienvenida enviado correctamente.')
+            except Exception as e:
                 print(f'Error al enviar el correo de bienvenida: {e}')
                 messages.error(request, f'Error al enviar el correo de bienvenida: {e}')
-#==================retorna==================
+
+            # Agregar entrada al historial
+            username = user.username
+            historial = Historial(movimiento='Nuevo Usuario', usuario=request.user.username, fecha=timezone.now(), nombre=username)
+            historial.save()
+
             return redirect('/usuarios')
         else:
-            if 'email' in form.errors:
+         if 'email' in form.errors:
                 messages.error(request, 'error en la escritura de gmail recomendacion "@gmail.com" "@hotmail.com" "outlook.com"')
             
-            if 'username' in form.errors:
+         if 'username' in form.errors:
                 messages.error(request, 'El nombre de usuario ya existe. Por favor, elige otro.')
-            else:
+         else:
                 messages.error(request, 'La contraseña debe de tener más de 8 caracteres y no deben ser numeros continuos')
-            if 'is_superuser' in form.errors:
+         if 'is_superuser' in form.errors:
                 messages.error(request, 'error de admin')
-            return redirect('/usuarios')
+        return redirect('/usuarios')  
+            
+
     else:
         form = CustomUserCreationForm()
 
     return render(request, 'StockMaster_app/usuarios.html', {'form': form})
-    
 
 def home(request):
     if request.user.is_authenticated:
@@ -205,20 +211,6 @@ def exit(request):
 
 #--------------------------------------------------------- U S U A R I O S --------------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
-
-@login_required(login_url='signin')
-def usuarios(request):
-    if request.user.is_superuser:
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
-        usuario = Usuario.objects.all()
-        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
-        for Usuarios in usuario:
-            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/usuarios.html', {'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario})
-    else:
-        return redirect('/actividades')
-
 
 #ya cambia la contra
 @login_required(login_url='signin')
@@ -259,9 +251,26 @@ def pro(request):
         CategoriaListados = Categoria.objects.all()
         ProveedoresListados = Proveedores.objects.all()
         MarcaListados = Marca.objects.all() 
+        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
+        usuario = form.count()
+        cantidad_marcas = MarcaListados.count()
+        cantidad_productos = ProductosListados.count()
+        cantidad_categorias = CategoriaListados.count()
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/productos.html', {
+            "Productos": ProductosListados,
+            "Categoria": CategoriaListados,
+            'marca': MarcaListados,
+            'Proveedor': ProveedoresListados,
+            'Mensajes': mensajes,
+            'cantidad_mensajes': cantidad_mensajes,
+            'usuarios': usuario,
+            'Usuario': form,
+            'cantidad_productos': cantidad_productos,
+            'cantidad_categorias': cantidad_categorias,
+            'cantidad_marcas': cantidad_marcas,
+        })    
     else:
         return redirect('/actividades')
     
@@ -1285,6 +1294,38 @@ def historial(request):
     return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
 
 @login_required(login_url='signin')
+def historialModificaciones(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    RolListados = RolExtra.objects.all()
+    historial = Historial.objects.filter(movimiento__in=["Edicion de Proveedor", "Edicion de Producto", "Edicion de Producto", "Edicion de Marca", "Edicion de Categoria", "Edicion de Rol"])
+
+    return render(request, 'StockMaster_app/historialModificaciones.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+@login_required(login_url='signin')
+def historialMovimientos(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    RolListados = RolExtra.objects.all()
+    historial = Historial.objects.filter(movimiento="Rol Agregado")
+    return render(request, 'StockMaster_app/historialMovimientos.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+@login_required(login_url='signin')
+def historialEliminados(request):
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes =mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    RolListados = RolExtra.objects.all()
+    historial = Historial.objects.filter(movimiento__in=["Eliminacion de Proveedor", "Eliminacion de Producto", "Eliminacion de Producto", "Eliminacion de Marca", "Eliminacion de Categoria", "Eliminacion de Rol"])
+    return render(request, 'StockMaster_app/historialEliminados.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+
+
+@login_required(login_url='signin')
 def recuperar_producto(request):
     mensajes = Mensajes.objects.all()
     cantidad_mensajes = mensajes.count()
@@ -1309,41 +1350,6 @@ def recuperar_etiquetas(request):
     MarcaListados = Marca.objects.all() 
     return render(request, 'StockMaster_app/recuperar_etiquetas.html', { "Categoria": CategoriaListados, "Marca":MarcaListados, "Roles": RolListados, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
 
-
-#nueva idea pt2, ¿confirmación? del caso contrario solo elimine
-def historial_eliminacion(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_eliminacion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
-
-def historial_edicion(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_edicion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
-def historial_recuperacion(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_recuperacion.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
-def historial_registro(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes =mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    historial = Historial.objects.all()
-    return render(request, 'StockMaster_app/historial_registro.html', { "Productos": ProductosListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
-
 #____________________________________________________________________________________________________________________________________
 
 #------------------------------------------------------- F U N C I O N E S --------------------------------------------------------->
@@ -1358,8 +1364,36 @@ def productos(request):
     ProveedoresListados = Proveedores.objects.all()
     RolListados = RolExtra.objects.all()
     MarcaListados = Marca.objects.all()
-    return render(request, 'StockMaster_app/actividades.html', { "Roles": RolListados, 'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes,'marca': MarcaListados, ' Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
-
+    form = User.objects.all()  
+    usuario = form.count()
+    cantidad_marcas = MarcaListados.count()
+    cantidad_productos = ProductosListados.count()
+    cantidad_proveedores =  ProveedoresListados.count()
+    cantidad_categorias = CategoriaListados.count()
+    productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Count('idproducts')).order_by('month')    # Crear listas para las etiquetas y datos de la gráfica
+    labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
+    data = [mes['cantidad'] for mes in productos_por_mes]
+    for producto in ProductosListados:
+        producto.imagen_url = get_imagen_url(producto.imagen)
+    return render(request, 'StockMaster_app/actividades.html', {
+        "Productos": ProductosListados,
+        "Categoria": CategoriaListados,
+        'marca': MarcaListados,
+        'Proveedor': ProveedoresListados,
+        'Mensajes': mensajes,
+        'cantidad_mensajes': cantidad_mensajes,
+        'usuarios': usuario,
+        'Usuario': form,
+        'cantidad_productos': cantidad_productos,
+        'cantidad_proveedores': cantidad_proveedores,
+        'cantidad_categorias': cantidad_categorias,
+        'cantidad_marcas': cantidad_marcas,
+        "Roles": RolListados,
+        'CategoriaListados':CategoriaListados, 
+        'labels': labels,
+        'data': data,
+        'ProveedoresListados' : ProveedoresListados
+        })
 
 def editarcant(request, idproducts):
     if request.method == 'POST':
@@ -1409,3 +1443,13 @@ def example_view(request):
         producto.imagen_url = get_imagen_url(producto.imagen)
 
     return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+
+def enviar_correo(request):
+    send_mail(
+        'Asunto del Correo',
+        'Cuerpo del Correo',
+        'stockmaster404@gmail.com',         # Reemplaza con tu dirección de correo
+        ['mayelomonti1@gmail.com'],  # Reemplaza con la dirección del destinatario
+        fail_silently=False,
+    )
+    return HttpResponse('Correo enviado correctamente.')

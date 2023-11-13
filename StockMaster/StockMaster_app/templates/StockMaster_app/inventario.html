@@ -73,19 +73,21 @@
         </form>
         <form method="get">
             <div class="button-container"> 
-                <button class="scroll-button left-button" style="background: transparent;" onclick="scrollButtons(-1)">
+                <button class="scroll-button left-button" style="background: transparent;" type="button" onclick="scrollButtons(-1)">
                     <span class="material-symbols-outlined">navigate_before</span>
                 </button>
                 <div class="scroll-container">
                     <div class="scrollable-buttons">
-                        {% for c in Categoria %}
-                            {% if c.status == 1 %}
-                            <button class="configurable-button" role="button" value="{{c.nombre}}" name="categoria">{{ c.nombre }}</button>
-                            {% endif %}
-                        {% endfor %}
+                        <div class="configurable-buttons-container">
+                            {% for c in Categoria %}
+                                {% if c.status == 1 %}
+                                <button class="configurable-button" role="button" value="{{c.nombre}}" name="categoria">{{ c.nombre }}</button>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-                <button class="scroll-button right-button" style="background: transparent;" onclick="scrollButtons(1)">
+                <button class="scroll-button right-button" style="background: transparent;" type="button" onclick="scrollButtons(1)">
                     <span class="material-symbols-outlined">navigate_next</span>
                 </button>
             </div>

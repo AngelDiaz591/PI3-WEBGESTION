@@ -196,7 +196,6 @@ option:hover{
 .button-container {
   display: flex;
   align-items: center;
-  overflow: auto; /* Oculta la barra de desplazamiento horizontal */
   padding: 1rem 0 0.5rem 0;
 }
 
@@ -204,7 +203,8 @@ option:hover{
   display: flex;
   white-space: nowrap;
   justify-content: flex-start;
-  overflow: hidden; /* Oculta la barra de desplazamiento horizontal */
+  overflow: hidden;
+  transition: transform 0.3s;
 }
 
 .scroll-button span {
@@ -212,11 +212,12 @@ option:hover{
   cursor: pointer;
   font-size: 24px;
   color: var(--color-dark);
+  display: inline-flex;
 }
 
 .scroll-container{
-  width: 83%;
-  background-color: none;
+  width: 80%;
+  background-color: transparent;
 }
 
 .product-cards{
@@ -225,7 +226,6 @@ option:hover{
   /* width: 84.5%; */
   width: 83.5%;
   overflow: auto;
-  overflow-x: hidden;
   position: absolute;
 }
 
@@ -251,7 +251,3 @@ option:hover{
   color: var(--color-white);
   font-size: 16px;
 }
-
-
-
-

@@ -1,0 +1,15 @@
+{% extends 'StockMaster_app/base.html'%}
+
+{% block content%}
+
+<hr>
+{% if request.user.is_authenticated %}
+    <h4>
+        {{user.username | upper }}, Bienvenido
+    </h4>
+
+    {% else %}
+    <p>Inicia Sesion</p>
+    {% endif %}
+
+{% endblock %}

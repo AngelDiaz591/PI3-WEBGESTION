@@ -72,10 +72,10 @@
                                 <td>{{ c.name }}</td>
                                 <td>{{ c.username }}</td>
                                 <td>{{ c.fech_cate}}</td>
-                                <td class="edita"><a href="cambio_statusrolre/{{ c.id }}" class="btn btn-info">                                 
+                                <td class="edita"><a href="cambio_statusrolre/{{ c.id }}" class="btn btn-info btnRecuperarRol">                                 
                                     <span class="material-symbols-outlined">restart_alt</span>
                                 </a></td>
-                                <td class="elimina"><a href="{% url 'eliminarRol' id=c.id %}"  class="btn btn-danger btnEliminacion">
+                                <td class="elimina"><a href="{% url 'eliminarRol' id=c.id %}"  class="btn btn-danger btnEliminacionRol">
                                     <span class="material-symbols-outlined">delete</span>
                                 </a></td>
                             </tr>
@@ -104,10 +104,10 @@
                                 <td>{{ c.name }}</td>
                                 <td>{{ c.username }}</td>
                                 <td>{{ c.fech_cate}}</td>
-                                <td class="edita"><a href="status_areare/{{ c.area_id }}" class="btn btn-info">                                 
+                                <td class="edita"><a href="status_areare/{{ c.area_id }}" class="btn btn-info btnRecuperarArea">                                 
                                     <span class="material-symbols-outlined">restart_alt</span>
                                 </a></td>
-                                <td class="elimina"><a href="eliminar_area/{{c.area_id}}"  class="btn btn-danger btnEliminacion">
+                                <td class="elimina"><a href="eliminar_area/{{c.area_id}}"  class="btn btn-danger btnEliminacionArea">
                                     <span class="material-symbols-outlined">delete</span>
                                 </a></td>
                             </tr>

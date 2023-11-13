@@ -76,10 +76,10 @@
                                     <td>{{ c.nombre }} </td>
                                     <td>{{ c.username }}</td>
                                     <td>{{ c.fech_cate}}</td>
-                                    <td class="edita"><a href="{% url 'status_categoriare' categoria_id=c.categoria_id %}" class="btn btn-info">                                 
+                                    <td class="edita"><a href="{% url 'status_categoriare' categoria_id=c.categoria_id %}" class="btn btn-info btnRecuperarCate">                                 
                                         <span class="material-symbols-outlined">restart_alt</span>
                                     </a></td>
-                                    <td class="elimina"><a href="eliminar_categoria/{{c.categoria_id}}" class="btn btn-danger btnEliminacion">
+                                    <td class="elimina"><a href="eliminar_categoria/{{c.categoria_id}}" class="btn btn-danger btnEliminacionCate">
                                         <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>
@@ -111,10 +111,10 @@
                                     <td>{{ c.nombre }} </td>
                                     <td>{{ c.username }}</td>
                                     <td>{{ c.fech_cate}}</td>
-                                    <td class="edita"><a href="cambio_statusremar/{{ c.marca_id }}" class="btn btn-info">                                 
+                                    <td class="edita"><a href="cambio_statusremar/{{ c.marca_id }}" class="btn btn-info btnRecuperarMarc">                                 
                                         <span class="material-symbols-outlined">restart_alt</span>
                                     </a></td>
-                                    <td class="elimina"><a href="eliminar-marca/{{ c.marca_id }}" class="btn btn-danger btnEliminacion">
+                                    <td class="elimina"><a href="eliminar-marca/{{ c.marca_id }}" class="btn btn-danger btnEliminacionMarc">
                                         <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>

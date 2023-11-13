@@ -1,0 +1,6 @@
+Hola {{ user.username }},
+
+Por favor, verifica tu correo electrónico haciendo clic en el siguiente enlace:
+<a href="http://{{ domain }}{% url 'verify_email' user.username user.profile.verification_key %}">Verificar correo</a>
+
+Gracias por registrarte en nuestro sitio.

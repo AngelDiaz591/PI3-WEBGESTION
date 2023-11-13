@@ -3,222 +3,110 @@
 {% load static %}
 <div class="ctn">
     <main>
-        {% if request.user.is_superuser %}
-        <div class="seccion">
-            <h1>Actividad de Usuarios</h1>
-            <div class="search-bar">
-                <label for="search-input"></label><input type="text" id="search-input" 
-                placeholder="Buscar movimientos..." oninput="convertToUppercase()">
-                <i class="fas fa-search" id="search-icon"></i>
-            </div>
+        <h1>Entrada de Productos</h1>
+        <div width="50" height="50">
+            <canvas id="myChartt" style="display: block; box-sizing: border-box;"></canvas>
         </div>
-        {% else %}
-            <h1>Actividades Recientes</h1>
-        {% endif %}
-        <div class="recent-orders">
-            <div class="messages-container">
-                {% for message in messages %}
-                    <div class="alert alert-custom" role="alert">
-                        <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                {% endfor %}
-            </div>
-            <div style="overflow: auto; height: 680px;">
-                <div class="principal">
-                    <div class="encabezado">
-                        {% if request.user.is_superuser %}
-                            <h2>Modificaciones del producto</h2>
-                        {% else %}
-                            <h2>Productos Recientes</h2>
-                        {% endif %}
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Codigo</th>
-                            <th>Producto</th>
-                            {% if request.user.is_superuser %}
-                                <th>Movimiento</th>
-                                <th>Usuario</th>
-                                <th>Fecha</th>
-                            {% else %}
-                                <th>Cantidad</th>
-                                <th colspan="4">Editar Cantidad</th>
-                            {% endif %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for ca in Productos|dictsortreversed:"fecha_edit"|slice:":5"  %}
-                        {% if request.user.is_superuser%}
-                        {% if ca.status_mov == 1%}
-                                <tr>
-                                    <td>{{ ca.codigo }}</td>
-                                    <td>{{ ca.nombre }}</td>
-                                    {% if request.user.is_superuser %}
-                                        <td>{{ ca.movimiento }}</td>
-                                        <td>{{ ca.username }}</td>
-                                        <td>{{ ca.fecha_edit }}</td>
-                                    {% else %}
-                                        <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
-                                            {% csrf_token %}
-                                            <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                            <td><button class="Editar" type="submit">Editar Cantidad</button></td>
-                                        </form>                                    
-                                    {% endif %}
-                                    <td class="elimina">
-                                        <a href="elimina_men/{{ca.idproducts}}" >Eliminar</a>
-                                    </td>
-                                </tr>
-                                {% endif %}
-                        {% else %}
-                            {% if ca and ca.status  %}
-                            
-                                <tr>
-                                    <td>{{ ca.id_categorias.nombre }}</td>
-                                    <td>{{ ca.codigo }}</td>
-                                    <td>{{ ca.cantPro }}</td>
-                                    {% if request.user.is_superuser %}
-                                        <td>{{ ca.useredit }}</td>
-                                        <td>{{ ca.fecha_edit }}</td>
-                                    {% else %}
-                                        <form action="{% url 'editarcant' ca.idproducts %}" method="POST">
-                                            {% csrf_token %}
-                                            <td><input id="cantPro" value="{{ ca.cantPro }}" name="cantPro" type="number"></td>
-                                            <td><button class="edita" style="background-color: blueviolet; color: white; padding-left: -55rem; width: 5rem;"type="submit">Editar Cantidad</button></td>
-                                        </form>                                    
-                                    {% endif %}
-                                </tr>
-                            {% endif%}
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <br>
-                <br>
-                <h2>Mensajes</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Usuario</th>
-                            <th>Mensaje</th>
-                            <th>Fecha</th>
-                            <th>Respuesta</th>
-                            <th>Usario que contesto</th>
-                            {% if request.user.is_superuser %}
-                                <th>Fecha</th>
-                                <th>Opcion</th>
-                            {% endif%}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for men in Mensajes|dictsortreversed:"tiem_res"|slice:":5" %}
-                            {% if men.status_mov == 1 %}
-                                <tr>
-                                    <td>{{ men.username }}</td>
-                                    <td>{{ men.comentario}}</td>
-                                    <td>{{ men.tiempo_creacion}}</td>
-                                    <td>{{ men.respuestascomentarios }}</td>
-                                    <td>{{ men.admincont }}</td>
-                                    {% if request.user.is_superuser %}
-                                        {% if men.respuestascomentarios %}
-                                            <td>{{ men.tiem_res }}</td>
-                                        {% else %}
-                                            <td>none</td>
-                                        {% endif %}
-                                        <td class="elimina"><a href="status_mov/{{men.idcomentario}}" >Eliminar</a></td>
-                                    {% endif %}
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <br>
-                <br>
-                {% if request.user.is_superuser %}
-                    <h2>Categoria</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Categoria</th>
-                                <th>Movimiento</th>
-                                <th>Usuario</th>
-                                <th>Fecha</th>
-                                <th>Opcion</th>
-                            </tr>
-                        </thead>
-                        {% for cate in CategoriaListados|dictsortreversed:"fech_cate"|slice:":5"%}
-                            {% if cate.status_mov %}
-                                <tbody>
-                                        <td>{{ cate.nombre }}</td>
-                                        <td>{{ cate.movi }}</td>
-                                        <td>{{ cate.username }}</td>
-                                        <td>{{ cate.fech_cate }}</td>
-                                        <td class="elimina"><a href="status_mov_cate/{{ cate.categoria_id}}" >Eliminar</a></td>                    
-                                </tbody>
-                            {% endif %}
-                        {% endfor %}
-                    </table>
-                {% endif %}
-                <br>
-                <br>
-                {% if request.user.is_superuser %}
-                    <h2>Proveedor</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Proveedor</th>
-                                <th>Movimiento</th>
-                                <th>Usuario</th>
-                                <th>Fecha</th>
-                                <th>Opcion</th>
-                            </tr>
-                        </thead>
-                        {% for cate in ProveedoresListados|dictsortreversed:"fecha_edit"|slice:":5"%}
-                            {% if cate.status_mov %}
-                                <tbody>
-                                        <td>{{ cate.nombre }}</td>
-                                        <td>{{ cate.movimiento }}</td>
-                                        <td>{{ cate.username }}</td>
-                                        <td>{{ cate.fecha_edit }}</td>
-                                        <td class="elimina"><a href="elimina_menpro/{{ cate.idProveedor}}" >Eliminar</a></td>                    
-                                </tbody>
-                            {% endif %}
-                        {% endfor %}
-                    </table>
-                {% endif %}
-                <br>
-                <br>
-                {% if request.user.is_superuser %}
-                    <h2>Marca</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Marca</th>
-                                <th>Movimiento</th>
-                                <th>Usuario</th>
-                                <th>Fecha</th>
-                                <th>Opcion</th>
-                            </tr>
-                        </thead>
-                        {% for marca in marca|dictsortreversed:"fech_cate"|slice:":5"%}
-                            {% if marca.status_mov %}
-                                <tbody>
-                                        <td>{{ marca.nombre }}</td>
-                                        <td>{{ marca.movi }}</td>
-                                        <td>{{ marca.username }}</td>
-                                        <td>{{ marca.fech_cate }}</td>
-                                        <td class="elimina"><a href="elimina_menmar/{{ marca.marca_id}}" >Eliminar</a></td>                    
-                                </tbody>
-                            {% endif %}
-                        {% endfor %}
-                    </table>
-                {% endif %}
-            </div>
+        <script>
+            const canvas1 = document.getElementById('myChartt');
+            canvas1.width = 200;
+            canvas1.height = 200;
+        
+            const Utils = {
+                months: ({ count }) => {
+                    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                    return monthNames.slice(0, count);
+                },
+            };
+            const labels1 = Utils.months({ count: 12 });
+            const data1 = {
+                labels: labels1,
+                datasets: [{
+                    label: 'Entrada de Productos',
+                    data: {{ data|safe }},
+                    backgroundColor: 'rgba(26, 206, 192)',
+                    borderColor: 'rgba(26, 206, 192)',
+                    borderWidth: 1
+                }]
+            };
+        
+            const config1 = {
+                type: 'bar',
+                data: data1,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    maintainAspectRatio: false,
+                    aspectRatio: 1,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            fullWidth: true,
+                            fontSize: 12
+                        }
+                    }
+                },
+            };
+            const ctx1 = canvas1.getContext('2d');
+            const myChartt = new Chart(ctx1, config1);
+        </script>
+        
+        <br>
+        <h1>Contador</h1>
+        <div width="50" height="50">
+            <canvas id="myChart" style="display: block; box-sizing: border-box;"></canvas>
         </div>
+        <script>
+            const canvas2 = document.getElementById('myChart');
+            canvas1.width = 100;
+            canvas1.height = 100;
+
+            const data2 = {
+                labels: [
+                    'Productos',
+                    'Proveedores',
+                    'Marcas',
+                    'Ctaegorias',
+                ],
+                datasets: [{
+                    label: 'Son',
+                    data: [{{cantidad_productos}}, {{cantidad_proveedores}}, {{cantidad_marcas}}, {{cantidad_categorias}}],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(75, 192, 192)',
+                        'rgb(255, 205, 86)',
+                        'rgb(201, 203, 207)',
+                    ]
+                }]
+            };
+            const config2 = {
+                type: 'polarArea',
+                data: data2,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    maintainAspectRatio: false,
+                    aspectRatio: 1,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            fullWidth: true,
+                            fontSize: 12
+                        }
+                    }
+                }
+            };
+            const ctx2 = canvas2.getContext('2d');
+            const myChart = new Chart(ctx2, config2);
+        </script>
     </main>
     <div class="right" >
         <div class="top">

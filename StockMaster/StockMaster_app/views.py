@@ -26,27 +26,19 @@ from django.core.mail import send_mail
 from smtplib import SMTPException
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+from django.db.models.functions import ExtractMonth
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
+import pytz
 
 # Create your views here.
 
-class CustomUserCreationForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your first name.')
-    last_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your last name.')
-    email = forms.EmailField()
+
 
 #____________________________________________________________________________________________________________________________________
  
 #--------------------------------------------------------------- L O G I N --------------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
-
-def is_superuser(user):
-    return user.is_authenticated and user.is_superuser
-
-@user_passes_test(is_superuser)
-@login_required(login_url='signin')
-def get_imagen_url(imagen_binaria):
-    imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
-    return f"data:image/jpeg;base64,{imagen_base64}"
     
 def signin(request):
     if request.user.is_authenticated:
@@ -108,7 +100,18 @@ def usuarios(request):
     else:
         return redirect('/actividades')
 
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your first name.')
+    last_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your last name.')
+    email = forms.EmailField()
+
+def is_superuser(user):
+    return user.is_authenticated and user.is_superuser
+@user_passes_test(is_superuser)
 @login_required(login_url='signin')
+def get_imagen_url(imagen_binaria):
+    imagen_base64 = base64.b64encode(imagen_binaria).decode('utf-8')
+    return f"data:image/jpeg;base64,{imagen_base64}"
 def signup(request):
     if request.user.has_perm('StockMaster_app.view_usuario'):
         if request.method == 'POST':
@@ -270,10 +273,26 @@ def pro(request):
         CategoriaListados = Categoria.objects.all()
         ProveedoresListados = Proveedores.objects.all()
         MarcaListados = Marca.objects.all() 
-        AreaListado = Area.objects.all()
+        form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
+        usuario = form.count()
+        cantidad_marcas = MarcaListados.count()
+        cantidad_productos = ProductosListados.count()
+        cantidad_categorias = CategoriaListados.count()
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/productos.html', { "Productos": ProductosListados, "Area": AreaListado, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/productos.html', {
+            "Productos": ProductosListados,
+            "Categoria": CategoriaListados,
+            'marca': MarcaListados,
+            'Proveedor': ProveedoresListados,
+            'Mensajes': mensajes,
+            'cantidad_mensajes': cantidad_mensajes,
+            'usuarios': usuario,
+            'Usuario': form,
+            'cantidad_productos': cantidad_productos,
+            'cantidad_categorias': cantidad_categorias,
+            'cantidad_marcas': cantidad_marcas,
+        })    
     else:
         return redirect('/actividades')
     
@@ -1769,17 +1788,43 @@ def recuperar_designaciones(request):
 
 @login_required(login_url='signin')
 def productos(request):
-    if request.user.has_perm('StockMaster_app.view_marca'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
-        ProductosListados = Productos.objects.all()
-        CategoriaListados = Categoria.objects.all()
-        ProveedoresListados = Proveedores.objects.all()
-        RolListados = RolExtra.objects.all()
-        MarcaListados = Marca.objects.all()
-        return render(request, 'StockMaster_app/actividades.html', { "Roles": RolListados, 'Mensajes': mensajes, 'cantidad_mensajes':cantidad_mensajes,'marca': MarcaListados, ' Productos':ProductosListados,'CategoriaListados':CategoriaListados, 'ProveedoresListados' : ProveedoresListados})
-    else:
-        return redirect('/actividades')
+    mensajes = Mensajes.objects.all()
+    cantidad_mensajes = mensajes.count()
+    ProductosListados = Productos.objects.all()
+    CategoriaListados = Categoria.objects.all()
+    ProveedoresListados = Proveedores.objects.all()
+    RolListados = RolExtra.objects.all()
+    MarcaListados = Marca.objects.all()
+    form = User.objects.all()  
+    usuario = form.count()
+    cantidad_marcas = MarcaListados.count()
+    cantidad_productos = ProductosListados.count()
+    cantidad_proveedores =  ProveedoresListados.count()
+    cantidad_categorias = CategoriaListados.count()
+    productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Count('idproducts')).order_by('month')    # Crear listas para las etiquetas y datos de la gráfica
+    labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
+    data = [mes['cantidad'] for mes in productos_por_mes]
+    for producto in ProductosListados:
+        producto.imagen_url = get_imagen_url(producto.imagen)
+    return render(request, 'StockMaster_app/actividades.html', {
+        "Productos": ProductosListados,
+        "Categoria": CategoriaListados,
+        'marca': MarcaListados,
+        'Proveedor': ProveedoresListados,
+        'Mensajes': mensajes,
+        'cantidad_mensajes': cantidad_mensajes,
+        'usuarios': usuario,
+        'Usuario': form,
+        'cantidad_productos': cantidad_productos,
+        'cantidad_proveedores': cantidad_proveedores,
+        'cantidad_categorias': cantidad_categorias,
+        'cantidad_marcas': cantidad_marcas,
+        "Roles": RolListados,
+        'CategoriaListados':CategoriaListados, 
+        'labels': labels,
+        'data': data,
+        'ProveedoresListados' : ProveedoresListados
+        })
 
 def editarcant(request, idproducts):
     if request.method == 'POST':

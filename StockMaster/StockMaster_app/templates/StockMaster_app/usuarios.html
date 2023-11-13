@@ -17,6 +17,13 @@
                     <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
+                {% if messages %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% endif %}
             </div>
             <div class="messages-container">
                 {% for message in messages %}
@@ -50,7 +57,7 @@
                                         </div>
                                     </td>
                                     <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                    <td class="elimina"><a class="btn btn-danger btnEliminacion" href="eliminaruser/{{us.id.id}}">
+                                    <td class="elimina"><a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
                                         <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>
@@ -71,13 +78,11 @@
                         {% csrf_token %}
                         {% csrf_token %}
                             {% if messages %}
-                            {% if messages %}
                                 {% for message in messages %}
                                     <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
                                 {% endfor %}
                             {% endif %}
-                            {% endif %}
-                        <!--Inicio de la tabla de columnas-->
+                            <!--Inicio de la tabla de columnas-->
                         
                         <div class="form-columns_user">                    
                             <div class="tab" style="justify-content: center;">
@@ -126,8 +131,8 @@
                                 </div>
                             </div>
                                 <!--Termino de segunda columna-->
-                            <div class="tab" style="justify-content: center;">  <!-- style="display: flex; position: absolute; left: 43%;" --
-                                <h2 class="titulo-modal_user" style="/* margin-left: 50px; */">Datos adicionales</h2>
+                            <div class="tab" style="justify-content: center;">  <!-- style="display: flex; position: absolute; left: 43%;" -->
+                                <h2 class="titulo-modal_user" style="margin-left: 50px; ">Datos adicionales</h2>
                                 <!--Tercera columna-->
                                 <div class="form-column_user">
                                     <div class="divisor">
@@ -218,7 +223,7 @@
                                                 <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">   -->
                                                 <div class="checkbox-wrapper-1">
                                                     <input id="example-1" class="substituted" type="checkbox" aria-hidden="true" />
-                                                    <label for="example-1">Checkbox</label>
+                                                    <label for="example-1">Inserta Imagen</label>
                                                   </div>
                                         </div>
                                 </div>
@@ -232,7 +237,7 @@
                         <!-- <div class="btn-cerrar">
                             <button type="submit">Guardar</button>
                         </div> -->
-                        <div>
+                        <div style="overflow: auto;">
                             <div class="" style="float:right; justify-content:space-around;">
                                 <button class="button-8" role="button" type="button" id="prevBtn" onclick="nextPrev(-1)">Atras</button>
                                 <button class="button-8" role="button" type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>

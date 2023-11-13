@@ -4,11 +4,11 @@ const scrollLeftButton = document.querySelector('.scroll-button.left-button');
 const buttonWidth = document.querySelector('.configurable-button').offsetWidth;
 
 scrollLeftButton.addEventListener('click', () => {
-  scrollButtons(-1);
+  scrollButtons(1);
 });
 
 scrollRightButton.addEventListener('click', () => {
-  scrollButtons(1);
+  scrollButtons(-1);
 });
 
 function scrollButtons(direction) {

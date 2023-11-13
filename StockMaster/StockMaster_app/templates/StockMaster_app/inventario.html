@@ -73,7 +73,7 @@
         </form>
         <form method="get">
             <div class="button-container"> 
-                <button class="scroll-button left-button" style="background: transparent;" type="button" onclick="scrollButtons(-1)">
+                <button class="scroll-button left-button" style="background: transparent;" type="button" onclick="scrollButtons(1)">
                     <span class="material-symbols-outlined">navigate_before</span>
                 </button>
                 <div class="scroll-container">
@@ -87,9 +87,22 @@
                         </div>
                     </div>
                 </div>
-                <button class="scroll-button right-button" style="background: transparent;" type="button" onclick="scrollButtons(1)">
+                <button class="scroll-button right-button" style="background: transparent;" type="button" onclick="scrollButtons(-1)">
                     <span class="material-symbols-outlined">navigate_next</span>
                 </button>
+            </div>
+            <div class="category-cards">
+                {% for c in Categoria %}
+                    {% if c.status == 1 %}
+                        <div class="category-card">
+                            <div class="category-content">
+                                <button class="configurable-button" role="button" value="{{c.nombre}}" name="categoria">
+                                    <h3>{{ c.nombre }}</h3>
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </form>
         <div class="product-cards">
@@ -163,6 +176,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static 'js/search.js' %}"></script>
 <script src="{% static 'js/botonesColor.js' %}"></script>
+<script src="{% static 'js/apartadonuevo.js' %}"></script>
 
 
 {% endblock %}

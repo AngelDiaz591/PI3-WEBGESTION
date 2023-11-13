@@ -1,0 +1,157 @@
+{% extends "./base.html" %}
+{% block body %}
+{% load static %}
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+<main>
+    <h1>Areas Designadas</h1>
+    <div class="recent-orders">
+        <div class="principal">
+            <div class="search-bar-v1">
+                <input type="text" id="search-input" placeholder="Buscar categoria..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+        </div>
+        <br>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="mitad">
+            <div>
+                <div class="boton-modal">
+                    <h2 class="agregar">Areas</h2>
+                    <label for="btn-modal">
+                        <i class="fa-solid fa-plus"></i>    Agregar Area
+                    </label>
+                </div>    
+                <div style="overflow:auto; height: 450px;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Areas</th>
+                            <th colspan="2">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 15px;">
+                        {% for c in Area %}
+                        {% if c.status%}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ c.nombre }}</td>
+                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.area_id }}">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </a></td>
+                                <td class="elimina"><a href="{% url 'status_area' area_id=c.area_id %}" class="btn btn-danger btnEliminacionArea">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>  
+        
+    </div>
+    <!--Ventana Modal-->
+    <div>
+        <input type="checkbox" id="btn-modal">
+        <div class="container-modal">
+            <div class="content-modal" style="width: 100%; max-width: 400px;">
+                <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
+                <h2 class="titulo-modal">Agregar Nueva Area</h2>
+                <form action="/registraArea/" method="POST" enctype="multipart/form-data" id="mi_formulario">
+                    {% csrf_token %}
+                    <div class="divisor">
+                        <div class="titulo">Area:</div>
+                        <input class="campos" type="text" id="nombreArea" name="nombreArea" class="campos" placeholder="Nombre Area" 
+                        pattern = "[A-Z0-9]{2,50}" maxlength="50" oninput="convertToUppercase()" required>
+                        <span class="error-message" style="color: red;"></span>
+                    </div>
+                    <div class="btn-cerrar">
+                        <button type="submit">Guardar</button>
+                        <label for="btn-modal">Cancelar</label>
+                    </div>
+                </form>
+                <label for="btn-modal" class="cerrar-modal"></label>
+            </div>
+        </div>
+    </div>
+    <!--Fin ventana modal-->
+
+    <!-- Modal edición -->
+    <div id="editModalArea" class="container-modal-editar">
+        <div class="content-modal-editar" style="width: 100%; max-width: 400px;">
+            <label class="cerrar" id="closeEditModal"><i class="fa-solid fa-xmark"></i></label>
+            <h2 class="titulo-modal">Editar Area</h2>
+            <form action="/editarArea2/" method="POST" enctype="multipart/form-data" value="{{c.area_id }}">
+                {% csrf_token %}
+                <input class="campos" type="hidden" id="editProductId" name="productId" value="{{ c.area_id }}">
+                <div class="divisor">
+                    <div class="titulo">Nombre:</div>
+                    <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Nombre Area"
+                    pattern = "[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
+                    <br><span class="error-message" style="color: red;"></span>
+                </div>
+                <div class="btn-cerrar">
+                    <button type="submit">Guardar</button>
+                    <label id="cancelar">Cancelar</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fin Modal edición -->
+
+</main>
+<script>
+// Resto del código para cerrar el modal y otros eventos
+
+    // Cierra el modal de edición cuando se hace clic en la "x"
+    closeEditModal.addEventListener("click", function() {
+        editModalArea.style.display = "none";
+    });
+
+    //Cierra el modal de edicion cuando se da click a cancelar
+    cancelar.addEventListener("click", function() {
+        editModalArea.style.display = "none";
+    });
+
+</script>
+{% endblock %}

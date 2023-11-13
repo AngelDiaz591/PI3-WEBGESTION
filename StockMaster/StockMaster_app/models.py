@@ -26,6 +26,18 @@ class Marca(models.Model):
     def __str__(self):
         return self.nombre
 
+class Area(models.Model):
+    area_id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    movi = models.CharField(max_length=100, null= True)
+    username = models.CharField(max_length=100, null=True)
+    fech_cate= models.DateTimeField(default=timezone.now, null= True)
+    status= models.BooleanField(default=True)
+    status_mov = models.BooleanField(default=True)
+    def __str__(self):
+        return self.nombre
+
+
 #Modelo de proveedores
 
 class Proveedores(models.Model):    
@@ -66,6 +78,7 @@ class Productos(models.Model):
     id_categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE, null= True)
     id_Proveedores = models.ForeignKey(Proveedores, on_delete=models.CASCADE, null = True)
     id_marca = models.ForeignKey(Marca, on_delete=models.CASCADE, null= True)
+    id_area = models.ForeignKey(Area, on_delete=models.CASCADE, null= True)
 
 
     hora_baja = models.DateTimeField(default=timezone.now, null=True)
@@ -87,12 +100,19 @@ class RolExtra(models.Model):
     productos = models.BooleanField(default=False)
     proveedores = models.BooleanField(default=False)
     etiquetas = models.BooleanField(default=False)
+    area = models.BooleanField(default=False)
     productosRecuperacion = models.BooleanField(default=False)
     proveedoresRecuperacion = models.BooleanField(default=False)
     etiquetasRecuperacion = models.BooleanField(default=False)
+    designadoRecuperacion = models.BooleanField(default=False)
     usuarios = models.BooleanField(default=False)
     roles = models.BooleanField(default=False)
     soporte = models.BooleanField(default=False)
+    contra = models.BooleanField(default=False)
+    historialGeneral = models.BooleanField(default=False)
+    historialModificaciones = models.BooleanField(default=False)
+    historialMovimientos = models.BooleanField(default=False)
+    historialEliminados = models.BooleanField(default=False)
     
     movi = models.CharField(max_length=100, null= True)
     username = models.CharField(max_length=100, null=True)

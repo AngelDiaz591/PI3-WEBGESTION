@@ -69,6 +69,7 @@
                         <th>Categoría</th>
                         <th>Proveedor</th>
                         <th>Marca</th>
+                        <th>Area</th>
                         <th colspan="4">Opciones</th>
                     </tr>
                 </thead>
@@ -119,10 +120,21 @@
                                       MARCA NO EXISTE
                                     {% endif %}
                                   </td>
+                                <td>
+                                    {% if c.id_area %}
+                                    {% if c.id_area.status == 1 %}
+                                        {{ c.id_area.nombre }}
+                                    {% elif c.id_area.status == 0 %}
+                                    AREA NO EXISTE
+                                    {% endif %}
+                                    {% else %}
+                                    AREA NO EXISTE
+                                    {% endif %}
+                                </td>
                                 <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
                                     <span class="material-symbols-outlined">edit</span></a>
                                 </td>
-                                <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacion">
+                                <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
                                     <span class="material-symbols-outlined">delete</span>
                                 </a></td>
                             </tr>
@@ -142,35 +154,39 @@
                 <form action="/registrarProducto/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
                     <!--Inicio de la tabla de columnas-->
                     <div class="form-columns">
-                    <!--Datos-->
                         <!--Primer columna-->
                         <div class="form-column">
                             <div class="divisor">
                                 <div class="titulo">Código:</div>
-                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Codigo" pattern="[A-Za-z0-9]{6}"  maxlength="6" oninput="convertToUppercase()" required>
+                                <input type="text" id="txtCodigo" name="txtCodigo" class="campos" placeholder="Codigo" 
+                                pattern="[A-Z0-9]{6}"  maxlength="6" oninput="convertToUppercase()" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Nombre:</div>
-                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" pattern="[A-Za-z0-9]{6,20}"  maxlength="20" oninput="convertToUppercase()" required>
+                                <input type="text" id="txtNombre" name="txtNombre" class="campos" placeholder="Nombre" 
+                                pattern = "[A-Z0-9\s]{2,20}" maxlength="20" oninput="convertToUppercase()" required>
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Precio:</div>
-                                <input type="number" id="NumPrecio" name="NumPrecio" placeholder="Precio" class="campos" maxlength="7" required oninput="validarNumeros(this)">
+                                <input type="number" id="NumPrecio" name="NumPrecio" placeholder="Precio" pattern="[0-9]{1,7}" 
+                                class="campos" maxlength="7" required oninput="validarNumeros(this)">
                                 <br>
                                 <small class="text-muted">Ingrese un número (entre 1 y 100 000).</small><br>
                                 <span class="error-message error" style="color: red;"></span>
                             </div>
                             <div class="divisor">
                                 <div class="titulo">Cantidad Producto:</div>
-                                <input type="number" id="CantPro" name="CantPro" placeholder="Cantidad de Producto" pattern="[0-9]{1,7}" class="campos" maxlength="7"  required oninput="validarNumeros(this)" >
+                                <input type="number" id="CantPro" name="CantPro" placeholder="Cantidad de Producto" 
+                                pattern="[0-9]{1,7}" class="campos" maxlength="7"  required oninput="validarNumeros(this)" >
                                 <br>
                                 <small class="text-muted">Ingrese un numero (entre 1 y 100 000).</small><br>
                                 <span class="error-message" style="color: red;"></span>
                             </div>
                         </div>
                         <!--Termino de la 1 columna-->
+
                         <!--Inicio de la 2 columna-->
                         <div class="form-column">
                             <div class="divisor">
@@ -206,33 +222,31 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="divisor">
+                                <div class="titulo">Area:</div>
+                                <select name="area" id="area" class="campos-seleccion" required>
+                                    <option value="" disabled selected>Selecciona un Area</option>
+                                    {% for c in Area %}
+                                         {% if c.status == 1 %}
+                                        <option value="{{ c.area_id }}">{{ c.nombre }}</option>
+                                        {% endif%}
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
                         <!--Termino de la 2 columna-->
                     </div>
                     <!--Termino de la tabla de columnas-->
-                        <div class="divisor">
-                            <div class="message" style="align-items: center;">
-                                <input type="file" name="imagen" id="id_imagen" accept="image/*" required>
-                            </div>
+                    <div class="divisor">
+                        <div class="message" style="align-items: center;">
+                            <input type="file" name="imagen" id="id_imagen" accept="image/*" required>
                         </div>
-                        <div class="btn-cerrar">
-                            <button type="submit">Guardar</button>
-                            <label for="btn-modal">Cancelar</label>
-                        </div>
-                    <!--Fin datos-->
+                    </div>
+                    <div class="btn-cerrar">
+                        <button type="submit">Guardar</button>
+                        <label for="btn-modal">Cancelar</label>
+                    </div>
                 </form>
-                <script>
-                    // Obtén todos los elementos con la clase "close-btn"
-                    var closeBtns = document.querySelectorAll('.close-btnn');
-
-                    // Agrega un evento de clic a cada elemento
-                    closeBtns.forEach(function (closeBtn) {
-                        closeBtn.addEventListener('click', function () {
-                            // Oculta el elemento al hacer clic
-                            closeBtn.style.display = 'none';
-                        });
-                    });
-                </script>
             <label for="btn-modal" class="cerrar-modal"></label>
             </div>
         </div>
@@ -253,35 +267,42 @@
                     <div class="form-column">
                         <div class="divisor">
                             <div class="titulo">Código:</div>
-                            <input class="campos" type="text" id="EtxtCodigo" name="txtCodigo"
-                                    placeholder="Código" pattern="[A-Za-z0-9]{6}" maxlength="6" required> <!-- form-control -->
-                            <br><span class="error-message" style="color: red;"></span>
-                        </div>
-                        <div class="divisor">
-                            <div class="titulo">Nombre:</div>
-                            <input class="campos" type="text" id="EtxtNombre" name="txtNombre"
-                                placeholder="Nombre" minlength="6"  pattern="[A-Za-z0-9]{6}" maxlength="20" required>
+                            <input class="campos" type="text" id="EtxtCodigo" name="txtCodigo" placeholder="Código" 
+                            pattern="[A-Z0-9]{6}" maxlength="6" required oninput="convertToUppercase()"> <!-- form-control -->
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Precio:</div>
                             <input class="campos" type="text" id="ENumPrecio" name="NumPrecio" placeholder="Precio"
-                                pattern="[0-9]{1,7}" maxlength="7" required>
+                                pattern="[0-9]{1,7}" maxlength="7" required oninput="validarNumeros(this)">
                             <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                             <br><span class="error-message error" style="color: red;"></span>
                         </div>
                         <div class="divisor">
                             <div class="titulo">Cantidad Productos:</div>
                             <input class="campos" type="text" id="ECantPro" name="CantPro" placeholder="Cantidad de Producto"
-                                pattern="[0-9]{1,7}"  maxlength="7" required>
+                                pattern="[0-9]{1,7}"  maxlength="7" required oninput="validarNumeros(this)">
                             <br><small class="text-muted">Ingrese un número (entre 1 y 100 000).</small>
                             <br><span class="error-message error" style="color: red;"></span>
+                        </div>
+                        <div class="divisor">
+                            <center><img id="imgActual" src="{{ imagen_url }}" alt="Imagen actual"></center>     
+                        </div>
+                        <div class="divisor">
+                            <input type="file" name="imagen" id="id_imagen" accept="image/*">
+                            <input class="ingresar" type="hidden" name="imagen_actual" value="{{ productos.imagen.url }}">
                         </div>
                     </div>
                     <!--Fin de Primer columna-->
 
                     <!--Segunda columna-->
                     <div class="form-column">
+                        <div class="divisor">
+                            <div class="titulo">Nombre:</div>
+                            <input class="campos" type="text" id="EtxtNombre" name="txtNombre"
+                                placeholder="Nombre" pattern="[A-Z0-9\s]{2,20}" maxlength="20" required oninput="convertToUppercase()">
+                            <br><span class="error-message" style="color: red;"></span>
+                        </div>
                         <div class="divisor">
                             <div class="titulo">Categoría:</div>
                             <select name="categoria" id="categoria" class="campos-seleccion" required>
@@ -316,11 +337,15 @@
                             </select>
                         </div>
                         <div class="divisor">
-                            <center><img id="imgActual" src="{{ imagen_url }}" alt="Imagen actual"></center>     
-                        </div>
-                        <div class="divisor">
-                            <input type="file" name="imagen" id="id_imagen" accept="image/*">
-                            <input class="ingresar" type="hidden" name="imagen_actual" value="{{ productos.imagen.url }}">
+                            <div class="titulo">Area:</div>
+                            <select name="area" id="area" class="campos-seleccion" required>
+                                <option value="" disabled>Selecciona un area</option>
+                                {% for c in Area %}
+                                         {% if c.status == 1 %}
+                                           <option class="areaOP" id="areaOP{{ c.area_id }}" value="{{ c.area_id }}">{{ c.nombre }}</option>
+                                        {% endif%}
+                                    {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <!--Fin de segunda columna-->

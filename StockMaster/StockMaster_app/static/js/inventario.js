@@ -1,6 +1,18 @@
 (function () {
+    const btnEliminacionPro = document.querySelectorAll(".btnEliminacionPro");
+    const btnEliminacionProv = document.querySelectorAll(".btnEliminacionProv")
+    const btnEliminacionArea = document.querySelectorAll(".btnEliminacionArea");
+    const btnEliminacionCate = document.querySelectorAll(".btnEliminacionCate");
+    const btnEliminacionMarc = document.querySelectorAll(".btnEliminacionMarc");
+    const btnEliminacionRol = document.querySelectorAll(".btnEliminacionRol");
+    const btnEliminacionUsua = document.querySelectorAll(".btnEliminacionUsua");
 
-    const btnEliminacionProv = document.querySelectorAll(".btnElimiacioProv")
+    const btnRecuperarPro = document.querySelectorAll(".btnRecuperarPro");
+    const btnRecuperarProv = document.querySelectorAll(".btnRecuperarProv");
+    const btnRecuperarArea = document.querySelectorAll(".btnRecuperarArea");
+    const btnRecuperarRol = document.querySelectorAll(".btnRecuperarRol");
+    const btnRecuperarCate = document.querySelectorAll(".btnRecuperarCate");
+    const btnRecuperarMarc = document.querySelectorAll(".btnRecuperarMarc");
 
     btnEliminacionProv.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -11,9 +23,7 @@
         });
     });
 
-    const btnEliminacion = document.querySelectorAll(".btnEliminacion");
-
-    btnEliminacion.forEach(btn => {
+    btnEliminacionPro.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const confirmacion = confirm('¿Desea eliminar el producto?');
             if (!confirmacion) {
@@ -22,6 +32,107 @@
         });
     });
     
+    btnEliminacionArea.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea eliminar el area?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnEliminacionCate.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea eliminar la categoria?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnEliminacionMarc.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea eliminar la marca?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnEliminacionRol.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea eliminar el rol?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnEliminacionUsua.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea eliminar el usuario?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    //Recuperar
+
+    btnRecuperarPro.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea recuperar el producto?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnRecuperarProv.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea recuperar al proveedor?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnRecuperarArea.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea recuperar al area?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnRecuperarRol.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea recuperar el rol?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnRecuperarCate.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea recuperar la categoria?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    btnRecuperarMarc.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea recuperar la marca?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
 })();
 
 // Espera a que se cargue el documento

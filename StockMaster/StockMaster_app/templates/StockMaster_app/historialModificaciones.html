@@ -3,32 +3,24 @@
 {% load static %}
 <div class="ctn">
     <main>
-            <h1>Historial</h1>
+        <h1>Historial Modificaciones</h1>
         <div class="recent-orders">
             <div class="principal">
                 <div class="encabezado">
                     <h2>Movimientos</h2>
                 </div>
-                <div class="search-bar-v1">
+                <div class="search-bar-v3">
                     <label for="search-input"></label><input type="text" id="search-input" placeholder="Buscar movimientos..." oninput="convertToUppercase()">
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
             </div>
             <br>
-            <div class="messages-container">
-                {% for message in messages %}
-                    <div class="alert alert-custom" role="alert">
-                        <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                {% endfor %}
-            </div>
-            <div style="overflow: auto; height: 400px;">
+            <div style="overflow: auto; height: 650px;">
                 <table>
                     <thead>
                         <tr>
-                            <th>Nombre</th>
                             <th>Movimiento</th>
+                            <th>Nombre</th>
                             <th>Usuario del Movimiento</th>
                             <th>Fecha</th>
                         </tr>
@@ -36,8 +28,8 @@
                     <tbody>
                         {% for his in historial|dictsortreversed:"fecha" %}
                             <tr>
+                                <td align="left">{{ his.movimiento}}</td>
                                 <td>{{ his.nombre }}</td>
-                                <td>{{ his.movimiento}}</td>
                                 <td>{{ his.usuario}}</td>
                                 <td>{{ his.fecha}}</td>
                             </tr>

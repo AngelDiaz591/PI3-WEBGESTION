@@ -79,7 +79,7 @@
                                     <td class="edita"><a class="btn btn-info edit-product-button-categoria" data-id="{{ c.categoria_id }}">
                                         <span class="material-symbols-outlined">edit</span>
                                     </a></td>
-                                    <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacion">
+                                    <td class="elimina"><a href="{% url 'status_categoria' categoria_id=c.categoria_id %}" class="btn btn-danger btnEliminacionCate">
                                         <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>
@@ -116,7 +116,7 @@
                                         <span class="material-symbols-outlined">edit</span>
                                     </a></td>
                                     
-                                    <td class="elimina"><a href="{% url 'cambio_statusmar' marca_id=c.marca_id %}"  class="btn btn-danger btnEliminacion">
+                                    <td class="elimina"><a href="{% url 'cambio_statusmar' marca_id=c.marca_id %}"  class="btn btn-danger btnEliminacionMarc">
                                             <span class="material-symbols-outlined">delete</span>
                                     </a></td>
                                 </tr>
@@ -141,7 +141,7 @@
                     <div class="divisor">
                         <div class="titulo">Categoría:</div>
                         <input class="campos" type="text" id="txtNombreCat" name="txtNombreCat" class="campos" placeholder="Nombre Categoría" 
-                            maxlength="20" oninput="convertToUppercase()" required>
+                        pattern = "[A-Z0-9]{2,50}" maxlength="50" oninput="convertToUppercase()" required>
                         <span class="error-message" style="color: red;"></span>
                     </div>
                     <div class="btn-cerrar">
@@ -149,18 +149,6 @@
                         <label for="btn-modal">Cancelar</label>
                     </div>
                 </form>
-                <script>
-                    // Obtén todos los elementos con la clase "close-btn"
-                    var closeBtns = document.querySelectorAll('.close-btnn');
-
-                    // Agrega un evento de clic a cada elemento
-                    closeBtns.forEach(function (closeBtn) {
-                        closeBtn.addEventListener('click', function () {
-                            // Oculta el elemento al hacer clic
-                            closeBtn.style.display = 'none';
-                        });
-                    });
-                </script>
             <label for="btn-modal" class="cerrar-modal"></label>
         </div>
         <!--Fin de Ventana Modal-->
@@ -179,7 +167,7 @@
                 <div class="divisor">
                     <div class="titulo">Nombre:</div>
                     <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Categoria"
-                        maxlength="50" required oninput="convertToUppercase()">
+                    pattern = "[A-Z0-9]{2,50}"maxlength="50" required oninput="convertToUppercase()">
                     <br><span class="error-message" style="color: red;"></span>
                 </div>
                 <div class="btn-cerrar">
@@ -207,7 +195,7 @@
                     <div class="divisor">
                         <div class="titulo">Marca:</div>
                         <input type="text" id="txtMarcaNew" name="txtMarcaNew" class="campos" placeholder="Nombre" 
-                            maxlength="20" oninput="convertToUppercase()" required>
+                        pattern = "[A-Z0-9]{2,50}" maxlength="50" oninput="convertToUppercase()" required>
                         <span class="error-message" style="color: red;"></span>
                     </div>
                     <div class="btn-cerrar">
@@ -215,18 +203,6 @@
                         <label for="btn-modal-segundo">Cancelar</label>
                     </div>
                 </form>
-                <script>
-                    // Obtén todos los elementos con la clase "close-btn"
-                    var closeBtns = document.querySelectorAll('.close-btnn');
-
-                    // Agrega un evento de clic a cada elemento
-                    closeBtns.forEach(function (closeBtn) {
-                        closeBtn.addEventListener('click', function () {
-                            // Oculta el elemento al hacer clic
-                            closeBtn.style.display = 'none';
-                        });
-                    });
-                </script>
                 <label for="btn-modal-segundo" class="cerrar-modal"></label>
             </div>
         </div>
@@ -244,7 +220,7 @@
                 <div class="divisor">
                     <div class="titulo">Nombre:</div>
                     <input type="text" id="txtNombre" name="nombre" class="campos" placeholder="Marca"
-                        maxlength="50" oninput="convertToUppercase()" required>
+                    pattern = "[A-Z0-9]{2,50}"maxlength="50" oninput="convertToUppercase()" required>
                     <br><span class="error-message" style="color: red;"></span>
                 </div>
                 <div class="btn-cerrar">

@@ -54,70 +54,63 @@
         </div>
         <div class="mitad">
             <div>
-                <h2>Categorias</h2>
+                <h2>Roles</h2>
                 <table>
                     <thead>
                         <tr>
                             <!-- <th>#</th> -->
-                            <th>Categoria</th>
+                            <th>Rol</th>
                             <th>Elimino Usuario</th>
                             <th>Fecha</th>
                             <th colspan="2">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for c in Categoria %}
-                            {% if c.status %}
-
-                            {% else %}
-                                <tr>
-                                    
-                                    <!-- <td>{{forloop.counter}}</td> -->
-                                    <td>{{ c.nombre }} </td>
-                                    <td>{{ c.username }}</td>
-                                    <td>{{ c.fech_cate}}</td>
-                                    <td class="edita"><a href="{% url 'status_categoriare' categoria_id=c.categoria_id %}" class="btn btn-info btnRecuperarCate">                                 
-                                        <span class="material-symbols-outlined">restart_alt</span>
-                                    </a></td>
-                                    <td class="elimina"><a href="eliminar_categoria/{{c.categoria_id}}" class="btn btn-danger btnEliminacionCate">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a></td>
-                                </tr>
-                            {% endif %}
+                        {% for c in Roles %}
+                            <tr>
+                                <!-- <td>{{forloop.counter}}</td> -->
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.username }}</td>
+                                <td>{{ c.fech_cate}}</td>
+                                <td class="edita"><a href="cambio_statusrolre/{{ c.id }}" class="btn btn-info btnRecuperarRol">                                 
+                                    <span class="material-symbols-outlined">restart_alt</span>
+                                </a></td>
+                                <td class="elimina"><a href="{% url 'eliminarRol' id=c.id %}"  class="btn btn-danger btnEliminacionRol">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
             <div>
-                <h2>Marca</h2>
+                <h2>Areas</h2>
                 <table>
                     <thead>
                         <tr>
                             <!-- <th>#</th> -->
-                            <th>Marca</th>
+                            <th>Area</th>
                             <th>Elimino Usuario</th>
                             <th>Fecha</th>
                             <th colspan="2">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for c in Marca %}
+                        {% for c in Area %}
                             {% if c.status %}
-
                             {% else %}
-                                <tr>
-                                    
-                                    <!-- <td>{{forloop.counter}}</td> -->
-                                    <td>{{ c.nombre }} </td>
-                                    <td>{{ c.username }}</td>
-                                    <td>{{ c.fech_cate}}</td>
-                                    <td class="edita"><a href="cambio_statusremar/{{ c.marca_id }}" class="btn btn-info btnRecuperarMarc">                                 
-                                        <span class="material-symbols-outlined">restart_alt</span>
-                                    </a></td>
-                                    <td class="elimina"><a href="eliminar-marca/{{ c.marca_id }}" class="btn btn-danger btnEliminacionMarc">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a></td>
-                                </tr>
+                            <tr>
+                                <!-- <td>{{forloop.counter}}</td> -->
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.username }}</td>
+                                <td>{{ c.fech_cate}}</td>
+                                <td class="edita"><a href="status_areare/{{ c.area_id }}" class="btn btn-info btnRecuperarArea">                                 
+                                    <span class="material-symbols-outlined">restart_alt</span>
+                                </a></td>
+                                <td class="elimina"><a href="eliminar_area/{{c.area_id}}"  class="btn btn-danger btnEliminacionArea">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
                             {% endif %}
                         {% endfor %}
                     </tbody>

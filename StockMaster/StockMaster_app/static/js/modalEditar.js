@@ -24,6 +24,11 @@ const editButtonsRol = document.querySelectorAll('.edit-product-button');
 const editModalRol = document.getElementById('editModalRol');
 const editProductIdFieldRol = document.getElementById('editProductId');
 
+// Obtén todos los elementos con la clase "edit-product-button"
+const editButtonsArea = document.querySelectorAll('.edit-product-button');
+const editModalArea = document.getElementById('editModalArea');
+const editProductIdFieldArea = document.getElementById('editProductId');
+
 // Función para abrir el modal de edición Productos
 function openEditModal(productId) {
     editProductIdField.value = productId;
@@ -40,6 +45,7 @@ function openEditModal(productId) {
     var proveedorOp = document.querySelectorAll(".proveedorOp")
     var categroiaOp = document.querySelectorAll(".categoriaOp")
     var marcaOP = document.querySelectorAll(".marcaOP")
+    var areaOP = document.querySelectorAll(".areaOP")
     $.ajax({
         url: 'edicioninventario2/'+ productoId + '',
         type: 'GET',
@@ -71,6 +77,14 @@ function openEditModal(productId) {
             for (var i = 0; i < marcaOP.length; i++) {
                         var option = marcaOP[i];
                     if (option.value == data.id_marca) {
+                    $(option).prop('selected', true);
+                    break;  // Terminar el bucle después de encontrar la coincidencia
+                }
+            }
+
+            for (var i = 0; i < areaOP.length; i++) {
+                        var option = areaOP[i];
+                    if (option.value == data.id_area) {
                     $(option).prop('selected', true);
                     break;  // Terminar el bucle después de encontrar la coincidencia
                 }
@@ -199,13 +213,68 @@ function openEditModalRol(productId) {
             $('#Etxtproductos').val(data.productos)
             $('#Etxtproveedores').val(data.proveedores)
             $('#Etxtetiquetas').val(data.etiquetas)
+            $('#Etxtarea').val(data.area)
             $('#EtxtproductosRecuperacion').val(data.productosRecuperacion)
             $('#EtxtproveedoresRecuperacion').val(data.proveedoresRecuperacion)
             $('#EtxtetiquetasRecuperacion').val(data.etiquetasRecuperacion)
+            $('#EtxtdesignadoRecuperacion').val(data.designadoRecuperacion)
             $('#Etxtusuarios').val(data.usuarios)
             $('#Etxtroles').val(data.roles)
             $('#Etxtsoporte').val(data.soporte)
-       
+            $('#Etxtcontra').val(data.contra)
+            $('#EtxthistorialGeneral').val(data.historialGeneral)
+            $('#EtxthistorialModificaciones').val(data.historialModificaciones)
+            $('#EtxthistorialMovimientos').val(data.historialMovimientos)
+            $('#EtxthistorialEliminados').val(data.historialEliminados)
+            // Obtiene los checkbox
+            const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
+
+            // Recorre todos los checkbox
+            for (let i = 0; i < checkboxes.length; i++) {
+              const checkbox = checkboxes[i];
+
+              // Obtiene el nombre del checkbox
+              const checkboxName = checkbox.getAttribute('name');
+
+              // Obtiene el valor del checkbox de la base de datos
+              const checkboxValue = data[checkboxName];
+
+              // Si el valor del checkbox es 1 o true, activa el checkbox
+              if (checkboxValue === 1 || checkboxValue === true) {
+                checkbox.checked = true;
+              }
+              // Obtiene el checkbox52
+              const checkbox52 = document.querySelector('#checkbox52');
+
+              // Desactiva el checkbox52
+              checkbox52.checked = false;
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        }
+    });
+}
+
+// Función para abrir el modal de edición Area 
+function openEditModalArea(productId) {
+    editProductIdFieldArea.value = productId;
+
+    // Realiza una solicitud Ajax para obtener los detalles del producto y llenar el formulario con esos datos
+    // Aquí debes cargar los detalles del producto y llenar el formulario en el modal
+
+    // Abre el modal de edición
+    editModalArea.style.display = 'flex';
+    
+
+    // Obtener el ID del producto y hacer una solicitud AJAX para obtener los detalles
+    var productoId = document.getElementById("editProductId").value
+    $.ajax({
+        url: 'edicionArea2/'+ productoId + '',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data)
+            $('#EtxtNombre').val(data.nombre)
         },
         error: function(jqXHR, textStatus, errorThrown){
         }
@@ -244,11 +313,19 @@ editButtonsMarcas.forEach(function (button) {
     });
 });
 
-// Asigna un evento de clic a cada botón de edición Proveedores
+// Asigna un evento de clic a cada botón de edición Roles
 editButtonsRol.forEach(function (button) {
     button.addEventListener('click', function (event) {
         const productId = button.getAttribute('data-id');
         openEditModalRol(productId);
+    });
+});
+
+// Asigna un evento de clic a cada botón de edición Roles
+editButtonsArea.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+        const productId = button.getAttribute('data-id');
+        openEditModalArea(productId);
     });
 });
 
@@ -267,7 +344,20 @@ window.addEventListener("click", function(event) {
         editModalMarca.style.display = "none";
     }
     if (event.target === editModalRol) {
+        // Recorre todos los checkbox
+        const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
+
+        // Recorre todos los checkbox
+        for (let i = 0; i < checkboxes.length; i++) {
+            const checkbox = checkboxes[i];
+
+            // Desactiva el checkbox
+            checkbox.checked = false;
+        }
         editModalRol.style.display = "none";
+    }
+    if (event.target === editModalArea) {
+        editModalArea.style.display = "none";
     }
 });
 

@@ -273,6 +273,7 @@ def pro(request):
         CategoriaListados = Categoria.objects.all()
         ProveedoresListados = Proveedores.objects.all()
         MarcaListados = Marca.objects.all() 
+        AreaListado = Area.objects.all()
         form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
         usuario = form.count()
         cantidad_marcas = MarcaListados.count()
@@ -292,6 +293,7 @@ def pro(request):
             'cantidad_productos': cantidad_productos,
             'cantidad_categorias': cantidad_categorias,
             'cantidad_marcas': cantidad_marcas,
+            'Area':AreaListado
         })    
     else:
         return redirect('/actividades')
@@ -766,7 +768,7 @@ def registrar_area(request):
             messages.success(request, '¡Area registrada con éxito!')
 
         # Redireccionar a la página de categorías después del registro
-        return redirect('area')
+        return redirect('/area/')
     else:
         return redirect('/actividades')
     
@@ -819,7 +821,7 @@ def edicionArea2(request, area_id):
         #return JsonResponse(data)    
         #return render(request, 'Stockmaster_app/productos.html', { idproducts : idproducts})
         return JsonResponse(data)
-        return render(request, 'StockMaster_app/configuraciones.html', data)
+        return render(request, 'StockMaster_app/area.html', data)
     else:
         return redirect('/actividades')
 
@@ -1788,43 +1790,46 @@ def recuperar_designaciones(request):
 
 @login_required(login_url='signin')
 def productos(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes = mensajes.count()
-    ProductosListados = Productos.objects.all()
-    CategoriaListados = Categoria.objects.all()
-    ProveedoresListados = Proveedores.objects.all()
-    RolListados = RolExtra.objects.all()
-    MarcaListados = Marca.objects.all()
-    form = User.objects.all()  
-    usuario = form.count()
-    cantidad_marcas = MarcaListados.count()
-    cantidad_productos = ProductosListados.count()
-    cantidad_proveedores =  ProveedoresListados.count()
-    cantidad_categorias = CategoriaListados.count()
-    productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Count('idproducts')).order_by('month')    # Crear listas para las etiquetas y datos de la gráfica
-    labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
-    data = [mes['cantidad'] for mes in productos_por_mes]
-    for producto in ProductosListados:
-        producto.imagen_url = get_imagen_url(producto.imagen)
-    return render(request, 'StockMaster_app/actividades.html', {
-        "Productos": ProductosListados,
-        "Categoria": CategoriaListados,
-        'marca': MarcaListados,
-        'Proveedor': ProveedoresListados,
-        'Mensajes': mensajes,
-        'cantidad_mensajes': cantidad_mensajes,
-        'usuarios': usuario,
-        'Usuario': form,
-        'cantidad_productos': cantidad_productos,
-        'cantidad_proveedores': cantidad_proveedores,
-        'cantidad_categorias': cantidad_categorias,
-        'cantidad_marcas': cantidad_marcas,
-        "Roles": RolListados,
-        'CategoriaListados':CategoriaListados, 
-        'labels': labels,
-        'data': data,
-        'ProveedoresListados' : ProveedoresListados
-        })
+    if request.user.has_perm('StockMaster_app.view_marca'):
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes = mensajes.count()
+        ProductosListados = Productos.objects.all()
+        CategoriaListados = Categoria.objects.all()
+        ProveedoresListados = Proveedores.objects.all()
+        RolListados = RolExtra.objects.all()
+        MarcaListados = Marca.objects.all()
+        form = User.objects.all()  
+        usuario = form.count()
+        cantidad_marcas = MarcaListados.count()
+        cantidad_productos = ProductosListados.count()
+        cantidad_proveedores =  ProveedoresListados.count()
+        cantidad_categorias = CategoriaListados.count()
+        productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Count('idproducts')).order_by('month')    # Crear listas para las etiquetas y datos de la gráfica
+        labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
+        data = [mes['cantidad'] for mes in productos_por_mes]
+        for producto in ProductosListados:
+            producto.imagen_url = get_imagen_url(producto.imagen)
+        return render(request, 'StockMaster_app/actividades.html', {
+            "Productos": ProductosListados,
+            "Categoria": CategoriaListados,
+            'marca': MarcaListados,
+            'Proveedor': ProveedoresListados,
+            'Mensajes': mensajes,
+            'cantidad_mensajes': cantidad_mensajes,
+            'usuarios': usuario,
+            'Usuario': form,
+            'cantidad_productos': cantidad_productos,
+            'cantidad_proveedores': cantidad_proveedores,
+            'cantidad_categorias': cantidad_categorias,
+            'cantidad_marcas': cantidad_marcas,
+            "Roles": RolListados,
+            'CategoriaListados':CategoriaListados, 
+            'labels': labels,
+            'data': data,
+            'ProveedoresListados' : ProveedoresListados
+            })
+    else:
+        return redirect('/actividades')
 
 def editarcant(request, idproducts):
     if request.method == 'POST':

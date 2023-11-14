@@ -227,7 +227,7 @@
                                 <select name="area" id="area" class="campos-seleccion" required>
                                     <option value="" disabled selected>Selecciona un Area</option>
                                     {% for c in Area %}
-                                         {% if c.status == 1 %}
+                                        {% if c.status == 1 %}
                                         <option value="{{ c.area_id }}">{{ c.nombre }}</option>
                                         {% endif%}
                                     {% endfor %}

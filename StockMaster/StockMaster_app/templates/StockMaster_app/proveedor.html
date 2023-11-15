@@ -44,10 +44,11 @@
             </div>
             <!--Fin de Boton-->
             <div class="search-bar-v3">
-                <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                <input type="text" id="search-input" placeholder="Buscar proveedores..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
         </div>
+        <br>
         <div class="messages-container">
             {% for message in messages %}
                 <div class="alert alert-custom" role="alert">
@@ -87,8 +88,8 @@
                                 {{ c.colonia }}, {{ c.cp }}, <br>{{ c.municipio }}, <br>{{ c.estado }}, {{ c.pais }}
                             </td>
                             <td class="imagen" style="position: relative;">
-                                <div class="img-container" style="width: 120px; height: 150px;  justify-content: center;">
-                                    <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: auto; max-height: 130px; transition: transform 0.3s;"> 
+                                <div class="img-container" style="width: 100px; height: 100px;">
+                                    <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
                                 </div>
                             </td>
                             <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idProveedor }}">

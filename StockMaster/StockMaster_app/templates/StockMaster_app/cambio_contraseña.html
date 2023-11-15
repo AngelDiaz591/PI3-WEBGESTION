@@ -2,278 +2,228 @@
 {% extends "./base.html" %}
 {% block body %}
 {% load static %}
-<div class="ctn">
-    <main>
-        <h1>Usuarios</h1>
-        <div class="recent-orders">
-            
-            <div class="principal">
-                <div class="boton-modal">
-                    
-                </div>
-                <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
-                    <i class="fas fa-search" id="search-icon"></i>
-                </div>
-              
-            </div>
-            <div class="messages-container">
-                {% for message in messages %}
-                    <div class="alert alert-custom" role="alert">
-                        <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                {% endfor %}
-            </div>
-            <h1>Perfil de usuario</h1>
-            <div class="recent-orders">
-                <div class="apartado-perfil">
-                    <div class="info-user">
-                        <div class="fotoperfil" style="align-items: center; border: none;">
-                            <img id="vistaUser" alt=""/>
-                            <h3>Vicente Fernandez</h3>
-                            <h5>Administrador</h5>
-                        </div>
-                        <script>
-                            function previsualizarImagen() {
-                                var cargador = document.getElementById('imagen');
-                                var vistaPrevia = document.getElementById('vistaUser');
-                                
-                                var archivo = cargador.files[0];
-                                if (archivo) {
-                                    var lector = new FileReader();
-
-                                    lector.onload = function(e) {
-                                        vistaPrevia.src = e.target.result;
-                                    }
-
-                                    lector.readAsDataURL(archivo);
-                                }
-                            }
-                        </script>
-                    </div>
-                    <div class="info-user">
-                        <div>
-                            <div class="perfil-sub">
-                                <h5>Datos personales</h5>
-                            </div>
-                            <div class="info-sub">
-                                <div><strong>CURP: </strong> PEPM040415MMCGRRA9</div>
-                                <div><strong>RFC: </strong> 12345678901</div>
-                                <div><strong>NSS: </strong> 123456789009876543</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="perfil-sub">
-                                <h5>Residencia</h5>
-                            </div>
-                            <div class="info-sub">
-                                <div><strong>Municipio: </strong> Ecatepec</div>
-                                <div><strong>Pais: </strong> Filandia</div>
-                                <div>dfjsdfjo</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="perfil-sub">
-                                <h5>Domicilio</h5>
-                            </div>
-                            <div class="info-sub">
-                                <div><strong>Calle: </strong> Orquideas</div>
-                                <div><strong>Colonia: </strong> Valle del Coral</div>
-                                <div><strong>No.Interior: </strong> #45</div>
-                                <div><strong>Codigo Postal: </strong> 28864</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="perfil-sub">
-                                <h5>Contacto</h5>
-                            </div>
-                            <div class="info-sub">
-                                <div><strong>No. Celular: </strong> 3141064874</div>
-                                <div><strong>Correo: </strong> mpegueros@ucol.mx</div>
-                                <div><strong>No. Telefonico: </strong> 3141064874</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="perfil-sub">
-                                <h5>Contraseña</h5>
-                            </div>
-                            <div class="info-sub">
-                                    <div style="padding: 0.1rem; align-items: center; letter-spacing: 1rem;">
-                                        *************
-                                    </div>
-                                    <div class="cambioContra">
-                                        <label for="btn-modal" style="color: white;">
-                                            Cambiar contraseña
-                                        </label>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!--Ventana Modal-->
-            <div>
-                <input type="checkbox" id="btn-modal">
-                <div class="container-modal">
-                    <div class="content-modal-contra">
-                        <label for="btn-modal" class="cerrar"><i class="fa-solid fa-xmark"></i></label>
-                        <div class="recent-updates">
-                            <h2 class="titulo-modal" style="display: flex; justify-content: center;">Cambio de contraseña</h2>
-                            <form method="post">
-                                {% csrf_token %}
-                                {{ form.non_field_errors }}
-                                <div class="form-columns">
-                                    <div class="form-column">
-                                        <img class="modal-img-contra" src="{% static 'login/img/secure.svg' %}">
-                                        <div class="form-group">
-                                            <label class="sub-contra" for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
-                                            {{ form.old_password }}
-                                            {% for error in form.old_password.errors %}
-                                                <div class="alert alert-danger">{{ error }}</div>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sub-contra" for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
-                                            {{ form.new_password1 }}
-                                            {% for error in form.new_password1.errors %}
-                                                <div class="alert alert-custom" role="alert">
-                                                    <strong>{{ error }}</strong>
-                                                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sub-contra" for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
-                                            {{ form.new_password2 }}
-                                            {% for error in form.new_password2.errors %}
-                                                <div class="alert alert-danger">{{ error }}</div>
-                                            {% endfor %}
-                                        </div>
-                                        <button type="submit">Cambiar contraseña</button>
-                                        <div class="btn-cerrar">
-                                            <button type="submit" class="updatess">Guardar</button>
-                                            <label for="btn-modal">Cancelar</label>
-                                        </div>
-                                        <!--Fin datos-->
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <label for="btn-modal" class="cerrar-modal"></label>
-                </div>
-            </div>
-            <!--Fin de Ventana Modal-->
-            </div>
-            <div style="overflow:auto; height: 400px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Gmail</th>
-                            <th>Usuario</th>
-                            <th>Cambiar Contraseña</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for us in usuario %}
-                            {% if us != request.user%}
-                                <tr>
-                                    <td>{{ us.id.first_name }}</td>
-                                    <td>{{ us.id.last_name }}</td>
-                                    <td>{{ us.id.email }}</td>
-                                   
-                                    <td>{{us.id.username}}</td>
-                                    <td class="edita  edit-product-button"><a class=" edit-product-button" href="{% url 'permiso' id=us.id.id %}">
-                                        <span class="material-symbols-outlined">password</span>
-                                    </a></td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <h1>Cambio de Contraseña</h1>
-            <br>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.non_field_errors }}
-                <div class="form-group">
-                    <label for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
-                    {{ form.old_password }}
-                    {% for error in form.old_password.errors %}
-                        <div class="alert alert-danger">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
-                    {{ form.new_password1 }}
-                    {% for error in form.new_password1.errors %}
-                        <div class="alert alert-custom" role="alert">
-                            <strong>{{ error }}</strong>
-                            <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
-                    {{ form.new_password2 }}
-                    {% for error in form.new_password2.errors %}
-                        <div class="alert alert-danger">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <button type="submit">Cambiar contraseña</button>
-            </form>
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
         </div>
-
-    </main>
-    <script>
-        // Resto del código para cerrar el modal y otros eventos
-        
-            // Cierra el modal de edición cuando se hace clic en la "x"
-            closeEditModal.addEventListener("click", function() {
-                editModal.style.display = "none";
-            });
-        
-            //Cierra el modal de edicion cuando se da click a cancelar
-            cancelar.addEventListener("click", function() {
-                editModal.style.display = "none";
-            });
-        
-        </script>
-    <div class="right" >
-        <div class="top">
-            <div class="tema">
-                <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-                </button>
-                <button id="themeToggleBtn" >
-                    <i id="sunIcon" class="fas fa-sun"></i>
-                    <i id="moonIcon" class="fas fa-moon"></i>
-                </button>
-            </div>
-            <div class="profile">
-                {% if request.user.is_authenticated %}
-                    <div class="info">
-                        <p>Hola, <b>{{ user.username}}</b> </p>
-                        <p style="text-align: center;">
-                            BIENVENIDO
-                        </p>
-                    </div>
-                    <div class="profile-photo">
-                        {% if request.user.is_superuser %}
-                            <i class="fa-solid fa-user-tie"></i>
-                            <small class="text-muted">Admin</small>
-                        {% else %}
-                            <i class="fa-solid fa-user"></i>
-                            <small class="text-muted">Empleado</small>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
+<main>
+    <h1>Perfil de usuario</h1>
+    <div class="recent-orders">
+        <div class="apartado-perfil">
+            <div class="info-user">
+                <div class="fotoperfil" style="align-items: center; border: none;">
+                    <img id="vistaUser" alt="{{user.id.image}}">
+                    <h3>Vicente Fernandez</h3>
+                    <h5>Administrador</h5>
+                </div>
+                <script>
+                    function previsualizarImagen() {
+                        var cargador = document.getElementById('imagen');
+                        var vistaPrevia = document.getElementById('vistaUser');
+                        
+                        var archivo = cargador.files[0];
+                        if (archivo) {
+                            var lector = new FileReader();
+
+                            lector.onload = function(e) {
+                                vistaPrevia.src = e.target.result;
+                            }
+
+                            lector.readAsDataURL(archivo);
+                        }
+                    }
+                </script>
+            </div>
+            <div class="info-user">
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Datos personales</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>CURP: </strong> PEPM040415MMCGRRA9</div>
+                        <div><strong>RFC: </strong> 12345678901</div>
+                        <div><strong>NSS: </strong> 123456789009876543</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Residencia</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>Municipio: </strong> Ecatepec</div>
+                        <div><strong>Pais: </strong> Filandia</div>
+                        <div>dfjsdfjo</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Domicilio</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>Calle: </strong> Orquideas</div>
+                        <div><strong>Colonia: </strong> Valle del Coral</div>
+                        <div><strong>No.Interior: </strong> #45</div>
+                        <div><strong>Codigo Postal: </strong> 28864</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Contacto</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>No. Celular: </strong> 3141064874</div>
+                        <div><strong>Correo: </strong> mpegueros@ucol.mx</div>
+                        <div><strong>No. Telefonico: </strong> 3141064874</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Contraseña</h5>
+                    </div>
+                    <div class="info-sub">
+                            <div style="padding: 0.1rem; align-items: center; letter-spacing: 1rem;">
+                                *************
+                            </div>
+                            <div class="cambioContra">
+                                <label for="btn-modal" style="color: white;">
+                                    Cambiar contraseña
+                                </label>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <h1>Usuarios</h1>
+        <div style="overflow:auto; height: 400px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Gmail</th>
+                        <th>Usuario</th>
+                        <th>Cambiar Contraseña</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for us in usuario %}
+                        {% if us != request.user%}
+                            <tr>
+                                <td>{{ us.id.first_name }}</td>
+                                <td>{{ us.id.last_name }}</td>
+                                <td>{{ us.id.email }}</td>
+                               
+                                <td>{{us.id.username}}</td>
+                                <td class="edita  edit-product-button"><a class=" edit-product-button" href="{% url 'permiso' id=us.id.id %}">
+                                    <span class="material-symbols-outlined">password</span>
+                                </a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!--Ventana Modal-->
+    <div>
+        <input type="checkbox" id="btn-modal">
+        <div class="container-modal">
+            <div class="content-modal-contra">
+                <label for="btn-modal" class="cerrar"><i class="fa-solid fa-xmark"></i></label>
+                <div class="recent-updates">
+                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Cambio de contraseña</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-columns">
+                            <div class="form-column">
+                                <img class="modal-img-contra" src="{% static 'login/img/secure.svg' %}">
+                                <div class="form-group">
+                                    <label class="sub-contra" for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
+                                    {{ form.old_password }}
+                                    {% for error in form.old_password.errors %}
+                                        <div class="alert alert-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="sub-contra" for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
+                                    {{ form.new_password1 }}
+                                    {% for error in form.new_password1.errors %}
+                                        <div class="alert alert-custom" role="alert">
+                                            <strong>{{ error }}</strong>
+                                            <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="sub-contra" for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
+                                    {{ form.new_password2 }}
+                                    {% for error in form.new_password2.errors %}
+                                        <div class="alert alert-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="btn-cerrar">
+                                    <button type="submit" class="updatess">Guardar</button>
+                                    <label for="btn-modal">Cancelar</label>
+                                </div>
+                                <!--Fin datos-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <label for="btn-modal" class="cerrar-modal"></label>
+        </div>
+    </div>
+    <!--Fin de Ventana Modal-->
+    </div>
+</main>
+            <script>
+                // Obtén todos los elementos con la clase "close-btn"
+                var closeBtns = document.querySelectorAll('.close-btnn');
+
+                // Agrega un evento de clic a cada elemento
+                closeBtns.forEach(function (closeBtn) {
+                    closeBtn.addEventListener('click', function () {
+                        // Oculta el elemento al hacer clic
+                        closeBtn.style.display = 'none';
+                    });
+                });
+            </script>
 {% endblock %}

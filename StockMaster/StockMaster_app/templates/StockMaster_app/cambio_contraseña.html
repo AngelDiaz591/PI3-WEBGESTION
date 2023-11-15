@@ -39,7 +39,7 @@
         <div class="apartado-perfil">
             <div class="info-user">
                 <div class="fotoperfil" style="align-items: center; border: none;">
-                    <img id="vistaUser" alt=""/>
+                    <img id="vistaUser" alt="{{user.id.image}}">
                     <h3>Vicente Fernandez</h3>
                     <h5>Administrador</h5>
                 </div>
@@ -120,8 +120,46 @@
                 </div>
             </div>
         </div>
-
-
+        <br>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <h1>Usuarios</h1>
+        <div style="overflow:auto; height: 400px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Gmail</th>
+                        <th>Usuario</th>
+                        <th>Cambiar Contraseña</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for us in usuario %}
+                        {% if us != request.user%}
+                            <tr>
+                                <td>{{ us.id.first_name }}</td>
+                                <td>{{ us.id.last_name }}</td>
+                                <td>{{ us.id.email }}</td>
+                               
+                                <td>{{us.id.username}}</td>
+                                <td class="edita  edit-product-button"><a class=" edit-product-button" href="{% url 'permiso' id=us.id.id %}">
+                                    <span class="material-symbols-outlined">password</span>
+                                </a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <!--Ventana Modal-->
     <div>
         <input type="checkbox" id="btn-modal">
@@ -160,7 +198,6 @@
                                         <div class="alert alert-danger">{{ error }}</div>
                                     {% endfor %}
                                 </div>
-                                <button type="submit">Cambiar contraseña</button>
                                 <div class="btn-cerrar">
                                     <button type="submit" class="updatess">Guardar</button>
                                     <label for="btn-modal">Cancelar</label>

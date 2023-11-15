@@ -30,6 +30,14 @@ from django.db.models.functions import ExtractMonth
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
 import pytz
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.forms import SetPasswordForm
+from django.utils.http import urlsafe_base64_encode
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -162,7 +170,7 @@ def signup(request):
                 accept_link = 'http://127.0.0.1:8000/signin/?next=/actividades/'
 
                 # Crear el mensaje en formato HTML
-                message_html = render_to_string('StockMaster_app/Correo.html', {'accept_link': accept_link})
+                message_html = render_to_string('StockMaster_app/correos/Correo.html', {'accept_link': accept_link})
 
                 try:
                     send_mail(subject, '', from_email, recipient_list, fail_silently=False, html_message=message_html)
@@ -234,19 +242,130 @@ def exit(request):
 #--------------------------------------------------------- U S U A R I O S --------------------------------------------------------->
 #____________________________________________________________________________________________________________________________________
 
+
+def cambio(request, uidb64, token):
+    try:
+        # Decodifica el ID del usuario desde uidb64 y obtiene el usuario
+        uid = force_bytes(urlsafe_base64_decode(uidb64)).decode()
+        user = get_object_or_404(User, id=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    # Verifica que el token sea válido y pertenezca al usuario
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)  # Actualiza la sesión del usuario
+                messages.success(request, 'Contraseña cambiada exitosamente.')
+                new_password = form.cleaned_data.get('new_password2')
+                accept_link = 'http://127.0.0.1:8000/signin/?next=/actividades/'
+                message_html = render_to_string('StockMaster_app/correos/correo_cambio.html', {'accept_link': accept_link, 'user': request.user,'new_password':new_password})
+                
+                user = form.save()
+
+                # Actualiza la sesión del usuario para evitar que se cierre la sesión después de cambiar la contraseña
+                update_session_auth_hash(request, user)
+
+                # Envia un correo electrónico al usuario notificando el cambio de contraseña
+                subject = 'Cambio de Contraseña'
+                from_email = 'stockmaster404@gmail.com'
+                
+                try:
+                    send_mail(subject, '', from_email, [user.email], fail_silently=False, html_message=message_html)
+                except Exception as e:
+                    print(f'Error al enviar el correo de cambio de Contraseña: {e}')
+                    messages.error(request, f'Error al enviar el correo de cambio de Contraseña: {e}')
+
+                return redirect('/signin/?next=/actividades/')
+            else:
+                messages.error(request, 'Error al cambiar la contraseña. Por favor, corrija los errores.')
+        else:
+            form = SetPasswordForm(user)
+    else:
+        messages.error(request, 'Enlace de cambio de contraseña no válido.')
+        return redirect('/signin/?next=/actividades/')
+
+    return render(request, 'StockMaster_app/cambio.html', {'form': form})
+                   
+
+def permiso(request, id):
+        user = get_object_or_404(User, id=id)
+        accept_link = f'http://127.0.0.1:8000/cambio/{urlsafe_base64_encode(force_bytes(user.id))}/{default_token_generator.make_token(user)}/'
+        message_html = render_to_string('StockMaster_app/correos/correo_cam.html', {'accept_link': accept_link, 'user': request.user})
+            # Actualiza la sesión del usuario para evitar que se cierre la sesión después de cambiar la contraseña
+
+            # Envia un correo electrónico al usuario notificando el cambio de contraseña
+        subject = 'Cambio de Contraseña'
+        from_email = 'stockmaster404@gmail.com'
+        messages.success(request, 'Permiso Enviado')
+        try:
+                send_mail(subject, '', from_email, [user.email], fail_silently=False, html_message=message_html)
+        except Exception as e:
+                print(f'Error al enviar el correo de cambio de Contraseña: {e}')
+                messages.error(request, f'Error al enviar el correo de cambio de Contraseña: {e}')
+
+
+            
+        return redirect('/cambio_password')
 #ya cambia la contra
-@login_required(login_url='signin')
+@login_required(login_url='signin')       
 def cambio_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
+            new_password = form.cleaned_data.get('new_password2')
+            accept_link = 'http://127.0.0.1:8000/signin/?next=/actividades/'
+            message_html = render_to_string('StockMaster_app/correos/correo_cambio.html', {'accept_link': accept_link, 'user': request.user,'new_password':new_password})
+            
             user = form.save()
+
             # Actualiza la sesión del usuario para evitar que se cierre la sesión después de cambiar la contraseña
             update_session_auth_hash(request, user)
-            return redirect('/actividades')  # Reemplaza 'perfil' con la URL a la que deseas redirigir al usuario después de cambiar la contraseña
+
+            # Envia un correo electrónico al usuario notificando el cambio de contraseña
+            subject = 'Cambio de Contraseña'
+            from_email = 'stockmaster404@gmail.com'
+            
+            try:
+                send_mail(subject, '', from_email, [user.email], fail_silently=False, html_message=message_html)
+            except Exception as e:
+                print(f'Error al enviar el correo de cambio de Contraseña: {e}')
+                messages.error(request, f'Error al enviar el correo de cambio de Contraseña: {e}')
+
+
+            
+            return redirect('/cambio_password')  # Reemplaza con la URL deseada después de cambiar la contraseña
+            # Código de cambio de contraseña exitoso aquí
+        else:
+            # El formulario no es válido, renderiza la página con los errores
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
+            usuario = Usuario.objects.all()
+            roles = RolExtra.objects.all()
+            grupos = Group.objects.all()
+
+            for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+
+            return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form, 'Roles': roles, 'Usuarios': form, 'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes, 'usuario': usuario, 'grupos': grupos})
+    
     else:
+        # Código para manejar la solicitud GET (puede ser igual al que ya tienes)
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes = mensajes.count()
+        usuario = Usuario.objects.all()
+        roles = RolExtra.objects.all()
+        grupos = Group.objects.all()
+
+        for Usuarios in usuario:
+            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+
         form = PasswordChangeForm(request.user)
-    return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form})
+        return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form, 'Roles': roles, 'Usuarios': form, 'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes, 'usuario': usuario, 'grupos': grupos})
+    
+
 
 def eliminaruser(request, id):
     try:
@@ -1805,7 +1924,10 @@ def productos(request):
         cantidad_productos = ProductosListados.count()
         cantidad_proveedores =  ProveedoresListados.count()
         cantidad_categorias = CategoriaListados.count()
-        productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Count('idproducts')).order_by('month')    # Crear listas para las etiquetas y datos de la gráfica
+        productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Sum('cantPro')).order_by('month')
+        # Crear listas para las etiquetas y datos de la gráfica
+        labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
+        data = [mes['cantidad'] if mes['cantidad'] is not None else 0 for mes in productos_por_mes]
         labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
         data = [mes['cantidad'] for mes in productos_por_mes]
         for producto in ProductosListados:

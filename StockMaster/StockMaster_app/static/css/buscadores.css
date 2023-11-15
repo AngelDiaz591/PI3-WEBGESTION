@@ -5,7 +5,12 @@
     margin-left: 1rem;
     width: 30%;
 }
-
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-right: 10rem;
+    width: 60%;
+}
 .search-bar-v3 {
     position: relative;
     display: flex;

@@ -25,7 +25,7 @@ const editModalRol = document.getElementById('editModalRol');
 const editProductIdFieldRol = document.getElementById('editProductId');
 
 // Obtén todos los elementos con la clase "edit-product-button"
-const editButtonsArea = document.querySelectorAll('.edit-product-button');
+const editButtonsArea = document.querySelectorAll('.edit-product-button-area');
 const editModalArea = document.getElementById('editModalArea');
 const editProductIdFieldArea = document.getElementById('editProductId');
 
@@ -321,7 +321,7 @@ editButtonsRol.forEach(function (button) {
     });
 });
 
-// Asigna un evento de clic a cada botón de edición Roles
+// Asigna un evento de clic a cada botón de edición Area
 editButtonsArea.forEach(function (button) {
     button.addEventListener('click', function (event) {
         const productId = button.getAttribute('data-id');

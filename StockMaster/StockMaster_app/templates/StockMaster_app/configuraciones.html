@@ -38,8 +38,8 @@
     <h1>Etiquetas Master</h1>
     <div class="recent-orders">
         <div class="principal">
-            <div class="search-bar-v1">
-                <input type="text" id="search-input" placeholder="Buscar categoria..." oninput="convertToUppercase()">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Buscar categorias y marcas..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
         </div>
@@ -189,7 +189,6 @@
             <div class="content-modal" style="width: 100%; max-width: 400px;">
                 <label for="btn-modal-segundo" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
                 <h2 class="titulo-modal">Agregar Nueva Marca</h2>
-                <br>
                 <form action="/MarcaAgregada/" method="POST" enctype="multipart/form-data" id="mi_formulario">
                     {% csrf_token %}
                     <div class="divisor">

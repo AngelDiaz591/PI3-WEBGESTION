@@ -38,12 +38,13 @@
     <h1>Dados de Baja</h1>
     <div class="recent-orders">
         <div class="principal">
-            <div class="search-bar-v2">
+            <div class="search-bar">
                 <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
             <br><br>
         </div>
+        <br>
         <div class="messages-container">
             {% for message in messages %}
                 <div class="alert alert-custom" role="alert">
@@ -52,12 +53,14 @@
                 </div>
             {% endfor %}
         </div>
+        <br>
         <h2>Proveedores</h2>
         <table>
             <thead>
                 <tr>
                     <!-- <th>#</th> -->
                     <th>Proveedor</th>
+                    <th>Contacto</th>
                     <th>Elimino Usuario</th>
                     <th>Fecha</th>
                     <th colspan="2">Opciones</th>
@@ -72,6 +75,7 @@
                             
                             <!-- <td>{{forloop.counter}}</td> -->
                             <td>{{ c.nombre }} </td>
+                            <td>{{ c.contacto }}</td>
                             <td>{{ c.username }}</td>
                             <td>{{ c.fecha_edit}}</td>
                             <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info btnRecuperarProv">                                 

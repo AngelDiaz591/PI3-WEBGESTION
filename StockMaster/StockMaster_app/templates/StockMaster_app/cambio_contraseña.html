@@ -3,6 +3,7 @@
 {% block body %}
 {% load static %}
 <div class="right-v2" >
+    
     <div class="top">
         <div class="tema">
             <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
@@ -34,7 +35,16 @@
     </div>
 </div>
 <main>
+    
     <h1>Perfil de usuario</h1>
+    <div class="messages-container">
+        {% for message in messages %}
+            <div class="alert alert-custom" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        {% endfor %}
+    </div>
     <div class="recent-orders">
         <div class="apartado-perfil">
             <div class="info-user">
@@ -121,45 +131,8 @@
             </div>
         </div>
         <br>
-        <div class="messages-container">
-            {% for message in messages %}
-                <div class="alert alert-custom" role="alert">
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            {% endfor %}
-        </div>
-        <br>
-        <h1>Usuarios</h1>
-        <div style="overflow:auto; height: 400px;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Gmail</th>
-                        <th>Usuario</th>
-                        <th>Cambiar Contraseña</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for us in usuario %}
-                        {% if us != request.user%}
-                            <tr>
-                                <td>{{ us.id.first_name }}</td>
-                                <td>{{ us.id.last_name }}</td>
-                                <td>{{ us.id.email }}</td>
-                               
-                                <td>{{us.id.username}}</td>
-                                <td class="edita  edit-product-button"><a class=" edit-product-button" href="{% url 'permiso' id=us.id.id %}">
-                                    <span class="material-symbols-outlined">password</span>
-                                </a></td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        
+       
         <!--Ventana Modal-->
     <div>
         <input type="checkbox" id="btn-modal">

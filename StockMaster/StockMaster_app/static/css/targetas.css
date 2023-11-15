@@ -298,3 +298,26 @@ option:hover{
   font-size: 20px;
   color: var(--color-dark);
 }
+
+.verMas{
+  display: flex;
+  justify-content: center;
+}
+
+.view-more{
+  background-color: transparent;
+  border: 0.2rem solid var(--color-dark);
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.8rem;
+  color: var(--color-dark);
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: var(--box-shadow);
+}
+
+.view-more:hover{
+  background-color: var(--color-dark);
+  border: 0.2rem solid var(--color-dark);
+  color: var(--color-white);
+  cursor: pointer;
+}

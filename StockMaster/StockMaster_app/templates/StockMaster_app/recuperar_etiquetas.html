@@ -38,12 +38,13 @@
     <h1>Dados de Baja</h1>
     <div class="recent-orders">
         <div class="principal">
-            <div class="search-bar-v2">
+            <div class="search-bar">
                 <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
             <br><br>
         </div>
+        <br>
         <div class="messages-container">
             {% for message in messages %}
                 <div class="alert alert-custom" role="alert">
@@ -54,6 +55,7 @@
         </div>
         <div class="mitad">
             <div>
+                <br>
                 <h2>Categorias</h2>
                 <table>
                     <thead>
@@ -89,6 +91,7 @@
                 </table>
             </div>
             <div>
+                <br>
                 <h2>Marca</h2>
                 <table>
                     <thead>

@@ -36,8 +36,13 @@
     <h1>Areas Designadas</h1>
     <div class="recent-orders">
         <div class="principal">
-            <div class="search-bar-v1">
-                <input type="text" id="search-input" placeholder="Buscar categoria..." oninput="convertToUppercase()">
+            <div class="boton-modal">
+                <label for="btn-modal">
+                    <i class="fa-solid fa-plus"></i>    Agregar Area
+                </label>
+            </div> 
+            <div class="search-bar-v3">
+                <input type="text" id="search-input" placeholder="Buscar areas..." oninput="convertToUppercase()">
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
         </div>
@@ -53,39 +58,34 @@
         
         <div class="mitad">
             <div>
-                <div class="boton-modal">
-                    <h2 class="agregar">Areas</h2>
-                    <label for="btn-modal">
-                        <i class="fa-solid fa-plus"></i>    Agregar Area
-                    </label>
-                </div>    
+                   
                 <div style="overflow:auto; height: 450px;">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Areas</th>
-                            <th colspan="2">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody style="font-size: 15px;">
-                        {% for c in Area %}
-                        {% if c.status%}
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ c.nombre }}</td>
-                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.area_id }}">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </a></td>
-                                <td class="elimina"><a href="{% url 'status_area' area_id=c.area_id %}" class="btn btn-danger btnEliminacionArea">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a></td>
+                                <th>#</th>
+                                <th>Areas</th>
+                                <th colspan="2">Opciones</th>
                             </tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody style="font-size: 15px;">
+                            {% for c in Area %}
+                            {% if c.status%}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ c.nombre }}</td>
+                                    <td class="edita"><a class="btn btn-info edit-product-button-area" data-id="{{ c.area_id }}">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a></td>
+                                    <td class="elimina"><a href="{% url 'status_area' area_id=c.area_id %}" class="btn btn-danger btnEliminacionArea">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>  
         

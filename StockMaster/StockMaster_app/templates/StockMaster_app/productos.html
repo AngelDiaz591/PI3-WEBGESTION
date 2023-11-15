@@ -47,6 +47,7 @@
             </div>
         </div>
         <!--Fin de Boton-->
+        <br>
         <div class="messages-container">
             {% for message in messages %}
                 <div class="alert alert-custom" role="alert">
@@ -66,10 +67,8 @@
                         <th>Precio</th>
                         <th>Cantidad</th>
                         <th>Imagen</th>
-                        <th>Categoría</th>
-                        <th>Proveedor</th>
-                        <th>Marca</th>
-                        <th>Area</th>
+                        <th>Visible</th>
+                        
                         <th colspan="4">Opciones</th>
                     </tr>
                 </thead>
@@ -83,54 +82,30 @@
                                 <td>${{ c.precio }}mxn</td>
                                 <td>{{ c.cantPro }}</td>
                                 <td class="imagen" style="position: relative;">
-                                    <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                                    <div class="img-container" style="width: 100px; height: 100px;">
                                         <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
                                     </div>
                                 </td>
-                                <td>
-                                    {% if c.id_categorias %}
-                                      {% if c.id_categorias.status == 1 %}
-                                        {{ c.id_categorias.nombre }}
-                                      {% elif c.id_categorias.status == 0 %}
-                                      CATEGORIA NO EXISTE
-                                      {% endif %}
+                                <td align="left">
+                                    {% if c.id_categorias.status == 0 or c.id_Proveedores.status == 0 or c.id_marca.status == 0 or c.id_area.status == 0 %}
+                                        <h3>ACTUALIZAR</h3>
+                                        {% if c.id_categorias.status == 0 %}
+                                            CATEGORIA<br>
+                                        {% endif %}
+                                            {% if c.id_Proveedores.status == 0  %}
+                                            PROVEEDOR<br>
+                                        {% endif %}
+                                        {% if c.id_marca.status == 0 %}
+                                            MARCA<br>
+                                        {% endif %}
+                                        {% if c.id_area.status == 0 %}
+                                            AREA<br>
+                                        {% endif %}
                                     {% else %}
-                                      CATEGORIA NO EXISTE
+                                        VISIBLE
                                     {% endif %}
                                   </td>
                                 <td>
-                                    {% if c.id_Proveedores %}
-                                      {% if c.id_Proveedores.status == 1 %}
-                                        {{ c.id_Proveedores.nombre }}
-                                      {% elif c.id_Proveedores.status == 0 %}
-                                      PROVEEDOR NO EXISTE
-                                      {% endif %}
-                                    {% else %}
-                                      PROVEEDOR NO EXISTE
-                                    {% endif %}
-                                  </td>
-                                <td>
-                                    {% if c.id_marca %}
-                                      {% if c.id_marca.status == 1 %}
-                                        {{ c.id_marca.nombre }}
-                                      {% elif c.id_marca.status == 0 %}
-                                      MARCA NO EXISTE
-                                      {% endif %}
-                                    {% else %}
-                                      MARCA NO EXISTE
-                                    {% endif %}
-                                  </td>
-                                <td>
-                                    {% if c.id_area %}
-                                    {% if c.id_area.status == 1 %}
-                                        {{ c.id_area.nombre }}
-                                    {% elif c.id_area.status == 0 %}
-                                    AREA NO EXISTE
-                                    {% endif %}
-                                    {% else %}
-                                    AREA NO EXISTE
-                                    {% endif %}
-                                </td>
                                 <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
                                     <span class="material-symbols-outlined">edit</span></a>
                                 </td>
@@ -360,6 +335,7 @@
     </div>
     <!-- Fin Modal edición -->
 </main>
+
 <script>
 // Resto del código para cerrar el modal y otros eventos
 

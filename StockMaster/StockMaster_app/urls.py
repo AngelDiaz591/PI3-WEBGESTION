@@ -25,6 +25,8 @@ urlpatterns = [
     path('logout/', views.exit, name='exit'),
     
     #paths Registro
+    path('cambio/<str:uidb64>/<str:token>/', views.cambio, name="cambio"),
+    path('cambio_password/permiso/<int:id>', views.permiso, name='permiso'),
     path('cambio_password/', views.cambio_password, name='cambio_password'),
     path('usuarios/eliminaruser/<int:id>', views.eliminaruser, name="eliminaruser"),
 

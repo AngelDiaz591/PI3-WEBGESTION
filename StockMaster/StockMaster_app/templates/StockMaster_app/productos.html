@@ -61,7 +61,7 @@
             <table>
                 <thead>
                     <tr>
-                        <!-- <th>#</th> -->
+                        <th>#</th>
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Precio</th>
@@ -76,7 +76,7 @@
                     {% for c in Productos %}
                         {% if c.status %}
                             <tr>
-                                <!-- <td>{{ forloop.counter }}</td> -->
+                                <td>{{ forloop.counter }}</td>
                                 <td>{{ c.codigo }}</td>
                                 <td>{{ c.nombre }}</td>
                                 <td>${{ c.precio }}mxn</td>

@@ -264,6 +264,8 @@
                         <button type="submit">Guardar</button>
                         <label for="btn-modal">Cancelar</label>
                     </div>
+                
+                
                 </form>
             <label for="btn-modal" class="cerrar-modal"></label>
             </div>
@@ -469,21 +471,23 @@
     editModalRol.style.display = "none";
     });
 
-    //Cierra el modal de edicion cuando se da click a cancelar
+    // Cierra el modal de edición cuando se da click a cancelar
     cancelar.addEventListener("click", function() {
-    // Recorre todos los checkbox
-    const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
+        // Recorre todos los checkbox
+        const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
 
-    // Recorre todos los checkbox
-    for (let i = 0; i < checkboxes.length; i++) {
-        const checkbox = checkboxes[i];
+        // Recorre todos los checkbox
+        for (let i = 0; i < checkboxes.length; i++) {
+            const checkbox = checkboxes[i];
 
-        // Desactiva el checkbox
-        checkbox.checked = false;
-    }
+            // Solo deshabilita los checkbox que no están actualmente marcados
+            if (!checkbox.checked) {
+                checkbox.checked = false;
+            }
+        }
 
-    // Cierra el modal
-    editModalRol.style.display = "none";
+        // Cierra el modal
+        editModalRol.style.display = "none";
     });
 
     // Obtiene la casilla de verificación que se va a usar para activar las otras

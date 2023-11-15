@@ -1778,8 +1778,9 @@ def recuperar_designaciones(request):
         cantidad_mensajes =mensajes.count()
         AreasListado = Area.objects.all()
         roles = Group.objects.all()
+        rolextra = RolExtra.objects.all()
         roles_con_status_1 = [rol for rol in roles if RolExtra.objects.get(grupo=rol).status == 0]
-        return render(request, 'StockMaster_app/recuperar_designaciones.html', { "Area":AreasListado, "Roles": roles_con_status_1, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
+        return render(request, 'StockMaster_app/recuperar_designaciones.html', { "Area":AreasListado, "RolExtra":rolextra, "Roles": roles_con_status_1, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
     else:
         return redirect('/actividades')
 

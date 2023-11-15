@@ -252,3 +252,81 @@ main table th{
     align-items: center;
     justify-content: center;
 }
+
+.apartado-perfil{
+    display: grid;
+    gap: 0;
+    background-color: var(--color-white);
+    grid-template-columns: 22rem 1fr; /* Tamaño fijo para la primera columna y el resto para la segunda */
+    border-radius: 2rem;
+    box-shadow: var(--box-shadow);
+    margin: 2.5rem 1rem 0 0;
+}
+
+#vistaUser{
+    max-width: 15rem;
+    min-height: 15rem;
+}
+
+.info-user{
+    display: flex;
+    align-items: stretch;
+    flex-direction: column; /* Alinea los elementos en columna */
+}
+
+/* Agrega estilos adicionales si es necesario */
+.info-user:first-child {
+    border-right: 0.1rem solid var(--color-info-dark);
+    padding-right: 1rem; /* Ajusta el espacio derecho para separar del borde */
+}
+
+/* Estilo para los div dentro de .info-user */
+.info-user > div {
+    flex: 1; /* Hace que todos los div tengan el mismo tamaño */
+    border-bottom: 1px solid var(--color-info-dark); /* Ajusta el color y grosor del borde inferior */
+    padding: 1.5rem; /* Ajusta el espacio interno según sea necesario */
+    box-sizing: border-box; /* Incluye el espacio del borde en el tamaño total del elemento */
+}
+
+/* Eliminar border-bottom del último div dentro de .info-user */
+.info-user > div:last-child {
+    border-bottom: none;
+}
+
+.info-user > div > div:first-child {
+    border-bottom: none;
+}
+
+.perfil-sub{
+    color: var(--color-info-dark);
+    margin-bottom: 0.6rem;
+    display: flex;
+}
+
+.info-sub{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fotoperfil{
+    align-items:flex-start;
+    justify-content: center;
+    margin-top: 20%;
+}
+
+.cambioContra{
+    background-color: rgb(0, 0, 235);
+    padding: 0.7rem 3rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--box-shadow);
+    display: flex;
+}
+
+.cambioContra:hover{
+    background-color: rgb(0, 0, 165);
+    cursor: pointer;
+}
+

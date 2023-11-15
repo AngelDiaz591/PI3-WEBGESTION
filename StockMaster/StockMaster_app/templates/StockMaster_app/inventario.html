@@ -143,9 +143,7 @@
                                                   {% else %}
                                                     NO DISPONIBLE
                                                   {% endif %}</span>
-                                                <strong>CANTIDAD DISPONIBLES</strong>
-                                                <span>{{ producto.cantPro }} unidades</span>
-                                                <strong>PROVEEDOR:</strong>
+                                                  <strong>PROVEEDOR:</strong>
                                                 <span>
                                                     {% if producto.id_Proveedores %}
                                                     {% if producto.id_Proveedores.status == 1 %}
@@ -156,8 +154,12 @@
                                                   {% else %}
                                                     NO DISPONIBLE
                                                   {% endif %}
-
                                                 </span>
+                                                <strong>CANTIDAD DISPONIBLES</strong>
+                                                <span>{{ producto.cantPro }} unidades</span>
+                                                <div class="verMas">
+                                                    <button class="view-more">Ver Más</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

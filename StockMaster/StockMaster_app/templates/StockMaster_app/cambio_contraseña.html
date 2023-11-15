@@ -2,141 +2,181 @@
 {% extends "./base.html" %}
 {% block body %}
 {% load static %}
-<div class="ctn">
-    <main>
-        
-        <h1>Cambio de Contraseña</h1>
-        <br>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            <div class="form-group">
-                <label for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
-                {{ form.old_password }}
-                {% for error in form.old_password.errors %}
-                    <div class="alert alert-danger">{{ error }}</div>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
-                {{ form.new_password1 }}
-                {% for error in form.new_password1.errors %}
-                    <div class="alert alert-custom" role="alert">
-                        <strong>{{ error }}</strong>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
-                {{ form.new_password2 }}
-                {% for error in form.new_password2.errors %}
-                    <div class="alert alert-danger">{{ error }}</div>
-                {% endfor %}
-            </div>
-            <button type="submit">Cambiar contraseña</button>
-        </form>
-    </main>
-    <div class="right" >
-        <div class="top">
-            <div class="tema">
-                <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-                </button>
-                <button id="themeToggleBtn" >
-                    <i id="sunIcon" class="fas fa-sun"></i>
-                    <i id="moonIcon" class="fas fa-moon"></i>
-                </button>
-            </div>
-            <div class="profile">
-                {% if request.user.is_authenticated %}
-                    <div class="info">
-                        <p>Hola, <b>{{ user.username}}</b> </p>
-                        <p style="text-align: center;">
-                            BIENVENIDO
-                        </p>
-                    </div>
-                    <div class="profile-photo">
-                        {% if request.user.is_superuser %}
-                            <i class="fa-solid fa-user-tie"></i>
-                            <small class="text-muted">Admin</small>
-                        {% else %}
-                            <i class="fa-solid fa-user"></i>
-                            <small class="text-muted">Empleado</small>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
         </div>
-        <div class="recent-updates">
-            <h2>Mensajes Recientes</h2>
-            <div class="updates">
-                {% if request.user.is_superuser %}
-                    {% if Mensajes %}
-                        {% if respuestascomentarios %}
-                            <p>respuestas comentarios </p>
-                        {% else %}
-                            {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
-                                {% if me.respuestascomentarios%}
-                                    <div class="message">
-                                        <div class="icon" style="color: green">
-                                            <span class="material-symbols-outlined">forward</span>
-                                        </div>
-                                            <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
-                                        <small class="text-muted" style="font-size: 11px;">Mensaje contestado</small>
-                                    </div>
-                                {% else %}
-                                    <div class="message">
-                                        <div class="icon" style="color: red">
-                                            <span class="material-symbols-outlined">mark_email_unread</span>
-                                        </div>
-                                        <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
-                                        <small class="text-muted">{{ me.tiempo_creacion }}</small>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
                     {% else %}
-                        <p>No hay mensajes disponibles en este momento.</p>
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
                     {% endif %}
-                {% else %}
-                    {% if Mensajes %}
-                        {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
-                            {% if me.respuestascomentarios %}
-                                {% if me.username == request.user.username %}
-                                    <div class="message">
-                                        <b>Comentario:</b>
-                                        <p>{{me.comentario}}</p>
-                                        <b>Respuesta del Admin: </b>
-                                        <p> {{ me.respuestascomentarios }}</p>
-                                        <small class="text-muted">{{ me.tiempo_creacion }}</small>
-                                    </div> 
-                                {% endif %}
-                            {% else %}
-                                {% if me.username == request.user.username %}
-                                    <div class="message">
-                                        <b>Comentario:</b>
-                                        <p>{{me.comentario}}</p>
-                                        <b>Respuesta del Admin: </b>
-                                        <br>
-                                        <small class="text-muted">Sin respuesta</small>
-                                    </div> 
-                                {% endif %}
-                            {% endif%}
-                        {% endfor%}
-                    {% else %}
-                        <p>No tienes ningun comentario por el momento</p>
-                    {% endif %}
-                {% endif %}
-                
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<main>
+    <h1>Perfil de usuario</h1>
+    <div class="recent-orders">
+        <div class="apartado-perfil">
+            <div class="info-user">
+                <div class="fotoperfil" style="align-items: center; border: none;">
+                    <img id="vistaUser" alt=""/>
+                    <h3>Vicente Fernandez</h3>
+                    <h5>Administrador</h5>
+                </div>
+                <script>
+                    function previsualizarImagen() {
+                        var cargador = document.getElementById('imagen');
+                        var vistaPrevia = document.getElementById('vistaUser');
+                        
+                        var archivo = cargador.files[0];
+                        if (archivo) {
+                            var lector = new FileReader();
+
+                            lector.onload = function(e) {
+                                vistaPrevia.src = e.target.result;
+                            }
+
+                            lector.readAsDataURL(archivo);
+                        }
+                    }
+                </script>
             </div>
-            <div class="add-products">
+            <div class="info-user">
                 <div>
-                    <span class="material-symbols-outlined">add</span> 
-                    <a href="{% url 'soporte' %}">Mostrar Todas</a>
+                    <div class="perfil-sub">
+                        <h5>Datos personales</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>CURP: </strong> PEPM040415MMCGRRA9</div>
+                        <div><strong>RFC: </strong> 12345678901</div>
+                        <div><strong>NSS: </strong> 123456789009876543</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Residencia</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>Municipio: </strong> Ecatepec</div>
+                        <div><strong>Pais: </strong> Filandia</div>
+                        <div>dfjsdfjo</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Domicilio</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>Calle: </strong> Orquideas</div>
+                        <div><strong>Colonia: </strong> Valle del Coral</div>
+                        <div><strong>No.Interior: </strong> #45</div>
+                        <div><strong>Codigo Postal: </strong> 28864</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Contacto</h5>
+                    </div>
+                    <div class="info-sub">
+                        <div><strong>No. Celular: </strong> 3141064874</div>
+                        <div><strong>Correo: </strong> mpegueros@ucol.mx</div>
+                        <div><strong>No. Telefonico: </strong> 3141064874</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="perfil-sub">
+                        <h5>Contraseña</h5>
+                    </div>
+                    <div class="info-sub">
+                            <div style="padding: 0.1rem; align-items: center; letter-spacing: 1rem;">
+                                *************
+                            </div>
+                            <div class="cambioContra">
+                                <label for="btn-modal" style="color: white;">
+                                    Cambiar contraseña
+                                </label>
+                            </div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            
+
+        <!--Ventana Modal-->
+    <div>
+        <input type="checkbox" id="btn-modal">
+        <div class="container-modal">
+            <div class="content-modal-contra">
+                <label for="btn-modal" class="cerrar"><i class="fa-solid fa-xmark"></i></label>
+                <div class="recent-updates">
+                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Cambio de contraseña</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-columns">
+                            <div class="form-column">
+                                <img class="modal-img-contra" src="{% static 'login/img/secure.svg' %}">
+                                <div class="form-group">
+                                    <label class="sub-contra" for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
+                                    {{ form.old_password }}
+                                    {% for error in form.old_password.errors %}
+                                        <div class="alert alert-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="sub-contra" for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
+                                    {{ form.new_password1 }}
+                                    {% for error in form.new_password1.errors %}
+                                        <div class="alert alert-custom" role="alert">
+                                            <strong>{{ error }}</strong>
+                                            <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="sub-contra" for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
+                                    {{ form.new_password2 }}
+                                    {% for error in form.new_password2.errors %}
+                                        <div class="alert alert-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                <button type="submit">Cambiar contraseña</button>
+                                <div class="btn-cerrar">
+                                    <button type="submit" class="updatess">Guardar</button>
+                                    <label for="btn-modal">Cancelar</label>
+                                </div>
+                                <!--Fin datos-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <label for="btn-modal" class="cerrar-modal"></label>
+        </div>
+    </div>
+    <!--Fin de Ventana Modal-->
+    </div>
+</main>
             <script>
                 // Obtén todos los elementos con la clase "close-btn"
                 var closeBtns = document.querySelectorAll('.close-btnn');
@@ -149,7 +189,4 @@
                     });
                 });
             </script>
-        </div>
-    </div>
-</div>
 {% endblock %}

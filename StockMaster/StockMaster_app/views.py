@@ -308,7 +308,7 @@ def permiso(request, id):
 
 
             
-        return redirect('/cambio_password')
+        return redirect('/usuarios')
 #ya cambia la contra
 @login_required(login_url='signin')       
 def cambio_password(request):
@@ -335,7 +335,7 @@ def cambio_password(request):
                 messages.error(request, f'Error al enviar el correo de cambio de Contraseña: {e}')
 
 
-            
+            messages.success(request, 'Cambio la Contraseña')
             return redirect('/cambio_password')  # Reemplaza con la URL deseada después de cambiar la contraseña
             # Código de cambio de contraseña exitoso aquí
         else:

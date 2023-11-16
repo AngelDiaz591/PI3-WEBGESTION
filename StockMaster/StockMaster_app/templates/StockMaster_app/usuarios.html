@@ -17,13 +17,6 @@
                     <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
                     <i class="fas fa-search" id="search-icon"></i>
                 </div>
-                {% if messages %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-danger"><p>{{ message.tags }}:</p> {{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-                {% endif %}
             </div>
             <div class="messages-container">
                 {% for message in messages %}
@@ -42,6 +35,8 @@
                             <th>Gmail</th>
                             <th>Imagen</th>
                             <th>Rol</th>
+                            <th>Eliminar</th>
+                            <th>Cambiar Contraseña</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +54,9 @@
                                     <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
                                     <td class="elimina"><a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
                                         <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                    <td class="edita  edit-product-button"><a class=" edit-product-button" href="{% url 'permiso' id=us.id.id %}">
+                                        <span class="material-symbols-outlined">password</span>
                                     </a></td>
                                 </tr>
                             {% endif %}

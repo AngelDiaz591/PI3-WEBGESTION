@@ -72,10 +72,8 @@
                             <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>{{ c.name }}</td>
-                                {% for c in RolExtra %}
-                                    <td>{{ c.username }}</td>
-                                    <td>{{ c.fech_cate}}</td>
-                                {% endfor %}
+                                <td>{{ c.rolextra.username }}</td>
+                                <td>{{ c.rolextra.fech_cate}}</td>
                                 <td class="edita"><a href="cambio_statusrolre/{{ c.id }}" class="btn btn-info btnRecuperarRol">                                 
                                     <span class="material-symbols-outlined">restart_alt</span>
                                 </a></td>

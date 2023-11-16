@@ -56,57 +56,114 @@
         </script>
         
         <br>
-        <h1>Contador</h1>
-        <div width="50" height="50">
-            <canvas id="myChart" style="display: block; box-sizing: border-box;"></canvas>
-        </div>
-        <script>
-            const canvas2 = document.getElementById('myChart');
-            canvas1.width = 100;
-            canvas1.height = 100;
+        <div class="mitad">
+            <div>
+                <h1>Contador</h1>
+                <div width="50" height="50">
+                    <canvas id="myChart" style="display: block; box-sizing: border-box;"></canvas>
+                </div>
+                <script>
+                    const canvas2 = document.getElementById('myChart');
+                    canvas1.width = 100;
+                    canvas1.height = 100;
 
-            const data2 = {
-                labels: [
-                    'Productos',
-                    'Proveedores',
-                    'Marcas',
-                    'Categorias',
-                ],
-                datasets: [{
-                    label: 'Son',
-                    data: [{{cantidad_productos}}, {{cantidad_proveedores}}, {{cantidad_marcas}}, {{cantidad_categorias}}],
-                    backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(75, 192, 192)',
-                        'rgb(255, 205, 86)',
-                        'rgb(201, 203, 207)',
-                    ]
-                }]
-            };
-            const config2 = {
-                type: 'polarArea',
-                data: data2,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                    const data2 = {
+                        labels: [
+                            'Productos',
+                            'Proveedores',
+                            'Marcas',
+                            'Categorias',
+                        ],
+                        datasets: [{
+                            label: 'Son',
+                            data: [{{cantidad_productos}}, {{cantidad_proveedores}}, {{cantidad_marcas}}, {{cantidad_categorias}}],
+                            backgroundColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(75, 192, 192)',
+                                'rgb(255, 205, 86)',
+                                'rgb(201, 203, 207)',
+                            ]
+                        }]
+                    };
+                    const config2 = {
+                        type: 'polarArea',
+                        data: data2,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            },
+                            maintainAspectRatio: false,
+                            aspectRatio: 1,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                    fullWidth: true,
+                                    fontSize: 12
+                                }
+                            }
                         }
-                    },
-                    maintainAspectRatio: false,
-                    aspectRatio: 1,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            fullWidth: true,
-                            fontSize: 12
+                    };
+                    const ctx2 = canvas2.getContext('2d');
+                    const myChart = new Chart(ctx2, config2);
+                </script>
+            </div>
+            <div>
+                <h1>Contador</h1>
+                <div width="50" height="50">
+                    <canvas id="myChart3" style="display: block; box-sizing: border-box;"></canvas>
+                </div>
+                <script>
+                    const canvas3 = document.getElementById('myChart3');
+                    canvas1.width = 100;
+                    canvas1.height = 100;
+
+                    const data3 = {
+                        labels: [
+                            {% for c in Categoria %}
+                                {{ c.nombre }}
+                            {% endfor %}
+                        ],
+                        datasets: [{
+                            label: 'Son',
+                            data: [{{cantidad_productos}}, {{cantidad_proveedores}}, {{cantidad_marcas}}, {{cantidad_categorias}}],
+                            backgroundColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(75, 192, 192)',
+                                'rgb(255, 205, 86)',
+                                'rgb(201, 203, 207)',
+                            ]
+                        }]
+                    };
+                    const config3 = {
+                        type: 'polarArea',
+                        data: data3,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            },
+                            maintainAspectRatio: false,
+                            aspectRatio: 1,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                    fullWidth: true,
+                                    fontSize: 12
+                                }
+                            }
                         }
-                    }
-                }
-            };
-            const ctx2 = canvas2.getContext('2d');
-            const myChart = new Chart(ctx2, config2);
-        </script>
+                    };
+                    const ctx3 = canvas3.getContext('2d');
+                    const myChart3 = new Chart(ctx3, config3);
+                </script>
+            </div>
+        </div>
+        
     </main>
     <div class="right" >
         <div class="top">

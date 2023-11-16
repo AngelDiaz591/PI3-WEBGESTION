@@ -428,3 +428,14 @@ main table th{
     font-size: 1.1rem;
     padding: 1rem;
 }
+
+/*Mensaje oculto*/
+.oculto {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    /* background-color: #f1f1f1; */
+    color: var(--color-dark);
+    margin-top: 8rem;
+    justify-content: center;
+}

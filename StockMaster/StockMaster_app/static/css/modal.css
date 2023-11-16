@@ -262,6 +262,29 @@
 .divisor{
     margin-top: 2rem;
 }
+.divisorv2{
+    margin-top: 1rem;
+}
+.divisorv2 .titulo{
+    color: var(---color-dark);
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+.divisorv2 .subtitulo{
+    font-size: 1rem;
+    color: var(---color-dark);
+    font-weight: bold;
+    margin-top: 1rem;
+}
+.subtitulo{
+    color: var(---color-dark);
+    font-size: 1rem;
+}
+hr{
+    height: 0.1rem;
+    background-color: black;
+}
 .titulo{
     color: var(---color-dark);
     font-size: 1rem;
@@ -556,92 +579,6 @@ input.invalid {
     min-height: 300px;
 }
 
-/* CSS */
-.button-8 {
-  touch-action: manipulation;
-  appearance: button;
-  background-color: transparent;
-  border-style: initial;
-  border-width: 0;
-  cursor: pointer;
-  margin: 0;
-  text-transform: none;
-  vertical-align: baseline;
-}
-
-.button-8:focus {
-  outline: 0;
-}
-
-.button-8 {
-  touch-action: manipulation;
-  background-color: #6574e6; /* var(--color-primary-variant) */
-  /* background: #0a4e8e; */
-  border-radius: 8px;
-  color: #ffffff;
-  font-feature-settings: "ss01", "cv10", "calt"0, "liga"0;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 24px;
-  padding: 7px 10px;
-  position: relative;
-  transition: transform .2s cubic-bezier(.6, .6, 0, 1), margin-top .2s cubic-bezier(.6, .6, 0, 1);
-  transition-behavior: normal, normal;
-}
-
-.button-8::before {
-  -webkit-mask-clip: content-box, initial;
-  -webkit-mask-composite: xor;
-  -webkit-mask-image: linear-gradient(#fff 0, #fff 0), linear-gradient(#fff 0, #fff 0);
-  -webkit-mask-origin: content-box, initial;
-  -webkit-mask-position-x: initial, initial;
-  -webkit-mask-position-y: initial, initial;
-  -webkit-mask-repeat-x: initial, initial;
-  -webkit-mask-repeat-y: initial, initial;
-  -webkit-mask-size: initial, initial;
-  padding: 1px;
-}
-
-.button-8::before {
-  background-color: initial;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.32), transparent);
-  bottom: 0;
-  pointer-events: none;
-  right: 0;
-}
-
-.button-8::after,
-.button-8::before {
-  border-radius: inherit;
-  content: "";
-  left: 0;
-  position: absolute;
-  top: 0;
-}
-
-.button-8::after {
-  box-shadow: #000019 0 0, rgba(0, 0, 25, .3) 0 9px 21px, rgba(73, 2, 57, .2) 0 -3px inset;
-  height: 100%;
-  transition: box-shadow .2s cubic-bezier(.6, .6, 0, 1), background-color .2s cubic-bezier(.6, .6, 0, 1);
-  transition-behavior: normal, normal;
-  width: 100%;
-  z-index: 1;
-}
-
-.button-8:active {
-  transform: translateY(1.5px);
-}
-
-.button-8:hover::after {
-  background-color: rgba(255, 255, 255, .1);
-}
-
-.button-8:active::after {
-  box-shadow: #000019 0 0, rgba(0, 0, 25, .2) 0 9px 21px, rgba(73, 2, 57, .2) 0 0 inset;
-}
-
-
-
 /* -----------------------------------MODAL CAMBIO CONTRA --------------------------------------- */
 .content-modal-contra{
     max-width: 90%;
@@ -698,3 +635,61 @@ input.invalid {
     color: var(--color-dark);
     font-size: 1rem;
 }
+
+/* -----------------------------------MODAL CAMBIO CONTRA --------------------------------------- */
+.content-modal-contra{
+    max-width: 90%;
+    padding: 20px;
+    background-color: var(--color-white);
+    border-radius: 20px;
+    overflow: auto;
+}
+
+.content-modal-contra p{
+    padding: 15px 0px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+}
+.content-modal-contra .btn-cerrar{
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+.content-modal-contra .btn-cerrar label{
+    border: 1px solid rgb(0, 0, 0);
+    padding: 7px 10px;
+    background-color: #e90404;
+    color: var(--color-white);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+.content-modal-contra .btn-cerrar label:hover{
+    background-color: #960808;
+}
+.content-modal-contra .btn-cerrar button{
+    border: 1px solid rgb(0, 0, 0);
+    padding: 7px 10px;
+    margin-right: 10px;
+    background-color: #5488a3;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+.content-modal-contra .btn-cerrar button:hover{
+    background-color: #204a60;
+}
+
+.modal-img-contra{
+    width: 10rem;
+    height: auto;
+    margin: 0.5rem 0 0.5rem 7rem;
+}
+
+.sub-contra{
+    color: var(--color-info-dark);
+    font-size: 1rem;
+}
+

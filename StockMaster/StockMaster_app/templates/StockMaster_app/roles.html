@@ -94,176 +94,205 @@
     <div>
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
-            <div class="content-modal">
+            <div class="content-modal" style="overflow: auto; max-width: 750px; max-height: 600px;">
                 <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
                 <h2 class="titulo-modal">Crear nuevo Rol</h2>
                 <form action="/registrar_rol/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
-                    <!--Inicio de la tabla de columnas-->
-                    <div class="form-columns">
-                        <!--Primer columna-->
-                        <div class="form-column">
-                            <div class="divisor">
-                                <div class="titulo">Seleccionar Todo:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="principal" id="checkbox51" />
-                                    <label for="checkbox51">Principal</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
+                    <div class="divisor">
+                        <div class="mitad">
+                            <div><hr></div>
+                            <div><h2 style="margin-top: -1rem;">Roles prestablecidos</h2></div>
+                        </div>
+                        <br>
+                        <div class="cuatropartes">
+                            <div>
                                 <div class="titulo">Nombre:</div>
                                 <input type="text" id="RolNew" name="RolNew" class="campos" placeholder="Nombre" 
                                 pattern="[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Principal:</div>
+                            <div>
+                                <div class="subtitulo">Administrador:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="principal" id="checkbox51" />
+                                    <label for="checkbox51">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="titulo">Gerente:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="principal" id="checkbox53" />
+                                    <label for="checkbox53">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="titulo">Empleado:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="principal" id="checkbox55" />
+                                    <label for="checkbox55">Principal</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divisor">
+                        <hr><br>
+                        <div class="titulo">Paginas principales</div>
+                        <div class="trespartes">
+                            <div>
+                                <div class="subtitulo">Principal:</div>
                                 <div class="check">
                                     <input type="checkbox" name="principal" id="checkbox1" />
                                     <label for="checkbox1">Principal</label>
                                 </div>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Inventario:</div>
+                            <div>
+                                <div class="subtitulo">Inventario:</div>
                                 <div class="check">
                                     <input type="checkbox" name="inventario" id="checkbox2" />
                                     <label for="checkbox2">Inventario</label>
                                 </div>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Productos:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="productos" id="checkbox3" />
-                                    <label for="checkbox3">Productos</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Proveedores:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="proveedores" id="checkbox4" />
-                                    <label for="checkbox4">Productos</label>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Fin primer columna-->
-
-                        <!--Segunda columna-->
-                        <div class="form-column">
-                            <div class="divisor">
-                                <div class="titulo">Etiquetas:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="etiquetas" id="checkbox5" />
-                                    <label for="checkbox5">Principal</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Productos recuperacion:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="productosRecuperacion" id="checkbox6" />
-                                    <label for="checkbox6">Principal</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Proveedores recuperacion:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="proveedoresRecuperacion" id="checkbox7" />
-                                    <label for="checkbox7">Principal</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Etiquetas recuperacion:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="etiquetasRecuperacion" id="checkbox8" />
-                                    <label for="checkbox8">Principal</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Usuarios:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="usuarios" id="checkbox9" />
-                                    <label for="checkbox9">Principal</label>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Fin Segunda columna-->
-                        
-                        <!--Tercera columna-->
-                        <div class="form-column">
-                            <div class="divisor">
-                                <div class="titulo">Roles:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="roles" id="checkbox10" />
-                                    <label for="checkbox10">Principal</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Soporte:</div>
+                            <div>
+                                <div class="subtitulo">Soporte:</div>
                                 <div class="check">
                                     <input type="checkbox" name="soporte" id="checkbox11" />
                                     <label for="checkbox11">Principal</label>
                                 </div>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Contraseña:</div>
+                        </div>
+
+                        <hr><br>
+                        <div class="titulo">Gestionar Usarios</div>
+                        <div class="trespartes">
+                            <div>
+                                <div class="subtitulo">Usuarios:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="usuarios" id="checkbox9" />
+                                    <label for="checkbox9">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Roles:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="roles" id="checkbox10" />
+                                    <label for="checkbox10">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Perfil:</div>
                                 <div class="check">
                                     <input type="checkbox" name="contra" id="checkbox12" />
                                     <label for="checkbox12">Principal</label>
                                 </div>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Historial General:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="historialGeneral" id="checkbox13" />
-                                    <label for="checkbox13">Principal</label>
-                                </div>
-                            </div>
-                            <div class="divisor">
-                                <div class="titulo">Historial Modificaciones:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="historialModificaciones" id="checkbox14" />
-                                    <label for="checkbox14">Principal</label>
-                                </div>
-                            </div>
                         </div>
-                        <!-- Fin Tercera columna -->
 
-                        <!-- Cuarta columna -->
-                        <div class="form-column">
-                            <div class="divisor">
-                                <div class="titulo">Historial Movimientos:</div>
+                        <hr><br>
+                        <div class="titulo">Administracion de Productos</div>
+                        <div class="cuatropartes">
+                            <div>
+                                <div class="subtitulo">Productos:</div>
                                 <div class="check">
-                                    <input type="checkbox" name="historialMovimientos" id="checkbox15" />
-                                    <label for="checkbox15">Principal</label>
+                                    <input type="checkbox" name="productos" id="checkbox3" />
+                                    <label for="checkbox3">Productos</label>
                                 </div>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Historial Eliminados:</div>
+                            <div>
+                                <div class="subtitulo">Proveedores:</div>
                                 <div class="check">
-                                    <input type="checkbox" name="historialEliminados" id="checkbox16" />
-                                    <label for="checkbox16">Principal</label>
+                                    <input type="checkbox" name="proveedores" id="checkbox4" />
+                                    <label for="checkbox4">Productos</label>
                                 </div>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Recuperacion Designados:</div>
+                            <div>
+                                <div class="subtitulo">Etiquetas:</div>
                                 <div class="check">
-                                    <input type="checkbox" name="designadoRecuperacion" id="checkbox17" />
-                                    <label for="checkbox17">Principal</label>
+                                    <input type="checkbox" name="etiquetas" id="checkbox5" />
+                                    <label for="checkbox5">Principal</label>
                                 </div>
                             </div>
-                            <div class="divisor">
-                                <div class="titulo">Area:</div>
+                            <div>
+                                <div class="subtitulo">Area:</div>
                                 <div class="check">
                                     <input type="checkbox" name="area" id="checkbox18" />
                                     <label for="checkbox18">Principal</label>
                                 </div>
                             </div>
                         </div>
-                        <!--Fin Cuarta columna-->
+
+                        <hr><br>
+                        <div class="titulo">Recuperacion de Datos</div>
+                        <div class="cuatropartes">
+                            <div>
+                                <div class="subtitulo">Productos recuperacion:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="productosRecuperacion" id="checkbox6" />
+                                    <label for="checkbox6">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Proveedores recuperacion:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="proveedoresRecuperacion" id="checkbox7" />
+                                    <label for="checkbox7">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Etiquetas recuperacion:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="etiquetasRecuperacion" id="checkbox8" />
+                                    <label for="checkbox8">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Recuperacion Designados:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="designadoRecuperacion" id="checkbox17" />
+                                    <label for="checkbox17">Principal</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr><br>
+                        <div class="titulo">Historial</div>
+                        <div class="cuatropartes">
+                            <div>
+                                <div class="subtitulo">Historial General:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialGeneral" id="checkbox13" />
+                                    <label for="checkbox13">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Historial Modificaciones:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialModificaciones" id="checkbox14" />
+                                    <label for="checkbox14">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Historial Movimientos:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialMovimientos" id="checkbox15" />
+                                    <label for="checkbox15">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Historial Eliminados:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="historialEliminados" id="checkbox16" />
+                                    <label for="checkbox16">Principal</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--Termino de la tabla de columnas-->
                     <div class="btn-cerrar">
                         <button type="submit">Guardar</button>
                         <label for="btn-modal">Cancelar</label>
                     </div>
+                
+                
                 </form>
             <label for="btn-modal" class="cerrar-modal"></label>
             </div>
@@ -273,175 +302,200 @@
 
     <!-- Modal edición -->
     <div id="editModalRol" class="container-modal-editar">
-        <div class="content-modal-editar" style="width: 100%; max-width: 700px;">
+        <div class="content-modal-editar" style="overflow: auto; max-width: 750px; max-height: 600px;">
             <label class="cerrar" id="closeEditModal"><i class="fa-solid fa-xmark"></i></label>
             <h2 class="titulo-modal">Editar Rol</h2>
-            <form action="/editarRol2/" method="POST" enctype="multipart/form-data" value="{{c.id }}" id="mi_formulario">
+            <form action="/editarRol2/" method="POST" enctype="multipart/form-data" value="{{c.id }}" id="formulario_editar">
                 {% csrf_token %}
                 <input type="hidden" id="editProductId" name="productId" value="{{ c.id }}">
                 <!--Inicio de la tabla de columnas-->
-                <div class="form-columns">
-                    <!--Primer columna-->
-                    <div class="form-column">
-                        <div class="divisor">
-                            <div class="titulo">Seleccionar Todo:</div>
-                            <div class="check">
-                                <input type="checkbox" name="principal" id="checkbox52" />
-                                <label for="checkbox52">Principal</label>
-                            </div>
-                        </div>
-                        <div class="divisor">
+                <div class="divisor">
+                    <div class="mitad">
+                        <div><hr></div>
+                        <div><h2 style="margin-top: -1rem;">Roles prestablecidos</h2></div>
+                    </div>
+                    <div class="cuatropartes">
+                        <div>
                             <div class="titulo">Nombre:</div>
                             <input type="text" id="EtxtNombre" name="nombre" class="campos" placeholder="Nombre"
                             pattern = "[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
                             <br><span class="error-message" style="color: red;"></span>
                         </div>
-                        <div class="divisor">
+                        <div>
+                            <div class="subtitulo">Administrador:</div>
+                            <div class="check">
+                                <input type="checkbox" name="principal" id="checkbox52" />
+                                <label for="checkbox52">Principal</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="titulo">Gerente:</div>
+                            <div class="check">
+                                <input type="checkbox" name="principal" id="checkbox54" />
+                                <label for="checkbox54">Principal</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="titulo">Empleado:</div>
+                            <div class="check">
+                                <input type="checkbox" name="principal" id="checkbox56" />
+                                <label for="checkbox56">Principal</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divisor">
+                    <hr><br>
+                    <div class="titulo">Paginas principales</div>
+                    <div class="trespartes">
+                        <div>
                             <div class="titulo">Principal:</div>
                             <div class="check">
                                 <input type="checkbox" name="principal" id="checkbox25" />
                                 <label for="checkbox25">Principal</label>
-                            </div>                         
+                            </div>  
                         </div>
-                        <div class="divisor">
+                        <div>
                             <div class="titulo">Inventario:</div>
                             <div class="check">
                                 <input type="checkbox" name="inventario" id="checkbox26" />
                                 <label for="checkbox26">Principal</label>
                             </div> 
                         </div>
-                        <div class="divisor">
-                            <div class="titulo">Productos:</div>
-                            <div class="check">
-                                <input type="checkbox" name="productos" id="checkbox27" />
-                                <label for="checkbox27">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
-                            <div class="titulo">Proveedores:</div>
-                            <div class="check">
-                                <input type="checkbox" name="proveedores" id="checkbox28" />
-                                <label for="checkbox28">Principal</label>
-                            </div> 
-                        </div>
-                    </div>
-                    <!--Fin de Primer columna-->
-
-                    <!--Segunda columna-->
-                    <div class="form-column">
-                        <div class="divisor">
-                            <div class="titulo">Etiquetas:</div>
-                            <div class="check">
-                                <input type="checkbox" name="etiquetas" id="checkbox29" />
-                                <label for="checkbox29">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
-                            <div class="titulo">Productos recuperacion:</div>
-                            <div class="check">
-                                <input type="checkbox" name="productosRecuperacion" id="checkbox30" />
-                                <label for="checkbox30">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
-                            <div class="titulo">Proveedores recuperacion:</div>
-                            <div class="check">
-                                <input type="checkbox" name="proveedoresRecuperacion" id="checkbox31" />
-                                <label for="checkbox31">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
-                            <div class="titulo">Etiquetas recuperacion:</div>
-                            <div class="check">
-                                <input type="checkbox" name="etiquetasRecuperacion" id="checkbox32" />
-                                <label for="checkbox32">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
-                            <div class="titulo">Usuarios:</div>
-                            <div class="check">
-                                <input type="checkbox" name="usuarios" id="checkbox33" />
-                                <label for="checkbox33">Principal</label>
-                            </div> 
-                        </div>
-                    </div>
-                    <!--Fin Segunda columna-->
-                    
-                    <!--Tercera columna-->
-                    <div class="form-column">
-                        <div class="divisor">
-                            <div class="titulo">Roles:</div>
-                            <div class="check">
-                                <input type="checkbox" name="roles" id="checkbox34" />
-                                <label for="checkbox34">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
+                        <div>
                             <div class="titulo">Soporte:</div>
                             <div class="check">
                                 <input type="checkbox" name="soporte" id="checkbox35" />
                                 <label for="checkbox35">Principal</label>
                             </div> 
                         </div>
-                        <div class="divisor">
+                    </div>
+
+                    <hr><br>
+                    <div class="titulo">Gestionar Usarios</div>
+                    <div class="trespartes">
+                        <div>
+                            <div class="titulo">Usuarios:</div>
+                            <div class="check">
+                                <input type="checkbox" name="usuarios" id="checkbox33" />
+                                <label for="checkbox33">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Roles:</div>
+                            <div class="check">
+                                <input type="checkbox" name="roles" id="checkbox34" />
+                                <label for="checkbox34">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
                             <div class="titulo">Contraseña:</div>
                             <div class="check">
                                 <input type="checkbox" name="contra" id="checkbox36" />
                                 <label for="checkbox36">Principal</label>
                             </div> 
                         </div>
-                        <div class="divisor">
-                            <div class="titulo">Historial General:</div>
-                            <div class="check">
-                                <input type="checkbox" name="historialGeneral" id="checkbox37" />
-                                <label for="checkbox37">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
-                            <div class="titulo">Historial Modificaciones:</div>
-                            <div class="check">
-                                <input type="checkbox" name="historialModificaciones" id="checkbox38" />
-                                <label for="checkbox38">Principal</label>
-                            </div> 
-                        </div>
                     </div>
-                    <!--Fin Tercera columna-->
 
-                    <!--Cuarta columna-->
-                    <div class="form-column">
-                        <div class="divisor">
-                            <div class="titulo">Historial Movimientos:</div>
+                    <hr><br>
+                    <div class="titulo">Administracion de Productos</div>
+                    <div class="cuatropartes">
+                        <div>
+                            <div class="titulo">Productos:</div>
                             <div class="check">
-                                <input type="checkbox" name="historialMovimientos" id="checkbox39" />
-                                <label for="checkbox39">Principal</label>
+                                <input type="checkbox" name="productos" id="checkbox27" />
+                                <label for="checkbox27">Principal</label>
                             </div> 
                         </div>
-                        <div class="divisor">
-                            <div class="titulo">Historial Eliminados:</div>
+                        <div>
+                            <div class="titulo">Proveedores:</div>
                             <div class="check">
-                                <input type="checkbox" name="historialEliminados" id="checkbox40" />
-                                <label for="checkbox40">Principal</label>
+                                <input type="checkbox" name="proveedores" id="checkbox28" />
+                                <label for="checkbox28">Principal</label>
                             </div> 
                         </div>
-                        <div class="divisor">
-                            <div class="titulo">Recuperacion Designados:</div>
-                            <div class="check">
-                                <input type="checkbox" name="designadoRecuperacion" id="checkbox41" />
-                                <label for="checkbox41">Principal</label>
-                            </div> 
-                        </div>
-                        <div class="divisor">
+                        <div>
                             <div class="titulo">Area:</div>
                             <div class="check">
                                 <input type="checkbox" name="area" id="checkbox42" />
                                 <label for="checkbox42">Principal</label>
                             </div> 
                         </div>
+                        <div>
+                            <div class="titulo">Etiquetas:</div>
+                            <div class="check">
+                                <input type="checkbox" name="etiquetas" id="checkbox29" />
+                                <label for="checkbox29">Principal</label>
+                            </div> 
+                        </div>
                     </div>
-                    <!--Fin Cuarta columna-->
-                    
-                </div>
-                <!--Fin de la tabla de columnas-->
+
+                    <hr><br>
+                    <div class="titulo">Recuperacion de Datos</div>
+                    <div class="cuatropartes">
+                        <div>
+                            <div class="titulo">Productos recuperacion:</div>
+                            <div class="check">
+                                <input type="checkbox" name="productosRecuperacion" id="checkbox30" />
+                                <label for="checkbox30">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Proveedores recuperacion:</div>
+                            <div class="check">
+                                <input type="checkbox" name="proveedoresRecuperacion" id="checkbox31" />
+                                <label for="checkbox31">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Recuperacion Designados:</div>
+                            <div class="check">
+                                <input type="checkbox" name="designadoRecuperacion" id="checkbox41" />
+                                <label for="checkbox41">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Etiquetas recuperacion:</div>
+                            <div class="check">
+                                <input type="checkbox" name="etiquetasRecuperacion" id="checkbox32" />
+                                <label for="checkbox32">Principal</label>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <hr><br>
+                    <div class="titulo">Historial</div>
+                    <div class="cuatropartes">
+                        <div>
+                            <div class="titulo">Historial General:</div>
+                            <div class="check">
+                                <input type="checkbox" name="historialGeneral" id="checkbox37" />
+                                <label for="checkbox37">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Historial Modificaciones:</div>
+                            <div class="check">
+                                <input type="checkbox" name="historialModificaciones" id="checkbox38" />
+                                <label for="checkbox38">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Historial Movimientos:</div>
+                            <div class="check">
+                                <input type="checkbox" name="historialMovimientos" id="checkbox39" />
+                                <label for="checkbox39">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Historial Eliminados:</div>
+                            <div class="check">
+                                <input type="checkbox" name="historialEliminados" id="checkbox40" />
+                                <label for="checkbox40">Principal</label>
+                            </div> 
+                        </div>
+                    </div>
+                </div>                   
                 <div class="btn-cerrar">
                     <button type="submit">Guardar</button>
                     <label id="cancelar">Cancelar</label>
@@ -452,7 +506,40 @@
     <!-- Fin Modal edición -->
 </main>
 <script>
-    // Cierra el modal de edición cuando se hace clic en la "x"
+const form = document.getElementById('mi_formulario'); // Obtén el elemento de formulario por ID
+const saveButton = form.querySelector('button[type="submit"]'); // Obtén el botón de envío dentro del formulario
+const inputRolNew = form.querySelector('input[type="text"][name="RolNew"]'); // Obtén el campo de entrada con el nombre "nombre" dentro del formulario
+
+const editar = document.getElementById('formulario_editar');
+const saveButtonEd = editar.querySelector('button[type="submit"]'); 
+const inputnombre= editar.querySelector('input[type="text"][name="nombre"]'); 
+
+saveButton.disabled = true; // Deshabilita el botón de envío inicialmente
+saveButtonEd.disabled = true; // Deshabilita el botón de envío inicialmente
+
+form.addEventListener('change', (event) => {
+  // Comprueba si alguna casilla de verificación está marcada
+  const isCheckboxChecked = form.querySelectorAll('.check input[type="checkbox"]:checked').length > 0;
+
+  // Comprueba si el campo de entrada tiene datos
+  const hasRolNewData = inputRolNew.value.trim().length > 0;
+
+  // Deshabilita el botón de envío si el campo de entrada tiene datos y ninguna casilla de verificación está marcada
+  saveButton.disabled = hasRolNewData && !isCheckboxChecked;
+});
+
+editar.addEventListener('change', (event) => {
+  // Comprueba si alguna casilla de verificación está marcada
+  const isCheckbox= editar.querySelectorAll('.check input[type="checkbox"]:checked').length > 0;
+
+  // Comprueba si el campo de entrada tiene datos
+  const hasRolNew = inputnombre.value.trim().length > 0;
+
+  // Deshabilita el botón de envío si el campo de entrada tiene datos y ninguna casilla de verificación está marcada
+  saveButtonEd.disabled = hasRolNew && !isCheckbox;
+});
+</script>
+<script>
     closeEditModal.addEventListener("click", function() {
     // Recorre todos los checkbox
     const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
@@ -469,37 +556,102 @@
     editModalRol.style.display = "none";
     });
 
-    //Cierra el modal de edicion cuando se da click a cancelar
+    // Cierra el modal de edición cuando se da click a cancelar
     cancelar.addEventListener("click", function() {
-    // Recorre todos los checkbox
-    const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
+        // Recorre todos los checkbox
+        const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
 
-    // Recorre todos los checkbox
-    for (let i = 0; i < checkboxes.length; i++) {
-        const checkbox = checkboxes[i];
+        // Recorre todos los checkbox
+        for (let i = 0; i < checkboxes.length; i++) {
+            const checkbox = checkboxes[i];
 
-        // Desactiva el checkbox
-        checkbox.checked = false;
-    }
+            // Solo deshabilita los checkbox que no están actualmente marcados
+            if (!checkbox.checked) {
+                checkbox.checked = false;
+            }
+        }
 
-    // Cierra el modal
-    editModalRol.style.display = "none";
+        // Cierra el modal
+        editModalRol.style.display = "none";
     });
 
     // Obtiene la casilla de verificación que se va a usar para activar las otras
     const checkbox51 = document.querySelector('#checkbox51');
+    const checkbox53 = document.querySelector('#checkbox53');
+    const checkbox55 = document.querySelector('#checkbox55');
+
+    const excluirEmpleado = ['checkbox6', 'checkbox7', 'checkbox8', 'checkbox17',
+    'checkbox13', 'checkbox14', 'checkbox15', 'checkbox16','checkbox9', 'checkbox10'];
+    const excluirGerente = ['checkbox6', 'checkbox7', 'checkbox8', 'checkbox17',];
 
     // Obtiene todas las casillas de verificación
     const otherCheckboxes = document.querySelectorAll('.check input[type="checkbox"]:not(#checkbox51)');
 
     // Agrega un evento de cambio a la casilla de verificación
     checkbox51.addEventListener('change', function() {
-    // Activa o desactiva todas las demás casillas de verificación
-    for (let i = 1; i <= 18; i++) {
-        const checkbox = document.querySelector(`#checkbox${i}`);
-        checkbox.checked = this.checked;
-    }
+        // Activa o desactiva todas las demás casillas de verificación
+        for (let i = 1; i <= 18; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = false;
+        }
+        for (let i = 1; i <= 18; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = this.checked;
+        }
+        if(checkbox53.checked = this.checked){
+            checkbox53.checked = false
+        }
+        if(checkbox55.checked = this.checked){
+            checkbox55.checked = false
+        }
     });
+
+    checkbox53.addEventListener('change', function() {
+        // Update all checkboxes except for the excluded ones
+        // Activa o desactiva todas las demás casillas de verificación
+        for (let i = 1; i <= 18; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = false;
+        }
+        for (let i = 1; i <= 18; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            if (!excluirGerente.includes(checkbox.id)) {
+            checkbox.checked = this.checked;
+            }
+        }
+
+        // Deselect checkboxes 51 and 55
+        if (checkbox51.checked === this.checked) {
+            checkbox51.checked = false;
+        }
+        if (checkbox55.checked === this.checked) {
+            checkbox55.checked = false;
+        }
+    });
+
+    checkbox55.addEventListener('change', function() {
+        // Update all checkboxes except for the excluded ones
+        // Activa o desactiva todas las demás casillas de verificación
+        for (let i = 1; i <= 18; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = false;
+        }
+        for (let i = 1; i <= 18; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            if (!excluirEmpleado.includes(checkbox.id)) {
+            checkbox.checked = this.checked;
+            }
+        }
+
+        // Deselect checkboxes 51 and 55
+        if (checkbox51.checked === this.checked) {
+            checkbox51.checked = false;
+        }
+        if (checkbox53.checked === this.checked) {
+            checkbox53.checked = false;
+        }
+    });
+
     // Obtiene la casilla de verificación que se va a usar para activar las otras
     const checkbox52 = document.querySelector('#checkbox52');
 

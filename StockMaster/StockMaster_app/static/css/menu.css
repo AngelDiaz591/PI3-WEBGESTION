@@ -92,7 +92,21 @@ aside h3{
     width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
-    grid-template-columns: 50% auto;
+    grid-template-columns: 48% 48%;
+}
+.trespartes{
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 32% 32% 32%;
+}
+.cuatropartes{
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 24% 24% 24% 24%;
 }
 .text-muted{
     color: var(--color-info-dark);

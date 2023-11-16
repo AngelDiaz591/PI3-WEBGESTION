@@ -3,7 +3,6 @@
 {% block body %}
 {% load static %}
 <div class="right-v2" >
-    
     <div class="top">
         <div class="tema">
             <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
@@ -46,13 +45,28 @@
         {% endfor %}
     </div>
     <div class="recent-orders">
+        <div class="Bienvenida" style=" box-shadow: var(--box-shadow); background-color: rgb(2, 75, 220); border-radius: 1rem; padding: 1rem; display: flex; justify-content:space-between;">
+            <div>
+                <h1 style="font-size: 2.8rem; color: white;">¡BIENVENIDO, @usuario!</h1>
+                <p style="font-size: 1.1rem; color:white">¡Recuerda cumplir con tus deberes y obligaciones, en tiempo y forma!</p>
+                <p style="font-size: 1.1rem; color:white; margin-top: 1rem;">En Stockmaster, nuestra prioridad es el cliente</p>
+                <p style="font-size: 1.1rem; color:white;">StockMaster: El poder de tener todo bajo control</p>
+            </div>
+            <div style="display: flex; width: 17%;">
+                <img src="{% static 'login/img/bienvenida1.svg' %}">
+            </div>
+        </div>
         <div class="apartado-perfil">
             <div class="info-user">
-                <div class="fotoperfil" style="align-items: center; border: none;">
-                    <img id="vistaUser" alt="{{user.id.image}}">
-                    <h3>Vicente Fernandez</h3>
-                    <h5>Administrador</h5>
+                <!-- <div> -->
+                    <div class="fotoperfil" style="border: none; display: flex; align-items: center; justify-content: center;">
+                    <!-- <div class="fotoperfil" style="align-items: center; border: none;"> -->
+                    <div>
+                        <img id="vistaUser" alt="{{user.id.image}}">
+                        <h2>Administrador</h2>
+                    </div>
                 </div>
+                <!-- </div> -->
                 <script>
                     function previsualizarImagen() {
                         var cargador = document.getElementById('imagen');
@@ -73,65 +87,64 @@
             </div>
             <div class="info-user">
                 <div>
-                    <div class="perfil-sub">
-                        <h5>Datos personales</h5>
+                    <div class="perfil-sub" style="justify-content: space-around;">
+                        <div class="titulo-user">
+                            <strong>Nombre(s)</strong>
+                        </div>
+                        <div class="titulo-user">
+                            <strong>Apellido(s)</strong>
+                        </div>
                     </div>
                     <div class="info-sub">
-                        <div><strong>CURP: </strong> PEPM040415MMCGRRA9</div>
-                        <div><strong>RFC: </strong> 12345678901</div>
-                        <div><strong>NSS: </strong> 123456789009876543</div>
+                        <div>
+                            <strong>Mariana Ixchel</strong>
+                        </div>
+                        <div>
+                            <strong>Pegueros Pérez</strong>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <div class="perfil-sub">
-                        <h5>Residencia</h5>
+                    <div class="perfil-sub" style="justify-content: space-around;">
+                        <div class="titulo-user">
+                            <strong style=" display:flex; align-items: center;">Correo electronico<span class="material-symbols-outlined">mail</span>:</strong>
+                        </div>
                     </div>
                     <div class="info-sub">
-                        <div><strong>Municipio: </strong> Ecatepec</div>
-                        <div><strong>Pais: </strong> Filandia</div>
-                        <div>dfjsdfjo</div>
+                        <strong>mpegueros@ucol.mx</strong>
+                    </div>
+                </div>
+                <div style="padding-left: 1rem;">
+                    <div class="perfil-sub"">
+                        <div class="titulo-user">
+                            <strong>Descripción</strong>
+                        </div>
+                    </div>
+                    <div class="info-sub-descripcion">
+                        <div>
+                            <strong>I design and develop services for customers of all sizes, specializing in creating stylish, modern websites, web services and online stores. My passion is to design digital user experiences through the bold interface and meaningful interactions.</strong><br>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <div class="perfil-sub">
-                        <h5>Domicilio</h5>
+                    <div class="perfil-sub" style="justify-content: space-around;">
+                        <div class="titulo-user">
+                            <strong style=" display:flex; align-items: center;">Contraseña<span class="material-symbols-outlined">lock</span>:</strong>
+                        </div>
                     </div>
-                    <div class="info-sub">
-                        <div><strong>Calle: </strong> Orquideas</div>
-                        <div><strong>Colonia: </strong> Valle del Coral</div>
-                        <div><strong>No.Interior: </strong> #45</div>
-                        <div><strong>Codigo Postal: </strong> 28864</div>
-                    </div>
-                </div>
-                <div>
-                    <div class="perfil-sub">
-                        <h5>Contacto</h5>
-                    </div>
-                    <div class="info-sub">
-                        <div><strong>No. Celular: </strong> 3141064874</div>
-                        <div><strong>Correo: </strong> mpegueros@ucol.mx</div>
-                        <div><strong>No. Telefonico: </strong> 3141064874</div>
-                    </div>
-                </div>
-                <div>
-                    <div class="perfil-sub">
-                        <h5>Contraseña</h5>
-                    </div>
-                    <div class="info-sub">
-                            <div style="padding: 0.1rem; align-items: center; letter-spacing: 1rem;">
-                                *************
-                            </div>
-                            <div class="cambioContra">
-                                <label for="btn-modal" style="color: white;">
-                                    Cambiar contraseña
-                                </label>
-                            </div>
+                    <div class="info-sub" style="justify-content: space-around;">
+                        <div style="letter-spacing: 0.6rem;">
+                            <strong>*************</strong>
+                        </div>
+                        <div class="cambioContra">
+                            <label for="btn-modal" style="color: white;">
+                                Cambiar contraseña
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        
+        </div> 
        
         <!--Ventana Modal-->
     <div>

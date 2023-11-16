@@ -60,7 +60,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <!-- <th>#</th> -->
+                            <th>#</th>
                             <th>Rol</th>
                             <th>Elimino Usuario</th>
                             <th>Fecha</th>
@@ -70,10 +70,10 @@
                     <tbody>
                         {% for c in Roles %}
                             <tr>
-                                <!-- <td>{{forloop.counter}}</td> -->
+                                <td>{{forloop.counter}}</td>
                                 <td>{{ c.name }}</td>
-                                <td>{{ c.username }}</td>
-                                <td>{{ c.fech_cate}}</td>
+                                <td>{{ c.rolextra.username }}</td>
+                                <td>{{ c.rolextra.fech_cate}}</td>
                                 <td class="edita"><a href="cambio_statusrolre/{{ c.id }}" class="btn btn-info btnRecuperarRol">                                 
                                     <span class="material-symbols-outlined">restart_alt</span>
                                 </a></td>
@@ -91,7 +91,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <!-- <th>#</th> -->
+                            <th>#</th>
                             <th>Area</th>
                             <th>Elimino Usuario</th>
                             <th>Fecha</th>
@@ -103,8 +103,8 @@
                             {% if c.status %}
                             {% else %}
                             <tr>
-                                <!-- <td>{{forloop.counter}}</td> -->
-                                <td>{{ c.name }}</td>
+                                <td>{{forloop.counter}}</td> 
+                                <td>{{ c.nombre }}</td>
                                 <td>{{ c.username }}</td>
                                 <td>{{ c.fech_cate}}</td>
                                 <td class="edita"><a href="status_areare/{{ c.area_id }}" class="btn btn-info btnRecuperarArea">                                 

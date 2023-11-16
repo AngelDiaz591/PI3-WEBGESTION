@@ -71,7 +71,7 @@ main  .recent-orders .btn-registrar:hover{
     text-indent: -9999px;
     width: 60px;
     height: 30px;
-    background: grey;
+    background: transparent;
     display: block;
     border-radius: 100px;
     position: relative;
@@ -90,7 +90,8 @@ main  .recent-orders .btn-registrar:hover{
   }
   
   .check input[type="checkbox"]:checked + label {
-    background: #3d9c23;
+    background: blue;
+    border: 0.2rem solid var(--color-dark);
   }
   
   .check input[type="checkbox"]:checked + label:after {

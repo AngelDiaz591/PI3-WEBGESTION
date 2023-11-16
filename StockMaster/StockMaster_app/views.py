@@ -38,7 +38,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import SetPasswordForm
 from django.utils.http import urlsafe_base64_encode
 from django.db.models import Sum
-
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
 # Create your views here.
 
 
@@ -51,7 +52,6 @@ from django.db.models import Sum
 def signin(request):
     if request.user.is_authenticated:
         return redirect('/actividades')
-
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -67,6 +67,7 @@ def signin(request):
                 messages.error(request, 'Usuario no Registrado', extra_tags='signin')
             else:
                 messages.error(request, 'Contraseña Incorrecta', extra_tags='signin')
+                messages.error(request, 'Usuario dado de baja', extra_tags='signin')
         return render(request, 'registration/login.html', {'form': form})
 
     else:
@@ -136,25 +137,13 @@ def signup(request):
                 grupo = Group.objects.get(name=request.POST['grupo'])
                 user.groups.add(grupo)
                 # Resto del código para agregar el usuario al grupo, guardar información adicional, etc.
-                calle = request.POST['calle']
-                colonia = request.POST['colonia']
-                num_ext = request.POST['num_ext']
-                num_int = request.POST['num_int']
-                cp = request.POST['cp']
-                col_mun = request.POST['col_mun']
-                pais = request.POST['pais']
-                num_tel = request.POST['num_tel']
                 mun_cel = request.POST['mun_cel']
-                curp = request.POST['curp']
-                t_sangre = request.POST['t_sangre']
-                rfc = request.POST['rfc']
-                n_seg_social = request.POST['n_seg_social']
                 imagen = request.FILES['imagen'] 
                 permiso = 0
                 cambio = 0 
 
                 imagen_bytes = imagen.read()
-                usuario = Usuario(calle=calle, colonia=colonia, num_ext=num_ext, num_int=num_int, cp=cp, col_mun= col_mun, pais=pais,  num_tel=num_tel, mun_cel= mun_cel, curp=curp, t_sangre=t_sangre, rfc=rfc, n_seg_social=n_seg_social, imagen=imagen_bytes,id_id=user.id,permiso = permiso, cambio= cambio)
+                usuario = Usuario(mun_cel= mun_cel, imagen=imagen_bytes,id_id=user.id,permiso = permiso, cambio= cambio)
                 username = user.username  # Asignar el valor del nombre de usuario del usuario actual
                 #<-----------------Guarda en el Historial------------------------->
                 historial= Historial.objects.all()
@@ -196,31 +185,6 @@ def signup(request):
         return render(request, 'StockMaster_app/usuarios.html', {'form': form})
     else:
         return redirect('/actividades')
-
-def signin(request):
-    if request.user.is_authenticated:
-        return redirect('/actividades')
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('/actividades')
-        else:
-            form = AuthenticationForm(request.POST)
-            if not User.objects.filter(username=username).exists():
-                # Agrega un mensaje de error con la etiqueta 'signin'
-                messages.error(request, 'Usuario no Registrado', extra_tags='signin')
-            else:
-                messages.error(request, 'Contraseña Incorrecta', extra_tags='signin')
-        return render(request, 'registration/login.html', {'form': form})
-
-    else:
-        form = AuthenticationForm()
-        return render(request, 'registration/login.html', {'form': form})
     
 def home(request):
     if request.user.is_authenticated:
@@ -239,7 +203,7 @@ def exit(request):
 
 #____________________________________________________________________________________________________________________________________
 
-#--------------------------------------------------------- U S U A R I O S --------------------------------------------------------->
+#----------------------------------------------- U S U A R I O S  M O V I M I E N T O ---------------------------------------------->
 #____________________________________________________________________________________________________________________________________
 
 
@@ -364,8 +328,21 @@ def cambio_password(request):
 
         form = PasswordChangeForm(request.user)
         return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form, 'Roles': roles, 'Usuarios': form, 'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes, 'usuario': usuario, 'grupos': grupos})
-    
 
+def dar_baja(request, id): 
+    baja = User.objects.get(id=id)
+    baja.is_active = 0
+    baja.save()
+    messages.success(request, 'Usuario dado de baja')
+    return redirect('/usuarios')
+
+
+def recuperar(request,id):
+    recu = User.objects.get(id=id)
+    recu.is_active = 1
+    recu.save()
+    messages.success(request, 'Usuario Recuperado')
+    return redirect('/recuperar_usuario')
 
 def eliminaruser(request, id):
     try:
@@ -1902,6 +1879,16 @@ def recuperar_designaciones(request):
         return render(request, 'StockMaster_app/recuperar_designaciones.html', { "Area":AreasListado, "RolExtra":rolextra, "Roles": roles_con_status_1, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
     else:
         return redirect('/actividades')
+
+def recuperar_usuario(request):
+        form = User.objects.all()
+        usuario = Usuario.objects.all()
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes =mensajes.count()
+        AreasListado = Area.objects.all()
+        for Usuarios in usuario:
+            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/recuperar_usuario.html', { "Area":AreasListado, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes, 'usuarios':form,'usuario':usuario})
 
 #____________________________________________________________________________________________________________________________________
 

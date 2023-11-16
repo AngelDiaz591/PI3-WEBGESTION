@@ -29,6 +29,9 @@ urlpatterns = [
     path('cambio_password/permiso/<int:id>', views.permiso, name='permiso'),
     path('cambio_password/', views.cambio_password, name='cambio_password'),
     path('usuarios/eliminaruser/<int:id>', views.eliminaruser, name="eliminaruser"),
+    path('usuarios/dar_baja/<int:id>', views.dar_baja, name="dar_baja"),
+    path('recuperar_usuario/', views.recuperar_usuario, name="recuperar_usuario"),
+    path('recuperar_usuario/recuperar/<int:id>', views.recuperar, name='recuperar'),
 
     #paths Productos
     path('productos/', views.pro, name='productos'),

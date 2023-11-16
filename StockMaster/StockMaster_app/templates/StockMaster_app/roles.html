@@ -119,14 +119,14 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="titulo">Gerente:</div>
+                                <div class="subtitulo">Gerente:</div>
                                 <div class="check">
                                     <input type="checkbox" name="principal" id="checkbox53" />
                                     <label for="checkbox53">Principal</label>
                                 </div>
                             </div>
                             <div>
-                                <div class="titulo">Empleado:</div>
+                                <div class="subtitulo">Empleado:</div>
                                 <div class="check">
                                     <input type="checkbox" name="principal" id="checkbox55" />
                                     <label for="checkbox55">Principal</label>
@@ -137,7 +137,7 @@
                     <div class="divisor">
                         <hr><br>
                         <div class="titulo">Paginas principales</div>
-                        <div class="trespartes">
+                        <div class="mitad">
                             <div>
                                 <div class="subtitulo">Principal:</div>
                                 <div class="check">
@@ -150,13 +150,6 @@
                                 <div class="check">
                                     <input type="checkbox" name="inventario" id="checkbox2" />
                                     <label for="checkbox2">Inventario</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Soporte:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="soporte" id="checkbox11" />
-                                    <label for="checkbox11">Principal</label>
                                 </div>
                             </div>
                         </div>
@@ -176,6 +169,31 @@
                                 <div class="check">
                                     <input type="checkbox" name="roles" id="checkbox10" />
                                     <label for="checkbox10">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Recuperar Usuario:</div>
+                                <div class="check">
+                                    <input type="checkbox" name="usuarioRecuperacion" id="checkbox20" />
+                                    <label for="checkbox20">Principal</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr><br>
+                        <div class="titulo">Configuracion</div>
+                        <div class="trespartes">
+                            <div>
+                                <div class="subtitulo">Soporte (Recibir mensajes):</div>
+                                <div class="check">
+                                    <input type="checkbox" name="soporte" id="checkbox11" />
+                                    <label for="checkbox11">Principal</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="subtitulo">Soporte (Mandar mensajes):</div>
+                                <div class="check">
+                                    <input type="checkbox" name="soporteenviar" id="checkbox19" />
+                                    <label for="checkbox19">Principal</label>
                                 </div>
                             </div>
                             <div>
@@ -329,14 +347,14 @@
                             </div>
                         </div>
                         <div>
-                            <div class="titulo">Gerente:</div>
+                            <div class="subtitulo">Gerente:</div>
                             <div class="check">
                                 <input type="checkbox" name="principal" id="checkbox54" />
                                 <label for="checkbox54">Principal</label>
                             </div>
                         </div>
                         <div>
-                            <div class="titulo">Empleado:</div>
+                            <div class="subtitulo">Empleado:</div>
                             <div class="check">
                                 <input type="checkbox" name="principal" id="checkbox56" />
                                 <label for="checkbox56">Principal</label>
@@ -347,7 +365,7 @@
                 <div class="divisor">
                     <hr><br>
                     <div class="titulo">Paginas principales</div>
-                    <div class="trespartes">
+                    <div class="mitad">
                         <div>
                             <div class="titulo">Principal:</div>
                             <div class="check">
@@ -360,13 +378,6 @@
                             <div class="check">
                                 <input type="checkbox" name="inventario" id="checkbox26" />
                                 <label for="checkbox26">Principal</label>
-                            </div> 
-                        </div>
-                        <div>
-                            <div class="titulo">Soporte:</div>
-                            <div class="check">
-                                <input type="checkbox" name="soporte" id="checkbox35" />
-                                <label for="checkbox35">Principal</label>
                             </div> 
                         </div>
                     </div>
@@ -389,7 +400,33 @@
                             </div> 
                         </div>
                         <div>
-                            <div class="titulo">Contraseña:</div>
+                            <div class="titulo">Recuperacion:</div>
+                            <div class="check">
+                                <input type="checkbox" name="usuarioRecuperacion" id="checkbox44" />
+                                <label for="checkbox44">Principal</label>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <hr><br>
+                    <div class="titulo">Configuraciones</div>
+                    <div class="trespartes">
+                        <div>
+                            <div class="titulo">Soporte (Recibir mensajes):</div>
+                            <div class="check">
+                                <input type="checkbox" name="soporte" id="checkbox35" />
+                                <label for="checkbox35">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Soporte (Enviar mensajes):</div>
+                            <div class="check">
+                                <input type="checkbox" name="soporteenviar" id="checkbox43" />
+                                <label for="checkbox43">Principal</label>
+                            </div> 
+                        </div>
+                        <div>
+                            <div class="titulo">Perfil:</div>
                             <div class="check">
                                 <input type="checkbox" name="contra" id="checkbox36" />
                                 <label for="checkbox36">Principal</label>
@@ -587,26 +624,60 @@ editar.addEventListener('change', (event) => {
     const checkbox55 = document.querySelector('#checkbox55'); // Agregar
     const checkbox56 = document.querySelector('#checkbox56'); // Editar
 
+    const checkbox11 = document.querySelector('#checkbox11');
+    const checkbox19 = document.querySelector('#checkbox19');
+    const checkbox35 = document.querySelector('#checkbox35');
+    const checkbox43 = document.querySelector('#checkbox43');
+
     // Permisos excluidos Agregar Roles
     const excluirEmpleado = ['checkbox6', 'checkbox7', 'checkbox8', 'checkbox17',
-    'checkbox13', 'checkbox14', 'checkbox15', 'checkbox16','checkbox9', 'checkbox10'];
-    const excluirGerente = ['checkbox6', 'checkbox7', 'checkbox8', 'checkbox17',];
+    'checkbox13', 'checkbox14', 'checkbox15', 'checkbox16','checkbox9', 'checkbox10', 'checkbox11'];
+    const excluirGerente = ['checkbox6', 'checkbox7', 'checkbox8', 'checkbox17', 'checkbox19'];
 
     // Permisos excluidos Editar Roles
     const excluirEmpleadoEditar = ['checkbox37', 'checkbox38', 'checkbox39', 'checkbox40',
-    'checkbox41', 'checkbox30', 'checkbox31', 'checkbox32','checkbox33', 'checkbox34'];
-    const excluirGerenteEditar = ['checkbox27', 'checkbox28', 'checkbox29', 'checkbox42',];
+    'checkbox41', 'checkbox30', 'checkbox31', 'checkbox32','checkbox33', 'checkbox34', 'checkbox35'];
+    const excluirGerenteEditar = ['checkbox27', 'checkbox28', 'checkbox29', 'checkbox42', 'checkbox43'];
+    const excluirsoporte = ['checkbox43', 'checkbox19'];
+
+    checkbox19.addEventListener('change', function(){
+        if(checkbox11.checked = this.checked)
+        {
+            checkbox11.checked = false
+        }
+    });
+    checkbox11.addEventListener('change', function(){
+        if(checkbox19.checked = this.checked)
+        {
+            checkbox19.checked = false
+        }
+    });
+
+    checkbox43.addEventListener('change', function(){
+        if(checkbox35.checked = this.checked)
+        {
+            checkbox35.checked = false
+        }
+    });
+    checkbox35.addEventListener('change', function(){
+        if(checkbox43.checked = this.checked)
+        {
+            checkbox43.checked = false
+        }
+    });
 
     // Agrega un evento de cambio a la casilla de verificación
     checkbox51.addEventListener('change', function() {
         // Activa o desactiva todas las demás casillas de verificación
-        for (let i = 1; i <= 18; i++) {
+        for (let i = 1; i <= 20; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             checkbox.checked = false;
         }
-        for (let i = 1; i <= 18; i++) {
+        for (let i = 1; i <= 20; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
+            if (!excluirsoporte.includes(checkbox.id)) {
             checkbox.checked = this.checked;
+            }
         }
         if(checkbox53.checked = this.checked){
             checkbox53.checked = false
@@ -618,13 +689,15 @@ editar.addEventListener('change', (event) => {
 
     checkbox52.addEventListener('change', function() {
         // Activa o desactiva todas las demás casillas de verificación
-        for (let i = 25; i <= 42; i++) {
+        for (let i = 25; i <= 44; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             checkbox.checked = false;
         }
-        for (let i = 25; i <= 42; i++) {
+        for (let i = 25; i <= 44; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
+            if (!excluirsoporte.includes(checkbox.id)) {
             checkbox.checked = this.checked;
+            }
         }
         // Deselect checkboxes 51 and 55
         if (checkbox54.checked === this.checked) {
@@ -638,11 +711,11 @@ editar.addEventListener('change', (event) => {
     checkbox53.addEventListener('change', function() {
         // Update all checkboxes except for the excluded ones
         // Activa o desactiva todas las demás casillas de verificación
-        for (let i = 1; i <= 18; i++) {
+        for (let i = 1; i <= 20; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             checkbox.checked = false;
         }
-        for (let i = 1; i <= 18; i++) {
+        for (let i = 1; i <= 20; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             if (!excluirGerente.includes(checkbox.id)) {
             checkbox.checked = this.checked;
@@ -660,11 +733,11 @@ editar.addEventListener('change', (event) => {
 
     checkbox54.addEventListener('change', function() {
         // Activa o desactiva todas las demás casillas de verificación
-        for (let i = 25; i <= 42; i++) {
+        for (let i = 25; i <= 44; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             checkbox.checked = false;
         }
-        for (let i = 25; i <= 42; i++) {
+        for (let i = 25; i <= 44; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             if (!excluirGerenteEditar.includes(checkbox.id)) {
             checkbox.checked = this.checked;
@@ -682,11 +755,11 @@ editar.addEventListener('change', (event) => {
     checkbox55.addEventListener('change', function() {
         // Update all checkboxes except for the excluded ones
         // Activa o desactiva todas las demás casillas de verificación
-        for (let i = 1; i <= 18; i++) {
+        for (let i = 1; i <= 20; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             checkbox.checked = false;
         }
-        for (let i = 1; i <= 18; i++) {
+        for (let i = 1; i <= 20; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             if (!excluirEmpleado.includes(checkbox.id)) {
             checkbox.checked = this.checked;
@@ -704,11 +777,11 @@ editar.addEventListener('change', (event) => {
 
     checkbox56.addEventListener('change', function() {
         // Activa o desactiva todas las demás casillas de verificación
-        for (let i = 25; i <= 42; i++) {
+        for (let i = 25; i <= 44; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             checkbox.checked = false;
         }
-        for (let i = 25; i <= 42; i++) {
+        for (let i = 25; i <= 44; i++) {
             const checkbox = document.querySelector(`#checkbox${i}`);
             if (!excluirEmpleadoEditar.includes(checkbox.id)) {
             checkbox.checked = this.checked;
@@ -728,10 +801,10 @@ editar.addEventListener('change', (event) => {
 
     // Agrega un evento de clic al botón "Cancelar"
     const cancelBtn = document.querySelector('#btn-modal');
-    cancelBtn.addEventListener('click', function() {
-    // Desactiva todos los checkbox
-    otherCheckboxes.forEach(checkbox => checkbox.checked = false);
-    checkbox51.checked = false;
+        cancelBtn.addEventListener('click', function() {
+        // Desactiva todos los checkbox
+        otherCheckboxes.forEach(checkbox => checkbox.checked = false);
+        checkbox51.checked = false;
     });
 
 </script>

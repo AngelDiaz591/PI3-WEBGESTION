@@ -121,10 +121,6 @@
                                         <span class="material-symbols-outlined">collections_bookmark</span>
                                         <h3>Etiquetas</h3>
                                     </a>
-                                    <a href="{% url 'recuperar_usuario' %}" class="active">
-                                        <span class="material-symbols-outlined">person_check</span>
-                                        <h3>Usuarios</h3>
-                                    </a>
                                 {% endif %}
                             </div>
                         </div>
@@ -151,10 +147,10 @@
                                         <h3>Agregar</h3>
                                     </a>
                                 {% endif %}
-                                {% if perms.StockMaster_app.delete_rolextra %}
-                                    <a href="{% url 'cambio_password' %}" class="main-menu-link active">
-                                        <span class="material-symbols-outlined">manage_accounts</span>
-                                        <h3>Cambiar Contraseña</h3>
+                                {% if perms.StockMaster_app.delete_usuario %}
+                                    <a href="{% url 'recuperar_usuario' %}" class="active">
+                                        <span class="material-symbols-outlined">person_check</span>
+                                        <h3>Recuperacion</h3>
                                     </a>
                                 {% endif %}
                             </div>
@@ -198,18 +194,50 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if perms.StockMaster_app.view_mensajes %}
-                    <a href="{% url 'soporte' %}" class="main-menu-link active">
-                        <span class="material-symbols-outlined">report_gmailerrorred</span>
-                        <h3>Soporte</h3>
-                        <span class="message-count">
-                            {% if cantidad_mensajes > 0 %}
-                                {{ cantidad_mensajes }}
-                            {% else %}
-                            0
-                            {% endif %}
-                        </span>
+                {% if perms.StockMaster_app.view_mensajes or perms.StockMaster_app.delete_mensajes or perms.StockMaster_app.delete_rolextra %}
+                    <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_configuracion" data-submenu-state="closed">
+                        <span class="material-symbols-outlined">settings</span>
+                        <h3>Configuración</h3>
+                        <i class="submenu-icon fas fa-chevron-right rotate-icon"></i>
                     </a>
+                    <div class="submenu-container active">
+                        <div class="submenu">
+                            <div style="margin-left: 1rem;">
+                                {% if perms.StockMaster_app.view_mensajes %}
+                                    <a href="{% url 'soporte' %}" class="main-menu-link active">
+                                        <span class="material-symbols-outlined">report_gmailerrorred</span>
+                                        <h3>Soporte</h3>
+                                        <span class="message-count">
+                                            {% if cantidad_mensajes > 0 %}
+                                                {{ cantidad_mensajes }}
+                                            {% else %}
+                                            0
+                                            {% endif %}
+                                        </span>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.delete_mensajes %}
+                                    <a href="{% url 'soporteEnviar' %}" class="main-menu-link active">
+                                        <span class="material-symbols-outlined">report_gmailerrorred</span>
+                                        <h3>Soporte</h3>
+                                        <span class="message-count">
+                                            {% if cantidad_mensajes > 0 %}
+                                                {{ cantidad_mensajes }}
+                                            {% else %}
+                                            0
+                                            {% endif %}
+                                        </span>
+                                    </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.delete_rolextra %}
+                                    <a href="{% url 'cambio_password' %}" class="main-menu-link active">
+                                        <span class="material-symbols-outlined">manage_accounts</span>
+                                        <h3>Perfil</h3>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
                 
                 

@@ -117,6 +117,7 @@ urlpatterns = [
     path('historialEliminados/', views.historialEliminados, name='historialEliminados'),
 
     path('soporte/', views.soporte, name='soporte'),
+    path('soporteEnviar/', views.soporteEnviar, name='soporteEnviar'),
     path('comentario/',views.comentario),
     path('usuarios/', views.usuarios, name='usuarios'),
     

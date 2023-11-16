@@ -1295,12 +1295,16 @@ def get_etiqRecu(request):
     return request.POST.get('etiquetasRecuperacion') == 'on'
 def get_degRecu(request):
     return request.POST.get('designadoRecuperacion') == 'on'
+def get_usuRecu(request):
+    return request.POST.get('usuarioRecuperacion') == 'on'
 def get_usuarios(request):
     return request.POST.get('usuarios') == 'on'
 def get_roles(request):
     return request.POST.get('roles') == 'on'
 def get_soporte(request):
     return request.POST.get('soporte') == 'on'
+def get_soporteenviar(request):
+    return request.POST.get('soporteenviar') == 'on'
 def get_contra(request):
     return request.POST.get('contra') == 'on'
 def get_histGen(request):
@@ -1346,6 +1350,9 @@ def registrar_rol(request):
         historialMovimientos = get_histMov(request)
         historialEliminados = get_histEli(request)
         soporte = get_soporte(request)
+        soporteenviar = get_soporteenviar(request)
+        usuarioRecuperacion = get_usuRecu(request)
+
         if Group.objects.filter(name=nombre).exists():
             messages.error(request, 'El Rol ya está registrado.')
         else:
@@ -1365,8 +1372,10 @@ def registrar_rol(request):
             rol_extra.etiquetasRecuperacion = etiquetasRecuperacion
             rol_extra.designadoRecuperacion = designadoRecuperacion
             rol_extra.usuarios = usuarios
+            rol_extra.usuariosRecuperacion = usuarioRecuperacion
             rol_extra.roles = roles
             rol_extra.soporte = soporte 
+            rol_extra.soporteenviar = soporteenviar 
             rol_extra.contra = contra 
             rol_extra.movi = 'Creacion de Rol'
             rol_extra.historialGeneral = historialGeneral 
@@ -1394,12 +1403,16 @@ def registrar_rol(request):
                 rol.permissions.add(Permission.objects.get(codename='delete_categoria'))
             if designadoRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_area'))
+            if usuarioRecuperacion:
+                rol.permissions.add(Permission.objects.get(codename='delete_usuario'))
             if usuarios:
                 rol.permissions.add(Permission.objects.get(codename='view_usuario'))
             if roles:
                 rol.permissions.add(Permission.objects.get(codename='view_rolextra'))
             if soporte:
                 rol.permissions.add(Permission.objects.get(codename='view_mensajes'))
+            if soporteenviar:
+                rol.permissions.add(Permission.objects.get(codename='delete_mensajes'))
             if contra:
                 rol.permissions.add(Permission.objects.get(codename='delete_rolextra'))
             if historialGeneral:
@@ -1445,6 +1458,8 @@ def editarRolMod(request):
             historialMovimientos = get_histMov(request)
             historialEliminados = get_histEli(request)
             soporte = get_soporte(request)
+            soporteenviar = get_soporteenviar(request)
+            usuarioRecuperacion = get_usuRecu(request)
 
             try:
                 rol = Group.objects.get(id= id)
@@ -1452,7 +1467,13 @@ def editarRolMod(request):
             except RolExtra.DoesNotExist:
                 messages.error(request, 'El Rol no se encontró o no existe.')
                 return redirect('/rol/')  # Puedes redirigir a donde desees
-            if Group.objects.filter(name=nombre).exists():
+            if Group.objects.filter(name=nombre).exists() and RolExtra.objects.filter(principal=principal, inventario=inventario,
+                productos=productos, proveedores=proveedores, etiquetas=etiquetas, area=area, productosRecuperacion=productosRecuperacion,
+                proveedoresRecuperacion=proveedoresRecuperacion, etiquetasRecuperacion=etiquetasRecuperacion, designadoRecuperacion=designadoRecuperacion,
+                usuariosRecuperacion=usuarioRecuperacion, usuarios=usuarios, roles=roles, soporte=soporte, soporteenviar=soporteenviar,
+                contra=contra, historialGeneral=historialGeneral, historialModificaciones=historialModificaciones, historialMovimientos=historialMovimientos,
+                historialEliminados=historialEliminados).exists():
+
                 messages.error(request, '¡Este Rol no recibio cambios!')
                 return redirect('/rol/') 
             else:
@@ -1468,9 +1489,11 @@ def editarRolMod(request):
                 rol_extra.proveedoresRecuperacion = proveedoresRecuperacion
                 rol_extra.etiquetasRecuperacion = etiquetasRecuperacion
                 rol_extra.designadoRecuperacion = designadoRecuperacion
+                rol_extra.usuariosRecuperacion = usuarioRecuperacion
                 rol_extra.usuarios = usuarios
                 rol_extra.roles = roles
                 rol_extra.soporte = soporte
+                rol_extra.soporteenviar = soporteenviar 
                 rol_extra.contra = contra 
                 rol_extra.movi = 'Edicion de Rol'
                 rol_extra.historialGeneral = historialGeneral 
@@ -1528,6 +1551,11 @@ def editarRolMod(request):
                 else:
                     permiso = Permission.objects.get(codename='delete_area')
                     rol.permissions.remove(permiso)
+                if usuarioRecuperacion:
+                    rol.permissions.add(Permission.objects.get(codename='delete_usuario'))
+                else:
+                    permiso = Permission.objects.get(codename='delete_usuario')
+                    rol.permissions.remove(permiso)
                 if usuarios:
                     rol.permissions.add(Permission.objects.get(codename='view_usuario'))
                 else:
@@ -1542,6 +1570,11 @@ def editarRolMod(request):
                     rol.permissions.add(Permission.objects.get(codename='view_mensajes'))
                 else:
                     permiso = Permission.objects.get(codename='view_mensajes')
+                    rol.permissions.remove(permiso)
+                if soporteenviar:
+                    rol.permissions.add(Permission.objects.get(codename='delete_mensajes'))
+                else:
+                    permiso = Permission.objects.get(codename='delete_mensajes')
                     rol.permissions.remove(permiso)
                 if contra:
                     rol.permissions.add(Permission.objects.get(codename='delete_rolextra'))
@@ -1604,9 +1637,11 @@ def edicionRol2(request, id):
             "proveedoresRecuperacion":rol_extra.proveedoresRecuperacion,
             "etiquetasRecuperacion":rol_extra.etiquetasRecuperacion,
             "designadoRecuperacion":rol_extra.designadoRecuperacion,
+            "usuariosRecuperacion":rol_extra.usuariosRecuperacion,
             "usuarios":rol_extra.usuarios,
             "roles": rol_extra.roles,
             "soporte":rol_extra.soporte,
+            "soporteenviar":rol_extra.soporteenviar,
             "contra":rol_extra.contra,
             "historialGeneral":rol_extra.historialGeneral,
             "historialModificaciones":rol_extra.historialModificaciones,
@@ -1694,65 +1729,64 @@ def soporte(request):
         return redirect('/actividades')
 
 @login_required(login_url='signin')
-def comentario(request):
-    if request.user.has_perm('StockMaster_app.view_mensajes'):
-        if request.method == 'POST':
-            comentario = request.POST.get('comentario')  # Corregir la sintaxis para obtener el valor del comentario
-            username = request.user.username  # Obtener el nombre de usuario del usuario autenticado
-
-            if comentario and username:  # Verificar que se haya proporcionado un comentario y que el usuario esté autenticado
-                comentario_obj = Mensajes(comentario=comentario, username=username)
-                historial= Historial.objects.all()
-                historial = Historial(movimiento='Nuevo Mensaje',usuario=request.user.username,fecha=timezone.now(),nombre='Mensaje')
-                historial.save()
-                comentario_obj.save()
-                men.success(request, 'Comentario listo!')
-            else:
-                men.error(request, 'Falta el comentario o el usuario no está autenticado.')
-
-        return redirect('/soporte')
+def soporteEnviar(request):
+    if request.user.has_perm('StockMaster_app.delete_mensajes'):
+        mensajes = Mensajes.objects.all()
+        cantidad_mensajes = mensajes.count()
+        return render(request, 'StockMaster_app/soporteEnviar.html', {'Mensajes': mensajes,  'cantidad_mensajes': cantidad_mensajes})
     else:
         return redirect('/actividades')
+
+@login_required(login_url='signin')
+def comentario(request):
+    if request.method == 'POST':
+        comentario = request.POST.get('comentario')  # Corregir la sintaxis para obtener el valor del comentario
+        username = request.user.username  # Obtener el nombre de usuario del usuario autenticado
+
+        if comentario and username:  # Verificar que se haya proporcionado un comentario y que el usuario esté autenticado
+            comentario_obj = Mensajes(comentario=comentario, username=username)
+            historial= Historial.objects.all()
+            historial = Historial(movimiento='Nuevo Mensaje',usuario=request.user.username,fecha=timezone.now(),nombre='Mensaje')
+            historial.save()
+            comentario_obj.save()
+            men.success(request, 'Comentario listo!')
+        else:
+            men.error(request, 'Falta el comentario o el usuario no está autenticado.')
+
+    return redirect('/soporteEnviar')
+
 
 @login_required(login_url='signin')
 def eliminarcomentarios(request, idcomentario):
-    if request.user.has_perm('StockMaster_app.view_mensajes'):
-        ecomentario = Mensajes.objects.get(idcomentario=idcomentario)
-        ecomentario.delete()
-        messages.success(request, '¡Producto Eliminado!')
-        return redirect('/soporte')
-    else:
-        return redirect('/actividades')
+    ecomentario = Mensajes.objects.get(idcomentario=idcomentario)
+    ecomentario.delete()
+    messages.success(request, '¡Producto Eliminado!')
+    return redirect('/soporte')
+
 
 @login_required(login_url='signin')
 def respuesta(request,idcomentario):
-    if request.user.has_perm('StockMaster_app.view_mensajes'):
-        respuesta = Mensajes.objects.get(idcomentario=idcomentario)
-        return render(request, "StockMaster_app/soporte.html", {"respuesta": respuesta})
-    else:
-        return redirect('/actividades')
+    respuesta = Mensajes.objects.get(idcomentario=idcomentario)
+    return render(request, "StockMaster_app/soporte.html", {"respuesta": respuesta})
 
 @login_required(login_url='signin')
 def contestarcomentarios(request,idcomentario):
-    if request.user.has_perm('StockMaster_app.view_mensajes'):
-        mensaje = get_object_or_404(Mensajes, idcomentario=idcomentario)
-        messages.success(request, '¡Mensaje Contestado!')
-        if request.method == 'POST':
-            respuestascomentarios = request.POST.get('respuestascomentarios')
-            mensaje.respuestascomentarios = respuestascomentarios
-            mensaje.tiem_res = timezone.now()
-            mensaje.admincont = request.user.username
-            if mensaje.status_mov != 1:
-                mensaje.status_mov = 1
-            historial= Historial.objects.all()
-            historial = Historial(movimiento='Mensaje Contestado',usuario=request.user.username,fecha=timezone.now(),nombre='Mensaje')
-            historial.save()
-            mensaje.save()
-            return redirect('/soporte/')  # Redirigir a la página de soporte o a donde corresponda
+    mensaje = get_object_or_404(Mensajes, idcomentario=idcomentario)
+    messages.success(request, '¡Mensaje Contestado!')
+    if request.method == 'POST':
+        respuestascomentarios = request.POST.get('respuestascomentarios')
+        mensaje.respuestascomentarios = respuestascomentarios
+        mensaje.tiem_res = timezone.now()
+        mensaje.admincont = request.user.username
+        if mensaje.status_mov != 1:
+            mensaje.status_mov = 1
+        historial= Historial.objects.all()
+        historial = Historial(movimiento='Mensaje Contestado',usuario=request.user.username,fecha=timezone.now(),nombre='Mensaje')
+        historial.save()
+        mensaje.save()
+        return redirect('/soporte/')  # Redirigir a la página de soporte o a donde corresponda
 
-        return render(request, 'StockMaster_app/soporte.html', {'mensaje': mensaje})
-    else:
-        return redirect('/actividades')
+    return render(request, 'StockMaster_app/soporte.html', {'mensaje': mensaje})
 
 #____________________________________________________________________________________________________________________________________
 
@@ -1881,6 +1915,7 @@ def recuperar_designaciones(request):
         return redirect('/actividades')
 
 def recuperar_usuario(request):
+    if request.user.has_perm('StockMaster_app.delete_usuario'):
         form = User.objects.all()
         usuario = Usuario.objects.all()
         mensajes = Mensajes.objects.all()
@@ -1889,7 +1924,8 @@ def recuperar_usuario(request):
         for Usuarios in usuario:
             Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         return render(request, 'StockMaster_app/recuperar_usuario.html', { "Area":AreasListado, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes, 'usuarios':form,'usuario':usuario})
-
+    else:
+        return redirect('/actividades')
 #____________________________________________________________________________________________________________________________________
 
 #------------------------------------------------------- F U N C I O N E S --------------------------------------------------------->

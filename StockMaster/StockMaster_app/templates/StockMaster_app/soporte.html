@@ -1,12 +1,6 @@
 {% extends "./base.html" %}
 {% block body %}
 {% load static %}
-
-{% if request.user.is_superuser %}
-
-{% else %}
-{% endif %}
-{% if request.user.is_superuser %}
 <div class="right-v2" >
     <div class="top">
         <div class="tema">
@@ -48,29 +42,34 @@
                 <i class="fas fa-search" id="search-icon"></i>
             </div>
         </div>
+        <br>
         <!-- Muestra mensajes existentes -->
-        {% for message in messages %}
-            <div class="alert alert-custom" role="alert">
-                <strong>{{ message }}</strong>
-                <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-        {% endfor %}
-        <div style="overflow:auto; height: 400px;">
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        <div style="overflow:auto; height: 450px;">
             <table>
                 <thead>
                     <tr>
-                        <th><h2 class="agregar">Usuario</h2></th>
-                        <th><h2 class="agregar">Mensaje</h2></th>
-                        <th><h2 class="agregar">Respuesta</h2></th>
-                        <th><h2 class="agregar">Fecha</h2></th>
-                        <th><h2 class="agregar">Contestar</h2></th>
-                        <th><h2 class="agregar">Eliminar</h2></th>
+                        <th>#</th>
+                        <th><h2>Usuario</h2></th>
+                        <th><h2>Mensaje</h2></th>
+                        <th><h2>Respuesta</h2></th>
+                        <th><h2>Fecha</h2></th>
+                        <th><h2>Contestar</h2></th>
+                        <th><h2>Eliminar</h2></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% if Mensajes %}
                         {% for mensaje in Mensajes|dictsortreversed:"tiempo_creacion"%}
                             <tr>
+                                <td>{{ forloop.counter }}</td>
                                 <td>
                                     <h4>{{ mensaje.username}}:</h4>
                                 </td>
@@ -120,110 +119,6 @@
         </div>
     </div>
 </main>
-{% else %}
-<div class="ctn">
-    <main>
-        <h1>Soporte Tecnico</h1>
-        <div class="recent-orders">
-            <div class="principal">
-                <div class="search-bar-v2">
-                    <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
-                    <i class="fas fa-search" id="search-icon"></i>
-                </div>
-            </div>
-            <!-- Muestra mensajes existentes -->
-            {% for message in messages %}
-                <div class="alert alert-custom" role="alert">
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            {% endfor %}
-            <table>
-                <thead>
-                    <tr>
-                        <th><h2 class="agregar">Usuario</h2></th>
-                        <th><h2 class="agregar">Mensaje</h2></th>
-                        <th><h2 class="agregar">Respuesta</h2></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if Mensajes %}
-                        {% for mensaje in Mensajes|dictsortreversed:"tiempo_creacion" %}
-                            {% if mensaje.username == request.user.username %}
-                            <tr>
-                                <td>
-                                    <h4>{{ mensaje.username}}:</h4>
-                                </td>
-                                <td>
-                                    {{ mensaje.comentario }}
-                                </td>
-                                <td>
-                                    {% if mensaje.respuestascomentarios %}
-                                        {{ mensaje.respuestascomentarios }}
-
-                                    {% else %}
-                                        <p>No tiene respuestas </p>
-
-                                    {% endif %}
-                                </td>
-                                {% endif %}                             
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <br>
-                        <p style="color: #787878; font-size: 15px;">No hay mensajes disponibles en este momento.</p>
-                        <br>
-                    {% endif %}
-                </tbody>
-            </table>
-            <!-- Formulario para agregar un nuevo comentario --> 
-        </div>
-    </main>
-    <div class="right" >
-        <div class="top">
-            <div class="tema">
-                <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-                </button>
-                <button id="themeToggleBtn" >
-                    <i id="sunIcon" class="fas fa-sun"></i>
-                    <i id="moonIcon" class="fas fa-moon"></i>
-                </button>
-            </div>
-            <div class="profile">
-                {% if request.user.is_authenticated %}
-                    <div class="info">
-                        <p>Hola, <b>{{ user.username}}</b> </p>
-                        <p style="text-align: center;">
-                            BIENVENIDO
-                        </p>
-                    </div>
-                    <div class="profile-photo">
-                        {% if request.user.is_superuser %}
-                            <i class="fa-solid fa-user-tie"></i>
-                            <small class="text-muted">Admin</small>
-                        {% else %}
-                            <i class="fa-solid fa-user"></i>
-                            <small class="text-muted">Empleado</small>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="recent-updates">
-            <h2>Agregar comentario:</h2>
-            <div class="updates">
-                <form method="post" action="/comentario/">
-                    {% csrf_token %}
-                    <label class="comment" for="comentario">Comentario:</label>
-                    <textarea id="comentario" name="comentario" rows="4" cols="30" style="resize: none;" required></textarea>
-                    <br>
-                    <input class="comentar" type="submit" value="Enviar comentario">
-                </form>   
-            </div>
-        </div>
-    </div>
-</div>  
-{% endif %}
 <script>
     // Función para eliminar el mensaje al hacer clic en el botón de cerrar
     function dismissMessage(button) {

@@ -94,6 +94,13 @@ aside h3{
     gap: 1.8rem;
     grid-template-columns: 48% 48%;
 }
+.disparejo{
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 30% auto;
+}
 .trespartes{
     display: grid;
     width: 96%;

@@ -99,9 +99,9 @@
                 <h2 class="titulo-modal">Crear nuevo Rol</h2>
                 <form action="/registrar_rol/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
                     <div class="divisor">
-                        <div class="mitad">
+                        <div class="disparejo">
                             <div><hr></div>
-                            <div><h2 style="margin-top: -1rem;">Roles prestablecidos</h2></div>
+                            <div><h2 style="margin-top: -1rem;">Roles prestablecidos (Opcionales)</h2></div>
                         </div>
                         <br>
                         <div class="cuatropartes">
@@ -310,9 +310,9 @@
                 <input type="hidden" id="editProductId" name="productId" value="{{ c.id }}">
                 <!--Inicio de la tabla de columnas-->
                 <div class="divisor">
-                    <div class="mitad">
+                    <div class="disparejo">
                         <div><hr></div>
-                        <div><h2 style="margin-top: -1rem;">Roles prestablecidos</h2></div>
+                        <div><h2 style="margin-top: -1rem;">Roles prestablecidos (Opcionales)</h2></div>
                     </div>
                     <div class="cuatropartes">
                         <div>
@@ -574,18 +574,28 @@ editar.addEventListener('change', (event) => {
         // Cierra el modal
         editModalRol.style.display = "none";
     });
+    
+    // Obtiene todas las casillas de verificación
+    const otherCheckboxes = document.querySelectorAll('.check input[type="checkbox"]:not(#checkbox51)');
+    const otherCheckboxes2 = document.querySelectorAll('.check input[type="checkbox"]:not(#checkbox52)');
 
     // Obtiene la casilla de verificación que se va a usar para activar las otras
-    const checkbox51 = document.querySelector('#checkbox51');
-    const checkbox53 = document.querySelector('#checkbox53');
-    const checkbox55 = document.querySelector('#checkbox55');
+    const checkbox51 = document.querySelector('#checkbox51'); // Agregar
+    const checkbox52 = document.querySelector('#checkbox52'); // Editar
+    const checkbox53 = document.querySelector('#checkbox53'); // Agregar
+    const checkbox54 = document.querySelector('#checkbox54'); // Editar
+    const checkbox55 = document.querySelector('#checkbox55'); // Agregar
+    const checkbox56 = document.querySelector('#checkbox56'); // Editar
 
+    // Permisos excluidos Agregar Roles
     const excluirEmpleado = ['checkbox6', 'checkbox7', 'checkbox8', 'checkbox17',
     'checkbox13', 'checkbox14', 'checkbox15', 'checkbox16','checkbox9', 'checkbox10'];
     const excluirGerente = ['checkbox6', 'checkbox7', 'checkbox8', 'checkbox17',];
 
-    // Obtiene todas las casillas de verificación
-    const otherCheckboxes = document.querySelectorAll('.check input[type="checkbox"]:not(#checkbox51)');
+    // Permisos excluidos Editar Roles
+    const excluirEmpleadoEditar = ['checkbox37', 'checkbox38', 'checkbox39', 'checkbox40',
+    'checkbox41', 'checkbox30', 'checkbox31', 'checkbox32','checkbox33', 'checkbox34'];
+    const excluirGerenteEditar = ['checkbox27', 'checkbox28', 'checkbox29', 'checkbox42',];
 
     // Agrega un evento de cambio a la casilla de verificación
     checkbox51.addEventListener('change', function() {
@@ -606,6 +616,25 @@ editar.addEventListener('change', (event) => {
         }
     });
 
+    checkbox52.addEventListener('change', function() {
+        // Activa o desactiva todas las demás casillas de verificación
+        for (let i = 25; i <= 42; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = false;
+        }
+        for (let i = 25; i <= 42; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = this.checked;
+        }
+        // Deselect checkboxes 51 and 55
+        if (checkbox54.checked === this.checked) {
+            checkbox54.checked = false;
+        }
+        if (checkbox56.checked === this.checked) {
+            checkbox56.checked = false;
+        }
+    });
+    
     checkbox53.addEventListener('change', function() {
         // Update all checkboxes except for the excluded ones
         // Activa o desactiva todas las demás casillas de verificación
@@ -626,6 +655,27 @@ editar.addEventListener('change', (event) => {
         }
         if (checkbox55.checked === this.checked) {
             checkbox55.checked = false;
+        }
+    });
+
+    checkbox54.addEventListener('change', function() {
+        // Activa o desactiva todas las demás casillas de verificación
+        for (let i = 25; i <= 42; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = false;
+        }
+        for (let i = 25; i <= 42; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            if (!excluirGerenteEditar.includes(checkbox.id)) {
+            checkbox.checked = this.checked;
+            }
+        }
+        // Deselect checkboxes 51 and 55
+        if (checkbox52.checked === this.checked) {
+            checkbox52.checked = false;
+        }
+        if (checkbox56.checked === this.checked) {
+            checkbox56.checked = false;
         }
     });
 
@@ -652,24 +702,29 @@ editar.addEventListener('change', (event) => {
         }
     });
 
-    // Obtiene la casilla de verificación que se va a usar para activar las otras
-    const checkbox52 = document.querySelector('#checkbox52');
-
-    // Obtiene todas las casillas de verificación
-    const otherCheckboxes2 = document.querySelectorAll('.check input[type="checkbox"]:not(#checkbox52)');
-
-    // Agrega un evento de cambio a la casilla de verificación
-    checkbox52.addEventListener('change', function() {
-    // Activa o desactiva todas las demás casillas de verificación
-    for (let i = 25; i <= 42; i++) {
-        const checkbox = document.querySelector(`#checkbox${i}`);
-        checkbox.checked = this.checked;
-    }
+    checkbox56.addEventListener('change', function() {
+        // Activa o desactiva todas las demás casillas de verificación
+        for (let i = 25; i <= 42; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            checkbox.checked = false;
+        }
+        for (let i = 25; i <= 42; i++) {
+            const checkbox = document.querySelector(`#checkbox${i}`);
+            if (!excluirEmpleadoEditar.includes(checkbox.id)) {
+            checkbox.checked = this.checked;
+            }
+        }
+        // Deselect checkboxes 51 and 55
+        if (checkbox52.checked === this.checked) {
+            checkbox52.checked = false;
+        }
+        if (checkbox54.checked === this.checked) {
+            checkbox54.checked = false;
+        }
     });
-    // Obtiene todos los checkbox del 1 al 16
+    
+    //Limpiar todo al cerrar el modal de agregar rol
     const otherCheckboxes3 = document.querySelectorAll('.check input[type="checkbox"]:not(#checkbox51)');
-
-    // Obtiene el checkbox51
 
     // Agrega un evento de clic al botón "Cancelar"
     const cancelBtn = document.querySelector('#btn-modal');

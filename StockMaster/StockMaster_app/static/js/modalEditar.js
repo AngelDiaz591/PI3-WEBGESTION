@@ -248,6 +248,16 @@ function openEditModalRol(productId) {
 
               // Desactiva el checkbox52
               checkbox52.checked = false;
+
+              const checkbox54 = document.querySelector('#checkbox54');
+
+              // Desactiva el checkbox52
+              checkbox54.checked = false;
+
+              const checkbox56 = document.querySelector('#checkbox56');
+
+              // Desactiva el checkbox52
+              checkbox56.checked = false;
             }
         },
         error: function(jqXHR, textStatus, errorThrown){

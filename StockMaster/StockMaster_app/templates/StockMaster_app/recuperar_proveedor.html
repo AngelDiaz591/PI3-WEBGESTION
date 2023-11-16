@@ -55,40 +55,48 @@
         </div>
         <br>
         <h2>Proveedores</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Proveedor</th>
-                    <th>Contacto</th>
-                    <th>Elimino Usuario</th>
-                    <th>Fecha</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in proveedores %}
-                    {% if c.status %}
+        <div class="mensaje-oculto">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Proveedor</th>
+                        <th>Contacto</th>
+                        <th>Elimino Usuario</th>
+                        <th>Fecha</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in proveedores %}
+                        {% if c.status %}
 
-                    {% else %}
-                        <tr>
-                            
-                            <td>{{forloop.counter}}</td>
-                            <td>{{ c.nombre }} </td>
-                            <td>{{ c.contacto }}</td>
-                            <td>{{ c.username }}</td>
-                            <td>{{ c.fecha_edit}}</td>
-                            <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info btnRecuperarProv">                                 
-                                <span class="material-symbols-outlined">restart_alt</span>
-                            </a></td>
-                            <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+                        {% else %}
+                            <tr>
+                                
+                                <td>{{forloop.counter}}</td>
+                                <td>{{ c.nombre }} </td>
+                                <td>{{ c.contacto }}</td>
+                                <td>{{ c.username }}</td>
+                                <td>{{ c.fecha_edit}}</td>
+                                <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info btnRecuperarProv">                                 
+                                    <span class="material-symbols-outlined">restart_alt</span>
+                                </a></td>
+                                <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="no-disponible oculto">
+            <div style="display:flex; justify-content: center; align-items: center;">
+                <img style="width: 15%;" src="{% static 'productos/img/prov.svg' %}">
+            </div>
+            <p style="font-size: 1.2rem; font-weight: 400;">Ningun proveedor se ha dado de baja.</p>
+        </div>
     </div>
 
 </main>

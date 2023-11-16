@@ -55,39 +55,47 @@
         </div>
         <br>
         <h2>Productos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Elimino Usuario</th>
-                    <th>Fecha</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Productos %}
-                    {% if c.status %}
-                    {% else %}
-                        <tr>
-                            
-                            <td>{{forloop.counter}}</td> 
-                            <td>{{ c.codigo }} </td>
-                            <td>{{ c.nombre }}</td>
-                            <td>{{ c.username }}</td>
-                            <td>{{ c.hora_baja }}</td>
-                            <td class="edita"><a href="statusre/{{c.idproducts}}" class="btn btn-info btnRecuperarPro">
-                                <span class="material-symbols-outlined">restart_alt</span>
-                            </a></td>
-                            <td class="elimina"><a href="eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="mensaje-oculto">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Elimino Usuario</th>
+                        <th>Fecha</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in Productos %}
+                        {% if c.status %}
+                        {% else %}
+                            <tr>
+                                
+                                <td>{{forloop.counter}}</td> 
+                                <td>{{ c.codigo }} </td>
+                                <td>{{ c.nombre }}</td>
+                                <td>{{ c.username }}</td>
+                                <td>{{ c.hora_baja }}</td>
+                                <td class="edita"><a href="statusre/{{c.idproducts}}" class="btn btn-info btnRecuperarPro">
+                                    <span class="material-symbols-outlined">restart_alt</span>
+                                </a></td>
+                                <td class="elimina"><a href="eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="no-disponible oculto">
+            <div style="display:flex; justify-content: center; align-items: center;">
+                <img style="width: 15%;" src="{% static 'productos/img/trash3.svg' %}">
+            </div>
+            <p style="font-size: 1.2rem; font-weight: 400;">Ningun producto se ha dado de baja.</p>
+        </div>
     </div>
 </main>
 

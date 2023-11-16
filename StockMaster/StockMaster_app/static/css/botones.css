@@ -14,7 +14,10 @@
     
 }
 .elimina a:hover{
-    background-color: #930404;
+  padding: 10px 15px;
+  background-color: #930404;
+  color: white;
+  transform: scale(1.3);
 }
 
 .edita {
@@ -31,7 +34,10 @@
     
 }
 .edita a:hover{
-    background-color: #185E83;
+  padding: 10px 15px;
+  background-color: #185E83;
+  transform: scale(1.3);
+  color: white;
 }
 
 main  .recent-orders .btn-registrar{

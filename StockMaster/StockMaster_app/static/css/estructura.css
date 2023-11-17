@@ -54,7 +54,6 @@ main .recent-orders h2{
 .principal{
     justify-content: space-between;
     display: flex;
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; */
 }
 
 /*---------------------------------------------TABLAS---------------------------------------------*/
@@ -420,13 +419,15 @@ main table th{
 .titulo-user{
     font-size: 1.2rem;
     text-transform: uppercase;
+    align-items: center;
+    display: flex;
 }
 
 .info-sub-descripcion{
     display: flex;
     align-items: center;
     font-size: 1.1rem;
-    padding: 1rem;
+    padding: 0.2rem 1rem 1rem 1rem;
 }
 
 /*Mensaje oculto*/

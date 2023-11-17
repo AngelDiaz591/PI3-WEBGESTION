@@ -397,7 +397,7 @@ hr{
 .content-modal-usuarios{
     max-width: 90%;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     border-radius: 20px;
     overflow: auto;
     /* height: 75%;  */

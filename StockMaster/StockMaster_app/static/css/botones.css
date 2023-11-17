@@ -99,6 +99,27 @@ main  .recent-orders .btn-registrar:hover{
     transform: translateX(-100%);
   }
 
+.edit-button{
+  /* box-shadow: var(--color-light) 0px 10px 20px, var(--color-light) 0px 6px 6px; */
+  box-shadow: var(--color-light) 0px 2px 4px, var(--color-light) 0px 7px 13px -3px, var(--color-light) 0px -3px 0px inset;
+  border-radius: 0.5rem;
+  align-items: center;
+  display: flex;
+  padding: 0.1rem;
+  margin-top: -0.4rem;
+  color: var(--color-dark);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.edit-button:hover{
+  cursor: pointer;
+  color: white;
+  background-color: blue;
+  box-shadow: var(--color-light) 0px 2px 4px, var(--color-light) 0px 7px 13px -3px, var(--color-light) 0px -3px 0px inset;
+  /* box-shadow: var(--color-light) 0px 10px 20px, var(--color-light) 0px 6px 6px; */
+}
+
 
   
   

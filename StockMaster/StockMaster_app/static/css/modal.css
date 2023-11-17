@@ -586,6 +586,7 @@ input.invalid {
     background-color: var(--color-white);
     border-radius: 20px;
     overflow: auto;
+    box-shadow: var(--box-shadow-v2);
 }
 
 .content-modal-contra p{
@@ -603,7 +604,7 @@ input.invalid {
     border: 1px solid rgb(0, 0, 0);
     padding: 7px 10px;
     background-color: #e90404;
-    color: var(--color-white);
+    color: white;
     border-radius: 4px;
     cursor: pointer;
     transition: all 300ms ease;
@@ -626,7 +627,7 @@ input.invalid {
 }
 
 .modal-img-contra{
-    width: 10rem;
+    width: 18rem;
     height: auto;
     margin: 0.5rem 0 0.5rem 7rem;
 }
@@ -650,6 +651,7 @@ input.invalid {
   .custom-form-control {
     display: block;
     width: 40rem;
+    min-height: 12rem;
     padding: 0.75rem;
     font-size: 1.2rem;
     line-height: 1.25;
@@ -660,7 +662,7 @@ input.invalid {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    resize: vertical; /* Permitir que el textarea sea redimensionado verticalmente */
+    resize: none; /* Permitir que el textarea sea redimensionado verticalmente */
     height: auto; /* Permitir que el textarea crezca automáticamente en altura */
     overflow-y: hidden;
   } 

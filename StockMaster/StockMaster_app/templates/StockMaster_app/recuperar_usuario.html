@@ -24,45 +24,53 @@
                     </div>
                 {% endfor %}
             </div>
-            <div style="overflow:auto; height: 400px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Gmail</th>
-                            <th>Imagen</th>
-                            <th>Rol</th>
-                            <th>Recuperar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for us in usuario %}
-                            {% if us != request.user%}
-                                {%if us.id.is_active == 0%}
-                                    <tr>
-                                        <td>{{ us.id.first_name }}</td>
-                                        <td>{{ us.id.last_name }}</td>
-                                        <td>{{ us.id.email }}</td>
-                                        <td class="imagen" style="position: relative;">
-                                            <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
-                                                <img src="{{ us.imagen_url }}"  width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
-                                            </div>
-                                        </td>
-                                        <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                        <td class="edita  edit-product-button"><a class=" btn btn-info btnRecuperarProv" href="recuperar/{{us.id.id}}">
-                                            <span class="material-symbols-outlined">restart_alt</span>
-                                        </a></td>
-                                        <td class="elimina"><a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
-                                            <span class="material-symbols-outlined">delete</span>
-                                        </a></td>
-                                    </tr>
+            <div style="overflow:auto; height: 46rem;">
+                <div class="mensaje-oculto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Gmail</th>
+                                <th>Imagen</th>
+                                <th>Rol</th>
+                                <th>Recuperar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for us in usuario %}
+                                {% if us != request.user%}
+                                    {%if us.id.is_active == 0%}
+                                        <tr>
+                                            <td>{{ us.id.first_name }}</td>
+                                            <td>{{ us.id.last_name }}</td>
+                                            <td>{{ us.id.email }}</td>
+                                            <td class="imagen" style="position: relative;">
+                                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
+                                                    <img src="{{ us.imagen_url }}"  width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
+                                                </div>
+                                            </td>
+                                            <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
+                                            <td class="edita  edit-product-button"><a class=" btn btn-info btnRecuperarProv" href="recuperar/{{us.id.id}}">
+                                                <span class="material-symbols-outlined">restart_alt</span>
+                                            </a></td>
+                                            <td class="elimina"><a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a></td>
+                                        </tr>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="no-disponible oculto">
+                    <div style="display:flex; justify-content: center; align-items: center;">
+                        <img style="width: 20%;" src="{% static 'productos/img/user-dele.svg' %}">
+                    </div>
+                    <p style="font-size: 1.2rem; font-weight: 400;">Sin usuarios dados de baja actualmente.</p>
+                </div>
             </div>
         </div>
 

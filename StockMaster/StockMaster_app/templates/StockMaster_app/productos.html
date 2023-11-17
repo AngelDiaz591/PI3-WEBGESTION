@@ -57,66 +57,80 @@
             {% endfor %}
         </div>
         <h2 class="agregar">Listado de Productos</h2>
-        <div style="overflow: auto; height: 450px;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Imagen</th>
-                        <th>Visible</th>
-                        
-                        <th colspan="4">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for c in Productos %}
-                        {% if c.status %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ c.codigo }}</td>
-                                <td>{{ c.nombre }}</td>
-                                <td>${{ c.precio }}mxn</td>
-                                <td>{{ c.cantPro }}</td>
-                                <td class="imagen" style="position: relative;">
-                                    <div class="img-container" style="width: 100px; height: 100px;">
-                                        <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
-                                    </div>
-                                </td>
-                                <td align="left">
-                                    {% if c.id_categorias.status == 0 or c.id_Proveedores.status == 0 or c.id_marca.status == 0 or c.id_area.status == 0 %}
-                                        <h3>ACTUALIZAR</h3>
-                                        {% if c.id_categorias.status == 0 %}
-                                            CATEGORIA<br>
+        <div style="overflow: auto; height: 39rem;">
+            <div class="mensaje-oculto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Imagen</th>
+                            <th>Visible</th>
+                            
+                            <th colspan="4">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in Productos %}
+                            {% if c.status %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ c.codigo }}</td>
+                                    <td>{{ c.nombre }}</td>
+                                    <td>${{ c.precio }}mxn</td>
+                                    <td>{{ c.cantPro }}</td>
+                                    <td class="imagen" style="position: relative;">
+                                        <div class="img-container" style="width: 100px; height: 100px;">
+                                            <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
+                                        </div>
+                                    </td>
+                                    <td align="left">
+                                        {% if c.id_categorias.status == 0 or c.id_Proveedores.status == 0 or c.id_marca.status == 0 or c.id_area.status == 0 %}
+                                            <h3>ACTUALIZAR</h3>
+                                            {% if c.id_categorias.status == 0 %}
+                                                CATEGORIA<br>
+                                            {% endif %}
+                                                {% if c.id_Proveedores.status == 0  %}
+                                                PROVEEDOR<br>
+                                            {% endif %}
+                                            {% if c.id_marca.status == 0 %}
+                                                MARCA<br>
+                                            {% endif %}
+                                            {% if c.id_area.status == 0 %}
+                                                AREA<br>
+                                            {% endif %}
+                                        {% else %}
+                                            VISIBLE
                                         {% endif %}
-                                            {% if c.id_Proveedores.status == 0  %}
-                                            PROVEEDOR<br>
-                                        {% endif %}
-                                        {% if c.id_marca.status == 0 %}
-                                            MARCA<br>
-                                        {% endif %}
-                                        {% if c.id_area.status == 0 %}
-                                            AREA<br>
-                                        {% endif %}
-                                    {% else %}
-                                        VISIBLE
-                                    {% endif %}
-                                  </td>
-                                <td>
-                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
-                                    <span class="material-symbols-outlined">edit</span></a>
-                                </td>
-                                <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a></td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
+                                    </td>
+                                    <td>
+                                    <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
+                                        <span class="material-symbols-outlined">edit</span></a>
+                                    </td>
+                                    <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="no-disponible oculto">
+                <div style="display:flex; justify-content: center; align-items: center;">
+                    <!-- <img style="width: 20%;" src="{% static 'productos/img/add-message2.svg' %}"> -->
+
+                    <img style="width: 20%;" src="{% static 'productos/img/add-message5.svg' %}">
+                    <!-- <img style="width: 20%;" src="{% static 'productos/img/add-message6.svg' %}"> -->
+                    <!-- img style="width: 20%;" src="{% static 'productos/img/add-message7.svg' %}"> -->
+                    <!-- <img style="width: 20%;" src="{% static 'productos/img/box-add.svg' %}"> -->
+                    <!-- <img style="width: 20%;" src="{% static 'productos/img/add-message10.svg' %}"> -->
+                </div>
+                <p style="font-size: 1.2rem; font-weight: 400;">La tabla está vacía. ¡Registra nuevos productos!</p>
+            </div>
         </div>
     </div>
     <!--Ventana Modal-->

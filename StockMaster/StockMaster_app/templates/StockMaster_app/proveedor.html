@@ -58,54 +58,63 @@
             {% endfor %}
         </div>
         <h2 class="agregar">Listado de Proveedores</h2>
-        <div style="overflow: auto; height: 450px;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Contacto</th>
-                        <th>Telefono</th>
-                        <th>Correo</th>
-                        <th>Direccion</th>
-                        <th>Imagen</th>
-                        <th colspan="2">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for c in Proveedor %}
-                    {% if c.status  %}
+        <div style="overflow: auto; height: 39rem;">
+            <div class="mensaje-oculto">
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td>{{ c.nombre }}</td>
-                            <td>{{ c.contacto }}</td>
-                            <td>{{ c.telefono}}</td>
-                            <td>{{ c.email}}</td>
-                            
-                            <td>
-                                {{ c.calle }} {{ c.noExt }}<br>
-                                {% if c.noInt %}
-                                    Interior {{ c.noInt }},<br>
-                                {% endif %}
-                                {{ c.colonia }}, {{ c.cp }}, <br>{{ c.municipio }}, <br>{{ c.estado }}, {{ c.pais }}
-                            </td>
-                            <td class="imagen" style="position: relative;">
-                                <div class="img-container" style="width: 100px; height: 100px;">
-                                    <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
-                                </div>
-                            </td>
-                            <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idProveedor }}">
-                            <span class="material-symbols-outlined">edit</span>
-                            </a></td>
-                            <td class="elimina"><a href="cambio_statuspro/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a></td>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Contacto</th>
+                            <th>Telefono</th>
+                            <th>Correo</th>
+                            <th>Direccion</th>
+                            <th>Imagen</th>
+                            <th colspan="2">Opciones</th>
                         </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for c in Proveedor %}
+                        {% if c.status  %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{ c.nombre }}</td>
+                                <td>{{ c.contacto }}</td>
+                                <td>{{ c.telefono}}</td>
+                                <td>{{ c.email}}</td>
+                                
+                                <td>
+                                    {{ c.calle }} {{ c.noExt }}<br>
+                                    {% if c.noInt %}
+                                        Interior {{ c.noInt }},<br>
+                                    {% endif %}
+                                    {{ c.colonia }}, {{ c.cp }}, <br>{{ c.municipio }}, <br>{{ c.estado }}, {{ c.pais }}
+                                </td>
+                                <td class="imagen" style="position: relative;">
+                                    <div class="img-container" style="width: 100px; height: 100px;">
+                                        <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
+                                    </div>
+                                </td>
+                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idProveedor }}">
+                                <span class="material-symbols-outlined">edit</span>
+                                </a></td>
+                                <td class="elimina"><a href="cambio_statuspro/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a></td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="no-disponible oculto">
+                <div style="display:flex; justify-content: center; align-items: center;">
+                    <img style="width: 20%;" src="{% static 'productos/img/user-add.svg' %}">
+                </div>
+                <p style="font-size: 1.2rem; font-weight: 400;">¿Dónde están los proveedores? La tabla espera tu información.</p>
+                <!-- ¡Oops! Parece que aún no hay proveedores registrados -->
+                <!-- <p style="font-size: 1.2rem; font-weight: 400;">La tabla aguarda proveedores. ¡Añade algunos para comenzar!</p> -->
+            </div>
         </div>
     </div>
     <!--Ventana Modal-->

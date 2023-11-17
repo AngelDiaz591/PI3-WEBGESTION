@@ -57,35 +57,48 @@
         </div>
         
         <div class="mitad">
-            <div>
-                   
-                <div style="overflow:auto; height: 450px;">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Areas</th>
-                                <th colspan="2">Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody style="font-size: 15px;">
-                            {% for c in Area %}
-                            {% if c.status%}
+            <div> 
+                <div style="overflow:auto; height: 42rem;">
+                    <div class="mensaje-oculto">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>{{ c.nombre }}</td>
-                                    <td class="edita"><a class="btn btn-info edit-product-button-area" data-id="{{ c.area_id }}">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </a></td>
-                                    <td class="elimina"><a href="{% url 'status_area' area_id=c.area_id %}" class="btn btn-danger btnEliminacionArea">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a></td>
+                                    <th>#</th>
+                                    <th>Areas</th>
+                                    <th colspan="2">Opciones</th>
                                 </tr>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody style="font-size: 15px;">
+                                {% for c in Area %}
+                                {% if c.status%}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ c.nombre }}</td>
+                                        <td class="edita"><a class="btn btn-info edit-product-button-area" data-id="{{ c.area_id }}">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </a></td>
+                                        <td class="elimina"><a href="{% url 'status_area' area_id=c.area_id %}" class="btn btn-danger btnEliminacionArea">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </a></td>
+                                    </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="no-disponible oculto">
+                        <div style="display:flex; justify-content: center; align-items: center;">
+                            <img style="width: 25%;" src="{% static 'productos/img/img7.svg' %}">
+                        </div>
+                        <p style="font-size: 1.2rem; font-weight: 400;">¡Oops! Parece que aún no hay áreas o sectores registrados</p>
+                        <!-- ¡Oops! Parece que aún no hay proveedores registrados -->
+                        <!-- <p style="font-size: 1.2rem; font-weight: 400;">La tabla aguarda proveedores. ¡Añade algunos para comenzar!</p> -->
+                    </div>
                 </div>
+            </div>
+            <div style="display:grid;">
+                <p style="font-size: 2rem; font-weight: 600; color: var(--color-dark); padding-left: 13%;">¡Nuestro objetivo, es la excelencia!</p>
+                <img src="{% static 'productos/img/fondo3.svg' %}">
             </div>
         </div>  
         

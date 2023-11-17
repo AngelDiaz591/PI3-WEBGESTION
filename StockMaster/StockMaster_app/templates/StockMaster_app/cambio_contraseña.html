@@ -153,53 +153,24 @@
     <div>
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
-            <div class="content-modal-contra">
+            <div class="content-modal">
                 <label for="btn-modal" class="cerrar"><i class="fa-solid fa-xmark"></i></label>
                 <div class="recent-updates">
-                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Cambio de contraseña</h2>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.non_field_errors }}
-                        <div class="form-columns">
-                            <div class="form-column">
-                                <img class="modal-img-contra" src="{% static 'login/img/secure.svg' %}">
-                                <div class="form-group">
-                                    <label class="sub-contra" for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
-                                    {{ form.old_password }}
-                                    {% for error in form.old_password.errors %}
-                                        <div class="alert alert-danger">{{ error }}</div>
-                                    {% endfor %}
-                                </div>
-                                <div class="form-group">
-                                    <label class="sub-contra" for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
-                                    {{ form.new_password1 }}
-                                    {% for error in form.new_password1.errors %}
-                                        <div class="alert alert-custom" role="alert">
-                                            <strong>{{ error }}</strong>
-                                            <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <div class="form-group">
-                                    <label class="sub-contra" for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
-                                    {{ form.new_password2 }}
-                                    {% for error in form.new_password2.errors %}
-                                        <div class="alert alert-danger">{{ error }}</div>
-                                    {% endfor %}
-                                </div>
-                                <div class="btn-cerrar">
-                                    <button type="submit" class="updatess">Guardar</button>
-                                    <label for="btn-modal">Cancelar</label>
-                                </div>
-                                <!--Fin datos-->
-                            </div>
+                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Edición de Descripción</h2>
+                    <div class="custom-form-group shadow-textarea">
+                        <textarea class="custom-form-control" id="customTextarea" rows="3" placeholder="Editando Descripción..."></textarea>
+                      </div>                      
+                      <div class="btn-cerrar">
+                        <button type="submit" class="updatess">Guardar</button>
+                        <label for="btn-modal">Cancelar</label>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-            <label for="btn-modal" class="cerrar-modal"></label>
         </div>
+        <label for="btn-modal" class="cerrar-modal"></label>
     </div>
+</div>
     <!--Fin de Ventana Modal-->
     </div>
 </main>

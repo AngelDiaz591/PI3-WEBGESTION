@@ -173,25 +173,25 @@
                 <label for="btn-modal-segundo" class="cerrar"><i class="fa-solid fa-xmark"></i></label>
                 <div class="recent-updates">
                     {% for user in usuario %}
-                                {% if user.id_id == request.user.id %}
-                                <form method="post"action="{% url 'descripcion' id_usuario=user.id_usuario%}">
-                                    {% csrf_token %}
-                                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Edición de Descripción</h2>
-                                    <div class="custom-form-group shadow-textarea">
-                                        <textarea class="custom-form-control" id="descripcion" name="descripcion" rows="3" placeholder="Editando Descripción..."></textarea>
-                                    </div>                      
-                                    <div class="btn-cerrar">
-                                        <button type="submit" class="updatess">Guardar</button>
-                                        <label for="btn-modal">Cancelar</label>
-                                        </div>
-                                    </div>
-                                </form>
-                                {% endif %}
-                            {% endfor %} 
+                        {% if user.id_id == request.user.id %}
+                        <form method="post"action="{% url 'descripcion' id_usuario=user.id_usuario%}">
+                            {% csrf_token %}
+                            <h2 class="titulo-modal" style="display: flex; justify-content: center;">Edición de Descripción</h2>
+                            <div class="custom-form-group shadow-textarea">
+                                <textarea class="custom-form-control" id="descripcion" name="descripcion" rows="3" placeholder="Editando Descripción..."></textarea>
+                            </div>                      
+                            <div class="btn-cerrar">
+                                <button type="submit" class="updatess">Guardar</button>
+                                <label for="btn-modal">Cancelar</label>
+                                </div>
+                            </div>
+                        </form>
+                        {% endif %}
+                    {% endfor %} 
                 </div>
             </div>
+            <label for="btn-modal-segundo" class="cerrar-modal"></label>
         </div>
-        <label for="btn-modal-segundo" class="cerrar-modal"></label>
     </div>
     <!--Ventana Modal-->
     

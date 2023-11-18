@@ -6,6 +6,8 @@
 <head>
   <title>Cambio de Contraseña</title>
   <link rel="stylesheet" href="{% static 'css/cambio_de_contraseña.css' %}">
+  <link rel="icon" type="image/png" href="{% static 'productos/img/eto2.jpg' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
   <div id="particles-js"></div>
@@ -13,25 +15,44 @@
     <div class="container">
       <div class="columnas">
         <div class="columnas-next">
-          <h2>Cambio de Contraseña</h2>
+          <h2 style="margin-bottom: -1rem;">Cambio de Contraseña</h2>
+          <!-- <h2>Contraseña</h2> -->
         </div>
         <form method="post">
           {% csrf_token %}
-          <ul">
-            <strong>La constraseña debe de:</strong>
-            <li>No debe contener información personal</li>
-            <li>La contraseña debe tener al menos 8 caracteres</li>
-            <li>Evita claves comunes</li>
-            <li>Utiliza contraseñas alfanuméricas</li>
-          </ul>  
+          <ul>
+            <strong>La contraseña debe de:</strong>
+            <div class="cumplimientos">
+              <li>
+                <span class="material-symbols-outlined">check_circle</span>No debe contener información personal
+              </li>
+              <li>
+                <span class="material-symbols-outlined">check_circle</span>Debe tener al menos 8 caracteres
+              </li>
+              <li>
+                <span class="material-symbols-outlined">check_circle</span>Evita claves comunes
+              </li>
+              <li>
+                <span class="material-symbols-outlined">check_circle</span>Utiliza contraseñas alfanuméricas
+              </li>
+            </div>
+          </ul>
       </div>
           <div class="columna-next">
-            <input type="password" id="new_password1" name="new_password1" required placeholder="Contraseña Nueva">
-            <br>
-            <input type="password" id="new_password2" name="new_password2" required placeholder="Confirmar contraseña">
-            <br>
-            <div class="picar">
-              <button type="submit">Cambiar Contraseña</button>
+            <div>
+              <div class="image">
+                <img width="200rem" src="{% static 'productos/img/password4.svg' %}">
+                <!-- <img width="230rem" src="{% static 'productos/img/password2.png' %}"> -->
+              </div>
+              <label for="id_new_password1">Contraseña nueva:</label>
+              <input type="password" id="new_password1" name="new_password1" placeholder="Contraseña Nueva" required>
+              <br>
+              <label for="id_new_password2">Confirma contraseña:</label>
+              <input type="password" id="new_password2" name="new_password2" placeholder="Confirmar contraseña"required>
+              <br>
+              <div class="picar">
+                <button type="submit">Cambiar Contraseña</button>
+              </div>
             </div>
           </div>
         </form>

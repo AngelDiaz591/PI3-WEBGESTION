@@ -47,7 +47,7 @@
     <div class="recent-orders">
         <div class="Bienvenida" style=" box-shadow: var(--box-shadow); background-color: rgb(2, 75, 220); border-radius: 1rem; padding: 1rem; display: flex; justify-content:space-between;">
             <div>
-                <h1 style="font-size: 2.8rem; color: white;">¡BIENVENIDO, @usuario!</h1>
+                <h1 style="font-size: 2.8rem; color: white;">¡BIENVENIDO, {{ user.username}}!</h1>
                 <p style="font-size: 1.1rem; color:white">¡Recuerda cumplir con tus deberes y obligaciones, en tiempo y forma!</p>
                 <p style="font-size: 1.1rem; color:white; margin-top: 1rem;">En Stockmaster, nuestra prioridad es el cliente</p>
                 <p style="font-size: 1.1rem; color:white;">StockMaster: El poder de tener todo bajo control</p>
@@ -97,10 +97,10 @@
                     </div>
                     <div class="info-sub">
                         <div>
-                            <strong>Mariana Ixchel</strong>
+                            <strong>{{ user.first_name}}</strong>
                         </div>
                         <div>
-                            <strong>Pegueros Pérez</strong>
+                            <strong>{{ user.last_name}}</strong>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div class="info-sub">
-                        <strong>mpegueros@ucol.mx</strong>
+                        <strong>{{ user.email}}</strong>
                     </div>
                 </div>
                 <div style="padding: 1rem 1rem 0 1rem;">
@@ -125,7 +125,7 @@
                     </div>
                     <div class="info-sub-descripcion">
                         <div>
-                            <strong>I design and develop services for customers of all sizes, specializing in creating stylish, modern websites, web services and online stores. My passion is to design digital user experiences through the bold interface and meaningful interactions.</strong><br>
+                            <strong>Sin Descripcion</strong><br>
                         </div>
                     </div>
                 </div>

@@ -185,7 +185,11 @@ def signup(request):
         return render(request, 'StockMaster_app/usuarios.html', {'form': form})
     else:
         return redirect('/actividades')
-    
+
+
+
+
+
 def home(request):
     if request.user.is_authenticated:
         return redirect('/actividades')
@@ -1948,6 +1952,15 @@ def productos(request):
         cantidad_proveedores =  ProveedoresListados.count()
         cantidad_categorias = CategoriaListados.count()
         productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Sum('cantPro')).order_by('month')
+        productos_por_categoria = []
+        for categoria in CategoriaListados:
+            cantidad_productos_categoria = Productos.objects.filter(id_categorias=categoria).count()
+            productos_por_categoria.append(cantidad_productos_categoria)
+        cantidad_productos_cate = [] 
+        for cantPro in CategoriaListados:
+            cantidad_productos_categoria = Productos.objects.filter(cantPro=cantPro).count()
+            productos_por_categoria.append(cantidad_productos_categoria)
+            cantidad_productos_cate.append(cantidad_productos_categoria)
         # Crear listas para las etiquetas y datos de la gráfica
         labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
         data = [mes['cantidad'] if mes['cantidad'] is not None else 0 for mes in productos_por_mes]
@@ -1972,7 +1985,9 @@ def productos(request):
             'CategoriaListados':CategoriaListados, 
             'labels': labels,
             'data': data,
-            'ProveedoresListados' : ProveedoresListados
+            'ProveedoresListados' : ProveedoresListados,
+            'productos_por_categoria': productos_por_categoria,
+            'cantidad_productos_cate':cantidad_productos_cate
             })
     else:
         return redirect('/actividades')

@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for us in usuario %}
+                            {% for us in usuarios %}
                                 {% if us != request.user%}
                                     {%if us.id.is_active == 1%}
                                         <tr>
@@ -214,13 +214,16 @@
                         </p>
                     </div>
                     <div class="profile-photo">
-                        {% if request.user.is_superuser %}
-                            <i class="fa-solid fa-user-tie"></i>
-                            <small class="text-muted">Admin</small>
-                        {% else %}
-                            <i class="fa-solid fa-user"></i>
-                            <small class="text-muted">Empleado</small>
-                        {% endif %}
+                        {% for user in usuarios %}
+                            {% if user.id_id == request.user.id %}
+                                {% if user.imagen %}
+                                    <img class="fa-solid fa-user-tie"src="{{ user.imagen_url }}" alt="Imagen del usuario">
+                                {% else %}
+                                    <p>No hay imagen disponible.</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <small class="text-muted">Empleado</small>
                     </div>
                 {% endif %}
             </div>

@@ -32,6 +32,7 @@ urlpatterns = [
     path('usuarios/dar_baja/<int:id>', views.dar_baja, name="dar_baja"),
     path('recuperar_usuario/', views.recuperar_usuario, name="recuperar_usuario"),
     path('recuperar_usuario/recuperar/<int:id>', views.recuperar, name='recuperar'),
+    path('cambio_password/descripcion/<int:id_usuario>',views.descripcion, name="descripcion"),
 
     #paths Productos
     path('productos/', views.pro, name='productos'),

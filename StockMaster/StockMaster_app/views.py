@@ -2219,10 +2219,8 @@ def productos(request):
             cantidad_productos_categoria = Productos.objects.filter(id_categorias=categoria).count()
             productos_por_categoria.append(cantidad_productos_categoria)
         cantidad_productos_cate = [] 
-        for cantPro in CategoriaListados:
-            cantidad_productos_categoria = Productos.objects.filter(cantPro=cantPro).count()
-            productos_por_categoria.append(cantidad_productos_categoria)
-            cantidad_productos_cate.append(cantidad_productos_categoria)
+        productos_por_categori = Productos.objects.values('id_categorias').annotate(cantidad=Sum('cantPro')).order_by('id_categorias')
+        cantidad_productos_cate.extend(productos_por_categori)
         # Crear listas para las etiquetas y datos de la gráfica
         labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
         data = [mes['cantidad'] if mes['cantidad'] is not None else 0 for mes in productos_por_mes]

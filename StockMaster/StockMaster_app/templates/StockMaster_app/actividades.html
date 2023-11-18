@@ -74,8 +74,8 @@
                         datasets: [{
                             label: 'Son',
                             data: [{% for cantidad in cantidad_productos_cate %}
-                                    {{ cantidad }},
-                                {% endfor %},],
+                                        {{ cantidad.cantidad }},
+                                    {% endfor %},],
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
                                 'rgb(75, 192, 192)',

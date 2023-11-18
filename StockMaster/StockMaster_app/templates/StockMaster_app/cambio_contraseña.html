@@ -119,7 +119,7 @@
                         <div class="titulo-user">
                             <strong>Descripción</strong>
                         </div>
-                        <label for="btn-modal" class="edit-button">
+                        <label for="btn-modal-segundo" class="edit-button">
                             <span class="material-symbols-outlined">edit_note</span> Editar
                         </label>
                     </div>
@@ -151,6 +151,28 @@
        
         <!--Ventana Modal-->
     <div>
+        <input type="checkbox" id="btn-modal-segundo">
+        <div class="container-modal-segundo">
+            <div class="content-modal">
+                <label for="btn-modal-segundo" class="cerrar"><i class="fa-solid fa-xmark"></i></label>
+                <div class="recent-updates">
+                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Edición de Descripción</h2>
+                    <div class="custom-form-group shadow-textarea">
+                        <textarea class="custom-form-control" id="customTextarea" rows="3" placeholder="Editando Descripción..."></textarea>
+                      </div>                      
+                      <div class="btn-cerrar">
+                        <button type="submit" class="updatess">Guardar</button>
+                        <label for="btn-modal">Cancelar</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label for="btn-modal-segundo" class="cerrar-modal"></label>
+    </div>
+    <!--Ventana Modal-->
+    
+    <div>
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
             <div class="content-modal-contra">
@@ -162,17 +184,21 @@
                         {{ form.non_field_errors }}
                         <div class="form-columns">
                             <div class="form-column">
-                                <img class="modal-img-contra" src="{% static 'login/img/secure.svg' %}">
+                                <img class="modal-img-contra" src="{% static 'login/img/secure1.svg' %}">
                                 <div class="form-group">
                                     <label class="sub-contra" for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
-                                    {{ form.old_password }}
+                                    <div style="display: flex;">
+                                        {{ form.old_password }}
+                                    </div>
                                     {% for error in form.old_password.errors %}
                                         <div class="alert alert-danger">{{ error }}</div>
                                     {% endfor %}
                                 </div>
                                 <div class="form-group">
                                     <label class="sub-contra" for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
-                                    {{ form.new_password1 }}
+                                    <div style="display: flex;">
+                                        {{ form.new_password1 }}
+                                    </div>
                                     {% for error in form.new_password1.errors %}
                                         <div class="alert alert-custom" role="alert">
                                             <strong>{{ error }}</strong>
@@ -182,7 +208,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="sub-contra" for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
-                                    {{ form.new_password2 }}
+                                    <div style="display: flex;">
+                                        {{ form.new_password2 }}
+                                    </div>
                                     {% for error in form.new_password2.errors %}
                                         <div class="alert alert-danger">{{ error }}</div>
                                     {% endfor %}
@@ -200,6 +228,8 @@
             <label for="btn-modal" class="cerrar-modal"></label>
         </div>
     </div>
+    <!--Fin de Ventana Modal-->
+</div>
     <!--Fin de Ventana Modal-->
     </div>
 </main>

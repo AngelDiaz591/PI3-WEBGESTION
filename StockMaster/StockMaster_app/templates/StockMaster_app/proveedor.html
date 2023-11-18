@@ -218,11 +218,31 @@
                         </div>
                         <!--Termino de la tabla de columnas-->
                         <div class="divisor">
-                            <div class="titulo">Logo Proveedor:</div>
-                            <div class="message" style="align-items: center;">
-                                <input type="file" name="imagenProv" id="id_imagen" accept="image/*" required>
+                            <div class="titulo" style="text-align: center;">Logo Proveedor:</div>
+                            <div class="message" style="align-items: center; padding-left: 25%;">
+                                <img id="vistaPreviaProv" alt=""/>
+                                <input type="file" name="imagenProv" id="id_imagen" accept="image/*" placeholder="Imagen" 
+                                class="campos" onchange="previsualizarImagen()" required>
+                                <script>
+                                    function previsualizarImagen() {
+                                        var cargador = document.getElementById('id_imagen');
+                                        var vistaPrevia = document.getElementById('vistaPreviaProv');
+                                        
+                                        var archivo = cargador.files[0];
+                                        if (archivo) {
+                                            var lector = new FileReader();
+
+                                            lector.onload = function(e) {
+                                                vistaPrevia.src = e.target.result;
+                                            }
+
+                                            lector.readAsDataURL(archivo);
+                                        }
+                                    }
+                                </script>
                             </div>
                         </div>
+
                         <div class="btn-cerrar">
                             <button type="submit" class="updatess">Guardar</button>
                             <label for="btn-modal">Cancelar</label>

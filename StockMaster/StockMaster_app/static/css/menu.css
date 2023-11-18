@@ -89,11 +89,11 @@ aside h3{
 }
 .mitad{
     display: flex;
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
-    gap: 1.8rem;
+    /* gap: 1rem; */
     grid-template-columns: 48% 48%;
-    justify-content: center;
+    justify-content: space-between;
 }
 .disparejo{
     display: grid;
@@ -104,15 +104,15 @@ aside h3{
     text-align: center;
 }
 .trespartes{
-    display: grid;
-    width: 96%;
+    display: flex;
+    width: 100%;
     margin: 0 auto;
     gap: 1.8rem;
     grid-template-columns: 32% 32% 32%;
 }
 .cuatropartes{
     display: grid;
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
     gap: 1.8rem;
     grid-template-columns: 24% 24% 24% 24%;

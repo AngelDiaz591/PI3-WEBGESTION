@@ -1,9 +1,44 @@
 
 {% block content %}
-  <h2>Cambio de Contraseña</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Cambiar Contraseña</button>
-  </form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Cambio de Contraseña</title>
+  <link rel="stylesheet" href="{% static 'css/cambio_de_contraseña.css' %}">
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="flex">
+    <div class="container">
+      <div class="columnas">
+        <div class="columnas-next">
+          <h2>Cambio de Contraseña</h2>
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          <ul">
+            <strong>La constraseña debe de:</strong>
+            <li>No debe contener información personal</li>
+            <li>La contraseña debe tener al menos 8 caracteres</li>
+            <li>Evita claves comunes</li>
+            <li>Utiliza contraseñas alfanuméricas</li>
+          </ul>  
+      </div>
+          <div class="columna-next">
+            <input type="password" id="new_password1" name="new_password1" required placeholder="Contraseña Nueva">
+            <br>
+            <input type="password" id="new_password2" name="new_password2" required placeholder="Confirmar contraseña">
+            <br>
+            <div class="picar">
+              <button type="submit">Cambiar Contraseña</button>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+  <script src="{% static 'login/js/particles.min.js' %}"></script>
+  <script src="{% static 'login/js/app.js' %}"></script>
+</body>
+</html>
 {% endblock %}

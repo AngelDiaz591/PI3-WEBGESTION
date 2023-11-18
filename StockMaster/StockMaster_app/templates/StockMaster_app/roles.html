@@ -103,36 +103,36 @@
         <div class="container-modal">
             <div class="content-modal" style="overflow: auto; min-width: 71rem; max-height: 50rem;">
                 <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
-                <h2 class="titulo-modal">Crear nuevo Rol</h2>
+                <h1 class="titulo-modal">Crear nuevo Rol</h1>
+                <div style="margin: 1rem 0 -1rem 0;"><hr></div>
                 <form action="/registrar_rol/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
                     <div class="divisor">
                         <div class="disparejo">
-                            <div><hr></div>
-                            <div><h2 style="margin-top: -1rem;">Roles prestablecidos (Opcionales)</h2></div>
+                            <h2>Roles prestablecidos (Opcionales)</h2>
                         </div>
                         <br>
                         <div class="cuatropartes">
-                            <div>
-                                <div class="titulo">Nombre:</div>
+                            <div style="text-align: center">
+                                <div class="titulo">Nombre de Rol:</div>
                                 <input type="text" id="RolNew" name="RolNew" class="campos" placeholder="Nombre" 
                                 pattern="[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
                                 <br><span class="error-message" style="color: red;"></span>
                             </div>
-                            <div>
+                            <div class="rol-pre">
                                 <div class="subtitulo">Administrador:</div>
                                 <div class="check">
                                     <input type="checkbox" name="principal" id="checkbox51" />
                                     <label for="checkbox51">Principal</label>
                                 </div>
                             </div>
-                            <div>
+                            <div class="rol-pre">
                                 <div class="subtitulo">Gerente:</div>
                                 <div class="check">
                                     <input type="checkbox" name="principal" id="checkbox53" />
                                     <label for="checkbox53">Principal</label>
                                 </div>
                             </div>
-                            <div>
+                            <div class="rol-pre">
                                 <div class="subtitulo">Empleado:</div>
                                 <div class="check">
                                     <input type="checkbox" name="principal" id="checkbox55" />

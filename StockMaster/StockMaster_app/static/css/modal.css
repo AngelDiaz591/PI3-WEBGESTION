@@ -283,12 +283,15 @@
 }
 hr{
     height: 0.1rem;
-    background-color: black;
+    background-color: var(--color-dark);
+    opacity: 0.2;
 }
 .titulo{
     color: var(---color-dark);
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
 }
 .campos{
     border: 1px solid var(--color-dark);
@@ -691,5 +694,14 @@ input.invalid {
     max-width: 270px;
     min-height: 10px;
 }
-  
+
+.rol-pre{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check{
+    margin: 0.6rem 0 0 0.5rem;
+}
   

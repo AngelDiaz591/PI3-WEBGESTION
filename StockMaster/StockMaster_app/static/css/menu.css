@@ -88,18 +88,20 @@ aside h3{
     grid-template-columns: auto 23rem;
 }
 .mitad{
-    display: grid;
+    display: flex;
     width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
     grid-template-columns: 48% 48%;
+    justify-content: center;
 }
 .disparejo{
     display: grid;
     width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
-    grid-template-columns: 30% auto;
+    /* grid-template-columns: 30% auto; */
+    text-align: center;
 }
 .trespartes{
     display: grid;
@@ -114,6 +116,8 @@ aside h3{
     margin: 0 auto;
     gap: 1.8rem;
     grid-template-columns: 24% 24% 24% 24%;
+    justify-content: center;
+    align-items: center;
 }
 .text-muted{
     color: var(--color-info-dark);

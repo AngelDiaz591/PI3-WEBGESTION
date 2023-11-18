@@ -77,12 +77,20 @@
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td>{{ c.nombre }}</td>
-                                        <td class="edita"><a class="btn btn-info edit-product-button-area" data-id="{{ c.area_id }}">
-                                            <span class="material-symbols-outlined">edit</span>
-                                        </a></td>
-                                        <td class="elimina"><a href="{% url 'status_area' area_id=c.area_id %}" class="btn btn-danger btnEliminacionArea">
-                                            <span class="material-symbols-outlined">delete</span>
-                                        </a></td>
+                                        <td>
+                                            <div class="botones">
+                                                <div class="edita">
+                                                    <a class="btn btn-info edit-product-button-area" data-id="{{ c.area_id }}">
+                                                        <span class="material-symbols-outlined">edit</span>
+                                                    </a>
+                                                </div>
+                                                <div class="elimina">
+                                                    <a href="{% url 'status_area' area_id=c.area_id %}" class="btn btn-danger btnEliminacionArea">
+                                                        <span class="material-symbols-outlined">delete</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -101,7 +109,7 @@
             </div>
             <div style="display:grid;">
                 <p style="font-size: 2rem; font-weight: 600; color: var(--color-dark); padding-left: 13%;">¡Nuestro objetivo, es la excelencia!</p>
-                <img src="{% static 'productos/img/fondo3.svg' %}">
+                <img src="{% static 'productos/img/fondo6.svg' %}">
             </div>
         </div>  
         

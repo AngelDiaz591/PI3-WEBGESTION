@@ -90,7 +90,7 @@
                                             <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
                                         </div>
                                     </td>
-                                    <td align="left">
+                                    <td align="center">
                                         {% if c.id_categorias.status == 0 or c.id_Proveedores.status == 0 or c.id_marca.status == 0 or c.id_area.status == 0 %}
                                             <h3>ACTUALIZAR</h3>
                                             {% if c.id_categorias.status == 0 %}
@@ -110,12 +110,19 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                    <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
-                                        <span class="material-symbols-outlined">edit</span></a>
+                                        <div class="botones">
+                                            <div class="edita">
+                                                <a class="btn btn-info edit-product-button" data-id="{{ c.idproducts }}">
+                                                    <span class="material-symbols-outlined">edit</span>
+                                                </a>
+                                            </div>
+                                            <div class="elimina">
+                                                <a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
+                                                    <span class="material-symbols-outlined">delete</span>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td class="elimina"><a href="status/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a></td>
                                 </tr>
                             {% endif %}
                         {% endfor %}

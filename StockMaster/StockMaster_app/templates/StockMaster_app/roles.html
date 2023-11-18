@@ -81,12 +81,19 @@
                                         {{ permiso.name }}
                                     {% endfor %}
                                 </td>
-                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.id }}">
-                                    <span class="material-symbols-outlined">edit</span></a>
+                                <td>
+                                    <div class="botones">
+                                        <div class="edita">
+                                            <a class="btn btn-info edit-product-button" data-id="{{ c.id }}">
+                                                <span class="material-symbols-outlined">edit</span></a>
+                                        </div>
+                                        <div class="elimina">
+                                            <a href="{% url 'cambio_statusrol' id=c.id %}"  class="btn btn-danger btnEliminacionRol">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td class="elimina"><a href="{% url 'cambio_statusrol' id=c.id %}"  class="btn btn-danger btnEliminacionRol">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -94,7 +101,7 @@
             </div>
             <div class="no-disponible oculto">
                 <div style="display:flex; justify-content: center; align-items: center;">
-                    <img style="width: 20%;" src="{% static 'productos/img/rols2.svg' %}">
+                    <img style="width: 20%; margin-bottom: -2rem;" src="{% static 'productos/img/rols2.svg' %}">
                 </div>
                 <p style="font-size: 1.2rem; font-weight: 400;">La tabla aguarda roles. ¡Añade algunos para comenzar!</p>
             </div>

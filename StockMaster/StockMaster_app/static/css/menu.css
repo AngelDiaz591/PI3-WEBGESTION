@@ -88,8 +88,8 @@ aside h3{
     grid-template-columns: auto 23rem;
 }
 .mitad{
-    display: flex;
-    width: 100%;
+    display: grid;
+    width: 96%;
     margin: 0 auto;
     /* gap: 1rem; */
     grid-template-columns: 48% 48%;

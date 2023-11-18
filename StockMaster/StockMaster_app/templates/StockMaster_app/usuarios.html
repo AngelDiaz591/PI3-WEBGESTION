@@ -42,7 +42,7 @@
                         </thead>
                         <tbody>
                             {% for us in usuarios %}
-                                {% if us != request.user%}
+                                {% if us.id_usuario != request.user.id%}
                                     {%if us.id.is_active == 1%}
                                         <tr>
                                             <td>{{ us.id.first_name }}</td>

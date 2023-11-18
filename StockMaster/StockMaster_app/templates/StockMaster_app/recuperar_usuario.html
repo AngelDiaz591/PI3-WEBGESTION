@@ -112,7 +112,7 @@
         <div class="recent-updates">
             <h2>Mensajes Recientes</h2>
             <div class="updates">
-                {% if request.user.is_superuser %}
+                {% if perms.StockMaster_app.view_mensajes %}
                     {% if Mensajes %}
                         {% if respuestascomentarios %}
                             <p>respuestas comentarios </p>
@@ -140,26 +140,39 @@
                     {% else %}
                         <p>No hay mensajes disponibles en este momento.</p>
                     {% endif %}
+            </div>
+            <div class="add-products">
+                <div>
+                    <span class="material-symbols-outlined">add</span> 
+                    <a href="{% url 'soporte' %}">Mostrar Todas</a>
+                </div>
+            </div>
                 {% else %}
                     {% if Mensajes %}
                         {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
                             {% if me.respuestascomentarios %}
                                 {% if me.username == request.user.username %}
+                                    
                                     <div class="message">
-                                        <b>Comentario:</b>
-                                        <p>{{me.comentario}}</p>
-                                        <b>Respuesta del Admin: </b>
-                                        <p> {{ me.respuestascomentarios }}</p>
-                                        <small class="text-muted">{{ me.tiempo_creacion }}</small>
-                                    </div> 
+                                        <div class="icon" style="color: green">
+                                            <span class="material-symbols-outlined">forward</span>
+                                        </div>
+                                            <b>Comentario:</b>
+                                            <p>{{me.comentario}}</p>
+                                            <b>Respuesta del Admin: </b>
+                                            <p>{{ me.comentario }}</p>
+                                    </div>
                                 {% endif %}
                             {% else %}
                                 {% if me.username == request.user.username %}
                                     <div class="message">
-                                        <b>Comentario:</b>
-                                        <p>{{me.comentario}}</p>
-                                        <b>Respuesta del Admin: </b>
-                                        <br>
+                                        <div class="icon" style="color: green">
+                                            <span class="material-symbols-outlined">forward</span>
+                                        </div>
+                                            <b>Comentario:</b>
+                                            <p>{{me.comentario}}</p>
+                                            <b>Respuesta del Admin: </b>
+                                            <br>
                                         <small class="text-muted">Sin respuesta</small>
                                     </div> 
                                 {% endif %}
@@ -168,15 +181,29 @@
                     {% else %}
                         <p>No tienes ningun comentario por el momento</p>
                     {% endif %}
-                {% endif %}
-                
-            </div>
-            <div class="add-products">
-                <div>
-                    <span class="material-symbols-outlined">add</span> 
-                    <a href="{% url 'soporte' %}">Mostrar Todas</a>
                 </div>
-            </div>
+                <div class="add-products">
+                    <div>
+                        <span class="material-symbols-outlined">add</span> 
+                        <a href="{% url 'soporteEnviar' %}">Mostrar Todas</a>
+                    </div>
+                </div>
+                {% endif %}
+            
+
+            
+            <script>
+                // Obtén todos los elementos con la clase "close-btn"
+                var closeBtns = document.querySelectorAll('.close-btnn');
+
+                // Agrega un evento de clic a cada elemento
+                closeBtns.forEach(function (closeBtn) {
+                    closeBtn.addEventListener('click', function () {
+                        // Oculta el elemento al hacer clic
+                        closeBtn.style.display = 'none';
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>

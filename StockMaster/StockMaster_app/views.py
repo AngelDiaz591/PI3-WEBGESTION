@@ -1960,7 +1960,7 @@ def historial(request):
         usuario = Usuario.objects.all()
         for Usuarios in usuario:
                 Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuarios})
+        return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"Mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuarios})
     else:
         return redirect('/actividades')
     
@@ -1990,7 +1990,7 @@ def historialModificaciones(request):
         "Creacion de Producto", "Creacion de Proveedor", "Creacion de Area", "Creacion de Categoria", "Creacion de Marca", "Creacion de Rol", "Creacion de Usuario"
         ])
 
-        return render(request, 'StockMaster_app/historialModificaciones.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
+        return render(request, 'StockMaster_app/historialModificaciones.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"Mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -2019,7 +2019,7 @@ def historialMovimientos(request):
         "Recuperacion de Producto", "Recuperacion de Proveedor", "Recuperacion de Area", "Recuperacion de Categoria", "Recuperacion de Marca","Recuperacion de Rol"
         ])
 
-        return render(request, 'StockMaster_app/historialMovimientos.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
+        return render(request, 'StockMaster_app/historialMovimientos.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"Mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -2049,7 +2049,7 @@ def historialEliminados(request):
         "¡Producto Dado de Baja!", "¡Proveedor Dado de Baja!", "¡Rol Dado de Baja!", "¡Area Dado de Baja!", "¡Categoria Dado de Baja!", "¡Marca Dado de Baja!"
         ])
         
-        return render(request, 'StockMaster_app/historialEliminados.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
+        return render(request, 'StockMaster_app/historialEliminados.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"Mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -2181,7 +2181,7 @@ def recuperar_usuario(request):
                 Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         for Usuarios in usuario:
             Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/recuperar_usuario.html', { "Area":AreasListado, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes, 'Usuario':form,'usuarios':usuario})
+        return render(request, 'StockMaster_app/recuperar_usuario.html', { "Area":AreasListado, "Mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes, 'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 #____________________________________________________________________________________________________________________________________

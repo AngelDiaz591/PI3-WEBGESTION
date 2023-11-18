@@ -41,6 +41,7 @@ from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 # Create your views here.
+from django.urls import reverse
 
 
 
@@ -97,15 +98,24 @@ def exit(request):
 @login_required(login_url='signin')
 def usuarios(request):
     if request.user.has_perm('StockMaster_app.view_usuario'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         usuario = Usuario.objects.all()
         roles = RolExtra.objects.all()
         form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
         grupos = Group.objects.all()  # Obtiene todos los grupos
         for Usuarios in usuario:
             Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/usuarios.html', { 'Roles':roles, 'Usuarios': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuario':usuario, 'grupos': grupos})
+        return render(request, 'StockMaster_app/usuarios.html', { 'Roles':roles, 'Usuario': form, 'Mensajes':mensajes,'cantidad_mensajes':cantidad_mensajes,'usuarios':usuario, 'grupos': grupos})
     else:
         return redirect('/actividades')
 
@@ -185,7 +195,11 @@ def signup(request):
         return render(request, 'StockMaster_app/usuarios.html', {'form': form})
     else:
         return redirect('/actividades')
-    
+
+
+
+
+
 def home(request):
     if request.user.is_authenticated:
         return redirect('/actividades')
@@ -304,8 +318,17 @@ def cambio_password(request):
             # Código de cambio de contraseña exitoso aquí
         else:
             # El formulario no es válido, renderiza la página con los errores
-            mensajes = Mensajes.objects.all()
-            cantidad_mensajes = mensajes.count()
+            if request.user.has_perm('StockMaster_app.delete_mensajes'):
+                usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+                # Filtra los mensajes para obtener solo los del usuario actual
+                mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+                # Obtiene la cantidad de mensajes del usuario actual
+                cantidad_mensajes = mensajes.count()
+            else:
+                mensajes = Mensajes.objects.all()
+                cantidad_mensajes = mensajes.count()
             usuario = Usuario.objects.all()
             roles = RolExtra.objects.all()
             grupos = Group.objects.all()
@@ -317,8 +340,17 @@ def cambio_password(request):
     
     else:
         # Código para manejar la solicitud GET (puede ser igual al que ya tienes)
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         usuario = Usuario.objects.all()
         roles = RolExtra.objects.all()
         grupos = Group.objects.all()
@@ -328,6 +360,17 @@ def cambio_password(request):
 
         form = PasswordChangeForm(request.user)
         return render(request, 'StockMaster_app/cambio_contraseña.html', {'form': form, 'Roles': roles, 'Usuarios': form, 'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes, 'usuario': usuario, 'grupos': grupos})
+
+def descripcion(request, id_usuario):
+    if request.method == 'POST':
+        descripcion = request.POST.get('descripcion')
+
+        objeto = Usuario.objects.get(id_usuario=id_usuario)
+        objeto.descripcion = descripcion
+        objeto.save()
+        messages.success(request, 'Nueva Descripción')
+        return redirect('/cambio_password')
+
 
 def dar_baja(request, id): 
     baja = User.objects.get(id=id)
@@ -363,18 +406,29 @@ def eliminaruser(request, id):
 @login_required(login_url='signin')
 def pro(request):
     if request.user.has_perm('StockMaster_app.view_productos'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         ProveedoresListados = Proveedores.objects.all()
         MarcaListados = Marca.objects.all() 
         AreaListado = Area.objects.all()
         form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
-        usuario = form.count()
+        usuario = Usuario.objects.all()
         cantidad_marcas = MarcaListados.count()
         cantidad_productos = ProductosListados.count()
         cantidad_categorias = CategoriaListados.count()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
         return render(request, 'StockMaster_app/productos.html', {
@@ -605,12 +659,25 @@ def eliminaInventario(request, idproducts):
 @login_required(login_url='signin')
 def prov(request):
     if request.user.has_perm('StockMaster_app.view_proveedores'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProveedoresListados = Proveedores.objects.all()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         for proveedor in ProveedoresListados:
             proveedor.imagen_url = get_imagen_url(proveedor.imagen)
-        return render(request, 'StockMaster_app/proveedor.html', { "Proveedor": ProveedoresListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/proveedor.html', { "Proveedor": ProveedoresListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -837,10 +904,23 @@ def eliminaProveedor(request, idProveedor):
 @login_required(login_url='signin')
 def area(request):
     if request.user.has_perm('StockMaster_app.view_area'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         AreaListado = Area.objects.all()
-        return render(request, 'StockMaster_app/area.html', { "Area": AreaListado, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/area.html', { "Area": AreaListado, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -986,11 +1066,24 @@ def eliminar_area(request, area_id):
 @login_required(login_url='signin')
 def configuraciones(request):
     if request.user.has_perm('StockMaster_app.view_categoria'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         CategoriaListados = Categoria.objects.all().order_by('-categoria_id')
         MarcaListados = Marca.objects.all()
-        return render(request, 'StockMaster_app/configuraciones.html',{"Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/configuraciones.html',{"Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -1137,11 +1230,24 @@ def eliminar_categoria(request, categoria_id):
 #Visualizar Marca
 @login_required(login_url='signin')
 def MarcaView(request):
-    mensajes = Mensajes.objects.all()
-    cantidad_mensajes = mensajes.count()
+    if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+    else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
     MarcaListados = Marca.objects.all()
     CategoriaListados = Categoria.objects.all()
-    return render(request, 'StockMaster_app/configuraciones.html', {"Marca": MarcaListados,"Categoria": CategoriaListados,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes})
+    form = User.objects.all()  
+    usuario = Usuario.objects.all()
+    for Usuarios in usuario:
+            Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+    return render(request, 'StockMaster_app/configuraciones.html', {"Marca": MarcaListados,"Categoria": CategoriaListados,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes,'Usuario':form,'usuarios':usuario})
 
 #Registrar Marca
 @login_required(login_url='signin')
@@ -1319,11 +1425,24 @@ def get_histEli(request):
 @login_required(login_url='signin')
 def RolView(request):
     if request.user.has_perm('StockMaster_app.view_rolextra'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         roles = Group.objects.all() 
         roles_con_status_1 = [rol for rol in roles if RolExtra.objects.get(grupo=rol).status == 1]
-        return render(request, 'StockMaster_app/roles.html', {"Roles": roles_con_status_1,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes})
+        return render(request, 'StockMaster_app/roles.html', {"Roles": roles_con_status_1,'Mensajes': mensajes, 'cantidad_mensajes': cantidad_mensajes,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -1722,18 +1841,44 @@ def eliminar_rol(request, id):
 @login_required(login_url='signin')
 def soporte(request):
     if request.user.has_perm('StockMaster_app.view_mensajes'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
-        return render(request, 'StockMaster_app/soporte.html', {'Mensajes': mensajes,  'cantidad_mensajes': cantidad_mensajes})
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/soporte.html', {'Mensajes': mensajes,  'cantidad_mensajes': cantidad_mensajes,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
 @login_required(login_url='signin')
 def soporteEnviar(request):
     if request.user.has_perm('StockMaster_app.delete_mensajes'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
-        return render(request, 'StockMaster_app/soporteEnviar.html', {'Mensajes': mensajes,  'cantidad_mensajes': cantidad_mensajes})
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/soporteEnviar.html', {'Mensajes': mensajes,  'cantidad_mensajes': cantidad_mensajes,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -1796,66 +1941,115 @@ def contestarcomentarios(request,idcomentario):
 @login_required(login_url='signin')
 def historial(request):
     if request.user.has_perm('StockMaster_app.view_historial'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         RolListados = RolExtra.objects.all()
         historial = Historial.objects.all()
-        return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/historial.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuarios})
     else:
         return redirect('/actividades')
     
 @login_required(login_url='signin')
 def historialModificaciones(request):
     if request.user.has_perm('StockMaster_app.add_historial'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         RolListados = RolExtra.objects.all()
-
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         historial = Historial.objects.filter(movimiento__in=[
         "Edicion de Producto", "Edicion de Proveedor", "Edicion de Area", "Edicion de Categoria", "Edicion de Marca", "Edicion de Rol"
         "Creacion de Producto", "Creacion de Proveedor", "Creacion de Area", "Creacion de Categoria", "Creacion de Marca", "Creacion de Rol", "Creacion de Usuario"
         ])
 
-        return render(request, 'StockMaster_app/historialModificaciones.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+        return render(request, 'StockMaster_app/historialModificaciones.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
 @login_required(login_url='signin')
 def historialMovimientos(request):
     if request.user.has_perm('StockMaster_app.change_historial'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         RolListados = RolExtra.objects.all()
-
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         historial = Historial.objects.filter(movimiento__in=[
         "Recuperacion de Producto", "Recuperacion de Proveedor", "Recuperacion de Area", "Recuperacion de Categoria", "Recuperacion de Marca","Recuperacion de Rol"
         ])
 
-        return render(request, 'StockMaster_app/historialMovimientos.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+        return render(request, 'StockMaster_app/historialMovimientos.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
 @login_required(login_url='signin')
 def historialEliminados(request):
     if request.user.has_perm('StockMaster_app.delete_historial'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         RolListados = RolExtra.objects.all()
-
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         historial = Historial.objects.filter(movimiento__in=[
         "Eliminacion de Producto", "Eliminacion de Proveedor", "Eliminacion de Producto", "Eliminacion de Area", "Eliminacion de Marca", "Eliminacion de Categoria", "Eliminacion de Rol",
         "¡Producto Dado de Baja!", "¡Proveedor Dado de Baja!", "¡Rol Dado de Baja!", "¡Area Dado de Baja!", "¡Categoria Dado de Baja!", "¡Marca Dado de Baja!"
         ])
         
-        return render(request, 'StockMaster_app/historialEliminados.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial})
+        return render(request, 'StockMaster_app/historialEliminados.html', { "Productos": ProductosListados, "Roles": RolListados,"Categoria": CategoriaListados,"mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"historial":historial,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
@@ -1867,63 +2061,127 @@ def historialEliminados(request):
 @login_required(login_url='signin')
 def recuperar_producto(request):
     if request.user.has_perm('StockMaster_app.delete_productos'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         ProveedoresListados = Proveedores.objects.all()
-        MarcaListados = Marca.objects.all() 
+        MarcaListados = Marca.objects.all()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen) 
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
-        return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/recuperar_producto.html', { "Productos": ProductosListados, "Categoria": CategoriaListados,'marca': MarcaListados, 'Proveedor' : ProveedoresListados,'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
 @login_required(login_url='signin')
 def recuperar_proveedor(request):
     if request.user.has_perm('StockMaster_app.delete_proveedores'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         proveedores = Proveedores.objects.all()
-        return render(request, 'StockMaster_app/recuperar_proveedor.html', { "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,})
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/recuperar_proveedor.html', { "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,"proveedores":proveedores,'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 
 @login_required(login_url='signin')
 def recuperar_etiquetas(request):
     if request.user.has_perm('StockMaster_app.delete_categoria'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         CategoriaListados = Categoria.objects.all() 
         RolListados = RolExtra.objects.all()
         MarcaListados = Marca.objects.all() 
-        return render(request, 'StockMaster_app/recuperar_etiquetas.html', { "Categoria": CategoriaListados, "Marca":MarcaListados, "Roles": RolListados, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/recuperar_etiquetas.html', { "Categoria": CategoriaListados, "Marca":MarcaListados, "Roles": RolListados, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,'Usuario':form, 'usuarios':usuario})
     else:
         return redirect('/actividades')
 
 @login_required(login_url='signin')
 def recuperar_designaciones(request):
     if request.user.has_perm('StockMaster_app.delete_area'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         AreasListado = Area.objects.all()
         roles = Group.objects.all()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         rolextra = RolExtra.objects.all()
         roles_con_status_1 = [rol for rol in roles if RolExtra.objects.get(grupo=rol).status == 0]
-        return render(request, 'StockMaster_app/recuperar_designaciones.html', { "Area":AreasListado, "RolExtra":rolextra, "Roles": roles_con_status_1, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes})
+        return render(request, 'StockMaster_app/recuperar_designaciones.html', { "Area":AreasListado, "RolExtra":rolextra, "Roles": roles_con_status_1, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes,'Usuario':form, 'usuarios':usuario})
     else:
         return redirect('/actividades')
 
 def recuperar_usuario(request):
     if request.user.has_perm('StockMaster_app.delete_usuario'):
-        form = User.objects.all()
-        usuario = Usuario.objects.all()
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         AreasListado = Area.objects.all()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         for Usuarios in usuario:
             Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
-        return render(request, 'StockMaster_app/recuperar_usuario.html', { "Area":AreasListado, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes, 'usuarios':form,'usuario':usuario})
+        return render(request, 'StockMaster_app/recuperar_usuario.html', { "Area":AreasListado, "mensajes":mensajes,"cantidad_mensajes":cantidad_mensajes, 'Usuario':form,'usuarios':usuario})
     else:
         return redirect('/actividades')
 #____________________________________________________________________________________________________________________________________
@@ -1934,20 +2192,37 @@ def recuperar_usuario(request):
 @login_required(login_url='signin')
 def productos(request):
     if request.user.has_perm('StockMaster_app.view_marca'):
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes = mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
         ProveedoresListados = Proveedores.objects.all()
         RolListados = RolExtra.objects.all()
         MarcaListados = Marca.objects.all()
-        form = User.objects.all()  
-        usuario = form.count()
+        
         cantidad_marcas = MarcaListados.count()
         cantidad_productos = ProductosListados.count()
         cantidad_proveedores =  ProveedoresListados.count()
         cantidad_categorias = CategoriaListados.count()
         productos_por_mes = Productos.objects.annotate(month=TruncMonth('hora_baja', tzinfo=pytz.UTC)).values('month').annotate(cantidad=Sum('cantPro')).order_by('month')
+        productos_por_categoria = []
+        for categoria in CategoriaListados:
+            cantidad_productos_categoria = Productos.objects.filter(id_categorias=categoria).count()
+            productos_por_categoria.append(cantidad_productos_categoria)
+        cantidad_productos_cate = [] 
+        for cantPro in CategoriaListados:
+            cantidad_productos_categoria = Productos.objects.filter(cantPro=cantPro).count()
+            productos_por_categoria.append(cantidad_productos_categoria)
+            cantidad_productos_cate.append(cantidad_productos_categoria)
         # Crear listas para las etiquetas y datos de la gráfica
         labels = [mes['month'].strftime('%b') for mes in productos_por_mes]
         data = [mes['cantidad'] if mes['cantidad'] is not None else 0 for mes in productos_por_mes]
@@ -1955,6 +2230,10 @@ def productos(request):
         data = [mes['cantidad'] for mes in productos_por_mes]
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         return render(request, 'StockMaster_app/actividades.html', {
             "Productos": ProductosListados,
             "Categoria": CategoriaListados,
@@ -1972,7 +2251,9 @@ def productos(request):
             'CategoriaListados':CategoriaListados, 
             'labels': labels,
             'data': data,
-            'ProveedoresListados' : ProveedoresListados
+            'ProveedoresListados' : ProveedoresListados,
+            'productos_por_categoria': productos_por_categoria,
+            'cantidad_productos_cate':cantidad_productos_cate
             })
     else:
         return redirect('/actividades')
@@ -2014,18 +2295,32 @@ def example_view(request):
         categorias = Categoria.objects.all()  # Obtener todas las categorías
         productos = []  # Inicializar una lista vacía para productos
         mensajes = Mensajes.objects.all()
-        mensajes = Mensajes.objects.all()
-        cantidad_mensajes =mensajes.count()
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
+
         categoria_seleccionada = request.GET.get('categoria')  # Obtener la categoría seleccionada por el usuario
         if categoria_seleccionada:
             productos = Productos.objects.filter(id_categorias__nombre=categoria_seleccionada)
         ProductosListados = Productos.objects.all()
         CategoriaListados = Categoria.objects.all()
-        MarcaListados = Marca.objects.all() 
+        MarcaListados = Marca.objects.all()
+        form = User.objects.all()  
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
         for producto in ProductosListados:
             producto.imagen_url = get_imagen_url(producto.imagen)
 
-        return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes})
+        return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes, 'usuarios':usuario, 'Usuario':form})
     else:
         return redirect('/actividades')
 

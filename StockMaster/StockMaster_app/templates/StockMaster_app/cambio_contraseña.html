@@ -21,20 +21,22 @@
                     </p>
                 </div>
                 <div class="profile-photo">
-                    {% if request.user.is_superuser %}
-                        <i class="fa-solid fa-user-tie"></i>
-                        <small class="text-muted">Admin</small>
-                    {% else %}
-                        <i class="fa-solid fa-user"></i>
-                        <small class="text-muted">Empleado</small>
-                    {% endif %}
+                    {% for user in usuario %}
+                                {% if user.id_id == request.user.id %}
+                                    {% if user.imagen %}
+                                        <img class="fa-solid fa-user-tie"src="{{ user.imagen_url }}" alt="Imagen del usuario">
+                                    {% else %}
+                                        <p>No hay imagen disponible.</p>
+                                    {% endif %}
+                                {% endif %}
+                    {% endfor %}
+                    <small class="text-muted">Empleado</small>
                 </div>
             {% endif %}
         </div>
     </div>
 </div>
 <main>
-    
     <h1>Perfil de usuario</h1>
     <div class="messages-container">
         {% for message in messages %}
@@ -47,7 +49,7 @@
     <div class="recent-orders">
         <div class="Bienvenida" style=" box-shadow: var(--box-shadow); background-color: rgb(2, 75, 220); border-radius: 1rem; padding: 1rem; display: flex; justify-content:space-between;">
             <div>
-                <h1 style="font-size: 2.8rem; color: white;">¡BIENVENIDO, @usuario!</h1>
+                <h1 style="font-size: 2.8rem; color: white;">¡BIENVENIDO, {{ user.username}}!</h1>
                 <p style="font-size: 1.1rem; color:white">¡Recuerda cumplir con tus deberes y obligaciones, en tiempo y forma!</p>
                 <p style="font-size: 1.1rem; color:white; margin-top: 1rem;">En Stockmaster, nuestra prioridad es el cliente</p>
                 <p style="font-size: 1.1rem; color:white;">StockMaster: El poder de tener todo bajo control</p>
@@ -62,7 +64,15 @@
                     <div class="fotoperfil" style="border: none; display: flex; align-items: center; justify-content: center;">
                     <!-- <div class="fotoperfil" style="align-items: center; border: none;"> -->
                     <div>
-                        <img id="vistaUser" alt="{{user.id.image}}">
+                    {% for user in usuario %}
+                        {% if user.id_id == request.user.id %}
+                            {% if user.imagen %}
+                                <img id="vistaUser"src="{{ user.imagen_url }}" alt="Imagen del usuario">
+                            {% else %}
+                                <p>No hay imagen disponible.</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                         <h2>Administrador</h2>
                     </div>
                 </div>
@@ -97,10 +107,10 @@
                     </div>
                     <div class="info-sub">
                         <div>
-                            <strong>Mariana Ixchel</strong>
+                            <strong>{{ user.first_name}}</strong>
                         </div>
                         <div>
-                            <strong>Pegueros Pérez</strong>
+                            <strong>{{ user.last_name}}</strong>
                         </div>
                     </div>
                 </div>
@@ -111,7 +121,7 @@
                         </div>
                     </div>
                     <div class="info-sub">
-                        <strong>mpegueros@ucol.mx</strong>
+                        <strong>{{ user.email}}</strong>
                     </div>
                 </div>
                 <div style="padding: 1rem 1rem 0 1rem;">
@@ -125,7 +135,13 @@
                     </div>
                     <div class="info-sub-descripcion">
                         <div>
-                            <strong>I design and develop services for customers of all sizes, specializing in creating stylish, modern websites, web services and online stores. My passion is to design digital user experiences through the bold interface and meaningful interactions.</strong><br>
+                            {% for user in usuario %}
+                                {% if user.id_id == request.user.id %}
+                                    <div>
+                                        <strong>{{ user.descripcion }}</strong><br>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}                         
                         </div>
                     </div>
                 </div>
@@ -156,15 +172,22 @@
             <div class="content-modal">
                 <label for="btn-modal-segundo" class="cerrar"><i class="fa-solid fa-xmark"></i></label>
                 <div class="recent-updates">
-                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Edición de Descripción</h2>
-                    <div class="custom-form-group shadow-textarea">
-                        <textarea class="custom-form-control" id="customTextarea" rows="3" placeholder="Editando Descripción..."></textarea>
-                      </div>                      
-                      <div class="btn-cerrar">
-                        <button type="submit" class="updatess">Guardar</button>
-                        <label for="btn-modal">Cancelar</label>
-                        </div>
-                    </div>
+                    {% for user in usuario %}
+                                {% if user.id_id == request.user.id %}
+                                <form method="post"action="{% url 'descripcion' id_usuario=user.id_usuario%}">
+                                    {% csrf_token %}
+                                    <h2 class="titulo-modal" style="display: flex; justify-content: center;">Edición de Descripción</h2>
+                                    <div class="custom-form-group shadow-textarea">
+                                        <textarea class="custom-form-control" id="descripcion" name="descripcion" rows="3" placeholder="Editando Descripción..."></textarea>
+                                    </div>                      
+                                    <div class="btn-cerrar">
+                                        <button type="submit" class="updatess">Guardar</button>
+                                        <label for="btn-modal">Cancelar</label>
+                                        </div>
+                                    </div>
+                                </form>
+                                {% endif %}
+                            {% endfor %} 
                 </div>
             </div>
         </div>

@@ -58,7 +58,7 @@
         <br>
         <div class="mitad">
             <div>
-                <h1>Contador</h1>
+                <h1>Numero de Productos</h1>
                 <div width="50" height="50">
                     <canvas id="myChart" style="display: block; box-sizing: border-box;"></canvas>
                 </div>
@@ -69,14 +69,13 @@
 
                     const data2 = {
                         labels: [
-                            'Productos',
-                            'Proveedores',
-                            'Marcas',
-                            'Categorias',
+                            {% for c in CategoriaListados %}'{{ c.nombre }}',{% endfor %},
                         ],
                         datasets: [{
                             label: 'Son',
-                            data: [{{cantidad_productos}}, {{cantidad_proveedores}}, {{cantidad_marcas}}, {{cantidad_categorias}}],
+                            data: [{% for cantidad in cantidad_productos_cate %}
+                                    {{ cantidad }},
+                                {% endfor %},],
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
                                 'rgb(75, 192, 192)',
@@ -111,7 +110,7 @@
                 </script>
             </div>
             <div>
-                <h1>Contador</h1>
+                <h1>Numero de Productos de Categoria</h1>
                 <div width="50" height="50">
                     <canvas id="myChart3" style="display: block; box-sizing: border-box;"></canvas>
                 </div>
@@ -122,13 +121,13 @@
 
                     const data3 = {
                         labels: [
-                            {% for c in Categoria %}
-                                {{ c.nombre }}
-                            {% endfor %}
+                            {% for c in CategoriaListados %}'{{ c.nombre }}',{% endfor %},
                         ],
                         datasets: [{
                             label: 'Son',
-                            data: [{{cantidad_productos}}, {{cantidad_proveedores}}, {{cantidad_marcas}}, {{cantidad_categorias}}],
+                            data: [{% for cantidad in productos_por_categoria %}
+                                    {{ cantidad }},
+                                {% endfor %},],
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
                                 'rgb(75, 192, 192)',
@@ -184,13 +183,16 @@
                         </p>
                     </div>
                     <div class="profile-photo">
-                        {% if request.user.is_superuser %}
-                            <i class="fa-solid fa-user-tie"></i>
-                            <small class="text-muted">Admin</small>
-                        {% else %}
-                            <i class="fa-solid fa-user"></i>
+                            {% for user in usuarios %}
+                                {% if user.id_id == request.user.id %}
+                                    {% if user.imagen %}
+                                        <img class="fa-solid fa-user-tie"src="{{ user.imagen_url }}" alt="Imagen del usuario">
+                                    {% else %}
+                                        <p>No hay imagen disponible.</p>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
                             <small class="text-muted">Empleado</small>
-                        {% endif %}
                     </div>
                 {% endif %}
             </div>

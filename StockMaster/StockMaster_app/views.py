@@ -57,10 +57,9 @@ def signin(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
-            login(request, user)
-            return redirect('actividades')
+                login(request, user)
+                return redirect('actividades')
         else:
             form = AuthenticationForm(request.POST)
             if not User.objects.filter(username=username).exists():
@@ -68,7 +67,7 @@ def signin(request):
                 messages.error(request, 'Usuario no Registrado', extra_tags='signin')
             else:
                 messages.error(request, 'Contraseña Incorrecta', extra_tags='signin')
-                messages.error(request, 'Usuario dado de baja', extra_tags='signin')
+
         return render(request, 'registration/login.html', {'form': form})
 
     else:
@@ -2290,7 +2289,6 @@ def get_char(_request):
 @login_required(login_url='signin')
 def example_view(request):
     if request.user.has_perm('StockMaster_app.delete_marca'):
-        categorias = Categoria.objects.all()  # Obtener todas las categorías
         productos = []  # Inicializar una lista vacía para productos
         mensajes = Mensajes.objects.all()
         if request.user.has_perm('StockMaster_app.delete_mensajes'):
@@ -2305,7 +2303,7 @@ def example_view(request):
             mensajes = Mensajes.objects.all()
             cantidad_mensajes = mensajes.count()
 
-        categoria_seleccionada = request.GET.get('categoria')  # Obtener la categoría seleccionada por el usuario
+        categoria_seleccionada = request.GET.get('categoria') # Obtener la categoría seleccionada por el usuario
         if categoria_seleccionada:
             productos = Productos.objects.filter(id_categorias__nombre=categoria_seleccionada)
         ProductosListados = Productos.objects.all()

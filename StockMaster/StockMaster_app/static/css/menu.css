@@ -106,8 +106,8 @@ aside h3{
 .trespartes{
     width: 100%;
     margin: 0 auto;
-    display: flex;
-    grid-template-columns: 32% 32% 32%;
+    display: grid;
+    /* grid-template-columns: 32% 32% 32%; */
 }
 .cuatropartes{
     display: grid;

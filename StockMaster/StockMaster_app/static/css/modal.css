@@ -695,8 +695,8 @@ input.invalid {
 }
 
 .rol-pre{
-    /* display: inline-flex; */
-    justify-content: center;
+    display: inline-flex;
+    /* justify-content: center; */
     align-items: center;
     margin: 0 0.8rem 0 0;
 }
@@ -706,24 +706,30 @@ input.invalid {
 }
 
 .titulo-rol{
-    text-align: center;
+    /* text-align: center; */
     text-transform: uppercase;
     font-size: 1.3rem;
     font-weight: bold;
-    display: flex;
+    /* display: flex; */
     justify-content: center;
 }
 
 .content-check{
-    justify-content: center;
+    /* justify-content: center; */
     display: flex;
 }
 
 .mitad-v2{
-    display: flex;
+    /* display: flex; */
     width: 100%;
     margin: 0 auto;
     /* gap: 1rem; */
     grid-template-columns: 48% 48%;
     justify-content: space-between;
+}
+
+.permisos{
+    display: grid;
+    color: pink;
+    font-size: 2rem;
 }

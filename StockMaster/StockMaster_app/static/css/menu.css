@@ -104,10 +104,9 @@ aside h3{
     text-align: center;
 }
 .trespartes{
-    display: flex;
     width: 100%;
     margin: 0 auto;
-    gap: 1.8rem;
+    display: flex;
     grid-template-columns: 32% 32% 32%;
 }
 .cuatropartes{

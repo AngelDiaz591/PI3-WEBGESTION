@@ -82,7 +82,7 @@
     border-radius: 2rem;
     box-shadow: var(--box-shadow);
     margin: 0rem 1rem 0 0;
-    padding: 3rem 3rem 3rem 0; 
+    padding: 3rem 3rem 2rem 0;
     text-align: left;
 }
 
@@ -251,4 +251,27 @@
         border-radius: 50%;
     }
 
+}
+
+.privacity{
+    margin-left: 2rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.term{
+    font-size: 0.88rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: 0.2rem solid var(--color-dark);
+    background-color: var(--color-white);
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.term:hover{
+    border: 0.2rem solid var(--color-dark);
+    background-color: var(--color-dark);
+    color: var(--color-white);
 }

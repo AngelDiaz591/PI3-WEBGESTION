@@ -14,6 +14,17 @@
     const btnRecuperarCate = document.querySelectorAll(".btnRecuperarCate");
     const btnRecuperarMarc = document.querySelectorAll(".btnRecuperarMarc");
 
+    const btnCerrarSesion = document.querySelectorAll(".btnCerrarSesion");
+
+    btnCerrarSesion.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const confirmacion = confirm('¿Desea Salir de la página?');
+            if (!confirmacion) {
+                e.preventDefault();
+            }
+        });
+    });
+
     btnEliminacionProv.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const confirmacion = confirm('¿Desea eliminar al proveedor?');

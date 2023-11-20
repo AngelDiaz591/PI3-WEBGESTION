@@ -73,7 +73,12 @@ def signin(request):
     else:
         form = AuthenticationForm()
         return render(request, 'registration/login.html', {'form': form})
-    
+
+def terminos(request):
+    form = User.objects.all()  # Agrega los paréntesis para instanciar el formulario
+    return render(request, 'registration/terminos.html', { 'Usuario': form})
+
+
 def home(request):
     if request.user.is_authenticated:
         return redirect('/actividades')
@@ -2319,6 +2324,16 @@ def example_view(request):
         return render(request, 'StockMaster_app/inventario.html', {"Productos": ProductosListados, "Categoria": CategoriaListados,"Marca":MarcaListados, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes, 'usuarios':usuario, 'Usuario':form})
     else:
         return redirect('/actividades')
+
+@login_required(login_url='signin')
+def acercaDe(request):
+        form = User.objects.all()  
+        return render(request, 'StockMaster_app/acercaDe.html', {'Usuario':form})
+
+@login_required(login_url='signin')
+def terminosYcondiones(request):
+        form = User.objects.all()  
+        return render(request, 'StockMaster_app/TerminosDe.html', {'Usuario':form})
 
 def enviar_correo(request):
     send_mail(

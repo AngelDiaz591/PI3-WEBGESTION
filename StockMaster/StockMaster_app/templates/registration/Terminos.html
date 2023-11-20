@@ -1,0 +1,98 @@
+{% block content %}
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="{% static 'login/css/estilos.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <div id="particles-js" class="fondo"></div>
+        
+        <div class="terminos">
+            <h1 class="titulo">Terminos y condiciones</h1>
+            <div class="container">
+                <h2>StockMaster</h2>  <br>
+                
+                <h3>1. Aviso de protección de datos.</h3>  <br>
+                                    
+                En StockMaster, estamos orgullosos de nuestro compromiso  de proteger la privacidad de su 
+                información personal y  de cumplir estrictamente con todas las leyes y regulaciones  de 
+                privacidad y protección de datos. <br> 
+                El propósito de este aviso es brindar información completa y detallada sobre cómo recopilamos,
+                usamos, divulgamos y protegemos su información personal cuando interactúa con nuestra 
+                aplicacion. <br><br>
+
+                <h3>2. Datos personales.</h3>  <br>
+                                    
+                <h4>2.1. Recopilación de datos personales.</h4>  <br>
+                                    
+                StockMaster recopila una variedad de información personal de nuestros proveedores y usuarios de 
+                nuestros servicios para administrar de manera efectiva nuestro inventario electrónico y brindarles la 
+                mejor experiencia posible. Los datos personales recopilados pueden incluir: <br><br>
+                <ul>
+                    <li>Información de contacto: nombre, dirección(proveedor), número de teléfono, dirección de correo electrónico.</li>
+                    <li>Información de  cuenta: Detalles de inicio de sesión y detalles de inicio de sesión  para acceder a nuestro sitio web y aplicaciones.  </li>
+                    <li>Historial de comunicación: datos sobre nuestras interacciones con usted por medio correos electrónicos y chats.</li>
+                </ul><br>     
+                <h4>2.2. Uso de datos personales.</h4>  <br>
+                                    
+                Usamos su información personal para una variedad de propósitos tales como: <br><br>
+                <ul>
+                    <li>Crear y administrar cuentas de usuarios para garantizar una experiencia de poder ingresar a nuestra aplicacion. </li>
+                    <li>Comunicarnos efectivamente con usted  para confirmar algun problema o brindar información relevante sobre sus movimientos en nuestra aplicación.  </li>
+                    <li>Brindar atención al usuario, resolver problemas y responder a las preguntas y solicitudes de los clientes de manera clara. </li>
+                    <li>Personalizar su experiencia en nuestra aplicacion web sobre su perfil de usuario. </li>
+                </ul><br>
+               
+                StockMaster se toma en serio la privacidad y seguridad de su información personal.
+                Implementamos estrictas medidas de seguridad técnicas y organizativas para proteger su 
+                información contra acceso no autorizado,  divulgación o  uso indebido. Estas medidas incluyen: <br><br>
+                <ul>
+                    <li>No compartir datos confidenciales en tránsito y en reposo.  </li>
+                    <li>Se tendra restricciones de acceso a  datos personales a menos de que sea un empleado autorizado y formados en privacidad y protección de datos.</li>
+                    <li>Formación continua y sensibilización de los empleados sobre la importancia de la privacidad y la protección de datos.  </li>
+                </ul><br>
+                                    
+                <h3>3. Derechos de autor.</h3> <br>
+
+                Todos los derechos de autor y derechos de propiedad intelectual relacionados con los 
+                servicios, productos y contenidos de StockMaster son propiedad de la Compañía. <br><br>
+                No se permite el uso, reproducción o  distribución no autorizados de nuestros materiales 
+                sin el consentimiento expreso de StockMaster. <br><br>
+
+                <h3>4. Derechos del registrante.</h3>  <br>
+
+                Como propietario de datos personales, usted tiene derechos que StockMaster respeta y protege, tales como: <br><br>
+                <ul>
+                    <li>Acceso a sus datos personales: Puede solicitar una copia de los datos que tenemos sobre usted. </li>
+                    <li>Corrección de información inexacta o incompleta: puede solicitarnos que corrijamos información incorrecta o incompleta.</li>
+                    <li>Revocación o supresión de tus datos: En algunas circunstancias, podrás solicitar la supresión de tus datos.  </li>
+                    <li>Oposición al tratamiento de datos: En algunos casos, podrás oponerte al tratamiento de tus datos para determinadas finalidades. </li>
+                    <li>Si desea ejercer sus derechos, actualizar su configuración o si tiene alguna pregunta o inquietud sobre la 
+                        privacidad o el manejo de sus datos personales, comuníquese con nuestro servicio de atención al cliente.  </li>
+                </ul><br>
+                <h3>5. Cambios al Aviso de Privacidad.</h3>  <br>
+
+                La política de protección de datos entra en vigor el 11/08/2023 y puede actualizarse 
+                periódicamente para reflejar los cambios en nuestras políticas de protección de datos y en 
+                la legislación de protección de datos. <br>
+                Le recomendamos que consulte este aviso periódicamente para estar al tanto de cualquier cambio. <br><br> 
+                
+                Gracias por confiar en StockMaster. <br>
+                En StockMaster, estamos comprometidos a proteger su privacidad y  garantizar la seguridad de su información personal.
+            </div>
+        </div>
+        <a href="{% url 'signin' %}" id="showModal" class="atras">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <script src="{% static 'login/js/particles.min.js' %}"></script>
+        <script src="{% static 'login/js/app.js' %}"></script>
+    </body>
+    </html>
+{% endblock %}
+

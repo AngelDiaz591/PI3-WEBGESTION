@@ -68,8 +68,8 @@
                         <tr>
                             <!-- <th>#</th> -->
                             <th>Nombre</th>
-                            <th>Permisos</th>
-                            <th colspan="2">Opciones</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,16 +77,15 @@
                             <tr>
                                 <td>{{ c.name }}</td>
                                 <td>
-                                    {% for permiso in c.permissions.all %}
-                                        {{ permiso.name }}
-                                    {% endfor %}
-                                </td>
-                                <td>
                                     <div class="botones">
                                         <div class="edita">
                                             <a class="btn btn-info edit-product-button" data-id="{{ c.id }}">
                                                 <span class="material-symbols-outlined">edit</span></a>
                                         </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="botones">
                                         <div class="elimina">
                                             <a href="{% url 'cambio_statusrol' id=c.id %}"  class="btn btn-danger btnEliminacionRol">
                                                 <span class="material-symbols-outlined">delete</span>

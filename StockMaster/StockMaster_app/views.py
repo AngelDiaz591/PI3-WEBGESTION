@@ -1760,7 +1760,7 @@ def edicionRol2(request, id):
             "proveedoresRecuperacion":rol_extra.proveedoresRecuperacion,
             "etiquetasRecuperacion":rol_extra.etiquetasRecuperacion,
             "designadoRecuperacion":rol_extra.designadoRecuperacion,
-            "usuariosRecuperacion":rol_extra.usuariosRecuperacion,
+            "usuarioRecuperacion":rol_extra.usuariosRecuperacion,
             "usuarios":rol_extra.usuarios,
             "roles": rol_extra.roles,
             "soporte":rol_extra.soporte,

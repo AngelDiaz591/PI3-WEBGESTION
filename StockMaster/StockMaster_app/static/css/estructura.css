@@ -93,7 +93,7 @@ main table th{
 }
 .right-v2{
     margin-top: 1.4rem;
-    margin-left: 87.5rem; /* 90 */
+    margin-left: 85.7rem; /* 90 */
     position: absolute;
 }
 
@@ -440,4 +440,59 @@ main table th{
     color: var(--color-dark);
     margin-top: 8rem;
     justify-content: center;
+}
+.atras{
+    position: flex;
+    top: 1rem;
+    justify-content: flex-start;
+    padding: 10px;
+    color:var(--color-dark);
+    font-size: 30px;
+}
+.atras:hover{
+    color: #e30404;
+    /*color: #e3d404*/
+}
+.terminos{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 25px;
+    position: relative;
+    border-radius: 15px;
+    text-transform: none;
+}
+.titulo{
+    color: var(--color-dark);
+    font-size: 35px;
+}
+.cuerpo{
+    box-shadow: var(--box-shadow-v3);
+    background-color: var(--color-white);
+    margin: 2.2rem auto; /*posicion modal*/
+    padding: 2.2rem 3.4rem;
+    width: 80%;
+    position: relative;
+    color: var(--color-dark);
+    border-radius: 25px;
+    text-align: justify;
+    font-size: 1rem;
+    font-family: Arial, 'Helvetica', sans-serif;
+}
+.cuerpo h2{
+    font-size: 2rem;
+    color: var(--color-dark);
+    font: bold;
+    text-align: center;
+}
+.cuerpo h4{
+    font-size: 1.2rem;
+    text-align: justify;
+}
+.cuerpo h3{
+    font-size: 1.5rem;
+    text-align: justify;
+}
+.cuerpo li{
+    margin-left: 3rem;
 }

@@ -22,6 +22,7 @@ urlpatterns = [
     #paths Login
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
+    path('terminos/', views.terminos, name='terminos'),
     path('logout/', views.exit, name='exit'),
     
     #paths Registro
@@ -121,7 +122,8 @@ urlpatterns = [
     path('soporteEnviar/', views.soporteEnviar, name='soporteEnviar'),
     path('comentario/',views.comentario),
     path('usuarios/', views.usuarios, name='usuarios'),
-    
+    path('acercaDe/', views.acercaDe, name='acercaDe'),
+    path('acercaDe/terminos', views.terminosYcondiones, name='terminosCon'),
 
     path('enviar_correo/', views.enviar_correo, name='enviar_correo'),
     ]

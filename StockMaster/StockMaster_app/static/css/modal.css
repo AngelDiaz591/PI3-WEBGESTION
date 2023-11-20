@@ -31,6 +31,7 @@
     /* --box-shadow: 0 2rem 3rem var(--color-light);  */
     --box-shadow-v2:rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     --box-shadow: var(--color-light) 0px 13px 27px -5px, var(--color-light) 0px 8px 16px -8px;
+    --box-shadow-v3: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
     --price: #da0303;
 }
 .dark-theme-variables{
@@ -258,6 +259,7 @@
     color: var(--color-dark);
     text-transform: uppercase;
     text-align: center;
+    margin-right: 0.2rem;
 }
 .divisor{
     margin-top: 2rem;
@@ -695,10 +697,11 @@ input.invalid {
 }
 
 .rol-pre{
-    display: inline-flex;
-    /* justify-content: center; */
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     margin: 0 0.8rem 0 0;
+    text-transform: uppercase;
 }
 
 .check{
@@ -706,17 +709,18 @@ input.invalid {
 }
 
 .titulo-rol{
-    /* text-align: center; */
+    text-align: center;
     text-transform: uppercase;
     font-size: 1.3rem;
     font-weight: bold;
-    /* display: flex; */
+    display: flex;
+    margin-right: 2rem;
     justify-content: center;
 }
 
 .content-check{
-    /* justify-content: center; */
-    display: flex;
+    justify-content: space-between;
+    /* display: grid; */
 }
 
 .mitad-v2{
@@ -730,4 +734,11 @@ input.invalid {
 
 .permisos{
     display: grid;
+}
+
+.input-rol{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

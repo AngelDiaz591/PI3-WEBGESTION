@@ -1,0 +1,85 @@
+{% extends "./base.html" %}
+{% block body %}
+{% load static %}
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% for user in usuarios %}
+                        {% if user.id_id == request.user.id %}
+                            {% if user.imagen %}
+                                <img class="fa-solid fa-user-tie"src="{{ user.imagen_url }}" alt="Imagen del usuario">
+                            {% else %}
+                                <p>No hay imagen disponible.</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <small class="text-muted">Empleado</small>
+                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+<main>
+    <h1></h1>
+    <div class="recent-orders">
+        <div class="apartado-perfil">
+            <h1>Acerca De Nosotros</h1>
+
+Acerca de nosotros
+
+En [nombre de la empresa], estamos comprometidos con ayudar a nuestros clientes a resolver sus problemas. Nuestro equipo de desarrolladores está formado por profesionales con amplia experiencia en el desarrollo de software, así como en la atención al cliente.
+
+Nuestro trabajo comienza con la escucha activa de los clientes. Nos ponemos en contacto con ellos para entender sus necesidades y problemas. Para ello, realizamos entrevistas, encuestas y análisis de datos.
+
+Una vez que entendemos las necesidades de los clientes, comenzamos a buscar soluciones. Para ello, utilizamos nuestros conocimientos técnicos y nuestra experiencia en el desarrollo de software.
+
+Las soluciones que proponemos pueden ser de diversa índole. Pueden ser cambios en el software, mejoras en los procesos o incluso nuevos productos o servicios.
+
+Trabajamos en estrecha colaboración con los clientes para garantizar que las soluciones sean efectivas y que satisfagan sus necesidades.
+
+Un ejemplo de éxito
+
+Un ejemplo de éxito de nuestro equipo es la solución que encontramos para un problema que tenían los clientes de una empresa de comercio electrónico. Los clientes se quejaban de que el proceso de compra era demasiado complejo y lento.
+
+Realizamos una investigación y descubrimos que el problema se debía a que el proceso de compra estaba dividido en muchas etapas. Los clientes tenían que pasar por varios pasos antes de finalizar su compra.
+
+La solución que propusimos fue simplificar el proceso de compra. Combinamos varias etapas en una sola, lo que hizo que el proceso fuera más rápido y fácil de usar.
+
+La solución fue un éxito. Los clientes quedaron satisfechos con el nuevo proceso de compra y las ventas de la empresa aumentaron.
+
+La importancia de nuestro equipo
+
+Nuestro equipo es un elemento fundamental para cualquier empresa de software. Ayudamos a que los clientes estén satisfechos con el software y a que la empresa aumente sus ventas.
+
+Nuestro equipo es importante porque:
+
+Entiende las necesidades de los clientes. Tenemos la capacidad de escuchar a los clientes y comprender sus necesidades.
+Propone soluciones efectivas. Utilizamos nuestros conocimientos técnicos y nuestra experiencia para encontrar soluciones que satisfagan las necesidades de los clientes.
+Trabaja en colaboración con los clientes. Trabajamos en estrecha colaboración con los clientes para garantizar que las soluciones sean efectivas.
+Si tiene un problema con su software, no dude en ponerse en contacto con nosotros. Nuestro equipo estará encantado de ayudarle a encontrar una solución.
+
+
+        </div>
+
+
+        <h5>Terminos y condiciones <a href="{% url 'terminosCon' %}">aqui.</a></h5>
+    </div>
+   
+</main>
+{% endblock %}

@@ -211,7 +211,7 @@
                                 <div class="form-group">
                                     <label class="sub-contra" for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
                                     <div style="display: flex;">
-                                        {{ form.old_password }}
+                                        <input type="password" id="old_password" name="old_password" placeholder="Contraseña Actual" required>
                                     </div>
                                     {% for error in form.old_password.errors %}
                                         <div class="alert alert-danger">{{ error }}</div>
@@ -220,7 +220,7 @@
                                 <div class="form-group">
                                     <label class="sub-contra" for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
                                     <div style="display: flex;">
-                                        {{ form.new_password1 }}
+                                        <input type="password" id="new_password1" name="new_password1" placeholder="Contraseña Nueva" required>
                                     </div>
                                     {% for error in form.new_password1.errors %}
                                         <div class="alert alert-custom" role="alert">
@@ -232,7 +232,7 @@
                                 <div class="form-group">
                                     <label class="sub-contra" for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
                                     <div style="display: flex;">
-                                        {{ form.new_password2 }}
+                                        <input type="password" id="new_password2" name="new_password2" placeholder="Confirmar contraseña"required>
                                     </div>
                                     {% for error in form.new_password2.errors %}
                                         <div class="alert alert-danger">{{ error }}</div>

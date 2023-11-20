@@ -97,25 +97,26 @@ aside h3{
 }
 .disparejo{
     display: grid;
-    width: 96%;
-    margin: 0 auto;
-    gap: 1.8rem;
+    width: 100%;
+    /* margin: 0 auto; */
+    /* gap: 1.8rem; */
     /* grid-template-columns: 30% auto; */
     text-align: center;
+    margin-top: 2rem;
+    text-transform: uppercase;
 }
 .trespartes{
     width: 100%;
     margin: 0 auto;
-    display: grid;
+    /* display: block; */
     /* grid-template-columns: 32% 32% 32%; */
+    justify-content: space-between;
 }
 .cuatropartes{
-    display: grid;
-    width: 100%;
-    margin: 0 auto;
-    gap: 1.8rem;
-    grid-template-columns: 24% 24% 24% 24%;
-    justify-content: center;
+    /* margin: 0 auto; */
+    /* gap: 1.8rem; */
+    /* grid-template-columns: 24% 24% 24% 24%; */
+    /* justify-content: center; */
     align-items: center;
 }
 .text-muted{

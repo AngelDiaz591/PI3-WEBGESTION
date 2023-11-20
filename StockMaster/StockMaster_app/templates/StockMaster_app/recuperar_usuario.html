@@ -2,219 +2,118 @@
 {% block body %}
 {% load static %}
 
-<div class="ctn">
-    <main>
-        <h1>Usuarios Dados de Baja</h1>
-        <div class="recent-orders">
-            
-            <div class="principal">
-                <div class="boton-modal">
-                    
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
                 </div>
-                <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
-                    <i class="fas fa-search" id="search-icon"></i>
+                <div class="profile-photo">
+                    {% for user in usuarios %}
+                        {% if user.id_id == request.user.id %}
+                            {% if user.imagen %}
+                                <img class="fa-solid fa-user-tie"src="{{ user.imagen_url }}" alt="Imagen del usuario">
+                            {% else %}
+                                <p>No hay imagen disponible.</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <small class="text-muted">Empleado</small>
                 </div>
-            </div>
-            <div class="messages-container">
-                {% for message in messages %}
-                    <div class="alert alert-custom" role="alert">
-                        <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                {% endfor %}
-            </div>
-            <div style="overflow:auto; height: 46rem;">
-                <div class="mensaje-oculto">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Gmail</th>
-                                <th>Imagen</th>
-                                <th>Rol</th>
-                                <th>Recuperar</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for us in usuario %}
-                                {% if us != request.user%}
-                                    {%if us.id.is_active == 0%}
-                                        <tr>
-                                            <td>{{ us.id.first_name }}</td>
-                                            <td>{{ us.id.last_name }}</td>
-                                            <td>{{ us.id.email }}</td>
-                                            <td class="imagen" style="position: relative;">
-                                                <div class="img-container" style="width: 150px; height: 200px; overflow: hidden;">
-                                                    <img src="{{ us.imagen_url }}"  width="150" height="150" style="transition: transform 0.3s; position: absolute; top: 0; left: 0;">
-                                                </div>
-                                            </td>
-                                            <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                            <td>
-                                                <div class="botones">
-                                                    <div class="edita edit-product-button">
-                                                        <a class=" btn btn-info btnRecuperarProv" href="recuperar/{{us.id.id}}">
-                                                            <span class="material-symbols-outlined">restart_alt</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="elimina">
-                                                        <a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
-                                                            <span class="material-symbols-outlined">delete</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="no-disponible oculto">
-                    <div style="display:flex; justify-content: center; align-items: center;">
-                        <img style="width: 20%;" src="{% static 'productos/img/user-dele.svg' %}">
-                    </div>
-                    <p style="font-size: 1.2rem; font-weight: 400;">Sin usuarios dados de baja actualmente.</p>
-                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+<main>
+    <h1>Usuarios Dados de Baja</h1>
+    <div class="recent-orders">
+        
+        <div class="principal">
+            <br><br><br>
+            <div class="search-bar-v3">
+                <input type="text" id="search-input" placeholder="Buscar usuarios..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
             </div>
         </div>
-
-
-    </main>
-    <div class="right" >
-        <div class="top">
-            <div class="tema">
-                <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
-                </button>
-                <button id="themeToggleBtn" >
-                    <i id="sunIcon" class="fas fa-sun"></i>
-                    <i id="moonIcon" class="fas fa-moon"></i>
-                </button>
-            </div>
-            <div class="profile">
-                {% if request.user.is_authenticated %}
-                    <div class="info">
-                        <p>Hola, <b>{{ user.username}}</b> </p>
-                        <p style="text-align: center;">
-                            BIENVENIDO
-                        </p>
-                    </div>
-                    <div class="profile-photo">
-                        {% for user in usuarios %}
-                            {% if user.id_id == request.user.id %}
-                                {% if user.imagen %}
-                                    <img class="fa-solid fa-user-tie"src="{{ user.imagen_url }}" alt="Imagen del usuario">
-                                {% else %}
-                                    <p>No hay imagen disponible.</p>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div><br><br>
+        <div style="overflow:auto; height: 46rem;">
+            <div class="mensaje-oculto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Gmail</th>
+                            <th>Imagen</th>
+                            <th colspan="2">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for us in usuarios %}
+                            {% if us != request.user%}
+                                {%if us.id.is_active == 0%}
+                                    <tr>
+                                        <td>{{ us.id.username }} </td>
+                                        <td>{{ us.id.first_name }} {{ us.id.last_name }}</td>
+                                        <td>{{ us.id.email }}</td>
+                                        <td class="imagen" style="position: relative;">
+                                            <div class="img-container" style="width: 100px; height: 100px;">
+                                                <img src="{{ us.imagen_url }}" style="width: 150px; max-height: auto; transition: transform 0.3s; position: absolute; top: 0; left: 20%;">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="botones">
+                                                <div class="edita edit-product-button">
+                                                    <a class=" btn btn-info btnRecuperarProv" href="recuperar/{{us.id.id}}">
+                                                        <span class="material-symbols-outlined">restart_alt</span>
+                                                    </a>
+                                                </div>
+                                                <div class="elimina">
+                                                    <a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
+                                                        <span class="material-symbols-outlined">delete</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
-                        <small class="text-muted">Empleado</small>
-                    </div>
-                {% endif %}
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="recent-updates">
-            <h2>Mensajes Recientes</h2>
-            <div class="updates">
-                {% if perms.StockMaster_app.view_mensajes %}
-                    {% if Mensajes %}
-                        {% if respuestascomentarios %}
-                            <p>respuestas comentarios </p>
-                        {% else %}
-                            {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
-                                {% if me.respuestascomentarios%}
-                                    <div class="message">
-                                        <div class="icon" style="color: green">
-                                            <span class="material-symbols-outlined">forward</span>
-                                        </div>
-                                            <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
-                                        <small class="text-muted" style="font-size: 11px;">Mensaje contestado</small>
-                                    </div>
-                                {% else %}
-                                    <div class="message">
-                                        <div class="icon" style="color: red">
-                                            <span class="material-symbols-outlined">mark_email_unread</span>
-                                        </div>
-                                        <p><b>{{ me.username }}: </b><br> {{ me.comentario }}</p>
-                                        <small class="text-muted">{{ me.tiempo_creacion }}</small>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% else %}
-                        <p>No hay mensajes disponibles en este momento.</p>
-                    {% endif %}
+            <div class="no-disponible oculto">
+                <div style="display:flex; justify-content: center; align-items: center;">
+                    <img style="width: 20%;" src="{% static 'productos/img/user-dele.svg' %}">
+                </div>
+                <p style="font-size: 1.2rem; font-weight: 400;">Sin usuarios dados de baja actualmente.</p>
             </div>
-            <div class="add-products">
-                <div>
-                    <span class="material-symbols-outlined">add</span> 
-                    <a href="{% url 'soporte' %}">Mostrar Todas</a>
-                </div>
-            </div>
-                {% else %}
-                    {% if Mensajes %}
-                        {% for me in Mensajes|dictsortreversed:"tiempo_creacion"|slice:":4" %}
-                            {% if me.respuestascomentarios %}
-                                {% if me.username == request.user.username %}
-                                    
-                                    <div class="message">
-                                        <div class="icon" style="color: green">
-                                            <span class="material-symbols-outlined">forward</span>
-                                        </div>
-                                            <b>Comentario:</b>
-                                            <p>{{me.comentario}}</p>
-                                            <b>Respuesta del Admin: </b>
-                                            <p>{{ me.comentario }}</p>
-                                    </div>
-                                {% endif %}
-                            {% else %}
-                                {% if me.username == request.user.username %}
-                                    <div class="message">
-                                        <div class="icon" style="color: green">
-                                            <span class="material-symbols-outlined">forward</span>
-                                        </div>
-                                            <b>Comentario:</b>
-                                            <p>{{me.comentario}}</p>
-                                            <b>Respuesta del Admin: </b>
-                                            <br>
-                                        <small class="text-muted">Sin respuesta</small>
-                                    </div> 
-                                {% endif %}
-                            {% endif%}
-                        {% endfor%}
-                    {% else %}
-                        <p>No tienes ningun comentario por el momento</p>
-                    {% endif %}
-                </div>
-                <div class="add-products">
-                    <div>
-                        <span class="material-symbols-outlined">add</span> 
-                        <a href="{% url 'soporteEnviar' %}">Mostrar Todas</a>
-                    </div>
-                </div>
-                {% endif %}
-            
-
-            
-            <script>
-                // Obtén todos los elementos con la clase "close-btn"
-                var closeBtns = document.querySelectorAll('.close-btnn');
-
-                // Agrega un evento de clic a cada elemento
-                closeBtns.forEach(function (closeBtn) {
-                    closeBtn.addEventListener('click', function () {
-                        // Oculta el elemento al hacer clic
-                        closeBtn.style.display = 'none';
-                    });
-                });
-            </script>
         </div>
     </div>
-</div>
+
+
+</main>
+
+
 <script>
     // Obtén todos los elementos con la clase "close-btn"
     var closeBtns = document.querySelectorAll('.close-btnn');

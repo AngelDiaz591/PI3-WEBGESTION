@@ -177,7 +177,7 @@
                         <form method="post"action="{% url 'descripcion' id_usuario=user.id_usuario%}">
                             {% csrf_token %}
                             <div class="custom-form-group shadow-textarea">
-                                <textarea class="custom-form-control" id="descripcion" name="descripcion" rows="3" placeholder="Editando Descripción..."></textarea>
+                                <textarea class="custom-form-control" id="descripcion" name="descripcion" rows="3" placeholder="Editando Descripción...">{{user.descripcion}}</textarea>
                             </div>                      
                             <div class="btn-cerrar">
                                 <button type="submit" class="updatess">Guardar</button>

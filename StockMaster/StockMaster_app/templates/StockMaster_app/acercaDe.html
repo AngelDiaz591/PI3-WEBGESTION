@@ -37,48 +37,70 @@
 <main>
     <h1></h1>
     <div class="recent-orders">
-        <div class="apartado-perfil">
-            <h1>Acerca De Nosotros</h1>
-
-Acerca de nosotros
-
-En [nombre de la empresa], estamos comprometidos con ayudar a nuestros clientes a resolver sus problemas. Nuestro equipo de desarrolladores está formado por profesionales con amplia experiencia en el desarrollo de software, así como en la atención al cliente.
-
-Nuestro trabajo comienza con la escucha activa de los clientes. Nos ponemos en contacto con ellos para entender sus necesidades y problemas. Para ello, realizamos entrevistas, encuestas y análisis de datos.
-
-Una vez que entendemos las necesidades de los clientes, comenzamos a buscar soluciones. Para ello, utilizamos nuestros conocimientos técnicos y nuestra experiencia en el desarrollo de software.
-
-Las soluciones que proponemos pueden ser de diversa índole. Pueden ser cambios en el software, mejoras en los procesos o incluso nuevos productos o servicios.
-
-Trabajamos en estrecha colaboración con los clientes para garantizar que las soluciones sean efectivas y que satisfagan sus necesidades.
-
-Un ejemplo de éxito
-
-Un ejemplo de éxito de nuestro equipo es la solución que encontramos para un problema que tenían los clientes de una empresa de comercio electrónico. Los clientes se quejaban de que el proceso de compra era demasiado complejo y lento.
-
-Realizamos una investigación y descubrimos que el problema se debía a que el proceso de compra estaba dividido en muchas etapas. Los clientes tenían que pasar por varios pasos antes de finalizar su compra.
-
-La solución que propusimos fue simplificar el proceso de compra. Combinamos varias etapas en una sola, lo que hizo que el proceso fuera más rápido y fácil de usar.
-
-La solución fue un éxito. Los clientes quedaron satisfechos con el nuevo proceso de compra y las ventas de la empresa aumentaron.
-
-La importancia de nuestro equipo
-
-Nuestro equipo es un elemento fundamental para cualquier empresa de software. Ayudamos a que los clientes estén satisfechos con el software y a que la empresa aumente sus ventas.
-
-Nuestro equipo es importante porque:
-
-Entiende las necesidades de los clientes. Tenemos la capacidad de escuchar a los clientes y comprender sus necesidades.
-Propone soluciones efectivas. Utilizamos nuestros conocimientos técnicos y nuestra experiencia para encontrar soluciones que satisfagan las necesidades de los clientes.
-Trabaja en colaboración con los clientes. Trabajamos en estrecha colaboración con los clientes para garantizar que las soluciones sean efectivas.
-Si tiene un problema con su software, no dude en ponerse en contacto con nosotros. Nuestro equipo estará encantado de ayudarle a encontrar una solución.
-
-
+        <div class="area">
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <div class="enunciado">
+                <h1 class="texto">STOCKMASTER</h1>
+            </div>
         </div>
+        
+        <div class="content-prin">
+            <div class="nosotros">
+                <div class="prop1">
+                    <h2 class="pro2">¿QUIÉNES SOMOS?</h2>
+                    <p class="part1">
+                        En StockMaster, nos dedicamos a la resolución de problemas para nuestros clientes. 
+                    </p>
+                    <p class="part2">
+                        Con un equipo de desarrolladores altamente capacitados en software y servicio al cliente, nos comprometemos a ofrecer soluciones innovadoras que impulsen el éxito de nuestros usuarios.
+                    </p>
 
-
-        <h5>Terminos y condiciones <a href="{% url 'terminosCon' %}">aqui.</a></h5>
+                    <p class="part3">
+                        Nuestra metodología comienza con una profunda inmersión en las necesidades de nuestros clientes. A través de entrevistas, encuestas y análisis de datos, creamos un diálogo continuo para entender completamente sus desafíos.
+                    </p>
+                    <br>       
+                </div>
+                <div class="derecha">
+                    <img class="logo" src="{% static 'productos/img/help.svg' %}">
+                </div>
+            </div>
+            <div class="titulo-apartado">
+                <h1 class="pro2">OBJETIVOS</h1>
+            </div>
+            <div class="iconsPar">
+                <div class="aspectos">
+                    <img class="carac" src="{% static 'productos/img/relation.png' %}">
+                    <p class="desc">
+                        Comprender las necesidades del cliente
+                    </p>
+                </div>
+                <div class="aspectos">
+                    <img class="carac2" src="{% static 'productos/img/solution.png' %}">
+                    <p class="desc">
+                        Proponer soluciones efectivas
+                    </p>
+                </div>
+                <div class="aspectos">
+                    <img class="carac3" src="{% static 'productos/img/work.png' %}">
+                    <p class="desc">
+                        Colaborar estrechamente con clientes
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
+    <h5>Terminos y condiciones <a href="{% url 'terminosCon' %}">aqui.</a></h5>
    
 </main>
 {% endblock %}

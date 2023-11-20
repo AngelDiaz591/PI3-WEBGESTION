@@ -81,12 +81,19 @@
                                         {{ permiso.name }}
                                     {% endfor %}
                                 </td>
-                                <td class="edita"><a class="btn btn-info edit-product-button" data-id="{{ c.id }}">
-                                    <span class="material-symbols-outlined">edit</span></a>
+                                <td>
+                                    <div class="botones">
+                                        <div class="edita">
+                                            <a class="btn btn-info edit-product-button" data-id="{{ c.id }}">
+                                                <span class="material-symbols-outlined">edit</span></a>
+                                        </div>
+                                        <div class="elimina">
+                                            <a href="{% url 'cambio_statusrol' id=c.id %}"  class="btn btn-danger btnEliminacionRol">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td class="elimina"><a href="{% url 'cambio_statusrol' id=c.id %}"  class="btn btn-danger btnEliminacionRol">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -94,7 +101,7 @@
             </div>
             <div class="no-disponible oculto">
                 <div style="display:flex; justify-content: center; align-items: center;">
-                    <img style="width: 20%;" src="{% static 'productos/img/rols2.svg' %}">
+                    <img style="width: 20%; margin-bottom: -2rem;" src="{% static 'productos/img/rols2.svg' %}">
                 </div>
                 <p style="font-size: 1.2rem; font-weight: 400;">La tabla aguarda roles. ¡Añade algunos para comenzar!</p>
             </div>
@@ -104,19 +111,19 @@
     <div>
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
-            <div class="content-modal" style="overflow: auto; min-width: 71rem; max-height: 50rem;">
+            <div class="content-modal" style="overflow: auto; min-width: 40rem; max-height: 50rem;">
                 <label class="cerrar" for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
                 <h1 class="titulo-modal">Crear nuevo Rol</h1>
                 <div style="margin: 1rem 0 -1rem 0;"><hr></div>
                 <form action="/registrar_rol/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
                     <div class="divisor">
                         <div class="disparejo">
-                            <h2>Roles prestablecidos (Opcionales)</h2>
+                            <h2>ROLES PREESTABLECIDOS (Opcionales)</h2>
                         </div>
                         <br>
                         <div class="cuatropartes">
                             <div style="text-align: center">
-                                <div class="titulo">Nombre de Rol:</div>
+                                <div class="titulo-rol">Nombre de Rol:</div>
                                 <input type="text" id="RolNew" name="RolNew" class="campos" placeholder="Nombre" 
                                 pattern="[A-Z0-9]{2,50}" maxlength="50" required oninput="convertToUppercase()">
                                 <br><span class="error-message" style="color: red;"></span>
@@ -146,170 +153,191 @@
                     </div>
                     <div class="divisor">
                         <hr><br>
-                        <div class="titulo">Paginas principales</div>
-                        <div class="mitad">
-                            <div>
-                                <div class="subtitulo">Principal:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="principal" id="checkbox1" />
-                                    <label for="checkbox1">Principal</label>
+                        <div class="disparejo">
+                            <h2>PERMISOS</h2>
+                        </div>
+                        <div class="mitad-v2">
+                            <div class="content">
+                                <div class="titulo-rol">Paginas principales</div>
+                                <div class="permisos">
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Principal:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="principal" id="checkbox1" />
+                                            <label for="checkbox1">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Inventario:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="inventario" id="checkbox2" />
+                                            <label for="checkbox2">Inventario</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <div class="subtitulo">Inventario:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="inventario" id="checkbox2" />
-                                    <label for="checkbox2">Inventario</label>
+                            <div class="content">
+                                <div class="titulo-rol">Gestion de Usuarios</div>
+                                <div class="trespartes">
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Usuarios:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="usuarios" id="checkbox9" />
+                                            <label for="checkbox9">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Roles:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="roles" id="checkbox10" />
+                                            <label for="checkbox10">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Recuperar Usuario:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="usuarioRecuperacion" id="checkbox20" />
+                                            <label for="checkbox20">Principal</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                         <hr><br>
-                        <div class="titulo">Gestionar Usarios</div>
-                        <div class="trespartes">
+                        <div class="content-check">
                             <div>
-                                <div class="subtitulo">Usuarios:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="usuarios" id="checkbox9" />
-                                    <label for="checkbox9">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Roles:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="roles" id="checkbox10" />
-                                    <label for="checkbox10">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Recuperar Usuario:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="usuarioRecuperacion" id="checkbox20" />
-                                    <label for="checkbox20">Principal</label>
+                                <div class="titulo-rol">Configuracion</div>
+                                <div class="trespartes">
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Soporte (Recibir mensajes):</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="soporte" id="checkbox11" />
+                                            <label for="checkbox11">Principal</label>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Soporte (Mandar mensajes):</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="soporteenviar" id="checkbox19" />
+                                            <label for="checkbox19">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Perfil:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="contra" id="checkbox12" />
+                                            <label for="checkbox12">Principal</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <hr><br>
-                        <div class="titulo">Configuracion</div>
-                        <div class="trespartes">
+                        <div class="content-check">
                             <div>
-                                <div class="subtitulo">Soporte (Recibir mensajes):</div>
-                                <div class="check">
-                                    <input type="checkbox" name="soporte" id="checkbox11" />
-                                    <label for="checkbox11">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Soporte (Mandar mensajes):</div>
-                                <div class="check">
-                                    <input type="checkbox" name="soporteenviar" id="checkbox19" />
-                                    <label for="checkbox19">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Perfil:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="contra" id="checkbox12" />
-                                    <label for="checkbox12">Principal</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr><br>
-                        <div class="titulo">Administracion de Productos</div>
-                        <div class="cuatropartes">
-                            <div>
-                                <div class="subtitulo">Productos:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="productos" id="checkbox3" />
-                                    <label for="checkbox3">Productos</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Proveedores:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="proveedores" id="checkbox4" />
-                                    <label for="checkbox4">Productos</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Etiquetas:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="etiquetas" id="checkbox5" />
-                                    <label for="checkbox5">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Area:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="area" id="checkbox18" />
-                                    <label for="checkbox18">Principal</label>
+                                <div class="titulo-rol">Administracion de Productos</div>
+                                <div class="cuatropartes">
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Productos:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="productos" id="checkbox3" />
+                                            <label for="checkbox3">Productos</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Proveedores:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="proveedores" id="checkbox4" />
+                                            <label for="checkbox4">Productos</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Etiquetas:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="etiquetas" id="checkbox5" />
+                                            <label for="checkbox5">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Area:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="area" id="checkbox18" />
+                                            <label for="checkbox18">Principal</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                         <hr><br>
-                        <div class="titulo">Recuperacion de Datos</div>
-                        <div class="cuatropartes">
+                        <div class="content-check">
                             <div>
-                                <div class="subtitulo">Productos recuperacion:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="productosRecuperacion" id="checkbox6" />
-                                    <label for="checkbox6">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Proveedores recuperacion:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="proveedoresRecuperacion" id="checkbox7" />
-                                    <label for="checkbox7">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Etiquetas recuperacion:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="etiquetasRecuperacion" id="checkbox8" />
-                                    <label for="checkbox8">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Recuperacion Designados:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="designadoRecuperacion" id="checkbox17" />
-                                    <label for="checkbox17">Principal</label>
+                                <div class="titulo-rol">Recuperacion de Datos</div>
+                                <div class="cuatropartes">
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Productos recuperacion:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="productosRecuperacion" id="checkbox6" />
+                                            <label for="checkbox6">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Proveedores recuperacion:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="proveedoresRecuperacion" id="checkbox7" />
+                                            <label for="checkbox7">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Etiquetas recuperacion:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="etiquetasRecuperacion" id="checkbox8" />
+                                            <label for="checkbox8">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Recuperacion Designados:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="designadoRecuperacion" id="checkbox17" />
+                                            <label for="checkbox17">Principal</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                         <hr><br>
-                        <div class="titulo">Historial</div>
-                        <div class="cuatropartes">
+                        <div class="content-check">
                             <div>
-                                <div class="subtitulo">Historial General:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="historialGeneral" id="checkbox13" />
-                                    <label for="checkbox13">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Historial Modificaciones:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="historialModificaciones" id="checkbox14" />
-                                    <label for="checkbox14">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Historial Movimientos:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="historialMovimientos" id="checkbox15" />
-                                    <label for="checkbox15">Principal</label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="subtitulo">Historial Eliminados:</div>
-                                <div class="check">
-                                    <input type="checkbox" name="historialEliminados" id="checkbox16" />
-                                    <label for="checkbox16">Principal</label>
+                                <div class="titulo-rol">Historial</div>
+                                <div class="cuatropartes">
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Historial General:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="historialGeneral" id="checkbox13" />
+                                            <label for="checkbox13">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Historial Modificaciones:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="historialModificaciones" id="checkbox14" />
+                                            <label for="checkbox14">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Historial Movimientos:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="historialMovimientos" id="checkbox15" />
+                                            <label for="checkbox15">Principal</label>
+                                        </div>
+                                    </div>
+                                    <div class="rol-pre">
+                                        <div class="subtitulo">Historial Eliminados:</div>
+                                        <div class="check">
+                                            <input type="checkbox" name="historialEliminados" id="checkbox16" />
+                                            <label for="checkbox16">Principal</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -375,14 +403,12 @@
                 <div class="divisor">
                     <hr><br>
                     <div class="titulo">Paginas principales</div>
-                    <div class="mitad">
-                        <div>
+                    <div class="mitad-v2">
                             <div class="titulo">Principal:</div>
                             <div class="check">
                                 <input type="checkbox" name="principal" id="checkbox25" />
                                 <label for="checkbox25">Principal</label>
                             </div>  
-                        </div>
                         <div>
                             <div class="titulo">Inventario:</div>
                             <div class="check">
@@ -534,7 +560,7 @@
                                 <label for="checkbox39">Principal</label>
                             </div> 
                         </div>
-                        <div>
+                        <div class="permisos">
                             <div class="titulo">Historial Eliminados:</div>
                             <div class="check">
                                 <input type="checkbox" name="historialEliminados" id="checkbox40" />

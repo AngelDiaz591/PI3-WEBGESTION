@@ -82,12 +82,20 @@
                                 <td>{{ c.contacto }}</td>
                                 <td>{{ c.username }}</td>
                                 <td>{{ c.fecha_edit}}</td>
-                                <td class="edita"><a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info btnRecuperarProv">                                 
-                                    <span class="material-symbols-outlined">restart_alt</span>
-                                </a></td>
-                                <td class="elimina"><a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a></td>
+                                <td>
+                                    <div class="botones">
+                                        <div class="edita">
+                                            <a href="cambio_statusrepro/{{ c.idProveedor }}" class="btn btn-info btnRecuperarProv">                                 
+                                                <span class="material-symbols-outlined">restart_alt</span>
+                                            </a>
+                                        </div>
+                                        <div class="elimina">
+                                            <a href="eliminaProveedor/{{c.idProveedor}}" class="btn btn-danger btnEliminacionProv">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -96,7 +104,7 @@
         </div>
         <div class="no-disponible oculto">
             <div style="display:flex; justify-content: center; align-items: center;">
-                <img style="width: 15%;" src="{% static 'productos/img/prov.svg' %}">
+                <img style="width: 15%; margin-top: -1rem;" src="{% static 'productos/img/prov.svg' %}">
             </div>
             <p style="font-size: 1.2rem; font-weight: 400;">Ningun proveedor se ha dado de baja.</p>
         </div>

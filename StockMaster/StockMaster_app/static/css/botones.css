@@ -21,8 +21,8 @@
 }
 
 .edita {
-    width: 50px;
-    height: auto;;
+    width: 64px;
+    height: auto;
 }
 .edita a{
     padding: 10px 15px;
@@ -121,6 +121,11 @@ main  .recent-orders .btn-registrar:hover{
   background-color: blue;
   box-shadow: var(--color-light) 0px 2px 4px, var(--color-light) 0px 7px 13px -3px, var(--color-light) 0px -3px 0px inset;
   /* box-shadow: var(--color-light) 0px 10px 20px, var(--color-light) 0px 6px 6px; */
+}
+
+.botones{
+  display: flex; 
+  justify-content: center;
 }
 
 

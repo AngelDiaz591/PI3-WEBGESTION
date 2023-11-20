@@ -78,6 +78,7 @@ main table tbody td{
     height: 4.8rem;
     border-bottom: 1px solid var(--color-light);
     color: var(--color-dark);
+    text-align: center;
 }
 
 main table th{

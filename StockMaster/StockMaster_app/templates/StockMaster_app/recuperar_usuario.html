@@ -35,7 +35,7 @@
                                 <th>Imagen</th>
                                 <th>Rol</th>
                                 <th>Recuperar</th>
-                                <th>Eliminar</th>
+                                <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,12 +52,20 @@
                                                 </div>
                                             </td>
                                             <td>{% if us.id.is_superuser %} Administrador{% else %} Empleado {% endif %}</td>
-                                            <td class="edita  edit-product-button"><a class=" btn btn-info btnRecuperarProv" href="recuperar/{{us.id.id}}">
-                                                <span class="material-symbols-outlined">restart_alt</span>
-                                            </a></td>
-                                            <td class="elimina"><a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </a></td>
+                                            <td>
+                                                <div class="botones">
+                                                    <div class="edita edit-product-button">
+                                                        <a class=" btn btn-info btnRecuperarProv" href="recuperar/{{us.id.id}}">
+                                                            <span class="material-symbols-outlined">restart_alt</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="elimina">
+                                                        <a class="btn btn-danger btnEliminacionUsua" href="eliminaruser/{{us.id.id}}">
+                                                            <span class="material-symbols-outlined">delete</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     {% endif %}
                                 {% endif %}

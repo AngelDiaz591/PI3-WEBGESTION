@@ -81,12 +81,20 @@
                                 <td>{{ c.nombre }}</td>
                                 <td>{{ c.username }}</td>
                                 <td>{{ c.hora_baja }}</td>
-                                <td class="edita"><a href="statusre/{{c.idproducts}}" class="btn btn-info btnRecuperarPro">
-                                    <span class="material-symbols-outlined">restart_alt</span>
-                                </a></td>
-                                <td class="elimina"><a href="eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a></td>
+                                <td>
+                                    <div class="botones">
+                                        <div class="edita">
+                                            <a href="statusre/{{c.idproducts}}" class="btn btn-info btnRecuperarPro">
+                                                <span class="material-symbols-outlined">restart_alt</span>
+                                            </a>
+                                        </div>
+                                        <div class="elimina">
+                                            <a href="eliminaInventario/{{c.idproducts}}" class="btn btn-danger btnEliminacionPro">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -95,7 +103,7 @@
         </div>
         <div class="no-disponible oculto">
             <div style="display:flex; justify-content: center; align-items: center;">
-                <img style="width: 15%;" src="{% static 'productos/img/trash3.svg' %}">
+                <img style="width: 15%; margin-top: -1rem;" src="{% static 'productos/img/trash3.svg' %}">
             </div>
             <p style="font-size: 1.2rem; font-weight: 400;">Ningun producto se ha dado de baja.</p>
         </div>

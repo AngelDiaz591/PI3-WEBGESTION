@@ -2309,7 +2309,6 @@ def get_char(_request):
 def example_view(request):
     if request.user.has_perm('StockMaster_app.delete_marca'):
         productos = []  # Inicializar una lista vacía para productos
-        mensajes = Mensajes.objects.all()
         if request.user.has_perm('StockMaster_app.delete_mensajes'):
             usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
 
@@ -2341,13 +2340,41 @@ def example_view(request):
 
 @login_required(login_url='signin')
 def acercaDe(request):
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         form = User.objects.all()  
-        return render(request, 'StockMaster_app/acercaDe.html', {'Usuario':form})
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/acercaDe.html', {'Usuario':form, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes, 'usuarios':usuario, 'Usuario':form})
 
 @login_required(login_url='signin')
 def terminosYcondiones(request):
+        if request.user.has_perm('StockMaster_app.delete_mensajes'):
+            usuario_actual = request.user  # Asegúrate de ajustar esto según tu implementación
+
+            # Filtra los mensajes para obtener solo los del usuario actual
+            mensajes = Mensajes.objects.filter(username=usuario_actual)
+
+            # Obtiene la cantidad de mensajes del usuario actual
+            cantidad_mensajes = mensajes.count()
+        else:
+            mensajes = Mensajes.objects.all()
+            cantidad_mensajes = mensajes.count()
         form = User.objects.all()  
-        return render(request, 'StockMaster_app/TerminosDe.html', {'Usuario':form})
+        usuario = Usuario.objects.all()
+        for Usuarios in usuario:
+                Usuarios.imagen_url = get_imagen_url(Usuarios.imagen)
+        return render(request, 'StockMaster_app/TerminosDe.html', {'Usuario':form, 'Mensajes':mensajes, 'cantidad_mensajes':cantidad_mensajes, 'usuarios':usuario, 'Usuario':form})
 
 def enviar_correo(request):
     send_mail(

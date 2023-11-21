@@ -633,12 +633,14 @@ input.invalid {
 .modal-img-contra{
     width: 18rem;
     height: auto;
-    margin: 0.5rem 0 0.5rem 7rem;
+    margin: 0.5rem 0 0.5rem 3rem;
 }
 
 .sub-contra{
     color: var(--color-dark);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 /* -----------------------------------MODAL DESCRIPCIÓN --------------------------------------- */

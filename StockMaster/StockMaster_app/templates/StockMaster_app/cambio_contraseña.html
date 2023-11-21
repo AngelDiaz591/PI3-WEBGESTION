@@ -206,19 +206,19 @@
                         <div class="form-columns">
                             <div class="form-column">
                                 <img class="modal-img-contra" src="{% static 'login/img/secure1.svg' %}">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-top: 1.8rem;">
                                     <label class="sub-contra" for="{{ form.old_password.id_for_label }}">Contraseña actual:</label>
-                                    <div style="display: flex;">
-                                        <input style="background: transparent; border-bottom: 0.2rem solid rgb(223, 12, 65); width: 70%; padding: 0.5rem 0 0.5rem 0.5rem;" type="password" id="old_password" name="old_password" placeholder="Contraseña Actual" required>
+                                    <div style="display: flex; margin-top: 0.5rem;">
+                                        <input style="color: var(--color-dark); font-size: 1.2rem; background: transparent; border-bottom: 0.2rem solid rgb(244, 24, 79); width: 90%; padding: 0.5rem 0 0.5rem 0;" type="password" id="old_password" name="old_password" placeholder="Contraseña Actual" required>
                                     </div>
                                     {% for error in form.old_password.errors %}
                                         <div class="alert alert-danger">{{ error }}</div>
                                     {% endfor %}
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="margin-top: 1.8rem;">
                                     <label class="sub-contra" for="{{ form.new_password1.id_for_label }}">Nueva contraseña:</label>
-                                    <div style="display: flex;">
-                                        <input class="design" type="password" id="new_password1" name="new_password1" placeholder="Contraseña Nueva" required>
+                                    <div style="display: flex; margin-top: 0.5rem;">
+                                        <input style="color: var(--color-dark); font-size: 1.2rem; background: transparent; border-bottom: 0.2rem solid rgb(244, 24, 79); width: 90%; padding: 0.5rem 0 0.5rem 0;" type="password" id="new_password1" name="new_password1" placeholder="Nueva Contraseña" required>
                                     </div>
                                     {% for error in form.new_password1.errors %}
                                         <div class="alert alert-custom" role="alert">
@@ -227,10 +227,10 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="margin-top: 1.8rem;">
                                     <label class="sub-contra" for="{{ form.new_password2.id_for_label }}">Confirmar nueva contraseña:</label>
-                                    <div style="display: flex;">
-                                        <input class="design" type="password" id="new_password2" name="new_password2" placeholder="Confirmar contraseña"required>
+                                    <div style="display: flex; margin-top: 0.5rem;">
+                                        <input style="color: var(--color-dark); font-size: 1.2rem; background: transparent; border-bottom: 0.2rem solid rgb(244, 24, 79); width: 90%; padding: 0.5rem 0 0.5rem 0;" type="password" id="new_password2" name="new_password2" placeholder="Confirmar nueva contraseña"required>
                                     </div>
                                     {% for error in form.new_password2.errors %}
                                         <div class="alert alert-danger">{{ error }}</div>

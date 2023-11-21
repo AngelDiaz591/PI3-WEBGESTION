@@ -42,7 +42,11 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 # Create your views here.
 from django.urls import reverse
-
+from django.core.files.base import ContentFile
+from django.contrib.auth.models import User
+from profiles.models import Profile
+from .utils import is_ajax, classify_face
+from logs.models import Log
 
 
 #____________________________________________________________________________________________________________________________________
@@ -2469,3 +2473,38 @@ def eliminarOrden(request, id_Orden):
         return redirect('/ordenes')
     else:
         return redirect('/actividades')
+    
+
+def find_user_view(request):
+    if is_ajax(request):
+        photo = request.POST.get('photo')
+        _, str_img = photo.split(';base64')
+
+        # print(photo)
+        decoded_file = base64.b64decode(str_img)
+        print(decoded_file)
+
+        x = Log()
+        x.photo.save('upload.png', ContentFile(decoded_file))
+        x.save()
+
+        res = classify_face(x.photo.path)
+        if res:
+            user_exists = User.objects.filter(username=res).exists()
+            if user_exists:
+                user = User.objects.get(username=res)
+                profile = Profile.objects.get(user=user)
+                x.profile = profile
+                x.save()
+
+                login(request, user)
+                return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
+
+def login_view(request):
+    return render(request, 'StockMaster_app/entrada.html', {})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+    

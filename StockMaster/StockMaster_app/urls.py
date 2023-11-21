@@ -130,5 +130,11 @@ urlpatterns = [
     #paths de ordenes
     path('ordenes/', views.ordenes, name='ordenes'),
     path('nuevaOrden/', views.nuevaOrden, name='nueva_orden'),
-    path('eliminarOrden/<int:id_Orden>/', views.eliminarOrden, name='eliminar_orden')
+    path('eliminarOrden/<int:id_Orden>/', views.eliminarOrden, name='eliminar_orden'),
+    
+    path('login/', views.login_view, name='login'),
+    path('logout2/', views.logout_view, name='logout2'),
+    path('classify/', views.find_user_view, name='classify'),
+    
+    
     ]

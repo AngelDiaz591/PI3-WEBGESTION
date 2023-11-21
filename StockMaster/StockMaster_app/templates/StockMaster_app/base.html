@@ -75,6 +75,12 @@
                                     </a>
                                 {% endif %}
                                 {% if perms.StockMaster_app.view_area %}
+                                <a href="{% url 'ordenes' %}">
+                                    <span class="material-symbols-outlined">orders</span>
+                                    <h3>Ordenes</h3>
+                                </a>
+                                {% endif %}
+                                {% if perms.StockMaster_app.view_area %}
                                     <a href="{% url 'area' %}" class="active">
                                         <span class="material-symbols-outlined">workspaces</span>
                                         <h3>Areas</h3>

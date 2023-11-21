@@ -126,4 +126,9 @@ urlpatterns = [
     path('acercaDe/terminos', views.terminosYcondiones, name='terminosCon'),
 
     path('enviar_correo/', views.enviar_correo, name='enviar_correo'),
+    
+    #paths de ordenes
+    path('ordenes/', views.ordenes, name='ordenes'),
+    path('nuevaOrden/', views.nuevaOrden, name='nueva_orden'),
+    path('eliminarOrden/<int:id_Orden>/', views.eliminarOrden, name='eliminar_orden')
     ]

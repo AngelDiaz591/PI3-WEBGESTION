@@ -154,3 +154,23 @@ class Usuario(models.Model):
     descripcion = models.CharField(max_length=255, null=True)
     comen = models.CharField(max_length =150)
     id = models.ForeignKey(User, on_delete=models.CASCADE, null= True)
+
+        
+######################################### Modelo de Ordenes ##############################################################################
+class Ordenes(models.Model):
+    id_Orden = models.AutoField(primary_key=True)
+    no_Orden = models.CharField(max_length=20)
+    fechaPedido = models.DateTimeField(default=timezone.now())
+    nombreProd = models.CharField(max_length=20)
+    codigoProd = models.CharField(max_length=6)
+    cantSolicitada = models.IntegerField()
+    precioUnitario = models.IntegerField()
+    totalPedido = models.IntegerField()
+    nombreProv = models.CharField(max_length=50)
+    dirProveedor = models.CharField(max_length=100)
+    telefonoProv = models.IntegerField()
+    emailProv = models.CharField(max_length=100)
+    dirEntrega = models.CharField(max_length=100)
+    fechaEntrega = models.DateTimeField(null=True)
+    metodoPago = models.CharField(max_length=20)
+    status = models.CharField(max_length=20)

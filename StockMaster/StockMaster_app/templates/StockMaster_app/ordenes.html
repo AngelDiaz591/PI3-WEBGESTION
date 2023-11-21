@@ -1,0 +1,239 @@
+{% extends "./base.html" %}
+{% block body %}
+{% load static %}
+<div class="right-v2" >
+    <div class="top">
+        <div class="tema">
+            <button id="menu-btn"><span class="material-symbols-outlined">menu</span>
+            </button>
+            <button id="themeToggleBtn" >
+                <i id="sunIcon" class="fas fa-sun"></i>
+                <i id="moonIcon" class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                <div class="info">
+                    <p>Hola, <b>{{ user.username}}</b> </p>
+                    <p style="text-align: center;">
+                        BIENVENIDO
+                    </p>
+                </div>
+                <div class="profile-photo">
+                    {% if request.user.is_superuser %}
+                        <i class="fa-solid fa-user-tie"></i>
+                        <small class="text-muted">Admin</small>
+                    {% else %}
+                        <i class="fa-solid fa-user"></i>
+                        <small class="text-muted">Empleado</small>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>  
+</div>
+<main>
+    <h1>Ordenes</h1>
+    <div class="recent-orders">
+        <div class="principal">
+            <!--Boton-->
+            <div class="boton-modal">
+                <label for="btn-modal">
+                    <i class="fa-solid fa-plus"></i>    Nueva Orden
+                </label>
+            </div>
+            <!--Fin de Boton-->
+            <div class="search-bar-v3">
+                <input type="text" id="search-input" placeholder="Buscar productos..." oninput="convertToUppercase()">
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+        </div>
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-custom" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="dismissMessage(this)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            {% endfor %}
+        </div>
+        <h2 class="agregar">Listado de Ordenes</h2>
+        <div style="overflow: auto; height: 450px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No. Orden</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Proveedor</th>
+                        <th>Metodo de Pago</th>
+                        <th>Dirección de Entrega</th>
+                        <th>Estatus</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in Ordenes %}
+                        <tr>
+                            <td>{{ c.no_Orden }}</td>
+                            <td>{{ c.nombreProd }}</td>
+                            <td>{{ c.cantSolicitada}}</td>
+                            <td>{{ c.nombreProv}}</td>
+                            <td>{{ c.metodoPago }}</td>
+                            <td>{{ c.dirEntrega }}</td>
+                            <td>{{ c.status }}</td>
+                            <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
+                                <span class="material-symbols-outlined">edit</span>
+                            </a></td>
+                            <td class="elimina"><a href="eliminacionOrden/{c.id_Orden}" class="btn btn-danger" id="cancelarPedido">
+                                <span class="material-symbols-outlined">
+                                    block
+                                    </span>
+                            </a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+        <!--Ventana Modal-->
+        <input type="checkbox" id="btn-modal">
+        <div class="container-modal">
+            <div class="content-modal">
+                <label for="btn-modal" style="display: flex; justify-content: flex-end; cursor: pointer;"><i class="fa-solid fa-xmark"></i></label>
+                <div class="recent-updates">
+                    <h2>Nueva Orden</h2>
+                    <div class="updates">
+                        <form action="/nuevaOrden/" method="POST" enctype="multipart/form-data" id="mi_formulario">{% csrf_token %}
+                            <!--Inicio de la tabla de columnas-->
+                            <div class="form-columns">    
+                            <!--Datos-->
+                                <!--Primer columna-->
+                                <div class="form-column">
+                                    <div class="divisor">
+                                        <div class="titulo">Producto:</div>
+                                        <select name="producto" id="producto" class="campos-seleccion" required>
+                                            <option value="" disabled selected>Selecciona un producto</option>
+                                            {% for c in Producto %}
+                                                {% if c.status == 1 %}
+                                                    <option value="{{ c.idproducts }}">{{ c.nombre }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Proveedor:</div>
+                                        <select name="proveedor" id="proveedor" class="campos-seleccion" required>
+                                            <option value="" disabled selected>Selecciona un Proveedor</option>
+                                            {% for c in Proveedor %}
+                                                {% if c.status == 1 %}
+                                                    <option value="{{ c.idProveedor }}">{{ c.nombre }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Cantidad a Pedir:</div>
+                                        <input type="number" id="cantPedido" name="cantPedido" class="campos" placeholder="Cantidad a Pedir" 
+                                            pattern="[0-9]{10}" required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                </div>
+                                <!--Termino de la 1 columna-->
+                                <!--Inicio de la 2 columna-->
+                                <div class="form-column">
+                                    <h4>Direccion de Entrega:</h4>
+                                    <div class="divisor">
+                                        <div class="titulo">Calle: </div>
+                                        <input type="text" id="calle" name="calle" class="campos" placeholder="Calle"  required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">no Ext:</div>
+                                        <input type="number" id="noExt" name="noExt" class="campos" placeholder="no Ext" 
+                                            pattern="[0-9]{10}">
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">no Int:</div>
+                                        <input type="number" id="noInt" name="noInt" class="campos" placeholder="no Int" 
+                                            pattern="[0-9]{10}">
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Colonia:</div>
+                                        <input type="text" id="colonia" name="colonia" class="campos" placeholder="Colonia" required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Código Postal:</div>
+                                        <input type="number" id="cp" name="cp" class="campos" placeholder="Código Postal" 
+                                            pattern="[0-9]{10}" required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Municipio:</div>
+                                        <input type="text" id="municipio" name="municipio" class="campos" placeholder="Municipio" required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Estado:</div>
+                                        <input type="text" id="estado" name="estado" class="campos" placeholder="Estado" required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--Termino de la 2 columna-->
+                            </div>
+                            <!--Termino de la tabla de columnas-->
+                            <br>
+                                <div class="btn-cerrar">
+                                    <button type="submit" class="updatess">Guardar</button>
+                                    <label for="btn-modal">Cancelar</label>
+                                </div>
+                            <!--Fin datos-->
+                            
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    // Obtén todos los elementos con la clase "close-btn"
+                    var closeBtns = document.querySelectorAll('.close-btnn');
+
+                    // Agrega un evento de clic a cada elemento
+                    closeBtns.forEach(function (closeBtn) {
+                        closeBtn.addEventListener('click', function () {
+                            // Oculta el elemento al hacer clic
+                            closeBtn.style.display = 'none';
+                        });
+                    });
+                </script>
+                
+            </div>
+            <label for="btn-modal" class="cerrar-modal"></label>
+        </div>
+        <!--Fin de Ventana Modal-->
+    </div>
+</main>
+</scrip>
+<script>
+const btnCancelarPedido = document.querySelectorAll("#cancelarPedido")
+console.log(btnCancelarPedido)
+btnCancelarPedido.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const confirmacion = confirm('¿Seguro que desea cancelar el pedido?, esta acción es irreversible');
+        if (!confirmacion) {
+            e.preventDefault();
+        }
+    });
+});
+
+    // Función para eliminar el mensaje al hacer clic en el botón de cerrar
+    function dismissMessage(button) {
+        const messageContainer = button.closest('.alert');
+        if (messageContainer) {
+            messageContainer.remove();
+        }
+    }
+</script>
+{% endblock %}

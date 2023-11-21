@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>
+        Estimado/a {{proveedor.nombre}}
+    </p>
+    <p>
+        Espero que este mensaje le encuentre bien. Mi nombre es {{username}} y represento a StockMaster. Estamos interesados en realizar un pedido de los siguientes productos y nos gustaría solicitar su cotización:
+    </p>
+    <p>
+        <b>Detalles del Pedido:</b>
+        <br>
+        Nombre del Producto: {{producto.nombre}}
+        <br>
+        Cantidad Solicitada: {{cantPedido}}
+        <br>
+        Fecha de Entrega Preferida: {{fechaEntrega}}
+        <br>
+        <br>
+        <b>Información de Entrega:</b>
+        <br>
+        Dirección de Entrega: {{dirEntrega}}
+    </p>
+    <p>Agradeceríamos que nos proporcionara un presupuesto detallado que incluya el costo de los productos, impuestos, tarifas de envío y cualquier otro cargo relevante. Además, si tiene alguna política específica de pedido mínimo, por favor háganoslo saber.
+        <br>
+        <br>
+        Estamos comprometidos a establecer una relación comercial sólida y a largo plazo. Si tiene algún requisito adicional para procesar nuestra solicitud, no dude en informarnos.
+        <br>
+        <br>
+        Esperamos con interés su pronta respuesta. Gracias por su atención y colaboración.
+        <br>
+        <br>
+        <b>Atte. {{username}}</b>
+    </p>
+    <a href="{{ accept_link }}" style="background-color: #008CBA; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Activar Cuenta</a>
+</body>
+</html>

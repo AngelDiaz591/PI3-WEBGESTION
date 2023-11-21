@@ -220,6 +220,7 @@ function openEditModalRol(productId) {
             $('#EtxtdesignadoRecuperacion').val(data.designadoRecuperacion)
             $('#EtxtusuarioRecuperacion').val(data.usuarioRecuperacion)
             $('#Etxtusuarios').val(data.usuarios)
+            $('#Etxtpedidos').val(data.pedidos)
             $('#Etxtroles').val(data.roles)
             $('#Etxtsoporte').val(data.soporte)
             $('#Etxtsoporteenviar').val(data.soporteenviar)

@@ -1397,6 +1397,8 @@ def get_etiquetas(request):
     return request.POST.get('etiquetas') == 'on'
 def get_area(request):
     return request.POST.get('area') == 'on'
+def get_pedidos(request):
+    return request.POST.get('pedidos') == 'on'
 def get_prodRecu(request):
     return request.POST.get('productosRecuperacion') == 'on'
 def get_provRecu(request):
@@ -1456,6 +1458,7 @@ def registrar_rol(request):
     if request.user.has_perm('StockMaster_app.view_rolextra'):
         nombre = request.POST['RolNew']
         principal = get_principal(request)
+        pedidos = get_pedidos(request)
         inventario = get_inventario(request)
         productos = get_productos(request)
         proveedores = get_proveedores(request)
@@ -1490,6 +1493,7 @@ def registrar_rol(request):
             rol_extra.proveedores = proveedores
             rol_extra.etiquetas = etiquetas
             rol_extra.area = area
+            rol_extra.pedidos = pedidos
             rol_extra.productosRecuperacion = productosRecuperacion 
             rol_extra.proveedoresRecuperacion = proveedoresRecuperacion 
             rol_extra.etiquetasRecuperacion = etiquetasRecuperacion
@@ -1518,6 +1522,8 @@ def registrar_rol(request):
                 rol.permissions.add(Permission.objects.get(codename='view_categoria'))
             if area:
                 rol.permissions.add(Permission.objects.get(codename='view_area'))
+            if pedidos:
+                rol.permissions.add(Permission.objects.get(codename='add_productos'))
             if productosRecuperacion:
                 rol.permissions.add(Permission.objects.get(codename='delete_productos'))
             if proveedoresRecuperacion:
@@ -1583,6 +1589,7 @@ def editarRolMod(request):
             soporte = get_soporte(request)
             soporteenviar = get_soporteenviar(request)
             usuarioRecuperacion = get_usuRecu(request)
+            pedidos = get_pedidos(request)
 
             try:
                 rol = Group.objects.get(id= id)
@@ -1595,7 +1602,7 @@ def editarRolMod(request):
                 proveedoresRecuperacion=proveedoresRecuperacion, etiquetasRecuperacion=etiquetasRecuperacion, designadoRecuperacion=designadoRecuperacion,
                 usuariosRecuperacion=usuarioRecuperacion, usuarios=usuarios, roles=roles, soporte=soporte, soporteenviar=soporteenviar,
                 contra=contra, historialGeneral=historialGeneral, historialModificaciones=historialModificaciones, historialMovimientos=historialMovimientos,
-                historialEliminados=historialEliminados).exists():
+                historialEliminados=historialEliminados, pedidos=pedidos).exists():
 
                 messages.error(request, '¡Este Rol no recibio cambios!')
                 return redirect('/rol/') 
@@ -1614,6 +1621,7 @@ def editarRolMod(request):
                 rol_extra.designadoRecuperacion = designadoRecuperacion
                 rol_extra.usuariosRecuperacion = usuarioRecuperacion
                 rol_extra.usuarios = usuarios
+                rol_extra.pedidos = pedidos
                 rol_extra.roles = roles
                 rol_extra.soporte = soporte
                 rol_extra.soporteenviar = soporteenviar 
@@ -1653,6 +1661,11 @@ def editarRolMod(request):
                     rol.permissions.add(Permission.objects.get(codename='view_area'))
                 else:
                     permiso = Permission.objects.get(codename='view_area')
+                    rol.permissions.remove(permiso)
+                if pedidos:
+                    rol.permissions.add(Permission.objects.get(codename='add_productos'))
+                else:
+                    permiso = Permission.objects.get(codename='add_productos')
                     rol.permissions.remove(permiso)
                 if productosRecuperacion:
                     rol.permissions.add(Permission.objects.get(codename='delete_productos'))
@@ -1763,6 +1776,7 @@ def edicionRol2(request, id):
             "usuarioRecuperacion":rol_extra.usuariosRecuperacion,
             "usuarios":rol_extra.usuarios,
             "roles": rol_extra.roles,
+            "pedidos": rol_extra.pedidos,
             "soporte":rol_extra.soporte,
             "soporteenviar":rol_extra.soporteenviar,
             "contra":rol_extra.contra,

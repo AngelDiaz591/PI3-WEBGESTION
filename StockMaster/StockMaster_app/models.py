@@ -101,6 +101,7 @@ class RolExtra(models.Model):
     proveedores = models.BooleanField(default=False)
     etiquetas = models.BooleanField(default=False)
     area = models.BooleanField(default=False)
+    pedidos = models.BooleanField(default=False)
     productosRecuperacion = models.BooleanField(default=False)
     proveedoresRecuperacion = models.BooleanField(default=False)
     etiquetasRecuperacion = models.BooleanField(default=False)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>
+        Estimado/a {{orden.nombreProv}}
+    </p>
+    <p>
+        Espero que este mensaje le encuentre bien. Mi nombre es {{username}} y represento a StockMaster. Este correo se esta enviando para informarle que el pedido del producto {{orden.nombreProd}} y el Número de Orden {{orden.no_Orden}} requiere de una urgente cancelación.
+    </p>
+    <p>
+        <b>Detalles del Pedido:</b>
+        <br>
+        Nombre del Producto: {{orden.nombreProd}}
+        <br>
+        Cantidad Solicitada: {{orden.cantSolicitada}}
+        <br>
+        Fecha de Entrega Preferida: {{orden.fechaEntrega}}
+        <br>
+        Metodo de Pago: {{orden.metodoPago}}
+        <br>
+        <br>
+        <b>Información de Entrega:</b>
+        <br>
+        Dirección de Entrega: {{orden.dirEntrega}}
+    </p>
+    <p>Agradeceríamos que nos de una pronta respuesta, para agilizar otros pedidos pendientes.
+        <br>
+        <br>
+        Estamos comprometidos a establecer una relación comercial sólida y a largo plazo. Si tiene algún requisito adicional para procesar nuestra solicitud, no dude en informarnos.
+        <br>
+        <br>
+        Esperamos con interés su pronta respuesta. Gracias por su atención y colaboración.
+        <br>
+        <br>
+        <b>Atte. {{username}}</b>
+    </p>
+</body>
+</html>

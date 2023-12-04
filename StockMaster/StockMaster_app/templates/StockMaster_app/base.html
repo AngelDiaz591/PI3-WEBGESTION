@@ -53,7 +53,7 @@
                         <h3>Inventario</h3>
                     </a>
                 {% endif %}
-                {% if perms.StockMaster_app.view_productos or perms.StockMaster_app.view_proveedores or perms.StockMaster_app.view_area or perms.StockMaster_app.view_categoria %}
+                {% if perms.StockMaster_app.view_productos or perms.StockMaster_app.view_proveedores or perms.StockMaster_app.view_area or perms.StockMaster_app.view_categoria or perms.StockMaster_app.add_productos %}
                     <a class="submenu-trigger has-submenu active" data-submenu-id="submenu_gestion" data-submenu-state="closed">
                         <span class="material-symbols-outlined">supervisor_account</span>
                         <h3>Administración</h3>
@@ -74,7 +74,7 @@
                                         <h3>Proveedores</h3>
                                     </a>
                                 {% endif %}
-                                {% if perms.StockMaster_app.view_area %}
+                                {% if perms.StockMaster_app.add_productos %}
                                 <a href="{% url 'ordenes' %}">
                                     <span class="material-symbols-outlined">orders</span>
                                     <h3>Ordenes</h3>

@@ -18,9 +18,9 @@
                     return monthNames.slice(0, count);
                 },
             };
-            const labels1 = Utils.months({ count: 12 });
+            const labels = Utils.months({ count: 12 });
             const data1 = {
-                labels: labels1,
+                labels: labels,
                 datasets: [{
                     label: 'Entrada de Productos',
                     data: {{ data|safe }},

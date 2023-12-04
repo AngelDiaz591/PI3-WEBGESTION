@@ -20,13 +20,15 @@
                     </p>
                 </div>
                 <div class="profile-photo">
-                    {% if request.user.is_superuser %}
-                        <i class="fa-solid fa-user-tie"></i>
-                        <small class="text-muted">Admin</small>
-                    {% else %}
-                        <i class="fa-solid fa-user"></i>
-                        <small class="text-muted">Empleado</small>
-                    {% endif %}
+                    {% for user in usuarios %}
+                        {% if user.id_id == request.user.id %}
+                            {% if user.imagen %}
+                                <img class="fa-solid fa-user-tie"src="{{ user.imagen_url }}" alt="Imagen del usuario">
+                            {% else %}
+                                <p>No hay imagen disponible.</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             {% endif %}
         </div>
@@ -81,10 +83,7 @@
                             <td>{{ c.metodoPago }}</td>
                             <td>{{ c.dirEntrega }}</td>
                             <td>{{ c.status }}</td>
-                            <td class="edita"><a href="edicionproveedor/{{c.idProveedor}}" class="btn btn-info">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a></td>
-                            <td class="elimina"><a href="eliminacionOrden/{c.id_Orden}" class="btn btn-danger" id="cancelarPedido">
+                            <td class="elimina"><a href="eliminacionOrden/{{c.id_Orden}}"  class="btn btn-danger" id="cancelarPedido">
                                 <span class="material-symbols-outlined">
                                     block
                                     </span>
@@ -95,7 +94,6 @@
 
             </table>
         </div>
-
         <!--Ventana Modal-->
         <input type="checkbox" id="btn-modal">
         <div class="container-modal">
@@ -136,6 +134,24 @@
                                         <div class="titulo">Cantidad a Pedir:</div>
                                         <input type="number" id="cantPedido" name="cantPedido" class="campos" placeholder="Cantidad a Pedir" 
                                             pattern="[0-9]{10}" required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Fecha Preferente de Entrega:</div>
+                                        <input type="date" id="fechaEntrega" name="fechaEntrega" required>
+                                        <br> <span class="error-message" style="color: red;"></span>
+                                    </div>
+                                    <div class="divisor">
+                                        <div class="titulo">Metodo de Pago:</div>
+                                        <select name="metodoPago" id="metodoPago" class="campos-seleccion" required>  
+                                            <option value="" disabled selected>Selecciona un Metodo de Pago</option>
+                                            <option value="Tarjeta de Credito">Tarjeta de Credito</option>
+                                            <option value="Tarjeta de Debito">Tarjeta de Debito</option>
+                                            <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+                                            <option value="Cheque">Cheque</option>
+                                            <option value="Pagare">Pagare</option>
+                                            
+                                        </select> 
                                         <br> <span class="error-message" style="color: red;"></span>
                                     </div>
                                 </div>
@@ -218,7 +234,6 @@
 </scrip>
 <script>
 const btnCancelarPedido = document.querySelectorAll("#cancelarPedido")
-console.log(btnCancelarPedido)
 btnCancelarPedido.forEach(btn => {
     btn.addEventListener('click', (e) => {
         const confirmacion = confirm('¿Seguro que desea cancelar el pedido?, esta acción es irreversible');
@@ -227,7 +242,15 @@ btnCancelarPedido.forEach(btn => {
         }
     });
 });
-
+const btnCompletarPedido = document.querySelectorAll("#completarPedido")
+btnCompletarPedido.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const confirmacion = confirm('Estas apunto de confirmar que el pedido ha sido entregado y completado, ¿Estas seguro?');
+        if (!confirmacion) {
+            e.preventDefault();
+        }
+    });
+});
     // Función para eliminar el mensaje al hacer clic en el botón de cerrar
     function dismissMessage(button) {
         const messageContainer = button.closest('.alert');

@@ -176,6 +176,8 @@ def signup(request):
 
                 accept_link = 'http://127.0.0.1:8000/signin/?next=/actividades/'
 
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
                 # Crear el mensaje en formato HTML
                 message_html = render_to_string('StockMaster_app/correos/Correo.html', {'accept_link': accept_link})
 
@@ -2393,7 +2395,7 @@ def enviar_correo(request):
 ########################################### Views de Pedidos ###################################################################################################################################################################################################
 @login_required(login_url='signin')
 def ordenes(request):
-    if request.user.is_superuser:
+    if request.user.has_perm('StockMaster_app.add_productos'):
         OrdenesListados = Ordenes.objects.all()
         ProductosListados = Productos.objects.all()
         mensajes = Mensajes.objects.all()
@@ -2406,7 +2408,7 @@ def ordenes(request):
 
 @login_required(login_url='signin')
 def nuevaOrden(request):
-    if request.user.has_perm('StockMaster_app.view_proveedores'):
+    if request.user.has_perm('StockMaster_app.add_productos'):
         proveedorId = request.POST['proveedor']
         productoId = request.POST['producto']
         producto = get_object_or_404(Productos, idproducts=productoId)
@@ -2432,24 +2434,24 @@ def nuevaOrden(request):
         municipio = request.POST['municipio']
         estado = request.POST['estado']
         dirEntrega = f"{calle} {noExt} {noInt}, {colonia}, {cp}, {municipio}, {estado}"
-        metodoPago = "N/A"
+        metodoPago = request.POST['metodoPago']
+        fechaEntrega = request.POST['fechaEntrega']
         status = "Pedido Enviado"
         
         # Crear una instancia de Producto con los datos proporcionados, incluyendo la imagen como bytes
-        orden = Ordenes(no_Orden=no_Orden, fechaPedido=fechaPedido, nombreProd=nombreProducto, codigoProd=codigoProd, cantSolicitada=cantPedido, precioUnitario=precioUnitario, totalPedido=totalPedido, nombreProv=nombreProv, dirProveedor=dirProveedor, telefonoProv=telefonoProv, emailProv=emailProv, dirEntrega=dirEntrega, metodoPago=metodoPago, status=status)
+        orden = Ordenes(no_Orden=no_Orden, fechaPedido=fechaPedido, nombreProd=nombreProducto, codigoProd=codigoProd, cantSolicitada=cantPedido, precioUnitario=precioUnitario, totalPedido=totalPedido, nombreProv=nombreProv, dirProveedor=dirProveedor, telefonoProv=telefonoProv, emailProv=emailProv, dirEntrega=dirEntrega, fechaEntrega=fechaEntrega, metodoPago=metodoPago, status=status)
         # Guardar la instancia en la base de datos
         historial= Historial.objects.all()
         historial = Historial(movimiento='Creacion de Pedido',usuario=request.user.username,fecha=timezone.now(),nombre=no_Orden)
         historial.save()
         orden.save()
         messages.success(request, '¡Pedido Enviado!')
-
         subject = f"Pedido de Inventario {nombreProducto}"
         from_email = 'stockmaster404@gmail.com'
         recipient_list = [emailProv]
-
+    
         # Crear el mensaje en formato HTML
-        pedido_html = render_to_string('StockMaster_app/CorreoPedidos.html', {'proveedor': proveedor, 'producto': producto, 'cantPedido': cantPedido, 'username': request.user.username, 'fechaEntrega': timezone.now(), 'dirEntrega': dirEntrega})
+        pedido_html = render_to_string('StockMaster_app/CorreoPedidos.html', {'proveedor': proveedor, 'producto': producto, 'cantPedido': cantPedido, 'username': request.user.username, 'fechaEntrega': fechaEntrega, 'dirEntrega': dirEntrega, 'metodoPago': metodoPago, 'no_Orden': no_Orden})
         try:
             send_mail(subject, '', from_email, recipient_list, fail_silently=False, html_message=pedido_html)
         except Exception as e:
@@ -2461,8 +2463,8 @@ def nuevaOrden(request):
         return redirect('/ordenes')
 
 def eliminarOrden(request, id_Orden):
-    if request.user.has_perm('StockMaster_app.view_productos'):
-        orden = Ordenes.objects.get(id_Orden=id_Orden)
+    if request.user.has_perm('StockMaster_app.add_productos'):
+        orden = Ordenes.objects.get(id_Orden=id_Orden)   
         historial= Historial.objects.all()
         historial = Historial(movimiento='Orden Cancelada',usuario=request.user.username,fecha=timezone.now(),nombre=orden.no_Orden)
         historial.save()
@@ -2470,11 +2472,20 @@ def eliminarOrden(request, id_Orden):
         messages.success(request, '¡Orden Cancelada!')
         historial= Historial.objects.all()
         historial = Historial(movimiento='Orden Cancelada',usuario=request.user.username,fecha=timezone.now(),nombre=orden.no_Orden)
+         
+        subject = f"Cancelacion de orden {orden.no_Orden}"
+        from_email = 'stockmaster404@gmail.com'
+        recipient_list = [orden.emailProv]
+        pedido_html = render_to_string('StockMaster_app/CorreoCancelacion.html', {'orden': orden, 'username': request.user.username})
+        try:
+            send_mail(subject, '', from_email, recipient_list, fail_silently=False, html_message=pedido_html)
+        except Exception as e:
+            print(f'Error al enviar el correo: {e}')
+            messages.error(request, f'Error al enviar el correo: {e}')
         return redirect('/ordenes')
-    else:
-        return redirect('/actividades')
-    
-
+    # Envío de correo de bienvenida
+        
+ 
 def find_user_view(request):
     if is_ajax(request):
         photo = request.POST.get('photo')
